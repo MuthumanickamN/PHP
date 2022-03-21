@@ -104,7 +104,7 @@ public function location_status_update(){
 		$this->form_validation->set_rules('location','location','trim|required|xss_clean');
 	
 		if ($this->form_validation->run() == FALSE) { 
-			redirect('location');
+			redirect('location_booking');
 		}
 		else
 		{
@@ -122,10 +122,10 @@ public function location_status_update(){
 			if($this->location_model->add_location_details($update_data))
 				{	
 					$this->session->set_flashdata('success_message', 'Location added successfully!');
-					redirect('location');
+					redirect('location_booking');
 				}else{
 					$this->session->set_flashdata('error_message', 'Data are not inserted Properly!');
-					redirect('location');
+					redirect('location_booking');
 				}
 			
 			
@@ -139,10 +139,10 @@ public function location_status_update(){
 			if($this->location_model->update_location_details($update_data, $id))
 				{	
 					$this->session->set_flashdata('success_message', 'Location updated successfully!');
-					redirect('location');
+					redirect('location_booking');
 				}else{
 					$this->session->set_flashdata('error_message', 'Data are not updated Properly!');
-					redirect('location');
+					redirect('location_booking');
 				}
 			
 				

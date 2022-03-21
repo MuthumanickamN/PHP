@@ -63,6 +63,11 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets_booking/libraries/1.10.0_jquery.validate.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="<?php echo base_url(); ?>assets_booking/libraries/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets_booking/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>assets_booking/libraries/jquery-validate.bootstrap-tooltip.js"></script>
   
 
   <!--<script type="text/javascript" src="<?php echo base_url() . 'assets_booking/datatable.min.js' ?>"></script>
@@ -128,6 +133,7 @@
   
 </head>
 <!-- END: Head-->
+
 
 <!-- BEGIN: Body-->
 <title><?php echo isset($title)?$title: 'Prime star sports services';?></title>
