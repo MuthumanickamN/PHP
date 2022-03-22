@@ -309,7 +309,7 @@ h3.content-header-title{
 }
 .common-bt, .btn.btn-primary{
     border:none;
-    background:transparent !important;
+   /* background:transparent !important; */
     border-radius:0px;
     color:#FFF;
     position:relative;
@@ -824,7 +824,7 @@ table.dataTable.no-footer{
 
 .pagination > li > a, .pagination > li > span{
     color: #808080;
-	width: 45px;
+	width: 70px;
 	height: 35px;
 	line-height: 35px;
 	text-align: center;
