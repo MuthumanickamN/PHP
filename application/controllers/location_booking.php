@@ -16,6 +16,8 @@ if(!$this->session->userdata('id')){
 
 	
     public function index(){
+
+		
 		$this->load->view('includes/header3');
 		//$this->load->view('templates/header');
         $this->load->view('location_booking');

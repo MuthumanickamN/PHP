@@ -171,7 +171,7 @@ $(document).on('click', '#location_add', function () {
 <h4 class="modal-title">Edit / Add New Location</h4>
 </div>
 <div class="modal-body">
-<form name="location_form" id="location_form" action="<?php echo base_url(); ?>location/add_location"  method="POST" class="form-horizontal" role="form" autocomplete="off">
+<form name="location_form" id="location_form" action="<?php echo base_url(); ?>location_booking/add_location"  method="POST" class="form-horizontal" role="form" autocomplete="off">
 <div class="col-sm-12 col-md-12">
     <p class="form_text1">Location</p>
 	<input type="text" name="location" id="location" placeholder="Egyptian Club in Oudmetha Road">

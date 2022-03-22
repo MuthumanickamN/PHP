@@ -234,7 +234,7 @@ Class Prepaid_credits_Model extends CI_Model {
 		$this->db->where('email',$search_value);
 		
 		$query = $this->db->get(); 
-		//echo $this->db->last_query();exit;
+		//echo $this->db->last_query();
 		
 		if ( $query->num_rows() > 0 )
 			{
