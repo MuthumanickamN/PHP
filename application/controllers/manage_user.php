@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class manage_user extends CI_Controller{
+class Manage_User extends CI_Controller{
     
     function __construct(){
         parent::__construct();
@@ -11,8 +11,8 @@ if(!$this->session->userdata('id')){
         }
 		 $this->load->library('form_validation');
 		 
-		 $this->load->model('manage_user_model');
-		 $this->load->model('sports_model');
+		 $this->load->model('Manage_user_model', 'manage_user_model');
+		 $this->load->model('Sports_Model', 'sports_model');
 		 
        
     }

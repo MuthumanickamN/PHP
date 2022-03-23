@@ -12,8 +12,8 @@ class Court extends CI_Controller{
         // Load database
 $this->load->library('image_lib');
 		 $this->load->library('form_validation');
-        $this->load->model('court_model');
-		$this->load->model('sports_model');
+        $this->load->model('Court_Model','court_model');
+		$this->load->model('Sports_Model','sports_model');
 		//$this->load->library('upload');
        
     }

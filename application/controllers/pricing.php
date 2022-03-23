@@ -13,8 +13,8 @@ class Pricing extends CI_Controller{
         $this->load->library('form_validation');
         
         // Load database
-	$this->load->model('pricing_model');
-        $this->load->model('court_model');
+	$this->load->model('Pricing_Model', 'pricing_model');
+        $this->load->model('Court_Model','court_model');
        
     }
 

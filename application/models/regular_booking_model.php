@@ -2,11 +2,12 @@
 /* Author: Rajkamal
 * Description: Full Stock Model class
 */
-Class Regular_Booking_Model extends CI_Model {
+Class Regular_booking_model extends CI_Model {
 
     public function add_booking_details($data) {
 
         $query = $this->db->insert('booking', $data);
+        //echo $this->db->last_query();die;
         if ($query) {
             return $this->db->insert_id();
             //return true;
@@ -106,12 +107,33 @@ Class Regular_Booking_Model extends CI_Model {
     } 
     
     public function check_timeslot_exist($cid, $fromtime, $totime, $day_id, $holiday_id){
-         
-            $this->db->select('pst.id, pr.holiday_id');
+
+            $sql="select pst.id, pr.holiday_id from 
+            pricingslot as pst
+            Left join pricing as pr on pr.id = pst.pid 
+            Where 1 ";
+
+            if($cid != ''){
+                $sql .="AND pr.cid='$cid' ";
+                
+            }
+            if($fromtime != ''){
+                $sql .="AND pst.fromtime <='$fromtime' ";
+            }
+            if($totime != ''){
+                $sql .="AND pst.totime >='$totime' ";
+            }
+
+            $sql .= "AND ( CASE WHEN pr.day_type='1' THEN pr.fromday <= '$day_id' AND pr.today >= '$day_id' WHEN pr.day_type='0' THEN pr.fromday = '$day_id' ELSE pr.holiday_id = '$holiday_id' END ) ";
+            
+            $sql .= "AND pr.delete_status !=1 ";
+            
+            /*$this->db->select('pst.id, pr.holiday_id');
             $this->db->from('pricingslot as pst');
             $this->db->join('pricing as pr', 'pr.id = pst.pid', 'left');
             if($cid != ''){
                 $this->db->where('pr.cid', $cid );
+
             }
             if($fromtime != ''){
                 $this->db->where('pst.fromtime <=', $fromtime);
@@ -121,11 +143,15 @@ Class Regular_Booking_Model extends CI_Model {
             }
 
             $where = "( CASE WHEN pr.day_type='1' THEN pr.fromday <= '$day_id' AND pr.today >= '$day_id' WHEN pr.day_type='0' THEN pr.fromday = '$day_id' ELSE pr.holiday_id = '$holiday_id' END )";
+           
             $this->db->where($where);
             $this->db->where('pr.delete_status !=', 1);
 //            echo $this->db->_compile_select();
 //            die();
             $query = $this->db->get();
+            echo $this->db->last_query();die;*/
+
+            $query = $this->db->query($sql);
             if ( $query->num_rows() > 0 )
             {
                 $row = $query->result_array();

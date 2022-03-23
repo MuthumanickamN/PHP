@@ -295,7 +295,7 @@ function customer_mobile_autocomplete(){
         source: function( request, response ) {
             $.ajax({
                 type: "POST",
-                url : base_url+"prepaid_credits/get_customer_email",
+                url : base_url+"prepaid_credits_booking/get_customer_email",
                 dataType: "json",
                 data: {
                     customer_email: request.term
@@ -328,7 +328,7 @@ function get_customerDetails(customer_email){
 	
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"prepaid_credits/get_customer_details",
+        url: base_url+"prepaid_credits_booking/get_customer_details",
 		data:{
 			email:customer_email
 			},
@@ -357,7 +357,7 @@ function get_customerWalletAmount(){
     var walletAmount;
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"prepaid_credits/get_customer_details",
+        url: base_url+"prepaid_credits_booking/get_customer_details",
 		data:{
 			email:email
 			},

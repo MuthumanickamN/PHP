@@ -10,8 +10,8 @@ class Booking_Approval extends CI_Controller{
             redirect('logout');
         }
 
-        $this->load->model('booking_approval_model');
-        $this->load->model('regular_booking_model');
+        $this->load->model('Booking_Approval_Model', 'booking_approval_model');
+        $this->load->model('Regular_booking_model','regular_booking_model');
     }
 
     public function index(){

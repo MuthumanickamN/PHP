@@ -10,7 +10,7 @@ if(!$this->session->userdata('id')){
             redirect('logout');
         }
 		
-		$this->load->model('reports_model');
+		$this->load->model('Reports_Model', 'reports_model');
        
     }
 

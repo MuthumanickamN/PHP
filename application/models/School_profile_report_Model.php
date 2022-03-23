@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-class School_profile_report_model extends CI_Model {
+class School_profile_report_Model extends CI_Model {
     private $_schoolID;
     private $_name;   
     private $_email;

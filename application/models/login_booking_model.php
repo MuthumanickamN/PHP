@@ -2,7 +2,7 @@
 /* Author: Rajkamal
 * Description: Login Model class
 */
-Class Login_Model extends CI_Model {
+Class login_booking_model extends CI_Model {
 
 	// Read data using username and password
 	public function login($data,$role) {

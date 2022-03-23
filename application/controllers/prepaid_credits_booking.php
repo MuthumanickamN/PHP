@@ -10,7 +10,7 @@ class Prepaid_credits_booking extends CI_Controller{
        if(!$this->session->userdata('id')){
             redirect('logout');
         }
-		$this->load->model('prepaid_credits_model');
+		$this->load->model('Prepaid_credits_Model', 'prepaid_credits_model');
     }
 
 	

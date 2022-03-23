@@ -2,7 +2,7 @@
 /* Author: Rajkamal
 * Description: Full Stock Model class
 */
-Class manage_user_model extends CI_Model {
+Class Manage_user_model extends CI_Model {
 
 	public function add_user_details($data) {
 		

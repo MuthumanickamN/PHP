@@ -2,7 +2,7 @@
 /* Author: Rajkamal
 * Description: Full Stock Model class
 */
-Class User_Model extends CI_Model {
+Class User_Booking_Model extends CI_Model {
 
 	public function add_user_details($data) {
 		
