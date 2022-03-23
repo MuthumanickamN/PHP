@@ -19,7 +19,7 @@ class Reset_Password extends CI_Controller{
             redirect('logout');
         } */
         // Load database
-        $this->load->model('user_model');
+        $this->load->model('User_Booking_Model', 'user_model');
     }
 
     public function index(){

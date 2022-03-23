@@ -107,6 +107,12 @@ define('SEND_TO_PARENT','NO');
 define('TERMS_CONDITION_ATTACHMENT',FCPATH.'/assets/TERMS & Conditions - Prime Star Sports Services.pdf');
 //define('CC_ADDRESS','');
 
+define("smpt_host",     "smtp.gmail.com");
+define("smpt_username",     "rrameshkannan8@gmail.com");
+define("smpt_password",     "9042625362");
+define("smpt_fromaddress",     "booking@primestaruae.com"); 
+define("smpt_fromname",     "Admin");
+
 /*
 define('EMAIL_HOST','smtp.office365.com');
 define('SMTPAUTH','true');

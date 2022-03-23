@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-Class location_booking_model extends CI_Model {
+Class Location_booking_model extends CI_Model {
 
 	public function add_location_details($data) {
 		

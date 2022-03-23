@@ -9,7 +9,7 @@ class Search extends CI_Controller{
            if(!$this->session->userdata('id')){
             redirect('logout');
            }
-       $this->load->model('search_model');
+       $this->load->model('Search_Model','search_model');
     }
 
 	

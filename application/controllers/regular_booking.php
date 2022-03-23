@@ -13,9 +13,9 @@ class Regular_booking extends CI_Controller{
         $this->load->library('form_validation');
         
         // Load database
-	$this->load->model('regular_booking_model');
-        $this->load->model('bulk_booking_model');
-        $this->load->model('pricing_model');
+	$this->load->model('Regular_booking_model', 'regular_booking_model');
+        $this->load->model('Bulk_Booking_Model','bulk_booking_model');
+        $this->load->model('Pricing_Model','pricing_model');
 
     }
     

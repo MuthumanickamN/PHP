@@ -11,7 +11,7 @@ class Profile extends CI_Controller{
 if(!$this->session->userdata('id')){
             redirect('logout');
         }
-        $this->load->model('user_model');
+        $this->load->model('User_Booking_Model', 'user_model');
     }
 
 	

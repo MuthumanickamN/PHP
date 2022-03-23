@@ -267,7 +267,7 @@ function add_day(date)
 	//get_transaction_list();
 	
 		$.ajax({
-			url:base_url+"reports/get_transaction_search_history",
+			url:base_url+"reports_booking/get_transaction_search_history",
 			type:'post',
 			async: false,
 			datatype:'html',
@@ -322,7 +322,7 @@ function add_day(date)
 			var	to_date = $('#datepicker3').val();
 
 			$.ajax({
-			url:base_url+"reports/get_booking_search_history",
+			url:base_url+"reports_booking/get_booking_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
@@ -374,7 +374,7 @@ function add_day(date)
 	var	to_date = $('#datepicker5').val();
 	
 		$.ajax({
-			url:base_url+"reports/get_cancellation_search_history",
+			url:base_url+"reports_booking/get_cancellation_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
@@ -422,7 +422,7 @@ function get_transaction_list(){
 	var	to_date = "";
    var user = "";
     $.ajax({
-			url:base_url+"reports/get_transaction_search_history",
+			url:base_url+"reports_booking/get_transaction_search_history",
 			type:'post',
 			async: false,
 			datatype:'html',
@@ -457,7 +457,7 @@ function get_booking_list(){
     var from_date = "";
 	var	to_date = "";
     $.ajax({
-			url:base_url+"reports/get_booking_search_history",
+			url:base_url+"reports_booking/get_booking_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
@@ -492,7 +492,7 @@ function get_cancellation_list(){
     var from_date = "";
 	var	to_date = "";
     $.ajax({
-			url:base_url+"reports/get_cancellation_search_history",
+			url:base_url+"reports_booking/get_cancellation_search_history",
 			type:'post',
 			datatype:'json',
 			data:{

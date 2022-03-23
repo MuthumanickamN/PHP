@@ -10,7 +10,7 @@ if(!$this->session->userdata('id')){
             redirect('logout');
         }
 		 $this->load->library('form_validation');
-		 $this->load->model('location_booking_model');
+		 $this->load->model('Location_booking_model','location_booking_model');
        
     }
 

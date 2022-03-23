@@ -10,7 +10,7 @@ if(!$this->session->userdata('id')){
             redirect('logout');
         }
 		$this->load->library('form_validation');
-		 $this->load->model('sports_model');
+		 $this->load->model('Sports_Model','sports_model');
        
     }
 

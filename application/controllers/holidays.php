@@ -12,7 +12,7 @@ class Holidays extends CI_Controller{
         }
 		
 		 $this->load->library('form_validation');
-		 $this->load->model('holidays_model');
+		 $this->load->model('Holidays_Model','holidays_model');
     }
 
 	
