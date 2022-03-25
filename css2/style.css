@@ -278,6 +278,7 @@ body.dd_authentication > div.ng-scope{
 }
 .header-navbar .navbar-header .navbar-brand .brand-text, .navbar-nav a.btn{
     color:#FFF;
+	font-weight: 600 !important;
 }
 .navbar-nav a.btn span{
     margin-right:7px;
@@ -287,9 +288,9 @@ body.dd_authentication > div.ng-scope{
 }
 .marquee-bg{
     background:rgba(0,0,0,0.05);
-    padding:5px;
+   /* padding:5px; */
     display:block;
-    border-bottom:1px solid rgba(0,0,0,0.1);
+    /* border-bottom:1px solid rgba(0,0,0,0.1); */
 }
 .dashboard .card-header, .card-header{
     padding:10px !important;
@@ -3062,4 +3063,7 @@ a.badge {color: #fff !important;}
 }
 .form-label{
     font-weight: bold;
+}
+nav.header-navbar.navbar-expand-md.navbar.navbar-with-menu.navbar-without-dd-arrow.navbar-static-top.navbar-light.navbar-brand-center {
+    margin-bottom: 0px !important;
 }
