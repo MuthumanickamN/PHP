@@ -9,6 +9,7 @@
 <!-- Main content -->
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets_booking/css/jquery-ui-1.10.3.custom.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets_booking/css2/style.css">
         <script src="<?php echo base_url(); ?>assets_booking/libraries/jquery-ui-1.10.3.custom.min.js"></script>
 		
 		 <script src="<?php echo base_url(); ?>assets_booking/js/search.js"></script>

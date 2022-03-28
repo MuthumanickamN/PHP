@@ -24,7 +24,11 @@ date_default_timezone_set('Asia/Dubai');
 |
 */
 //$config['base_url'] = 'http://208.109.13.169/';
+
 //$config['base_url'] = "http://sports.primestaruae.com/test/";
+
+//$config['base_url'] = 'http://sports.primestaruae.com/test/"
+
 $config['base_url'] = 'http://localhost/Primestar/';
 
 
