@@ -80,9 +80,9 @@
 		<thead>
 			<tr>
 				<th>Activity</th>
-                                <th>Date</th>
+                <th>Date</th>
 				<th>Time</th>
-                                <th>Location</th>
+                <th>Location</th>
 				<th>Court</th>
 				<th>Price</th>
 				<th>Remove</th>
@@ -90,7 +90,7 @@
 		</thead>
 		<tbody>			
 			<tr>
-                            <td colspan="7" class="total"><button type="button" title="Checkout" id="checkout" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-ok"></i> &nbsp; Checkout</button> Total : <span id="total_price"><strong></strong></span></td>
+                <td colspan="7" class="total"><button type="button" title="Checkout" id="checkout" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-ok"></i> &nbsp; Checkout</button> Total : <span id="total_price"><strong></strong></span></td>
 			</tr>
 		</tbody>
 	</table>
@@ -113,10 +113,15 @@
 	<p class="form_text1">Customer Mobile Number</p>
         <input type="text" name="customer_mobile" id="customer_mobile" value="" readonly>
 </div>
-<div class="col-sm-12 col-md-6">
+<div class="col-sm-12 col-md-3">
 	<p class="form_text1">Customer Wallet Amount</p>
 	<input type="text" name="customer_wallet_amount" id="customer_wallet_amount" value="" readonly>
 </div>
+<div class="col-sm-12 col-md-3"></br></br>
+    Booking For <input type="checkbox" name="booking_for" id="booking_for" value="" >
+</div>
+
+
 <div class="col-sm-12 col-md-12 pad_top_20">
 	<div class="table-responsive">
 		<table class="table table-bordered">

@@ -325,7 +325,7 @@ function customer_mobile_autocomplete(){
 
 function get_customerDetails(customer_email){
     //var mob_no = $("#customer_mobile").val();
-	
+	//alert(1);
     $.ajax({ 	
         type: "POST",   
         url: base_url+"prepaid_credits_booking/get_customer_details",
@@ -339,11 +339,11 @@ function get_customerDetails(customer_email){
         {
             //console.log(data);
             var obj = JSON.parse(data);
-            $('#customer_name').val(obj.name);
-            $('#customer_mobile').val(obj.mobile);
-            $('#cus_hid').val(obj.custid);
+            $('#customer_name').val(obj.parent_name);
+            $('#customer_mobile').val(obj.mobile_no);
+            $('#cus_hid').val(obj.parent_id);
             //var wallet_amount = parseInt(obj.amount);       
-            $('#customer_wallet_amount').val(obj.amount);
+            $('#customer_wallet_amount').val(obj.balance_credits);
 
         },
         fail: function( jqXHR, textStatus, errorThrown ) {
@@ -353,6 +353,7 @@ function get_customerDetails(customer_email){
 }
 
 function get_customerWalletAmount(){
+    //alert(2);
     var email = $("#customer_email").val();
     var walletAmount;
     $.ajax({ 	
@@ -367,7 +368,7 @@ function get_customerWalletAmount(){
         success : function(data)
         {
             var obj = JSON.parse(data);
-            walletAmount = obj.amount;
+            walletAmount = obj.balance_credits;
             console.log(walletAmount);
 
         },

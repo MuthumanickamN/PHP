@@ -616,8 +616,8 @@
                   <li data-menu="Manage Court"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'court' ?>"><span data-i18n="Manage Court">Manage Court</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
-                  <li data-menu="Manage Users"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Manage Users">Manage Users &raquo;</span></a>
+          <?php //if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') { ?>
+                  <!--<li data-menu="Manage Users"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Manage Users">Manage Users &raquo;</span></a>
                   <ul class="dropdown-submenu">
                     <li>
                       <a class="dropdown-item" href="<?php echo base_url() . 'manage_user' ?>">User</a>
@@ -626,8 +626,8 @@
                      <a class="dropdown-item" href="<?php echo base_url() . 'prepaid_credits_booking' ?>">Prepaid Credits</a>
                     </li>
           </ul>
-                </li>
-          <?php } ?>
+                </li>-->
+          <?php //} ?>
 
           <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
                   <li data-menu="Reports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports_booking' ?>"><span data-i18n="Reports">Reports</span></a></li>

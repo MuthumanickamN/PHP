@@ -200,23 +200,24 @@ Class Prepaid_credits_Model extends CI_Model {
 	}
 	
 	
-		public function get_customer_details($customer_email){
+		
+	public function get_customer_details($customer_email)
+	{
 		$this->db->select('*');
                 //$this->db->select("ct.*,wal.amount");
-		$this->db->from('customer as ct');
+		$this->db->from('parent as pt');
 		//$this->db->where('ct.mobile',$customer_mobile);
 		//$new_mobile = str_replace(' ','+',$customer_mobile);
 		
-        $this->db->where('ct.email',$customer_email);
+        $this->db->where('pt.email_id',$customer_email);
 		
 		
-		$this->db->join('wallet as wal', 'ct.id = wal.custid', 'left');
+		$this->db->join('prepaid_credits as pre', 'pt.parent_id = pre.parent_id', 'left');
 	
-		$this->db->order_by('ct.id','DESC');
+		$this->db->order_by('pt.parent_id','DESC');
 		
 		$query = $this->db->get();
-		
-
+  
 		if ( $query->num_rows() > 0 )
 		{
 		$row = $query->row_array();
@@ -225,7 +226,6 @@ Class Prepaid_credits_Model extends CI_Model {
 			return false;
 		}
 	}
-	
 	public function search_email_check($search_value){
 		
 		
