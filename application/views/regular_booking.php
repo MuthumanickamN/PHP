@@ -117,8 +117,9 @@
 	<p class="form_text1">Customer Wallet Amount</p>
 	<input type="text" name="customer_wallet_amount" id="customer_wallet_amount" value="" readonly>
 </div>
-<div class="col-sm-12 col-md-3"></br></br>
-    Booking For <input type="checkbox" name="booking_for" id="booking_for" value="" >
+<div class="col-sm-12 col-md-3">
+	<p class="form_text1">Booking For</p>
+	<input type="text" name="booking_for" id="Booking_for" value="" >
 </div>
 
 

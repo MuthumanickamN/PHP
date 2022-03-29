@@ -68,7 +68,9 @@ class Regular_booking extends CI_Controller{
             'balamt' => '0',
             'booked_by' => '0',
 			'blocked_status' => '1',
-			'reject_reason' => 'NULL'
+			'reject_reason' => 'NULL',
+            'booking_for' => $this->input->post('booking_for')
+            
         ); 
         $cus_wallet_amount = $this->input->post('customer_wallet_amount');
         
@@ -80,6 +82,7 @@ class Regular_booking extends CI_Controller{
         $hidden_lid = $this->input->post('hidden_lid', TRUE);
         $hidden_cid = $this->input->post('hidden_cid', TRUE);
         $hidden_cost = $this->input->post('hidden_cost', TRUE);
+        $booking_for = $this->input->post('booking_for', TRUE);
         $insert_booking_slot_details = array(
             'slot_ids' => $hidden_id,
             'fromdate' => $hidden_booking_date,
@@ -89,7 +92,8 @@ class Regular_booking extends CI_Controller{
             'sports_ids' => $hidden_sid,
             'location_ids' => $hidden_lid,
             'court_ids' => $hidden_cid,
-            'slot_price' => $hidden_cost
+            'slot_price' => $hidden_cost,
+            'booking_for' => $booking_for
         );
         $insert_id = $this->regular_booking_model->add_booking_details($insert_data);
 		
@@ -470,7 +474,13 @@ class Regular_booking extends CI_Controller{
            if($check_booked_slot){    
                if($check_booked_slot['btype'] == '1'){
                     $booked_by = ($check_booked_slot['booked_by'] == '0') ? 'btn-danger' : (($check_booked_slot['blocked_status'] == '0') ? 'btn-warning' : 'btn-danger' );
-                    $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    if($check_booked_slot['booking_for']=='')
+                    {
+                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    }else{
+                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+                    }
+                  
                }else{
                    $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn btn-info view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
                }

@@ -163,10 +163,10 @@ Class Regular_booking_model extends CI_Model {
     }
     
     public function check_bookedslot_exist($cid, $fromtime, $totime, $date,$day_id){
-        $this->db->select('bst.id, bst.bid, bk.btype, bk.booked_by, bk.blocked_status, cust.name as customer_name');
+        $this->db->select('bst.id, bst.bid, bk.btype, bk.booked_by, bk.blocked_status, bk.booking_for, par.parent_name as customer_name');
         $this->db->from('bookingslot as bst');
         $this->db->join('booking as bk', 'bk.id = bst.bid', 'left');
-        $this->db->join('customer as cust', 'cust.id = bk.customerid', 'left');
+        $this->db->join('parent as par', 'par.parent_id = bk.customerid', 'left');
         if($cid != ''){
             $this->db->where('bst.courtid', $cid );
         } 
