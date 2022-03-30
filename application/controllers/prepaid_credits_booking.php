@@ -41,7 +41,7 @@ class Prepaid_credits_booking extends CI_Controller{
 	
 	public function get_customer_details(){
 		
-        $customer_email = ($this->input->post('email') !='') ? $this->input->post('email') : '';
+        $customer_email = ($this->input->post('email_id') !='') ? $this->input->post('email_id') : '';
         $get_details = $this->prepaid_credits_model->get_customer_details($customer_email);
         echo json_encode($get_details);
     }

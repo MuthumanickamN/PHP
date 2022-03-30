@@ -392,6 +392,7 @@ class Bulk_booking extends CI_Controller{
         });
         $day_count = $this->countDaysByName($data['day_name'],$data['from_date'],$data['to_date']);
         $new_array_slot['slot_count'] = count($new_array_slot);
+        //$new_array_slot['slot_count'] = count((array)$new_array_slot);
         $new_array_slot['slot_price'] = $slot_price;
         $new_array_slot['day_count_display'] = ($day_count > 1 ) ? $day_count.'&nbsp;Days' : $day_count.'&nbsp;Day';
         $new_array_slot['day_count'] = $day_count; 

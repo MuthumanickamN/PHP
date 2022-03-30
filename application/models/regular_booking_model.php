@@ -275,9 +275,9 @@ Class Regular_booking_model extends CI_Model {
     
     public function get_customerDetails($id){
         
-        $this->db->select('cust.id,cust.email,cust.name,wal.amount');
-        $this->db->from('customer as cust');
-        $this->db->join('wallet as wal', 'wal.custid = cust.id', 'left');  
+        $this->db->select('pt.parent_id,pt.email_id,pt.parent_name,wal.amount');
+        $this->db->from('parent as pt');
+        $this->db->join('wallet as wal', 'wal.custid = pt.parent_id', 'left');  
         if($id != ''){
             $this->db->where('custid', $id );
         }
