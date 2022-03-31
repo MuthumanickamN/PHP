@@ -110,7 +110,7 @@ if(!$this->session->userdata('id')){
 	public function add_sports(){
 		
 	
-		$this->form_validation->set_rules('sports','sports','trim|required|xss_clean');
+		$this->form_validation->set_rules('sports','sports','trim|required');
 	
 		if ($this->form_validation->run() == FALSE) { 
 			redirect('sports');

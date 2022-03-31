@@ -57,7 +57,7 @@ class Holidays extends CI_Controller{
    public function add_holidays(){
 		
 	
-		$this->form_validation->set_rules('datepicker','datepicker','trim|required|xss_clean');
+		$this->form_validation->set_rules('datepicker','datepicker','trim|required');
 	
 		if ($this->form_validation->run() == FALSE) { 
 			redirect('holidays');

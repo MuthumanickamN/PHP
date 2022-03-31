@@ -43,7 +43,7 @@ if(!$this->session->userdata('id')){
         $data = array();
         $data['location_name'] = $this->input->post('location_name');
         $data['location_hidden_id'] = $this->input->post('location_hidden_id');
-        $get_details = $this->location_model->check_location_exist($data);	
+        $get_details = $this->location_booking_model->check_location_exist($data);	
         echo json_encode($get_details);
 		
     }
@@ -57,7 +57,7 @@ public function location_status_update(){
 					   );
 			
 		
-			    if($this->location_model->update_location_details($update_data, $loc_id))
+			    if($this->location_booking_model->update_location_details($update_data, $loc_id))
 				{	
 	
 					echo 'changed';
@@ -69,7 +69,7 @@ public function location_status_update(){
 	
 	public function get_location_details(){
         $data = array();
-        $get_details = $this->location_model->get_location_list();
+        $get_details = $this->location_booking_model->get_location_list();
         $output ='';
         if($get_details){
                 foreach($get_details as $key => $get_list)
@@ -103,7 +103,7 @@ public function location_status_update(){
 	public function add_location(){
 		
 	
-		$this->form_validation->set_rules('location','location','trim|required|xss_clean');
+		$this->form_validation->set_rules('location','location','trim|required');
 	
 		if ($this->form_validation->run() == FALSE) { 
 			redirect('location_booking');
@@ -121,7 +121,7 @@ public function location_status_update(){
 					);
 			
 		
-			if($this->location_model->add_location_details($update_data))
+			if($this->location_booking_model->add_location_details($update_data))
 				{	
 					$this->session->set_flashdata('success_message', 'Location added successfully!');
 					redirect('location_booking');
@@ -138,7 +138,7 @@ public function location_status_update(){
 		                'id' => $this->input->post('location_hidden_id'),
 		                'location' => trim($this->input->post('location'))
 					);
-			if($this->location_model->update_location_details($update_data, $id))
+			if($this->location_booking_model->update_location_details($update_data, $id))
 				{	
 					$this->session->set_flashdata('success_message', 'Location updated successfully!');
 					redirect('location_booking');
