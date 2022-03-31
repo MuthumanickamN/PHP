@@ -3035,6 +3035,10 @@ form .row{
 }
 .modal-header{
     padding: 10px 15px;
+	display:block !important;
+}
+.modal-header .close {
+    margin-top: -13px !important;
 }
 table.dataTable thead th, table.dataTable thead td {
     padding: 10px 12px !important;
