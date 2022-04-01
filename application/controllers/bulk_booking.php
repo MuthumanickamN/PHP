@@ -297,6 +297,7 @@ class Bulk_booking extends CI_Controller{
         $data['to_time'] = ($this->input->post('to_time') !='') ? date('H:i:s', strtotime($this->input->post('to_time')))  : '';
         
         $holiday_dates = $this->getDaysDate($data['day_name'],$data['from_date'],$data['to_date']);  
+		//print_r($holiday_dates);die;
         $get_slotprice_details = array();
         //$pricing_details = array();
         foreach($holiday_dates as $key => $holiday_date){
@@ -311,7 +312,8 @@ class Bulk_booking extends CI_Controller{
                 if($booked_details){                
                     $array = array('msg'=> '0', 'data' => $booked_details);
                 }else{
-                    $result = $this->get_price_timeslot($pricing_details, $data);                      
+                    $result = $this->get_price_timeslot($pricing_details, $data); 
+					print_r($result);die;
                     array_push($get_slotprice_details, $result);
                 }
             }
@@ -469,7 +471,7 @@ class Bulk_booking extends CI_Controller{
         $curdate=strtotime(date('Y-m-d'));
         //$mydate=strtotime($get_details['fromdate']);
         $getdate = $this->getDaysDate($get_details['days'],$get_details['fromdate'],$get_details['todate']);
-        
+        //print_r($getdate);die;
         $mydate = ($get_details['booking_type'] == '1') ? strtotime($get_details['fromdate']) : strtotime($getdate[0]) ;
 //        echo '<pre>';
 //        print_r($getdate);

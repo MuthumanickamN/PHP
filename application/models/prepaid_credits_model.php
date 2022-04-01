@@ -217,7 +217,7 @@ Class Prepaid_credits_Model extends CI_Model {
 		$this->db->order_by('pt.parent_id','DESC');
 		
 		$query = $this->db->get();
-  
+		//echo $this->db->last_query();die;
 		if ( $query->num_rows() > 0 )
 		{
 		$row = $query->row_array();

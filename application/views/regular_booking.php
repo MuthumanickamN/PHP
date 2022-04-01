@@ -29,8 +29,8 @@
 <a href="#" class="close" data-dismiss="alert">&times;</a>
 </div>
 <?php } ?>
-<form action="<?php echo $form_action; ?>" name="regular_booking" id="regular_booking" method="post">
-    <input type="hidden" name="hidden_slot_ids" id="hidden_slot_ids" value="">
+<form action="<?php echo $form_action; ?>" name="regular_booking" id="regular_booking" method="post" autocomplete="off">
+    <input type="hidden" name="hidden_slot_ids" id="hidden_slot_ids" value="" >
 <div class="col-sm-12 col-md-3">
 <p class="form_text1">Select Sport</p>
 <select name="sports" id="sports">

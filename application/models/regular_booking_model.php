@@ -61,9 +61,17 @@ Class Regular_booking_model extends CI_Model {
         if($data['lid'] != ''){
             $this->db->where('pr.lid', $data['lid'] );
         }
+        if($data['day'] != ''){
+            $day = $data['day'];
+            $where_a = "(pr.fromday = $day OR pr.today = $day OR (pr.fromday <= $day AND pr.today >= $day))";
+            //$this->db->where($where_a);
+        }
+
         $this->db->where('pr.delete_status !=', 1);
         $this->db->order_by('pr.id','ASC');
+        $this->db->limit(1);
         $query = $this->db->get();
+        //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )
         {
             $row = $query->result_array();
@@ -148,10 +156,11 @@ Class Regular_booking_model extends CI_Model {
             $this->db->where('pr.delete_status !=', 1);
 //            echo $this->db->_compile_select();
 //            die();
-            $query = $this->db->get();
-            echo $this->db->last_query();die;*/
+            $query = $this->db->get();*/
+            
 
             $query = $this->db->query($sql);
+            //echo $this->db->last_query();die;
             if ( $query->num_rows() > 0 )
             {
                 $row = $query->result_array();
@@ -248,6 +257,7 @@ Class Regular_booking_model extends CI_Model {
         $this->db->where('pr.delete_status !=', 1);
         $this->db->order_by('pr.id','DESC');
         $query = $this->db->get();
+        //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )
         {
             $row = $query->result_array();

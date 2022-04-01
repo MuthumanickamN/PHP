@@ -136,17 +136,22 @@ Class Bulk_Booking_Model extends CI_Model {
         }
         if($data['from_time'] != '' && $data['to_time'] != ''){
             //$where = " bst.booking_fromtime  > '".$data['from_time']."' AND bst.booking_fromtime  < '".$data['to_time']."' OR bst.booking_totime > '".$data['from_time']."' AND bst.booking_totime  < '".$data['to_time']."' ";
-            $where = " bst.booking_fromtime  < '".$data['to_time']."' AND bst.booking_totime > '".$data['from_time']."'  ";
-            $this->db->where('('.$where.')');        
+            //$where = " bst.booking_fromtime  < '".$data['to_time']."' AND bst.booking_totime > '".$data['from_time']."'  ";
+            //$this->db->where('('.$where.')');    
+			$this->db->where('bst.booking_fromtime <', $data['to_time']);
+			$this->db->where('bst.booking_totime >', $data['from_time']);
         }   
         if($data['from_date'] != '' && $data['to_date'] != ''){
           //  $where1 = "bst.fromdate  >= '".$data['from_date']."' AND bst.fromdate  <= '".$data['to_date']."' OR bst.todate >= '".$data['from_date']."' AND bst.todate  <= '".$data['to_date']."' ";
-            $where1 = "bst.fromdate  <= '".$data['to_date']."' AND bst.todate >= '".$data['from_date']."' ";
-            $this->db->where('('.$where1.')');       
+            //$where1 = "bst.fromdate  <= '".$data['to_date']."' AND bst.todate >= '".$data['from_date']."' ";
+            //$this->db->where('('.$where1.')'); 
+			$this->db->where('bst.fromdate  <=', $data['to_date']);
+			$this->db->where('bst.todate  >=', $data['from_date']);
         }     
         
         $this->db->where('bk.bstatus', 1);
         $query = $this->db->get();
+		//echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )
         {
             $row = $query->row_array();

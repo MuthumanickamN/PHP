@@ -395,13 +395,14 @@ class Regular_booking extends CI_Controller{
         {
         $distMatrix = array();
         $new_array = $this->array_group_by($get_details, 'courtname' );
+        //print_r($new_array);die;
         $time_slot_set = array();
         foreach($get_details as $key => $value) { // city_b headings
             $from_time = strtotime($value['from_time']);
             $to_time = strtotime($value['to_time']);
             $time_diff = $to_time - $from_time;
             $postive =  ($time_diff / 600) / 6 ;
-            //echo $postive;
+            //echo $postive;die;
             for($i = 1 ; $i <= $postive ; $i++ ){                
                 $timestamp = $from_time + ( 60*60) ;
                 $time = date('h:i A', $timestamp);
@@ -416,9 +417,10 @@ class Regular_booking extends CI_Controller{
                 
             }            
         }
+        //print_r($time_slot_set);die;
         sort($time_slot_set);
         $time_slot_set = array_map("unserialize", array_unique(array_map("serialize", $time_slot_set)));
-       
+        //print_r($time_slot_set);die;
         $new_output = '<tr>';
         $new_output .='<th>Time slot</th>';
         foreach($new_array as $key => $courtnames) { // city_b headings
