@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets_booking/css2/style.css">
 <section class="content-header">
 <h1>Manage Sports</h1>
 <ol class="breadcrumb">

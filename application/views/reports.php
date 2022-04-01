@@ -2,6 +2,7 @@
 ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo base_url(); ?>assets_booking/libraries/excel/excel.js"></script>
 <script src="<?php echo base_url(); ?>assets_booking/libraries/demo.js"></script>
 <script src="<?php echo base_url(); ?>assets_booking/js/reports.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets_booking/css2/style.css">
 <section class="content-header">
 <h1>Reports</h1>
 <ol class="breadcrumb">

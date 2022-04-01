@@ -1,4 +1,5 @@
 <script src="<?php echo base_url(); ?>assets_booking/js/pricing.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets_booking/css2/style.css">
 <?php
 $hidden_id = ($id !='') ? $id : ''; 
 $sports_id = ($id !='') ? $pricing_details['sid'] : '';
