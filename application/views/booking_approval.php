@@ -1,5 +1,7 @@
 
 <script src="<?php echo base_url(); ?>assets_booking/js/booking_approval.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets_booking/css2/style.css">
+
 
 <section class="content-header">
 <h1>Customer Booking Approval</h1>

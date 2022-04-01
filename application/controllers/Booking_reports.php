@@ -287,7 +287,7 @@ class Booking_reports extends CI_Controller {
 		$to_date1 = ($to_date != "") ? $this->change_date_format($to_date): "";
 		
 		
-		$query  = "select bok.booking_no,bok.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.paidamt,bok.discount_amount,spo.sportsname,loc.location,cus.user_name,cus.mobile,cus.email from booking as bok LEFT JOIN bookingslot as bs ON bs.bid=bok.id LEFT JOIN sports as spo ON spo.id = bs.sid LEFT JOIN location as loc ON loc.id = bs.lid  LEFT JOIN users as cus ON cus.user_id = bok.customerid";
+		$query  = "select bok.booking_no,bok.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.paidamt,bok.discount_amount,spo.sportsname,loc.location,cus.user_name,cus.mobile,cus.email from booking as bok LEFT JOIN bookingslot as bs ON bs.bid=bok.id LEFT JOIN sports as spo ON spo.id = bs.sid LEFT JOIN location_booking as loc ON loc.id = bs.lid  LEFT JOIN users as cus ON cus.user_id = bok.customerid";
 		
 		if($to_date1 !== "" && $from_date1 !== "")
 		{

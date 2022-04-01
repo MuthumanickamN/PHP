@@ -193,6 +193,9 @@
 
       $court_booking_menu_arr = [];
 			$court_booking_menu_perm = 0;
+
+      $parent_court_booking_menu_arr = [];
+			$parent_court_booking_menu_perm = 0;
 			
 			foreach($result_rp as $key => $value)
 			{
@@ -248,6 +251,15 @@
 					{
 						//show parent menu, if atlease one submenu having view_permission = 1
 						$court_booking_menu_perm = 1;
+					}
+				}
+        else if($value['main_menu_name'] == 'Parent Court Booking')
+				{
+					$parent_court_booking_menu_arr[$value['controller_name']] = $value['view_permission'];
+					if($value['view_permission'] == 1)
+					{
+						//show parent menu, if atlease one submenu having view_permission = 1
+						$parent_court_booking_menu_perm = 1;
 					}
 				}
 			}
@@ -645,11 +657,36 @@
           </ul>
                 </li>
           <?php } ?>
-
-
-    </ul>
+          </ul>
   </li>
 <?php } ?> 
+
+
+          <?php //echo "<pre>"; print_r($menu_model); die; ?>
+
+<?php if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
+  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Parent Court Booking</span></a>
+    <ul class="dropdown-menu">
+      
+        <?php if($role == 'superadmin' || $role == 'admin') {?>
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_slot' ?>"><span data-i18n="Booking">Booking</span></a></li> 
+<?php } ?>
+<?php if($role == 'superadmin') {?>
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_reports' ?>"><span data-i18n="Reports">Reports</span></a></li>
+<?php } ?>
+<?php if($role == 'superadmin' || $role == 'admin') {?>
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Recharge_history' ?>"><span data-i18n="Recharge History">Recharge History</span></a></li>
+<?php } ?>
+    
+
+
+     
+    </ul>
+  </li>
+<?php } ?>
+
+
+    
    
         
 
