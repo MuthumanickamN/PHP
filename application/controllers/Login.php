@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 	    parent::__construct();
 	    
       $this->load->model('Default_Model', 'default');
-      $this->load->model('main_model');  
+      $this->load->model('Main_model');  
     $this->load->model('MPermissions_Model');
     
 	}

@@ -1,5 +1,5 @@
 <?php 
-   class Email extends CI_Controller { 
+   class Email_controller extends CI_Controller { 
  
       function __construct() { 
          parent::__construct(); 

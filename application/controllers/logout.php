@@ -17,7 +17,7 @@ class Logout extends CI_Controller{
 		$this->load->library('form_validation');
 		
 		// Load database
-		$this->load->model('login_model');
+		$this->load->model('Login_Model');
     }
 
     public function index(){

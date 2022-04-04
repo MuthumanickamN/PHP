@@ -1,7 +1,7 @@
 <?php 
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-class role_delegation extends CI_Controller
+class Role_delegation extends CI_Controller
 {
 
     function __construct()

@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 
   
-class Fees_package_setup extends CI_Controller {  
+class Fees_package_setup_1 extends CI_Controller {  
 	
 	public function __construct()
 	{

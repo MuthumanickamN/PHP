@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 
   
-class refund_request_swap_slot extends CI_Controller {  
+class Refund_request_swap_slot extends CI_Controller {  
       
     
 	public function __construct()

@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 
   
-class registration_fees extends CI_Controller {  
+class Registration_fees extends CI_Controller {  
       
     
 	public function __construct()

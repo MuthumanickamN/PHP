@@ -4,23 +4,28 @@
 class Search_Model extends CI_Model{
 	
 	public function get_records($customer_email){
-		$this->db->select("email");
+		$this->db->select("email_id");
 		$this->db->distinct();
-		$this->db->from("customer");
-		$this->db->like('email',$customer_email);
+		$this->db->from("parent");
+		$this->db->like('email_id',$customer_email);
 		$this->db->get(); 
 		$query1 = $this->db->last_query();
+        //return $query1;
 
-		$this->db->select("booking_no as email");
+		$this->db->select("booking_no as email_id");
 		$this->db->distinct();
 		$this->db->from("booking");
 		$this->db->like("booking_no",$customer_email);
-
 		$this->db->get(); 
 		$query2 =  $this->db->last_query();
-		$query = $this->db->query($query1." UNION ".$query2);
-		 $this->db->get(); 
+		//return $query2;
 
+
+		$query = $this->db->query($query1." UNION ".$query2); 
+		//$query =("SELECT email_id from parent UNION SELECT booking_no as email_id from booking order by email_id,$customer_email");
+		$this->db->get();
+		//echo $this->db->last_query();die; 
+		//return $query;
 		
        if ( $query->num_rows() > 0 )
 		{

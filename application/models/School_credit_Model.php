@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-class School_credit_model extends CI_Model {
+class School_credit_Model extends CI_Model {
 		private $transaction_date;
 		private $transaction_type;
 		private $school_name;
