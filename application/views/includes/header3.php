@@ -588,11 +588,11 @@
 
         <?php //echo "<pre>"; print_r($menu_model); die; ?>
 
-<?php if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
+<?php if($role == 'superadmin' || $role == 'admin' ) { ?>
   <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Court Booking</span></a>
     <ul class="dropdown-menu">
       
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Schedule"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Schedule">Schedule &raquo;</span></a>
                    <ul class="dropdown-submenu">
                     <li>
@@ -611,20 +611,20 @@
           <?php } ?>
           
          
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
-                  <li data-menu="Customer Booking Approval"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'booking_approval' ?>"><span data-i18n="Customer Booking Approval">Customer Booking Approval</span></a></li>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+                  <li data-menu="Customer Booking Approval"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_Approval' ?>"><span data-i18n="Customer Booking Approval">Customer Booking Approval</span></a></li>
 
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Manage Sports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'sports' ?>"><span data-i18n="Manage Sports">Manage Sports</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Manage Location"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'location_booking' ?>"><span data-i18n="Manage Location">Manage Location</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Manage Court"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'court' ?>"><span data-i18n="Manage Court">Manage Court</span></a></li>
           <?php } ?>
 
@@ -641,11 +641,11 @@
                 </li>-->
           <?php //} ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Reports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports_booking' ?>"><span data-i18n="Reports">Reports</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') {?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Settings"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Settings">Settings &raquo;</span></a>
                   <ul class="dropdown-submenu">
                     <li>
@@ -664,7 +664,7 @@
 
           <?php //echo "<pre>"; print_r($menu_model); die; ?>
 
-<?php if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
+<?php /*if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
   <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Parent Court Booking</span></a>
     <ul class="dropdown-menu">
       
@@ -676,14 +676,14 @@
 <?php } ?>
 <?php if($role == 'superadmin' || $role == 'admin') {?>
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Recharge_history' ?>"><span data-i18n="Recharge History">Recharge History</span></a></li>
-<?php } ?>
+<?php }  ?>
     
 
 
      
     </ul>
   </li>
-<?php } ?>
+<?php }*/ ?>
 
 
     

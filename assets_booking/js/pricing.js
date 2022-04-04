@@ -19,6 +19,10 @@ jQuery(document).ready(function(){
     $("#court").change(function(){
         court_onchange();
     });
+	jQuery(document).on('click','.edit_court', function(e){
+        var id= $(this).attr('data-id');
+        window.location.href = base_url+"pricing/edit_pricing/"+id;
+    });
     
     jQuery(document).on('click','.delete_user', function(e){
         if(confirm('Are you sure!,Do you want to delete this pricing details?')) {

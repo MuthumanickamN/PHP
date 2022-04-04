@@ -51,7 +51,7 @@
 				<th>Discount</th>
 				<th>Net Amt</th>
 				<th>Paid</th>
-				<th>Balance</th>
+				<!--<th>Balance</th>-->
                                 <th>Cancel Booking</th>
 			</tr>
 		</thead>

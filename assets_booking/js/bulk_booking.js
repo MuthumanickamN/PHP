@@ -242,7 +242,7 @@ function show_bulkBooking_details(){
         $('.booking-cancel').click(function(e){
             var customer_id = $(this).attr('data-custid');
             var paid_amount =  $(this).attr('data-paidamount');
-            var booking_id =  $(this).attr('data-id');
+            var booking_id =  $(this).attr('data-bid');
             //alert(customer_id+','+paid_amount+','+booking_id);
             cancel_booking(customer_id,paid_amount,booking_id);
         });
@@ -379,11 +379,11 @@ function get_customerDetails(customer_email){
         {
             //console.log(data);
             var obj = JSON.parse(data);
-            $('#customer_name').val(obj.name);
-            $('#customer_mobile').val(obj.mobile);
-            $('#cus_hid').val(obj.custid);
+            $('#customer_name').val(obj.parent_name);
+            $('#customer_mobile').val(obj.mobile_no);
+            $('#cus_hid').val(obj.parent_id);
             //var wallet_amount = parseInt(obj.amount);       
-            $('#customer_wallet_amount').val(obj.amount);
+            $('#customer_wallet_amount').val(obj.balance_credits);
 
         },
         fail: function( jqXHR, textStatus, errorThrown ) {
@@ -407,7 +407,7 @@ function get_customerWalletAmount(){
         success : function(data)
         {
             var obj = JSON.parse(data);
-            walletAmount = obj.amount;
+            walletAmount = obj.balance_credits;
             console.log(walletAmount);
 
         },
@@ -478,6 +478,7 @@ function wallet_calc(){
                     alert('Insufficient wallet amount!');
                     $('input[name=pay_mode]').attr('checked', false);
                 }
+                amount_need_to_update = parseFloat(amount_need_to_update).toFixed(2);
                 $("#customer_wallet_amount").val(amount_need_to_update);
             }
         }
@@ -488,6 +489,7 @@ function wallet_calc(){
     }else{
         if($("#customer_wallet_amount").val()!=''){
             var amount_need_to_update = get_customerWalletAmount();
+            amount_need_to_update = parseFloat(amount_need_to_update).toFixed(2);
             $("#customer_wallet_amount").val(amount_need_to_update);
         }else{
             $("#customer_wallet_amount").val(''); 
@@ -571,7 +573,7 @@ function cancel_booking(customer_id,paid_amount,booking_id){
     if(confirm('Are you sure!,Do you want to cancel booking?')) {
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"regular_booking/cancel_booking",
+        url: base_url+"regular_booking/cancel_booking_bulk",
         data:"customer_id="+customer_id+"&booking_id="+booking_id+"&paid_amount="+paid_amount,		
         async: false,
         datatype: "html",

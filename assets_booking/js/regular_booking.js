@@ -13,7 +13,7 @@ jQuery(document).ready(function(){
     format: "dd-mm-yyyy", 
     autoclose: true,
     todayHighlight: true,
-    startDate: '-0d',
+    //startDate: '-0d',
     endDate: '+90d'
     }).on("changeDate", function (e) {
         $('.date-picker').valid();
@@ -533,8 +533,9 @@ function view_modal_popup(booked_slotid){
             $('.booking-cancel').click(function(e){
                 var customer_id = $("#customer_id").val();
                 var paid_amount =  $("#paid_amount").val();
-                var booking_id =  $("#booking_id").val();
-                cancel_booking(customer_id,paid_amount,booking_id);
+                var booking_id =  $("#booking_id").val();bookingslot_id
+                var bookingslot_id =  $("#bookingslot_id").val();
+                cancel_booking(customer_id,paid_amount,booking_id, bookingslot_id);
             });
             $('#sbt_btn').click(function(e){                 
                 $("form[name='update_booking_form']").submit();                
@@ -548,13 +549,13 @@ function view_modal_popup(booked_slotid){
     //$("#viewModal").html(output);
 }
 
-function cancel_booking(customer_id,paid_amount,booking_id){
+function cancel_booking(customer_id,paid_amount,booking_id, bookingslot_id){
     //alert('test1');
     if(confirm('Are you sure!,Do you want to cancel booking?')) {
     $.ajax({ 	
         type: "POST",   
         url: base_url+"regular_booking/cancel_booking",
-        data:"customer_id="+customer_id+"&booking_id="+booking_id+"&paid_amount="+paid_amount,		
+        data:"customer_id="+customer_id+"&booking_id="+booking_id+"&bookingslot_id="+bookingslot_id+"&paid_amount="+paid_amount,		
         async: false,
         datatype: "html",
         success : function(data)

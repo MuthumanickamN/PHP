@@ -19,9 +19,26 @@ Class Regular_booking_model extends CI_Model {
     public function update_booking_details($data, $id) {
         $this->db->where('id', $id);
         $query = $this->db->update('booking', $data);
-        $this->db->last_query();
+        //echo $this->db->last_query();die;
+        
+        return true;
+        
+    }
+
+    public function update_booking_details_slot($data, $id, $slot_id, $amount) {
+        $this->db->where('id', $slot_id);
+        $query = $this->db->update('bookingslot', $data);
+        //$this->db->last_query();
         $query = $this->db->affected_rows();		
         if ($query) {
+
+            $sql="select * from booking where id=$id";
+            $row = $this->db->query($sql)->row();
+            $new_amount = ($row->net_total) - $amount;
+            $new_paidamount = $new_amount - ($row->discount_amount);
+            $this->db->where('id',$id);
+            $this->db->update('booking', array('net_total'=>$new_amount, 'totamt'=> $new_paidamount,'paidamt'=> $new_paidamount ));
+
             return true;
         } else {
             return false;
@@ -31,6 +48,16 @@ Class Regular_booking_model extends CI_Model {
     public function add_bookingslot_details($data) {
 
         $query = $this->db->insert('bookingslot', $data);
+        if ($query) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function add_bookingslot_details_bulk($data) {
+
+        $query = $this->db->insert_batch('bookingslot', $data);
         if ($query) {
             return $this->db->insert_id();
         } else {
@@ -191,6 +218,7 @@ Class Regular_booking_model extends CI_Model {
             $this->db->where('bst.days', $day_id);
         }
         $this->db->where('bk.bstatus', 1);
+        $this->db->where('bst.cancelled !=', 1);
         $query = $this->db->get();
         if ( $query->num_rows() > 0 )
         {
@@ -256,6 +284,7 @@ Class Regular_booking_model extends CI_Model {
         }
         $this->db->where('pr.delete_status !=', 1);
         $this->db->order_by('pr.id','DESC');
+        $this->db->limit(1);
         $query = $this->db->get();
         //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )
