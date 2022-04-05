@@ -31,7 +31,7 @@ class Regular_booking extends CI_Controller{
         $data['username'] = $this->session->userdata('username');
         $data['sports_list'] = $this->regular_booking_model->get_sportslist();
         //$data['location_list'] = $this->pricing_model->get_locationlist();
-        $data['form_action'] = base_url().'regular_booking/add_booking_details'; 
+        $data['form_action'] = base_url().'Regular_booking/add_booking_details'; 
         $this->load->view('includes/header3');
        // $this->load->view('templates/header', $data);
         $this->load->view('regular_booking', $data);

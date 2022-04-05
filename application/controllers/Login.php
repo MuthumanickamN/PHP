@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 	    parent::__construct();
 	    
       $this->load->model('Default_Model', 'default');
-      $this->load->model('Main_model');  
+      $this->load->model('Main_model','main_model');  
     $this->load->model('MPermissions_Model');
     
 	}
@@ -37,7 +37,7 @@ function login_validation(){
                 $password = $this->input->post('password');  
                 //model function  
           
-                if($userdata = $this->Main_model->can_login($username, $password))  
+                if($userdata = $this->main_model->can_login($username, $password))  
                 { 
                      $menu_module = $this->MPermissions_Model->get_menu_by_module(strtolower($userdata[0]->role));
                      $session_data = array(  

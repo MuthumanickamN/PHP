@@ -19,7 +19,7 @@
                 $username = $this->input->post('username');  
                 $password = $this->input->post('password');  
                 //model function  
-                $this->load->model('Main_model');  
+                $this->load->model('Main_model','main_model');  
                 if($this->main_model->can_login($username, $password))  
                 {  
                      $session_data = array(  

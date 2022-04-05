@@ -8,7 +8,7 @@ class Booking_reports extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Booking_slot_model');
+		$this->load->model('Booking_slot_model','booking_slot_model');
 		//$this->load->model('Booking_reports_model');
 	}
 	public function index()
@@ -16,7 +16,7 @@ class Booking_reports extends CI_Controller {
 		//$this->load->view('includes/booking_header');
 		//$user_id = $_SESSION['id'];
 		$user_id = $this->session->userdata('id');
-		$data['getWalletAmount'] = $this->Booking_slot_model->getWalletAmount($user_id);
+		$data['getWalletAmount'] = $this->booking_slot_model->getWalletAmount($user_id);
 		$this->load->view('includes/header3',$data);
 		$this->load->view('booking_reports_view',$data);
 	}
