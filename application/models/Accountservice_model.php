@@ -7,15 +7,15 @@ class Accountservice_model extends CI_Model {
 		parent::__construct();
 	}
     public function gettype($selected='Income'){
-        $this->db->select('Name');
+        $this->db->select('*');
         $this->db->from('accounts_service');          
         $this->db->where('Type', $selected);  
         $query = $this->db->get();
        return $query->result_array();
     }
 
-
-   /* public function gettype($selected)
+/*
+    public function gettype($selected)
     {
       $where="";
         if($selected=='Expense')
@@ -25,8 +25,8 @@ class Accountservice_model extends CI_Model {
           }
          else if($selected=='Income')
           {
-            $Expense=$this->db->query("select  Name from accounts_service where Type='Income'".$where);
-            return $Expense->result_array();
+            $Income=$this->db->query("select  Name from accounts_service where Type='Income'".$where);
+            return $Income->result_array();
           }
     }*/
     

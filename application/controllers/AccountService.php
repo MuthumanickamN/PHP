@@ -47,14 +47,15 @@ class AccountService extends CI_Controller {
          $get_details = $this->Accountservice_model->gettype($selected);
          $html ="";
          $html .= '<option val="">SELECT</option>';
-         if($get_details){
+         if($get_details)
+		 {
 	          foreach($get_details as $key => $value){
 		       $Id = $value['Id'];
 		       $Name = $value['Name'];
 		   
 		       $html .= "<option value='".$Id."'>".$Name."</option>";
 		
-	    }
+	     }
 	}
 
     echo $html;

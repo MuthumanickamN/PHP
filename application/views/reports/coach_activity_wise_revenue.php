@@ -212,7 +212,7 @@ function get_coach_report(fromdateval='', todateval='' ,revenue){
                               {
                                   "name": "",
                                   "decimalPlaces": 0,
-                                  "currencySymbol": "$",
+                                  "currencySymbol": "AED ",
                                   "thousandsSeparator":","
                               }
                           ]

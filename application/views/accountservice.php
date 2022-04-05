@@ -12,9 +12,8 @@
 
 <script>
   jQuery(document).ready(function(){
-    $('input[type="radio"][name="service"]').change(function() {
+    $('input[type="radio"][name="service"]').on('change',function() {
       var selected = $(this).val(); 
-     // alert("Radio button " + selected + " is selected");
       $.ajax({
         type: "POST",
         url: "<?php echo base_url();?>"+"AccountService/service_list",
@@ -22,12 +21,30 @@
         datatype: "html",
         success : function(result)
         {
-          $('#Id').html(result);
+          $('#service').html(result);
         }
       });
 
     });
 });
+
+$(document).ready(function() {
+    $("input[name='vat']").change(function() {
+      //  var test = $(this).val();
+        if(this.value == 'yes')
+        {
+          $("div.vat").show();
+        }
+        else if(this.value == 'no')
+        {
+        $("div.vat").hide();
+        }
+    });
+});
+
+
+
+
 function allnumeric(inputtxt){
   var numbers = /^[0-9]+$/;
   var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -150,9 +167,9 @@ $.ajax({
               </div>                            
         <div class="col-md-3 control">
         
-          <input id="type" type="radio" value="Expense" name="type"   <?php if(isset($type) && $type==Expense){ echo 'checked';} else { 'checked'; } ?>checked required />
+          <input id="type" type="radio" value="Expenses" name="service"   <?php if(isset($type) && $type==Expense){ echo 'checked';} else { 'checked'; } ?>checked required />
           <label style="margin-left: 10px; margin-right: 10px">Expense</label>
-           <input id="type" type="radio" value="Income" name="type" 
+           <input id="type" type="radio" value="Income" name="service" 
            <?php if(isset($type) && $type==Income){ echo 'checked';} ?> />
           <label style="margin-left: 10px; margin-right: 10px">Income</label>
 
@@ -211,30 +228,31 @@ $.ajax({
      </div>
   
   
-    
-     <div class="form-group lg-btm">
+     <div class="vat">
+        <div class="form-group lg-btm">
+              <div class="row">
+                        <div class="col-md-3 control">
+                          <strong>VAT Percentage(%)</strong>*
+                        </div>                            
+                        <div class="col-md-3 control text-right">
+                          <input type="text" id="vat_percentage" name="vat_percentage" required="" value="<?php echo isset($vat_perc)?    $vat_perc:'0'; ?>" class="form-control" readonly="">
+                          <span class="errorMsg"></span>
+                        </div>
+              </div>
+         </div>
+      
+        <div class="form-group lg-btm">
           <div class="row">
-        <div class="col-md-3 control">
-                <strong>VAT Percentage(%)</strong>*
-              </div>                            
-        <div class="col-md-3 control text-right">
-          <input type="text" id="vat_percentage" name="vat_percentage" required="" value="<?php echo isset($vat_perc)?$vat_perc:'0'; ?>" class="form-control" readonly="">
-          <span class="errorMsg"></span>
+                <div class="col-md-3 control">
+                <strong>Vat Value</strong>*
+                </div>                            
+              <div class="col-md-3">
+              <input type="text" id="vat_value" name="vat_value" required="" value="" readonly=""  class="form-control">
+              <span class="errorMsg"></span>        
+              </div>
+          </div>
         </div>
     </div>
-     </div>
-    
-    <div class="form-group lg-btm">
-        <div class="row">
-        <div class="col-md-3 control">
-        <strong>Vat Value</strong>*
-</div>                            
-<div class="col-md-3">
-<input type="text" id="vat_value" name="vat_value" required="" value="" readonly=""  class="form-control">
-<span class="errorMsg"></span>        
-</div>
-    </div>
- </div>
     
      <div class="form-group lg-btm">
          <div class="row">
