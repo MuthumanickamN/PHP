@@ -19,9 +19,26 @@ Class Regular_booking_model extends CI_Model {
     public function update_booking_details($data, $id) {
         $this->db->where('id', $id);
         $query = $this->db->update('booking', $data);
-        $this->db->last_query();
+        //echo $this->db->last_query();die;
+        
+        return true;
+        
+    }
+
+    public function update_booking_details_slot($data, $id, $slot_id, $amount) {
+        $this->db->where('id', $slot_id);
+        $query = $this->db->update('bookingslot', $data);
+        //$this->db->last_query();
         $query = $this->db->affected_rows();		
         if ($query) {
+
+            $sql="select * from booking where id=$id";
+            $row = $this->db->query($sql)->row();
+            $new_amount = ($row->net_total) - $amount;
+            $new_paidamount = $new_amount - ($row->discount_amount);
+            $this->db->where('id',$id);
+            $this->db->update('booking', array('net_total'=>$new_amount, 'totamt'=> $new_paidamount,'paidamt'=> $new_paidamount ));
+
             return true;
         } else {
             return false;
@@ -31,6 +48,16 @@ Class Regular_booking_model extends CI_Model {
     public function add_bookingslot_details($data) {
 
         $query = $this->db->insert('bookingslot', $data);
+        if ($query) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function add_bookingslot_details_bulk($data) {
+
+        $query = $this->db->insert_batch('bookingslot', $data);
         if ($query) {
             return $this->db->insert_id();
         } else {
@@ -61,9 +88,17 @@ Class Regular_booking_model extends CI_Model {
         if($data['lid'] != ''){
             $this->db->where('pr.lid', $data['lid'] );
         }
+        if($data['day'] != ''){
+            $day = $data['day'];
+            $where_a = "(pr.fromday = $day OR pr.today = $day OR (pr.fromday <= $day AND pr.today >= $day))";
+            //$this->db->where($where_a);
+        }
+
         $this->db->where('pr.delete_status !=', 1);
         $this->db->order_by('pr.id','ASC');
+        $this->db->limit(1);
         $query = $this->db->get();
+        //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )
         {
             $row = $query->result_array();
@@ -148,10 +183,11 @@ Class Regular_booking_model extends CI_Model {
             $this->db->where('pr.delete_status !=', 1);
 //            echo $this->db->_compile_select();
 //            die();
-            $query = $this->db->get();
-            echo $this->db->last_query();die;*/
+            $query = $this->db->get();*/
+            
 
             $query = $this->db->query($sql);
+            //echo $this->db->last_query();die;
             if ( $query->num_rows() > 0 )
             {
                 $row = $query->result_array();
@@ -163,10 +199,10 @@ Class Regular_booking_model extends CI_Model {
     }
     
     public function check_bookedslot_exist($cid, $fromtime, $totime, $date,$day_id){
-        $this->db->select('bst.id, bst.bid, bk.btype, bk.booked_by, bk.blocked_status, cust.name as customer_name');
+        $this->db->select('bst.id, bst.bid, bk.btype, bk.booked_by, bk.blocked_status, bk.booking_for, par.parent_name as customer_name');
         $this->db->from('bookingslot as bst');
         $this->db->join('booking as bk', 'bk.id = bst.bid', 'left');
-        $this->db->join('customer as cust', 'cust.id = bk.customerid', 'left');
+        $this->db->join('parent as par', 'par.parent_id = bk.customerid', 'left');
         if($cid != ''){
             $this->db->where('bst.courtid', $cid );
         } 
@@ -182,6 +218,7 @@ Class Regular_booking_model extends CI_Model {
             $this->db->where('bst.days', $day_id);
         }
         $this->db->where('bk.bstatus', 1);
+        $this->db->where('bst.cancelled !=', 1);
         $query = $this->db->get();
         if ( $query->num_rows() > 0 )
         {
@@ -247,7 +284,9 @@ Class Regular_booking_model extends CI_Model {
         }
         $this->db->where('pr.delete_status !=', 1);
         $this->db->order_by('pr.id','DESC');
+        $this->db->limit(1);
         $query = $this->db->get();
+        //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )
         {
             $row = $query->result_array();
@@ -275,9 +314,9 @@ Class Regular_booking_model extends CI_Model {
     
     public function get_customerDetails($id){
         
-        $this->db->select('cust.id,cust.email,cust.name,wal.amount');
-        $this->db->from('customer as cust');
-        $this->db->join('wallet as wal', 'wal.custid = cust.id', 'left');  
+        $this->db->select('pt.parent_id,pt.email_id,pt.parent_name,wal.amount');
+        $this->db->from('parent as pt');
+        $this->db->join('wallet as wal', 'wal.custid = pt.parent_id', 'left');  
         if($id != ''){
             $this->db->where('custid', $id );
         }

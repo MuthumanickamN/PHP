@@ -27,10 +27,10 @@ Class Booking_Approval_Model extends CI_Model {
     }
 
     public function get_customerbookinglist($id=''){
-        $this->db->select('bk.id as booking_id, bk.customerid, bk.booking_no, bk.totamt as total_amount, wall.amount as wallet_amount, cust.name as customer_name, cust.mobile as customer_mobile, cust.email as customer_email');
+        $this->db->select('bk.id as booking_id, bk.customerid, bk.booking_no, bk.totamt as total_amount, wall.balance_credits as wallet_amount, cust.parent_name as customer_name, cust.mobile_no as customer_mobile, cust.email_id as customer_email');
         $this->db->from('booking as bk');
-        $this->db->join('customer as cust', 'cust.id = bk.customerid', 'left');
-        $this->db->join('wallet as wall', 'wall.custid = bk.customerid', 'left');
+        $this->db->join('parent as cust', 'cust.parent_id = bk.customerid', 'left');
+        $this->db->join('prepaid_credits as wall', 'wall.parent_id = bk.customerid', 'left');
         //$this->db->join('location as loc', 'loc.id = bk.lid', 'left');         
         $this->db->where('bk.booked_by !=', '0');
         $this->db->where('bk.bstatus', '1');

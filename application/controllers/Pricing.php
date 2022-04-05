@@ -248,7 +248,9 @@ class Pricing extends CI_Controller{
                     }else{
                         $output .= "<td>". $this->get_holidayDate($get_list['holiday_id'])."</td>";
                     }
-                    $output .= "<td><a href='".base_url()."pricing/edit_pricing/".$get_list['id']."' data-toggle='modal' class='btn btn-warning btn-xs edit_court'><i class='fa fa-pencil-square-o' aria-hidden='true' title='Edit'></i></a></td>";
+                    //$output .= "<td><a href='".base_url()."pricing/edit_pricing/".$get_list['id']."' data-toggle='modal' class='btn btn-warning btn-xs edit_court'><i class='fa fa-pencil-square-o' aria-hidden='true' title='Edit'></i></a></td>";
+					$output .= "<td><a data-id='".$get_list['id']."' data-toggle='modal' class='btn btn-warning btn-xs edit_court'><i class='fa fa-pencil-square-o' aria-hidden='true' title='Edit'></i></a></td>";
+                    
                     $output .= "<td><a href='javascript:void(0)' class='delete_user' data-id='".$get_list['id']."'><i class='glyphicon glyphicon-trash' aria-hidden='true'  title='Delete Court'></i></a></td>";
                     $output .= "</tr>";
                 }

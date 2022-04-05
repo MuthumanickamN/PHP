@@ -16,6 +16,10 @@ class Regular_booking extends CI_Controller{
 	$this->load->model('Regular_booking_model', 'regular_booking_model');
         $this->load->model('Bulk_Booking_Model','bulk_booking_model');
         $this->load->model('Pricing_Model','pricing_model');
+        $this->load->model('Default_Model', 'default');
+        $this->load->model('School_profile_report_Model', 'school');
+        $this->load->model('Daily_Transaction_Model', 'transaction');
+        $this->load->model('Invoice_Model', 'invoice_model');
 
     }
     
@@ -68,7 +72,9 @@ class Regular_booking extends CI_Controller{
             'balamt' => '0',
             'booked_by' => '0',
 			'blocked_status' => '1',
-			'reject_reason' => 'NULL'
+			'reject_reason' => 'NULL',
+            'booking_for' => $this->input->post('booking_for')
+            
         ); 
         $cus_wallet_amount = $this->input->post('customer_wallet_amount');
         
@@ -80,6 +86,7 @@ class Regular_booking extends CI_Controller{
         $hidden_lid = $this->input->post('hidden_lid', TRUE);
         $hidden_cid = $this->input->post('hidden_cid', TRUE);
         $hidden_cost = $this->input->post('hidden_cost', TRUE);
+        $booking_for = $this->input->post('booking_for', TRUE);
         $insert_booking_slot_details = array(
             'slot_ids' => $hidden_id,
             'fromdate' => $hidden_booking_date,
@@ -89,18 +96,19 @@ class Regular_booking extends CI_Controller{
             'sports_ids' => $hidden_sid,
             'location_ids' => $hidden_lid,
             'court_ids' => $hidden_cid,
-            'slot_price' => $hidden_cost
+            'slot_price' => $hidden_cost,
+            'booking_for' => $booking_for
         );
         $insert_id = $this->regular_booking_model->add_booking_details($insert_data);
 		
         if($insert_id !='')
         {
             if($pay_mode == '1'){
-               $this->update_wallet_amount($cus_wallet_amount,$this->input->post('cus_hid'));
+                $this->update_wallet_amount($insert_data['paidamt'], $insert_data['discount_amount'], $insert_data['customerid'], $insert_id, 'court_booking_regular');
             }
             $this->add_booking_slot($insert_booking_slot_details,$insert_id);
             $booking_status = '1';
-            $this->send_email($insert_id,$this->input->post('cus_hid'),$booking_status);
+            //$this->send_email($insert_id,$this->input->post('cus_hid'),$booking_status);
             $this->load->helper('cookie');    
             $past = time() - 3600;
             foreach ( $_COOKIE as $key => $value )
@@ -351,14 +359,568 @@ class Regular_booking extends CI_Controller{
         return $value;
     }
     
-    private function update_wallet_amount($amount, $id){
-        $update_data = array(
+    private function update_wallet_amount($amount, $discount=0, $id, $booking_id, $from){
+        /*$update_data = array(
             'amount' => $amount
         );
-        $this->regular_booking_model->update_wallet_amount($update_data,$id);
+        $this->regular_booking_model->update_wallet_amount($update_data,$id);*/
+
+        if ($from=="court_booking_regular"){
+            $vat_val1 =  sprintf("%2f",($amount*5)/100);
+            $vat_val1 = 0.00;
+            $tot_amount = $amount + $vat_val1-$discount;
+
+            $creditsDetails1 = $this->db->query('select * from prepaid_credits where parent_id='.$id);
+            $creditsDetailsData1 = $creditsDetails1->row_array();
+            $wallet_amount = $creditsDetailsData1['balance_credits'];
+            
+            $balance_credits = sprintf("%2f",$wallet_amount - $tot_amount);
+
+            $update2=array(
+                'balance_credits' => $balance_credits,
+                'total_credits' => $balance_credits,
+            );
+            
+            $this->db->where('parent_id',$id);
+            $this->db->update('prepaid_credits', $update2);
+            
+            $txn_id = $this->school->getLastEntry('wallet_transactions');
+            $wallet_transaction_id = 'WTXNO-'.$txn_id;
+
+            $inv_id = $this->default->getInvoiceId('wallet_transactions');
+            $invoice_id = 'PS'.date('Y').'-'.$inv_id;
+            $sqlp="SELECT p.parent_code, p.parent_name, p.mobile_no,p.email_id FROM `parent` p 
+            where p.parent_id=$id";
+            $resultp = $this->db->query($sqlp)->row_array();
+            
+                
+            $walletArray = array(
+                'wallet_transaction_id' =>$wallet_transaction_id,
+                'ac_code' => 'SBWT',
+                'discount_percentage' => 0.00,
+                'discount_value' => $discount,
+                'wallet_transaction_date' =>date('Y-m-d'),
+                'wallet_transaction_type' =>'Debit',
+                'wallet_transaction_detail' => 'Court Booking Fees',
+                'updated_admin_id' => $id,
+                'reg_id' => NULL,
+                'wallet_transaction_amount' => $tot_amount,
+                'gross_amount' => $amount,
+                'vat_percentage' => 5,
+                'vat_value' => $vat_val1,
+                'net_amount' => $tot_amount,
+                'debit' => $tot_amount,
+                'invoice' => 'yes',
+                'invoice_id' =>$invoice_id,
+                'slot_booking'=>$booking_id,
+                'student_id'=> NULL,
+                'parent_id'=> $id,
+                'parent_name'=> $resultp['parent_name'],
+                'parent_mobile'=> $resultp['mobile_no'],
+                'parent_email_id'=> $resultp['email_id'],
+                'description'=> 'Court Booking Fees',
+                'created_at' => date('Y-m-d H:i:s'),
+                'module' => 'Court Booking'
+            );
+            
+
+            if($discount)
+            {
+                $walletArray['wallet_transaction_detail']= 'Court Booking Fees Discount';
+                $walletArray['description']= 'Court Booking Fees Discount';
+            }
+
+            
+            $checkexists = $this->db->query('select id from wallet_transactions where slot_booking ="'.$booking_id.'" and  ac_code ="SBWT" and wallet_transaction_type = "Debit" and module="Court Booking" ');
+            $checkexistsArr = $checkexists->row_array();
+            if (empty($checkexistsArr)){
+            $this->db->insert('wallet_transactions', $walletArray); 
+            $wallet_transaction_id = $this->db->insert_id();
+            }else{
+            $this->db->where('id', $checkexistsArr['id']);
+            $this->db->update('wallet_transactions', $walletArray); 
+            $wallet_transaction_id = $checkexistsArr['id'];
+            }
+
+            //Invoice 
+            $this->send_email_booked_direct($booking_id, $walletArray,  $resultp['parent_code'], $wallet_amount, $balance_credits);
+            $this->invoice_model->send_email_invoice($wallet_transaction_id, "CourtBooking");
+        }
+        elseif ($from=="court_booking_regular_cancellation"){
+            $vat_val1 =  sprintf("%2f",($amount*5)/100);
+            $vat_val1 = 0.00;
+            $tot_amount = $amount + $vat_val1-$discount;
+
+            $creditsDetails1 = $this->db->query('select * from prepaid_credits where parent_id='.$id);
+            $creditsDetailsData1 = $creditsDetails1->row_array();
+            $wallet_amount = $creditsDetailsData1['balance_credits'];
+            
+            $balance_credits = sprintf("%2f",$wallet_amount + $tot_amount);
+
+            $update2=array(
+                'balance_credits' => $balance_credits,
+                'total_credits' => $balance_credits,
+            );
+            
+            $this->db->where('parent_id',$id);
+            $this->db->update('prepaid_credits', $update2);
+            
+            $txn_id = $this->school->getLastEntry('wallet_transactions');
+            $wallet_transaction_id = 'WTXNO-'.$txn_id;
+
+            
+            $sqlp="SELECT p.parent_code, p.parent_name, p.mobile_no,p.email_id FROM `parent` p 
+            where p.parent_id=$id";
+            $resultp = $this->db->query($sqlp)->row_array();
+            
+                
+            $walletArray = array(
+                'wallet_transaction_id' =>$wallet_transaction_id,
+                'ac_code' => 'REFWTR',
+                'discount_percentage' => 0.00,
+                'discount_value' => $discount,
+                'wallet_transaction_date' =>date('Y-m-d'),
+                'wallet_transaction_type' =>'Credit',
+                'wallet_transaction_detail' => 'Court Booking Fees - Cancellation',
+                'updated_admin_id' => $id,
+                'reg_id' => NULL,
+                'wallet_transaction_amount' => $tot_amount,
+                'gross_amount' => $amount,
+                'vat_percentage' => 5,
+                'vat_value' => $vat_val1,
+                'net_amount' => $tot_amount,
+                'debit' => $tot_amount,
+                'invoice' => '',
+                'invoice_id' =>'',
+                'slot_booking'=>$booking_id,
+                'student_id'=> NULL,
+                'parent_id'=> $id,
+                'parent_name'=> $resultp['parent_name'],
+                'parent_mobile'=> $resultp['mobile_no'],
+                'parent_email_id'=> $resultp['email_id'],
+                'description'=> 'Court Booking Fees',
+                'created_at' => date('Y-m-d H:i:s'),
+                'module' => 'Court Booking - Cancellation'
+            );
+            
+
+            if($discount)
+            {
+                $walletArray['wallet_transaction_detail']= 'Court Booking Fees Discount Cancellation';
+                $walletArray['description']= 'Court Booking Fees Discount Cancellation';
+            }
+
+            
+            
+            $this->db->insert('wallet_transactions', $walletArray); 
+            $wallet_transaction_id = $this->db->insert_id();
+            
+
+            //Invoice 
+            $this->send_email_booked_direct_cancelled($booking_id, $walletArray,  $resultp['parent_code'], $wallet_amount, $balance_credits);
+            
+        }
+        elseif ($from=="court_booking_regular_cancellation_bulk"){
+            //echo 'inside';die;
+            $vat_val1 =  sprintf("%2f",($amount*5)/100);
+            $vat_val1 = 0.00;
+            $tot_amount = $amount + $vat_val1-$discount;
+
+            $creditsDetails1 = $this->db->query('select * from prepaid_credits where parent_id='.$id);
+            $creditsDetailsData1 = $creditsDetails1->row_array();
+            $wallet_amount = $creditsDetailsData1['balance_credits'];
+            
+            $balance_credits = sprintf("%2f",$wallet_amount + $tot_amount);
+
+            $update2=array(
+                'balance_credits' => $balance_credits,
+                'total_credits' => $balance_credits,
+            );
+            
+            $this->db->where('parent_id',$id);
+            $this->db->update('prepaid_credits', $update2);
+            
+            $txn_id = $this->school->getLastEntry('wallet_transactions');
+            $wallet_transaction_id = 'WTXNO-'.$txn_id;
+
+            
+            $sqlp="SELECT p.parent_code, p.parent_name, p.mobile_no,p.email_id FROM `parent` p 
+            where p.parent_id=$id";
+            $resultp = $this->db->query($sqlp)->row_array();
+            
+                
+            $walletArray = array(
+                'wallet_transaction_id' =>$wallet_transaction_id,
+                'ac_code' => 'REFWTR',
+                'discount_percentage' => 0.00,
+                'discount_value' => $discount,
+                'wallet_transaction_date' =>date('Y-m-d'),
+                'wallet_transaction_type' =>'Credit',
+                'wallet_transaction_detail' => 'Court Booking Fees - Cancellation Bulk',
+                'updated_admin_id' => $id,
+                'reg_id' => NULL,
+                'wallet_transaction_amount' => $tot_amount,
+                'gross_amount' => $amount,
+                'vat_percentage' => 5,
+                'vat_value' => $vat_val1,
+                'net_amount' => $tot_amount,
+                'debit' => $tot_amount,
+                'invoice' => '',
+                'invoice_id' =>'',
+                'slot_booking'=>$booking_id,
+                'student_id'=> NULL,
+                'parent_id'=> $id,
+                'parent_name'=> $resultp['parent_name'],
+                'parent_mobile'=> $resultp['mobile_no'],
+                'parent_email_id'=> $resultp['email_id'],
+                'description'=> 'Court Booking Fees',
+                'created_at' => date('Y-m-d H:i:s'),
+                'module' => 'Court Booking - Cancellation Bulk'
+            );
+            
+            //print_r($walletArray);die;
+            if($discount)
+            {
+                $walletArray['wallet_transaction_detail']= 'Court Booking Fees Discount Cancellation Bulk';
+                $walletArray['description']= 'Court Booking Fees Discount Cancellation Bulk';
+            }
+
+            
+            
+            $this->db->insert('wallet_transactions', $walletArray); 
+            $wallet_transaction_id = $this->db->insert_id();
+            
+
+            $this->send_email_booked_direct_cancelled($booking_id, $walletArray,  $resultp['parent_code'], $wallet_amount, $balance_credits);
+            
+        }
+
     }
     
+    public function send_email_booked_direct_cancelled($booking_id,$wallet_data_array, $parent_code, $wallet_amount, $balance_credits)
+	{
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('Phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+        $mail->AddCC(CC_ADDRESS);
+		$mail->addAttachment(TERMS_CONDITION_ATTACHMENT);
+		if(SEND_TO_PARENT != 'NO'){
+		    $mail->addAddress($wallet_data_array['parent_email_id']);
+		}
+		else
+		{
+		    $mail->addAddress(DEFAULT_MAIL);
+		}
+		
+		
+		
+		
+		$mail->isHTML(true);
+
+		$mail->Subject = "Prime Star Sports Services - Court Booking Cancelled.";
+		
+		$body = '';
+		$body .= "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <div class='main' style='font-family: sans-serif;'>
+        <p>Dear <b>".$wallet_data_array['parent_name'].",</b></p>
+        <p>We are pleased to inform you that your Court booking is cancelled successfully.</p>
+        <table>
+            <tr>
+                <th>BKId</th>
+                <th>Booking Date</th>
+                <th>Activity</th>
+                <th>Location</th>
+                <th>Time</th>
+                <th>Court</th>
+                
+            </tr>";
+            $sql ="select b.booking_no,bs.fromdate  as booked_date, s.sportsname as game,l.location,c.courtname,bs.booking_fromtime as from_time,bs.booking_totime as to_time
+            from booking b 
+            left join bookingslot bs on bs.bid=b.id
+           left join sports s on bs.sid=s.id
+           left join location_booking l on l.id=bs.lid
+           left join court c on bs.courtid=c.id
+           where bs.id='$booking_id' and b.bstatus=1 and b.blocked_status=1 and bs.cancelled=1
+            ";
+            
+            foreach($this->db->query($sql)->result_array() as $key => $value) { 
+        
+        $body .= "<tr>
+                <td>".$value['booking_no']."</td>
+                <td>".$value['booked_date']."</td>
+                <td>".$value['game']."</td>
+                <td>".$value['location']."</td>
+                <td>".$value['from_time']."-".$value['to_time']."</td>
+                <td>".$value['courtname']."</td>
+                
+            </tr>";
+        }
+         $body .= "</table>
+        <p>Your Wallet details as follows</p>
+        <p style='text-align: right;'>Transaction ID :<b>".$wallet_data_array['wallet_transaction_id']."</b></p>
+         <table>
+            <tr>
+                <th>Parent-Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Previous balance(AED)</th>
+                <th>Credited amount(AED)</th>
+                <th>Total balance(AED)</th>
+            </tr>
+            <tr>
+                <td>".$parent_code."</td>
+                <td>".$wallet_data_array['parent_name']."</td>
+                <td>".$wallet_data_array['wallet_transaction_date']."</td>
+                <td>".round(sprintf("%2f",$wallet_amount),2)."</td>
+                <td>".round(sprintf("%2f",$wallet_data_array['wallet_transaction_amount']),2)."</td>
+                <td>".round(sprintf("%2f",$balance_credits),2)."</td>
+            </tr>
+        </table>
+        
+        <h4>Thanks & Regards</h4>
+        <h4 style='color: grey'>PSSS Admin team</h4>
+        <hr>
+        <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
+    </div>";
+    $mail->Body = $body;
+		$mail->AltBody = "This is the plain text version of the email content";
+		
+		if(!$mail->send()) 
+		{
+			
+		   //echo "Mailer Error: " . $mail->ErrorInfo;die;
+		   return false;
+		}
+		else{
+			return true;
+		}
+		
+	}
+
+    public function send_email_booked_direct($booking_id,$wallet_data_array, $parent_code, $wallet_amount, $balance_credits)
+	{
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('Phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+        $mail->AddCC(CC_ADDRESS);
+		$mail->addAttachment(TERMS_CONDITION_ATTACHMENT);
+		if(SEND_TO_PARENT != 'NO'){
+		    $mail->addAddress($wallet_data_array['parent_email_id']);
+		}
+		else
+		{
+		    $mail->addAddress(DEFAULT_MAIL);
+		}
+		
+		
+		
+		
+		$mail->isHTML(true);
+
+		$mail->Subject = "Prime Star Sports Services - Your Courts Booked";
+		
+		$body = '';
+		$body .= "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <div class='main' style='font-family: sans-serif;'>
+        <p>Dear <b>".$wallet_data_array['parent_name'].",</b></p>
+        <p>We are pleased to inform you that your Court booking is successful.</p>
+        <table>
+            <tr>
+                <th>BKId</th>
+                <th>Booking Date</th>
+                <th>Activity</th>
+                <th>Location</th>
+                <th>Time</th>
+                <th>Court</th>
+                
+            </tr>";
+            $sql ="select b.booking_no,bs.fromdate  as booked_date, s.sportsname as game,l.location,c.courtname,bs.booking_fromtime as from_time,bs.booking_totime as to_time
+            from booking b 
+            left join bookingslot bs on bs.bid=b.id
+           left join sports s on bs.sid=s.id
+           left join location_booking l on l.id=bs.lid
+           left join court c on bs.courtid=c.id
+           where b.id='$booking_id' and b.bstatus=1 and b.blocked_status=1 and bs.cancelled !=1
+            ";
+            
+            foreach($this->db->query($sql)->result_array() as $key => $value) { 
+        
+        $body .= "<tr>
+                <td>".$value['booking_no']."</td>
+                <td>".$value['booked_date']."</td>
+                <td>".$value['game']."</td>
+                <td>".$value['location']."</td>
+                <td>".$value['from_time']."-".$value['to_time']."</td>
+                <td>".$value['courtname']."</td>
+                
+            </tr>";
+        }
+         $body .= "</table>
+        <p>Your Wallet details as follows</p>
+        <p style='text-align: right;'>Transaction ID :<b>".$wallet_data_array['wallet_transaction_id']."</b></p>
+         <table>
+            <tr>
+                <th>Parent-Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Previous balance(AED)</th>
+                <th>Detected amount(AED)</th>
+                <th>Total balance(AED)</th>
+            </tr>
+            <tr>
+                <td>".$parent_code."</td>
+                <td>".$wallet_data_array['parent_name']."</td>
+                <td>".$wallet_data_array['wallet_transaction_date']."</td>
+                <td>".round(sprintf("%2f",$wallet_amount),2)."</td>
+                <td>".round(sprintf("%2f",$wallet_data_array['wallet_transaction_amount']),2)."</td>
+                <td>".round(sprintf("%2f",$balance_credits),2)."</td>
+            </tr>
+        </table>
+        
+        <h4>Thanks & Regards</h4>
+        <h4 style='color: grey'>PSSS Admin team</h4>
+        <hr>
+        <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
+    </div>";
+    $mail->Body = $body;
+		$mail->AltBody = "This is the plain text version of the email content";
+		
+		if(!$mail->send()) 
+		{
+			
+		   //echo "Mailer Error: " . $mail->ErrorInfo;die;
+		   return false;
+		}
+		else{
+			return true;
+		}
+		
+	}
+    
     public function cancel_booking(){
+        $data['customer_id'] = ($this->input->post('customer_id') !='') ? $this->input->post('customer_id') : '';
+        $data['booking_id'] = ($this->input->post('booking_id') !='') ? $this->input->post('booking_id') : '';
+        $data['bookingslot_id'] = ($this->input->post('bookingslot_id') !='') ? $this->input->post('bookingslot_id') : '';
+        $data['paid_amount'] = ($this->input->post('paid_amount') !='') ? $this->input->post('paid_amount') : '';
+        $update_data = array(
+            'bstatus' => '2',
+            'cancelled_on' => date('Y-m-d'),
+            //'paidamt' => '0'
+        );
+
+        $update_data2 = array(
+            'cancelled' => 1,
+        );
+        //return true;
+        if($this->regular_booking_model->update_booking_details_slot($update_data2, $data['booking_id'], $data['bookingslot_id'], $data['paid_amount'])){
+            $wallet_amount = $this->get_customer_wallet_amount($data['customer_id']);
+            $update_wallet_amount = $wallet_amount + $data['paid_amount']; 
+            $booking_status = '2';
+            //$this->send_email($data['booking_id'],$data['customer_id'],$booking_status);
+            //$this->update_wallet_amount($update_wallet_amount,$data['customer_id']);
+
+            $this->update_wallet_amount($data['paid_amount'], 0, $data['customer_id'], $data['bookingslot_id'], 'court_booking_regular_cancellation');
+            return true;
+        }
+    }
+
+    public function cancel_booking_bulk(){
         $data['customer_id'] = ($this->input->post('customer_id') !='') ? $this->input->post('customer_id') : '';
         $data['booking_id'] = ($this->input->post('booking_id') !='') ? $this->input->post('booking_id') : '';
         $data['paid_amount'] = ($this->input->post('paid_amount') !='') ? $this->input->post('paid_amount') : '';
@@ -367,13 +929,24 @@ class Regular_booking extends CI_Controller{
             'cancelled_on' => date('Y-m-d'),
             'paidamt' => '0'
         );
-        //return true;
+
+        
+
         if($this->regular_booking_model->update_booking_details($update_data, $data['booking_id'])){
             $wallet_amount = $this->get_customer_wallet_amount($data['customer_id']);
             $update_wallet_amount = $wallet_amount + $data['paid_amount']; 
             $booking_status = '2';
-            $this->send_email($data['booking_id'],$data['customer_id'],$booking_status);
-            $this->update_wallet_amount($update_wallet_amount,$data['customer_id']);
+            //$this->send_email($data['booking_id'],$data['customer_id'],$booking_status);
+            //$this->update_wallet_amount($update_wallet_amount,$data['customer_id']);
+            $update_data2 = array(
+                'cancelled' => 1,
+            );
+
+            $this->db->where('bid', $data['booking_id']);
+            $this->db->update('bookingslot', $update_data2);
+            //echo $this->db->last_query();die;
+
+            $this->update_wallet_amount($data['paid_amount'], 0, $data['customer_id'], $data['booking_id'], 'court_booking_regular_cancellation_bulk');
             return true;
         }
     }
@@ -391,13 +964,14 @@ class Regular_booking extends CI_Controller{
         {
         $distMatrix = array();
         $new_array = $this->array_group_by($get_details, 'courtname' );
+        //print_r($new_array);die;
         $time_slot_set = array();
         foreach($get_details as $key => $value) { // city_b headings
             $from_time = strtotime($value['from_time']);
             $to_time = strtotime($value['to_time']);
             $time_diff = $to_time - $from_time;
             $postive =  ($time_diff / 600) / 6 ;
-            //echo $postive;
+            //echo $postive;die;
             for($i = 1 ; $i <= $postive ; $i++ ){                
                 $timestamp = $from_time + ( 60*60) ;
                 $time = date('h:i A', $timestamp);
@@ -412,9 +986,10 @@ class Regular_booking extends CI_Controller{
                 
             }            
         }
+        //print_r($time_slot_set);die;
         sort($time_slot_set);
         $time_slot_set = array_map("unserialize", array_unique(array_map("serialize", $time_slot_set)));
-       
+        //print_r($time_slot_set);die;
         $new_output = '<tr>';
         $new_output .='<th>Time slot</th>';
         foreach($new_array as $key => $courtnames) { // city_b headings
@@ -470,7 +1045,13 @@ class Regular_booking extends CI_Controller{
            if($check_booked_slot){    
                if($check_booked_slot['btype'] == '1'){
                     $booked_by = ($check_booked_slot['booked_by'] == '0') ? 'btn-danger' : (($check_booked_slot['blocked_status'] == '0') ? 'btn-warning' : 'btn-danger' );
-                    $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    if($check_booked_slot['booking_for']=='')
+                    {
+                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    }else{
+                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+                    }
+                  
                }else{
                    $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn btn-info view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
                }
@@ -550,7 +1131,7 @@ class Regular_booking extends CI_Controller{
             $output .= '<table class="table table-bordered table-striped">';
             $output .= '<tbody>';
                     $output .= '<tr>';
-                            $output .= '<td><input type="hidden" name="booking_id" id="booking_id" value="'.$booking_details['bid'].'"><strong>Booking ID :</strong>&nbsp;&nbsp;'.ucfirst($booking_details['customer_name']).'&nbsp;&nbsp;'.$booking_details['booking_no'].'</td>';
+                            $output .= '<td><input type="hidden" name="booking_id" id="booking_id" value="'.$booking_details['bid'].'"><input type="hidden" name="bookingslot_id" id="bookingslot_id" value="'.$booking_details['id'].'"><strong>Booking ID :</strong>&nbsp;&nbsp;'.ucfirst($booking_details['customer_name']).'&nbsp;&nbsp;'.$booking_details['booking_no'].'</td>';
                             $output .= '<td><strong>Member? :</strong> No</td>';
                     $output .= '</tr>';
                     $output .= '<tr>';

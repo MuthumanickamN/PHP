@@ -94,7 +94,8 @@ if($data['location_hidden_id'] != ''){
 	}
 	public function update_location_details($data, $id) {
 		$this->db->where('id', $id);
-		$query = $this->db->update('location_booking', $data);	
+		$query = $this->db->update('location_booking', $data);
+		//echo $this->db->last_query();die;	
 		if ($query) {
 			return true;
 		} else {
