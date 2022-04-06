@@ -33,14 +33,44 @@ $(document).ready(function() {
       //  var test = $(this).val();
         if(this.value == 'yes')
         {
+          $('#vat_percentage').val(5.00);
           $("div.vat").show();
+            var paid_amount=parseFloat(document.getElementById('paid_amount').value); 
+            var vat_percentage=parseFloat(document.getElementById('vat_percentage').value);
+            if (!paid_amount) { paid_amount = 0.00;  }
+            var vat_value = parseFloat((vat_percentage/100)*paid_amount).toFixed(2);
+            $('#vat_value').val(vat_value);
+            var a=(parseFloat((vat_value)?vat_value:0.00) + parseFloat((paid_amount)?paid_amount:0.00)).toFixed(2);
+            document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
+
         }
         else if(this.value == 'no')
         {
         $("div.vat").hide();
+          var paid_amount=parseFloat(document.getElementById('paid_amount').value); 
+          var vat_percentage= 0;
+          if (!paid_amount) { paid_amount = 0.00;  }
+          var vat_value = parseFloat((vat_percentage/100)*paid_amount).toFixed(2);
+          $('#vat_value').val(vat_value);
+          $('#vat_percentage').val(0.00);
+          var a=(parseFloat((vat_value)?vat_value:0.00) + parseFloat((paid_amount)?paid_amount:0.00)).toFixed(2);
+          document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
+
         }
     });
 });
+
+/*function calculation()
+{
+
+  var paid_amount=parseFloat(document.getElementById('paid_amount').value); 
+  var vat_percentage= 0;
+  if (!paid_amount) { paid_amount = 0.00;  }
+  var vat_value = parseFloat((vat_percentage/100)*paid_amount).toFixed(2);
+  $('#vat_value').val(vat_value);
+  var a=(parseFloat((vat_value)?vat_value:0.00) + parseFloat((paid_amount)?paid_amount:0.00)).toFixed(2);
+document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
+}  */
 
 
 
@@ -82,6 +112,9 @@ function calculate_amount()
   var a=(parseFloat((vat_value)?vat_value:0.00) + parseFloat((paid_amount)?paid_amount:0.00)).toFixed(2);
 document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
 }
+
+
+
 
 /*function service_details(){	
 	var type=document.getElementById('type').value;
@@ -206,7 +239,7 @@ $.ajax({
                     <b>Amount</b>*
                   </div>                            
             <div class="col-md-3">
-              <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo isset($amount_paid)?$amount_paid:'';  ?>"   class="form-control"  oninput="allnumeric(document.form.paid_amount); calculate_amount();">
+              <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo isset($amount_paid)?$amount_paid:'';  ?>"   class="form-control" onkeyup="calculate_amount();" oninput="allnumeric(document.form.paid_amount);">
               <span class="errorMsg"></span>
             </div>
         </div>
