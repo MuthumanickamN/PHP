@@ -39,7 +39,7 @@ class Daily_transaction extends CI_Controller
 	        return 0;
 	    }
 	}
-	public function list(){
+	public function list_(){
 		$data['title'] = "Daily Transaction";
 		$query = $this->db->query("select * from daily_transactions order by `id` DESC ");
 		$transactionList = $query->result_array();
@@ -308,7 +308,7 @@ class Daily_transaction extends CI_Controller
 
 
 			setMessage('Transaction are Updated Successfully.');
-			redirect(base_url() . 'daily_transaction/list');
+			redirect(base_url() . 'daily_transaction/list_');
 		}
 
 		$this->load->view('daily_transaction', $data);
@@ -321,7 +321,7 @@ class Daily_transaction extends CI_Controller
 
 
 		setMessage('Transaction are Deleted Successfully.');
-		redirect(base_url() . 'daily_transaction/list');
+		redirect(base_url() . 'daily_transaction/list_');
 	}
 
 	public function getdetail()

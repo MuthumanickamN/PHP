@@ -337,8 +337,8 @@
             <?php if ($role == 'superadmin' || $academy_activities_menu_arr['Attendance_book'] == 1) : ?>
               <li data-menu="Attendance_book"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Attendance_book' ?>"><span data-i18n="Attendance book">Attendance book</span></a></li>
             <?php endif; ?>
-            <?php if ($role == 'superadmin'  || $academy_activities_menu_arr['Slot_refund_request/list'] == 1) : ?>
-              <li data-menu="Slot_refund_approval"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Slot_refund_request/list' ?>"><span data-i18n="Daily Fees">Slot Refund Approval</span></a></li>
+            <?php if ($role == 'superadmin'  || $academy_activities_menu_arr['Slot_refund_request/list_'] == 1) : ?>
+              <li data-menu="Slot_refund_approval"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Slot_refund_request/list_' ?>"><span data-i18n="Daily Fees">Slot Refund Approval</span></a></li>
             <?php endif; ?>
             
             <?php if ($role == 'superadmin' || $academy_activities_menu_arr['Prepaid_credits'] == 1) : ?>
@@ -570,12 +570,12 @@
                 <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Admin/superadmin_list' ?>"><span data-i18n="Activity">Super Admin</span></a></li>
 				<?php } ?>
 				<?php if($role == 'superadmin' || $role == 'admin') {?>
-                <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Admin/list' ?>"><span data-i18n="Activity">Admin</span></a></li>
+                <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Admin/list_' ?>"><span data-i18n="Activity">Admin</span></a></li>
 				<?php } ?>
               <?php if($role == 'superadmin' || $role == 'admin') { ?>
-                <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/list/headcoach' ?>"><span data-i18n="Activity">Head Coach</span></a></li>
+                <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/list_/headcoach' ?>"><span data-i18n="Activity">Head Coach</span></a></li>
               <?php } if( $role == 'superadmin' || $role == 'admin') { ?>
-                <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/list/coach' ?>"><span data-i18n="Activity">Coach</span></a></li>
+                <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/list_/coach' ?>"><span data-i18n="Activity">Coach</span></a></li>
               <?php } if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
                 <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'users?role=parent' ?>"><span data-i18n="Activity">Parent</span></a></li>
               <?php } ?>
@@ -664,7 +664,7 @@
 
           <?php //echo "<pre>"; print_r($menu_model); die; ?>
 
-<?php /*if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
+<?php if($role == 'superadmin' || $role == 'admin' || $role == 'parent') { ?>
   <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Parent Court Booking</span></a>
     <ul class="dropdown-menu">
       
@@ -683,7 +683,7 @@
      
     </ul>
   </li>
-<?php }*/ ?>
+<?php }/**/ ?>
 
 
     

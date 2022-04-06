@@ -110,7 +110,7 @@ document.getElementById('total_credits').value=parseFloat(a).toFixed(2);
   </media-left>
   <div class="media-body media-right text-right">
      <ul class="list-inline mb-0">
-<li> <a href="<?php echo site_url('Prepaid_credits/list'); ?>" class="btn btn-primary"   ><b>Credit List</b></a></li>
+<li> <a href="<?php echo site_url('Prepaid_credits/list_'); ?>" class="btn btn-primary"   ><b>Credit List</b></a></li>
 </ul>
     
   </div>
@@ -190,7 +190,7 @@ document.getElementById('total_credits').value=parseFloat(a).toFixed(2);
              <?php } else { ?>
               <button type="button" class="btn rkmd-btn btn-success add-prepaid-credit" id="add-prepaid-credit">Submit</button>          
               <?php } ?>
-             <a href="<?php echo base_url().'prepaid_credits/list' ?>"     class="btn btn-danger" >Cancel</a>
+             <a href="<?php echo base_url().'prepaid_credits/list_' ?>"     class="btn btn-danger" >Cancel</a>
            </div>
          </div>
       </form>
@@ -226,7 +226,7 @@ document.getElementById('total_credits').value=parseFloat(a).toFixed(2);
                 jQuery('form#prepaidCreditForm').find('textarea, input').each(function () {
                     jQuery(this).val('');
                 });
-                window.location.href = baseurl+'Prepaid_credits/list';
+                window.location.href = baseurl+'Prepaid_credits/list_';
             }
                 
             }

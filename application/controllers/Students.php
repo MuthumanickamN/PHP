@@ -29,7 +29,7 @@ class Students extends CI_Controller {
 		$data['role'] = $role;
 		$this->load->view('student_registration', $data);
 	}
-	public function list(){
+	public function list_(){
 		$data['title'] = 'Student List';
 		$role = strtolower($this->session->userdata['role']);
 		$username=$this->session->userdata('username');
@@ -471,7 +471,7 @@ public function edit1($id){
 		 $sql="Update  registrations set name='$student_name',dob='$student_dob',age='$student_age',gender='$student_gender',father_name='$father_name',father_contact='$father_contact_no',mother_name='$mother_name',emergency_contact='$emergency_contact_no',image_file_name='$student_passport_image',parent_mobile='$parent_mobile',parent_name='$parent_name',parent_email_id='$parent_email_id',nationality='$nationality',country='$country',postal_code='$postal_code',state='$state',district='$district',city='$city',school_name='$school_name',sibling_name='$sibling_name',sibling_reg_no='$sibling_reg_no',father_email='$father_email_id',mother_email='$mother_email_id',mother_contact='$mother_contact_no',mother_office_contact='$mother_office_contact_no',student_email='$student_email_id',passport_id='$passport_id',address_1='$address1',address_2='$address2',emirates_id_issue='$date_of_issue',student_emid_file_name='$student_emirates_id_image',t_shirt_size='$tshirt_size',student_passport_file_name='$student_passport_size_image',student_visapage_file_name='$student_visa_page',sponsor_passport_file_name='$sponsor_passport',sponsor_visapage_file_name='$sponsor_visa_page',sponsor_emid_file_name='$sponsor_emirates_id',updated_at='$updated_at',updated_admin_name='$user_name',updated_admin_email='$email',status='$status',approval_status='$approval_status' where id='$id'";
 		$insert=$this->db->query($sql);
 		setMessage('Student Details Updated Successfully.');
-		redirect(base_url().'index.php/student/list');
+		redirect(base_url().'index.php/student/list_');
 	}
 	$this->load->view('student_registration',$data);
 }
@@ -479,7 +479,7 @@ public function delete($id){
 	$sql="Delete from registrations  where id='$id'";
 	$insert=$this->db->query($sql);
 	setMessage('Student Details Deleted Successfully.');
-	redirect(base_url().'student/list');
+	redirect(base_url().'student/list_');
 }
 public function view($id){
 	$data['title'] = 'View Student Details';

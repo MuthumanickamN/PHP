@@ -109,7 +109,7 @@ class Credits_roll_back extends CI_Controller {
 			$this->send_email($email_result);
 	
 	        $this->session->set_flashdata('success_msg', 'New Credits Roll Back Amount Added Successfully.');
-			redirect(base_url().'credits_roll_back/list');
+			redirect(base_url().'credits_roll_back/list_');
 			}else{
 				$this->session->set_flashdata('error', 'Prepaid credit value is insufficent.');
 				redirect(base_url().'credits_roll_back');
@@ -296,7 +296,7 @@ $email=$this->session->userdata('username');
 
 	
 				setMessage('Credits Roll Back are Updated Successfully.');
-				redirect(base_url().'credits_roll_back/list');
+				redirect(base_url().'credits_roll_back/list_');
 			}
 
 	$this->load->view('credits_roll_back',$data);
@@ -311,10 +311,10 @@ public function delete($id)
 
 	
 				setMessage('Credits Roll Back are Deleted Successfully.');
-				redirect(base_url().'credits_roll_back/list');
+				redirect(base_url().'credits_roll_back/list_');
 			}
 
-public function list()
+public function list_()
 {
     $data = array();
     $data['list'] = $this->db->query("select c.*,p.parent_name,p.parent_code from credits_roll_backs c left join parent p on p.parent_id=c.parent_id")->result_array();

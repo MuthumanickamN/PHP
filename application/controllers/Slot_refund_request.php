@@ -200,7 +200,7 @@ class Slot_refund_request extends CI_Controller {
 		}
 	}
 	}
-	public function list(){
+	public function list_(){
 		$data['title'] = 'Request Approve/ Reject';
 		$role=$this->session->userdata('role');
 		if($role == 'admin' || $role == 'superadmin' ){
@@ -221,7 +221,7 @@ class Slot_refund_request extends CI_Controller {
 	    		$data['list'][$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
 				$data['list'][$key]['coach_id'] = $this->transaction->getCoachDetail($value['coach_id']);
 	   		}
-			$this->load->view('slotRefund/list', $data);
+			$this->load->view('slotRefund/list_', $data);
 		}else{
 			$this->session->set_flashdata('error', 'You do not have permission to access.');
 			redirect('/dashboard');

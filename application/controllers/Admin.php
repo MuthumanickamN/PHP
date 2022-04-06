@@ -33,7 +33,7 @@ class Admin extends CI_Controller {
 		$this->load->view('admin_registration', $data);
 	}
 	
-	public function list(){
+	public function list_(){
     	$data['title'] ="Admin List";
     	$query = $this->db->query("select u.*, a.admin_id from users u 
     	left join admin a on a.code = u.code
@@ -251,7 +251,7 @@ public function delete($admin_id){
 	$this->db->query($sql3);
 	
 	$this->session->set_flashdata('success', 'Admin Details Deleted Successfully.');
-	redirect(base_url().'Admin/list');
+	redirect(base_url().'Admin/list_');
 }
 
 public function superadmin_delete($admin_id){

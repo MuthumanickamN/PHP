@@ -206,7 +206,7 @@ function allnumeric(inputtxt){
 <?php if($role == 'superadmin' || $role == 'admin'){?>
 <div class="media-body media-right text-right">
  <ul class="list-inline mb-0">
-<li> <a href="<?php echo site_url('Registration_fees/list'); ?>" class="btn btn-primary"   ><b>Registration Fees List</b></a></li>
+<li> <a href="<?php echo site_url('Registration_fees/list_'); ?>" class="btn btn-primary"   ><b>Registration Fees List</b></a></li>
 </ul>
 
 </div>

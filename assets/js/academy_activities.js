@@ -83,7 +83,7 @@ jQuery(document).on('click', 'button.add-daily-transaction', function(){
                 jQuery('form#daily_transaction').find('textarea, input').each(function () {
                     jQuery(this).val('');
                 });
-                window.location.href = baseurl+'index.php/Daily_transaction/list';
+                window.location.href = baseurl+'index.php/Daily_transaction/list_';
             }
                 
             }
@@ -136,7 +136,7 @@ jQuery(document).on('click', 'button#add-popup-daily-transaction', function(){
                 jQuery('form#daily_transaction').find('textarea, input').each(function () {
                     jQuery(this).val('');
                 });
-                window.location.href = baseurl+'index.php/Daily_transaction/list';
+                window.location.href = baseurl+'index.php/Daily_transaction/list_';
             }
                 
             }

@@ -125,7 +125,7 @@ function calculate_amount()
               </media-left>
               <div class="media-body media-right text-right">
                  <ul class="list-inline mb-0">
-            <li> <a href="<?php echo site_url('Credits_roll_back/list'); ?>" class="btn btn-primary"   ><b>Roll back List</b></a></li>
+            <li> <a href="<?php echo site_url('Credits_roll_back/list_'); ?>" class="btn btn-primary"   ><b>Roll back List</b></a></li>
           </ul>
                 
               </div>

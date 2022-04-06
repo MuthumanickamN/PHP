@@ -168,7 +168,7 @@ function fileValidation(fileInput) {
                  <ul class="list-inline mb-0">
             <li><?php if($add_from=='superadmin') { ?> <a href="<?php echo site_url('Admin/superadmin_list'); ?>" class="btn btn-primary"   ><b>Superadmin List</b></a>
             <?php } else {?>
-            <a href="<?php echo site_url('Admin/list'); ?>" class="btn btn-primary"   ><b>Admin List</b></a>
+            <a href="<?php echo site_url('Admin/list_'); ?>" class="btn btn-primary"   ><b>Admin List</b></a>
             <?php } ?>
             </li>
           </ul>
@@ -569,7 +569,7 @@ $("#adminForm").on('submit',(function(e) {
                 }
                 else
                 {
-                    window.location.href = baseurl+'Admin/list';
+                    window.location.href = baseurl+'Admin/list_';
                 }
           }
               

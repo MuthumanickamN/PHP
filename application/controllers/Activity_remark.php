@@ -21,7 +21,7 @@ class Activity_remark extends CI_Controller {
 		 $this->load->view('activity_remark');
 		}
 
-			public function list()
+			public function list_()
 	{
 	    
 	    	
@@ -69,7 +69,7 @@ public function edit($id="")
             $this->db->update('student_remarks', $update_array);
             
             $this->session->set_flashdata('success_msg', 'Remark Updated successfully');
-        	redirect(base_url().'Activity_remark/list');
+        	redirect(base_url().'Activity_remark/list_');
     	}
     	
     	$this->load->view('activity_remark',$data);
@@ -96,7 +96,7 @@ public function edit($id="")
             $this->db->insert('student_remarks', $update_array);
             
             $this->session->set_flashdata('success_msg', 'Remark Added successfully');
-        	redirect(base_url().'Activity_remark/list');
+        	redirect(base_url().'Activity_remark/list_');
     	}
     }
 
@@ -111,7 +111,7 @@ public function delete($id)
 
 	
 				setMessage('Student Remarks Deleted Successfully.');
-				redirect(base_url().'Activity_remark/list');
+				redirect(base_url().'Activity_remark/list_');
 			}
 			
 

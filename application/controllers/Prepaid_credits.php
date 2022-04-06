@@ -352,7 +352,7 @@ $email=$this->session->userdata('username');
 
 	
 				setMessage('Prepaid Credits are Updated Successfully.');
-				redirect(base_url().'Prepaid_credits/list');
+				redirect(base_url().'Prepaid_credits/list_');
 			}
 
 	$this->load->view('prepaid_credits',$data);
@@ -363,10 +363,10 @@ public function delete($id){
 	$sql="Delete from prepaid_credits  where id='$id'";
 	$insert=$this->db->query($sql);
 	setMessage('Prepaid Credits are Deleted Successfully.');
-	redirect(base_url().'prepaid_credits/list');
+	redirect(base_url().'prepaid_credits/list_');
 }
 
-public function list(){
+public function list_(){
 	$data['title'] ='Prepaid Credits';
 	$creditList = $this->db->query( "select pc.*,p.parent_code from prepaid_credits pc left join parent p on pc.parent_id= p.parent_id");
 	$data['creditList'] = $creditList->result_array();
@@ -376,7 +376,7 @@ public function list(){
 		$data['creditList'][$key]['amount_paid'] = $totalAmount['total'];
 		$data['creditList'][$key]['total_credits'] = $totalAmount['total'];
 	}
-	$this->load->view('prepaid_credits/list', $data);
+	$this->load->view('prepaid_credits/list_', $data);
 }
 public function view($id){
 	$query = $this->db->query('select * from prepaid_credits where id='.$id);

@@ -247,7 +247,7 @@
                           <button type="button" id="preview_transaction_popup"  class="btn btn-success" ><b> Submit</b></button>
                           <!--<button type="button" class="btn rkmd-btn btn-success" id="add-daily-transaction">Submit</button>      -->
                           <?php } ?>
-                         <a href="<?php echo base_url().'index.php/Daily_transaction/list/' ?>" class="btn btn-danger" >Cancel</a></div></div>
+                         <a href="<?php echo base_url().'index.php/Daily_transaction/list_/' ?>" class="btn btn-danger" >Cancel</a></div></div>
                   </form>
                   
               </div>

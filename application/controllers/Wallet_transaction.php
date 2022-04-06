@@ -202,7 +202,7 @@ class Wallet_transaction extends CI_Controller {
 			$sql="Update  wallet_transactions set student_id='$student_id',parent_id='$parent_id',parent_mobile='$parent_mobile',account_code='$account_code',wallet_transaction_type='$transaction_type',wallet_transaction_date='$wallet_transaction_date',wallet_transaction_detail='$transaction_detail',amount='$wallet_credit',updated_admin_name='$user_name',updated_admin_email='$email',updated_date='$updated_date',updated_at='$updated_at' where id='$id'";
 			$insert=$this->db->query($sql);
 			setMessage('Wallet Transaction are Updated Successfully.');
-			redirect(base_url().'Wallet_transaction/list');
+			redirect(base_url().'Wallet_transaction/list_');
 		}
 
 		$this->load->view('wallet/Wallet_transaction',$data);
@@ -212,10 +212,10 @@ class Wallet_transaction extends CI_Controller {
 		$sql="Delete from wallet_transactions  where id='$id'";
 		$insert=$this->db->query($sql);
 		setMessage('Wallet Transaction are Deleted Successfully.');
-		redirect(base_url().'Wallet_transaction/list');
+		redirect(base_url().'Wallet_transaction/list_');
 	}
 
-	public function list(){
+	public function list_(){
 		$data['title'] = 'Wallet Transactions';
 		$query = $this->db->query("select * from wallet_transactions order by `id` DESC ");
 		$transactionList = $query->result_array();

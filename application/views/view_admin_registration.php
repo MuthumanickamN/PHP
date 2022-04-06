@@ -31,7 +31,7 @@
                      <?php if($add_from=='superadmin') { ?>
             <li> <a href="<?php echo site_url('Admin/superadmin_list'); ?>" class="btn btn-primary"   ><b>Back</b></a></li>
             <?php } else{ ?>
-            <li> <a href="<?php echo site_url('Admin/list'); ?>" class="btn btn-primary"   ><b>Back</b></a></li>
+            <li> <a href="<?php echo site_url('Admin/list_'); ?>" class="btn btn-primary"   ><b>Back</b></a></li>
             <?php } ?>
           </ul>
                 

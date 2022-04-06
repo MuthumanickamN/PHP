@@ -321,7 +321,7 @@ $data['student_id']=$postData['student_id'];
 	$this->load->view('view_registration_fees', $data);
 }
 
-public function list(){
+public function list_(){
     $data = array();
     $data['data']=$this->db->query("select * from registration_fees order by id desc")->result_array();
 	$this->load->view('registration_fees_list', $data);

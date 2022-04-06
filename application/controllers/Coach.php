@@ -28,10 +28,10 @@ class Coach extends CI_Controller {
 		$this->load->view('coach_registration', $data);
 	}
 
-	public function list($coach='coach'){
+	public function list_($coach='coach'){
     	$data['title'] ="Coach List";
     	$data['from'] =$coach;
-    	$query = $this->db->query("select u.*, c.coach_id from users u 
+    	$query = $this->db->query("select u.*, c.coach_id,c.activity_id,c.location_id from users u 
     	left join coach c on c.code = u.code
     	where u.role='$coach' and u.deleted !=1 ");
     	$data['coachList'] = $query->result_array();
@@ -226,7 +226,7 @@ public function delete($coach_id){
 	$this->db->query($sql3);
 	
 	$this->session->set_flashdata('error', 'Coach Details Deleted Successfully.');
-	redirect(base_url().'coach/list');
+	redirect(base_url().'coach/list_');
 }
 
 public function view($coach_id)
