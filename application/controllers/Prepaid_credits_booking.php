@@ -45,6 +45,13 @@ class Prepaid_credits_booking extends CI_Controller{
         $get_details = $this->prepaid_credits_model->get_customer_details($customer_email);
         echo json_encode($get_details);
     }
+
+    public function get_customer_details_by_id(){
+		
+        $customer_id = ($this->input->post('id') !='') ? $this->input->post('id') : '';
+        $get_details = $this->prepaid_credits_model->get_customer_details_by_id($customer_id);
+        echo json_encode($get_details);
+    }
 	
 	/*  public function toExcel()
   {

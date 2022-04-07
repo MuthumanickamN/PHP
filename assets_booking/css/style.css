@@ -3486,8 +3486,11 @@ transition:transform .5s ease-in-out
 	display:inline-block;
 	margin-top:-20px
 }
-.show{
-z-index:9999 !important
+#viewModal{
+z-index:9999 !important;
+}
+.glyphicon-eye-open{
+	display:none;
 }
 .modal {
 	background:rgba(0, 0, 0, 0.3);

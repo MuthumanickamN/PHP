@@ -35,9 +35,19 @@ Class Court_booking_model extends CI_Model {
             $sql="select * from booking where id=$id";
             $row = $this->db->query($sql)->row();
             $new_amount = ($row->net_total) - $amount;
-            $new_paidamount = $new_amount - ($row->discount_amount);
+            $new_paidamount = $new_amount;
+
+            $sql="select * from bookingslot where bid='$id' and cancelled=0";
+            $rows_cnt = $this->db->query($sql)->num_rows();
+            if($rows_cnt > 0)
+            {
+                $status = 1; 
+            }
+            else{
+                $status = 2; 
+            }
             $this->db->where('id',$id);
-            $this->db->update('booking', array('net_total'=>$new_amount, 'totamt'=> $new_paidamount,'paidamt'=> $new_paidamount ));
+            $this->db->update('booking', array('net_total'=>$new_amount, 'totamt'=> $new_paidamount,'paidamt'=> $new_paidamount, 'bstatus' =>$status ));
 
             return true;
         } else {
@@ -231,10 +241,10 @@ Class Court_booking_model extends CI_Model {
     }
     
     public function get_booking_details($booked_slotid){
-        $this->db->select('bst.id, bst.bid, bst.booking_fromtime, bst.booking_totime, bst.fromdate, bst.todate, bst.days, cust.name as customer_name, cust.mobile as customer_mobile, bk.bookedon, bk.paystatus, bk.customerid, bk.booking_no, bk.totamt as gross_amount, bk.net_total as net_amount, bk.btype as booking_type, bk.discount_amount, bk.advance_amount, bk.balamt as balance_amount, bk.paidamt as paid_amount_old, bst.amount as paid_amount, bk.remarks, ct.courtname ');
+        $this->db->select('bst.id, bst.bid, bst.booking_fromtime, bst.booking_totime, bst.fromdate, bst.todate, bst.days, cust.parent_name as customer_name, cust.mobile_no as customer_mobile, bk.bookedon, bk.paystatus, bk.customerid, bk.booking_no, bst.gross_amount as gross_amount, bst.amount as net_amount, bst.vat_perc, bst.vat_amount, bk.btype as booking_type, bst.discount_amount, bk.advance_amount, bk.balamt as balance_amount, bk.paidamt as paid_amount_old, bst.amount as paid_amount, bst.remarks, ct.courtname ');
         $this->db->from('bookingslot as bst');
         $this->db->join('booking as bk', 'bk.id = bst.bid', 'left');
-        $this->db->join('customer as cust', 'cust.id = bk.customerid', 'left');
+        $this->db->join('parent as cust', 'cust.parent_id = bk.customerid', 'left');
         $this->db->join('court as ct', 'ct.id = bst.courtid', 'left');  
         if($booked_slotid != ''){
             $this->db->where('bst.id', $booked_slotid );

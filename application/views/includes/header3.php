@@ -592,7 +592,7 @@
   <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Court Booking</span></a>
     <ul class="dropdown-menu">
       
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php /*if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Schedule"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Schedule">Schedule &raquo;</span></a>
                    <ul class="dropdown-submenu">
                     <li>
@@ -608,9 +608,12 @@
                  </li>
 
 
-          <?php } ?>
+          <?php }*/ ?>
           
-         
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+                  <li data-menu="Booking"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Court_booking' ?>"><span data-i18n="Booking">Book Court</span></a></li>
+
+          <?php } ?>
           <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Customer Booking Approval"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_Approval' ?>"><span data-i18n="Customer Booking Approval">Customer Booking Approval</span></a></li>
 

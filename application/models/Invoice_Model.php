@@ -479,11 +479,11 @@ class Invoice_Model extends CI_Model {
 	        {
 	            return false;
 	        }
-	        $sql2="select b.discount_amount, s.sportsname as game, p.email_id, sum(bs.amount) as amount, count(bs.id) as cnt from booking b 
+	        $sql2="select sum(bs.discount_amount) as discount_amount, s.sportsname as game, p.email_id, sum(bs.amount) as amount, sum(bs.vat_amount) as vat_amount, sum(bs.discount_amount) as discount_amount, count(bs.id) as cnt from booking b 
 	        left join bookingslot bs on bs.bid=b.id
 	        left join sports s on bs.sid=s.id
 	        left join parent p on p.parent_id = b.customerid
-	        where b.id=$slot_booking_id and b.bstatus=1 and b.blocked_status=1";
+	        where b.id=$slot_booking_id and b.bstatus=1 and b.blocked_status=1 group by b.id";
 	        $result2 = $this->db->query($sql2)->row_array();
 	        
 	        $this->load->helper('string');
@@ -576,49 +576,57 @@ class Invoice_Model extends CI_Model {
                             <th>Particulars</th>
                             <th>Quantity</th>
                             <th>Amount</th>
-                            <th>VAT(5%)</th>
+                            
                         </tr>";
                
                 
-			$vat_val1 =  sprintf("%2f",($result2['amount']*5)/100);
-			$tot_amount = $result2['amount'] + $vat_val1-$result2['discount_amount'];
+			
 			
             $body .= "<tr>
                         <td>1.</td>
                         <td> Court Booking Fees - ".$result2['game']."</td>
                         <td>".$result2['cnt']."</td>
-                        <td>".$result2['amount']."</td>
-                        <td>".$vat_val1."</td>
+                        <td>".$row['gross_amount']."</td>
+                        
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td>Gross Amount:</td>
-                            <td>".$result2['amount']."</td>
-                            <td>".$vat_val1."</td>
+                            <td>".$row['gross_amount']."</td>
+                            
             			</tr>
 						
             			<tr>
                             <td></td>
                             <td></td>
                             <td>Discount Amount:</td>
-                            <td>".$result2['discount_amount']."</td>
-                            <td></td>
+                            <td>".$row['discount_value']."</td>
+                            
             			</tr>
 						
+						<tr>
+                            <td></td>
+                            <td></td>
+                            <td>Vat Amount(5%):</td>
+                            <td>".$row['vat_value']."</td>
+                            
+            			</tr>
+						
+
             			<tr>
                             <td></td>
                             <td></td>
                             <td>Net Amount:</td>
-                            <td>".$tot_amount."</td>
-                            <td></td>
+                            <td>".$row['net_amount']."</td>
+                            
             			</tr>
             			<tr>
                             <td></td>
                             <td></td>
                             <td><b>Total</b></td>
-                            <td><b>AED ".$tot_amount."</b></td>
-                            <td></td>
+                            <td><b>AED ".$row['net_amount']."</b></td>
+                            
             			</tr>
             			";
             

@@ -41,6 +41,7 @@ class Court_booking extends CI_Controller{
     
     public function add_booking_details(){
         //die()
+        //print_r($_POST);die;
         $pay_mode = $this->input->post('pay_mode');
         if($pay_mode == '1'){
             if($this->input->post('hidden_advance_amount') !=''){
@@ -52,6 +53,7 @@ class Court_booking extends CI_Controller{
             $paid_amount = $this->input->post('advance_amount');
         }
         $paid_status = ($this->input->post('hidden_balance_amount') > 0) ? 2 : 1;
+        $parent_id = $this->input->post('cus_hid');
         $insert_data = array(
 			'booking_no' => 'NULL',
            // 'sid' => $this->input->post('sports'),
@@ -87,8 +89,11 @@ class Court_booking extends CI_Controller{
         $hidden_cid = $this->input->post('hidden_cid', TRUE);
         $hidden_cost = $this->input->post('hidden_cost', TRUE);
         $booking_for = $this->input->post('booking_for', TRUE);
+        $vat_perc = $this->input->post('hidden_vat_perc', TRUE);
+        
         $insert_booking_slot_details = array(
             'slot_ids' => $hidden_id,
+            'booked_date' => $hidden_booking_date,
             'fromdate' => $hidden_booking_date,
             'todate' => $hidden_booking_date,
             'slot_fromtimes' => $hidden_fromtime,
@@ -97,16 +102,27 @@ class Court_booking extends CI_Controller{
             'location_ids' => $hidden_lid,
             'court_ids' => $hidden_cid,
             'slot_price' => $hidden_cost,
-            'booking_for' => $booking_for
+            'booking_for' => $booking_for,
+        );
+
+        $data2 = array(
+            'vat_perc'=>$this->input->post('hidden_vat_perc'),
+            'discount'=>$this->input->post('discount_amount')
         );
         $insert_id = $this->court_booking_model->add_booking_details($insert_data);
 		
         if($insert_id !='')
         {
+            $this->add_booking_slot($insert_booking_slot_details,$insert_id, $data2);
+            
             if($pay_mode == '1'){
-                $this->update_wallet_amount($insert_data['paidamt'], $insert_data['discount_amount'], $insert_data['customerid'], $insert_id, 'court_booking_regular');
+                $this->update_wallet_amount($insert_data['totamt'], $insert_data['discount_amount'], $insert_data['customerid'], $insert_id, 'court_booking_regular');
             }
-            $this->add_booking_slot($insert_booking_slot_details,$insert_id);
+            
+
+            $sql="DELETE from tmp_booking_court where parent_id='$parent_id'";
+            $this->db->query($sql);
+
             $booking_status = '1';
             //$this->send_email($insert_id,$this->input->post('cus_hid'),$booking_status);
             $this->load->helper('cookie');    
@@ -303,13 +319,15 @@ class Court_booking extends CI_Controller{
         }
     }
     
-    private function add_booking_slot($insert_booking_slot_details, $booking_id){
+    private function add_booking_slot($insert_booking_slot_details, $booking_id, $data2){
         $length = $this->count_digit($booking_id);
         $booking_no = $this->create_booking_no($booking_id, $length);
         $update_data = array(
             'booking_no' => $booking_no
         );
         $this->court_booking_model->update_booking_details($update_data, $booking_id);
+
+        $discount_each = round($data2['discount']/count($insert_booking_slot_details['court_ids']),2);
         if(!empty($insert_booking_slot_details)){
             for($i=0; $i<count($insert_booking_slot_details['court_ids']); $i++){
                     //echo  $key.'-->'.$value[$i].'<br/>';
@@ -321,17 +339,26 @@ class Court_booking extends CI_Controller{
                     $fromtime = $insert_booking_slot_details['slot_fromtimes'][$i];
                     $totime =  $insert_booking_slot_details['slot_totimes'][$i];
                     $amount =  $insert_booking_slot_details['slot_price'][$i];
+
+                    $amount2 = $amount-$discount_each;
+                    $vat_amount = round(($amount2*$data2['vat_perc'])/100,2);
+                    $net_amount = round($amount2+$vat_amount,2);
                     $insert_booking_slot_data = array(
                         'bid' => $booking_id,
                         'sid' => $sports_id,
                         'lid' => $location_id,
                         'courtid' => $court_id,
+                        'booked_date' => date('Y-m-d', strtotime($fromdate)),
                         'fromdate' => date('Y-m-d', strtotime($fromdate)),
                         'todate' => date('Y-m-d', strtotime($todate)),
                         'days' => $this->get_dayid(date('l', strtotime($fromdate))),
                         'booking_fromtime' => $fromtime,
                         'booking_totime' => $totime,
-                        'amount' => $amount,
+                        'gross_amount' => $amount,
+                        'discount_amount' => $discount_each,
+                        'vat_perc' => $data2['vat_perc'],
+                        'vat_amount' => $vat_amount,
+                        'amount' => $net_amount,
                     );
                     $this->court_booking_model->add_bookingslot_details($insert_booking_slot_data);
                     //print_r($insert_booking_slot_data);
@@ -359,16 +386,16 @@ class Court_booking extends CI_Controller{
         return $value;
     }
     
-    private function update_wallet_amount($amount, $discount=0, $id, $booking_id, $from){
+    private function update_wallet_amount($amount, $discount, $id, $booking_id, $from){
+        //echo $booking_id;die;
         /*$update_data = array(
             'amount' => $amount
         );
         $this->court_booking_model->update_wallet_amount($update_data,$id);*/
 
         if ($from=="court_booking_regular"){
-            $vat_val1 =  sprintf("%2f",($amount*5)/100);
-            $vat_val1 = 0.00;
-            $tot_amount = $amount + $vat_val1-$discount;
+            $vat_val1 =  sprintf("%2f",(($amount-$discount)*5)/100);
+            $tot_amount = ($amount-$discount) + $vat_val1;
 
             $creditsDetails1 = $this->db->query('select * from prepaid_credits where parent_id='.$id);
             $creditsDetailsData1 = $creditsDetails1->row_array();
@@ -447,9 +474,9 @@ class Court_booking extends CI_Controller{
             $this->invoice_model->send_email_invoice($wallet_transaction_id, "CourtBooking");
         }
         elseif ($from=="court_booking_regular_cancellation"){
-            $vat_val1 =  sprintf("%2f",($amount*5)/100);
-            $vat_val1 = 0.00;
-            $tot_amount = $amount + $vat_val1-$discount;
+            $vat_val1 =  sprintf("%2f",(($amount-$discount)*5)/100);
+            $tot_amount = ($amount-$discount) + $vat_val1;
+
 
             $creditsDetails1 = $this->db->query('select * from prepaid_credits where parent_id='.$id);
             $creditsDetailsData1 = $creditsDetails1->row_array();
@@ -895,9 +922,15 @@ class Court_booking extends CI_Controller{
     
     public function cancel_booking(){
         $data['customer_id'] = ($this->input->post('customer_id') !='') ? $this->input->post('customer_id') : '';
+        $data['remarks'] = ($this->input->post('remarks') !='') ? $this->input->post('remarks') : '';
         $data['booking_id'] = ($this->input->post('booking_id') !='') ? $this->input->post('booking_id') : '';
         $data['bookingslot_id'] = ($this->input->post('bookingslot_id') !='') ? $this->input->post('bookingslot_id') : '';
         $data['paid_amount'] = ($this->input->post('paid_amount') !='') ? $this->input->post('paid_amount') : '';
+        $bid = $data['bookingslot_id'];
+        $sql="select gross_amount,discount_amount from bookingslot where id='$bid'";
+        
+        $data['gross_amount'] = $this->db->query($sql)->row()->gross_amount;
+        $data['discount_amount'] = $this->db->query($sql)->row()->discount_amount;
         $update_data = array(
             'bstatus' => '2',
             'cancelled_on' => date('Y-m-d'),
@@ -906,6 +939,8 @@ class Court_booking extends CI_Controller{
 
         $update_data2 = array(
             'cancelled' => 1,
+            'cancelled_on' => date('Y-m-d H:i:s'),
+            'remarks' => $data['remarks']
         );
         //return true;
         if($this->court_booking_model->update_booking_details_slot($update_data2, $data['booking_id'], $data['bookingslot_id'], $data['paid_amount'])){
@@ -915,7 +950,7 @@ class Court_booking extends CI_Controller{
             //$this->send_email($data['booking_id'],$data['customer_id'],$booking_status);
             //$this->update_wallet_amount($update_wallet_amount,$data['customer_id']);
 
-            $this->update_wallet_amount($data['paid_amount'], 0, $data['customer_id'], $data['bookingslot_id'], 'court_booking_regular_cancellation');
+            $this->update_wallet_amount($data['gross_amount'], $data['discount_amount'], $data['customer_id'], $data['bookingslot_id'], 'court_booking_regular_cancellation');
             return true;
         }
     }
@@ -1145,8 +1180,12 @@ class Court_booking extends CI_Controller{
                     $output .= '</tr>';
                     $output .= '<tr>';
                             $output .= '<td><strong>Gross Amt :</strong>'.$booking_details['gross_amount'].'</td>';
-                            $output .= '<td><strong>Discount :</strong>'.$booking_details['discount_amount'].'</td>';
+                            $output .= '<td><strong>Discount Amt:</strong>'.$booking_details['discount_amount'].'</td>';
                     $output .= '</tr>';
+                    $output .= '<tr>';
+                    $output .= '<td><strong>Vat % :</strong>'.$booking_details['vat_perc'].'</td>';
+                    $output .= '<td><strong>Vat Amt :</strong>'.$booking_details['vat_amount'].'</td>';
+            $output .= '</tr>';
                     $output .= '<tr>';
                             $output .= '<td><input type="hidden" name="update_balance_amount" id="update_balance_amount" value="'.$booking_details['balance_amount'].'"><strong>Net Amt :</strong>'.$booking_details['net_amount'].'</td>';
                             $output .= '<td><input type="hidden" name="paid_amount" id="paid_amount" value="'.$booking_details['paid_amount'].'"><strong>Advance :</strong>'.$booking_details['advance_amount'].'</td>';
@@ -1164,7 +1203,7 @@ class Court_booking extends CI_Controller{
                     if($booking_details['paystatus'] == '2') {
                             $output .= '<td colspan="2"><strong>Remarks :</strong> <input type="text" name="remarks" id="remarks" value="'.$booking_details['remarks'].'" ></td>';
                     }else{
-                        $output .= '<td colspan="2"><strong>Remarks :</strong> <input type="text" name="remarks" id="remarks" value="'.$booking_details['remarks'].'" readonly ></td>';
+                        $output .= '<td colspan="2"><strong>Remarks :</strong> <input type="text" name="remarks" id="remarks" value="'.$booking_details['remarks'].'" ></td>';
                     }
                     $output .= '</tr>';
             $output .= '</tbody>';
@@ -1181,7 +1220,7 @@ class Court_booking extends CI_Controller{
                     $output .= '<button type="button" title="Checkout" class="btn btn-danger pull-left booking-cancel">';
                     $output .= '<i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel Booking</button>';
                 }
-                $output .= '<button type="button" id="sbt_btn" class="btn btn-primary pull-right" >Update</button>';
+                //$output .= '<button type="button" id="sbt_btn" class="btn btn-primary pull-right" >Update</button>';
             }
             
             $output .= '</div>';            
@@ -1329,7 +1368,7 @@ class Court_booking extends CI_Controller{
         $events = $this->db->query("select *,bs.sid as activity_id, bs.booked_date as checkout_date,bs.booking_fromtime as from_time, bs.booking_totime as to_time,p.parent_name from booking ba 
         left join bookingslot as bs on bs.bid = ba.id
         left join parent p on p.parent_id = ba.customerid
-        where ba.`customerid` ='".$parent_id."' and bs.`sid` ='".$activity_id."' and bs.cancelled = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`blocked_status` = 1) ");
+        where ba.`customerid` ='".$parent_id."' and bs.`sid` ='".$activity_id."' and ba.bstatus=1 and bs.cancelled = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`blocked_status` = 1) ");
         
         
         $eventList=$events->result_array();

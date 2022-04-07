@@ -40,7 +40,7 @@
 <a href="#" class="close" data-dismiss="alert">&times;</a>
 </div>
 <?php } ?>
-<form action="<?php echo $form_action; ?>" name="regular_booking" id="regular_booking" method="post" autocomplete="off">
+<form action="<?php echo $form_action; ?>" name="Court_booking" id="Court_booking" method="post" autocomplete="off">
     <input type="hidden" name="hidden_slot_ids" id="hidden_slot_ids" value="" >
 <div class="col-sm-12 col-md-3">
 <p class="form_text1">Select Sport</p>
@@ -114,6 +114,8 @@
         <input type="hidden" name="hidden_total_price" id="hidden_total_price" value="">
         
         <input type="hidden" name="hidden_gross_amount" id="hidden_gross_amount" value="">
+        <input type="hidden" name="hidden_vat_amount" id="hidden_vat_amount" value="5.00">
+        <input type="hidden" name="hidden_vat_perc" id="hidden_vat_perc" value="">
         <input type="hidden" name="hidden_net_amount" id="hidden_net_amount" value="">
         <input type="hidden" name="hidden_balance_amount" id="hidden_balance_amount" value="">
         <table id="example3" class="table table-bordered table-striped">
@@ -145,7 +147,7 @@
 <h4>Make Booking</h4>
 <div class="col-sm-12 col-md-6">
 	<p class="form_text1">Customer Email</p>
-	<input type="text" name="customer_email" id="customer_email" placeholder="Enter Customer Email" value="" >
+	<input type="text" name="customer_email" id="customer_email" placeholder="Enter Customer Email" value="" readonly>
 </div>
 <div class="col-sm-12 col-md-6">
 	<p class="form_text1">Customer Name</p>
@@ -182,7 +184,16 @@
 						</div>
 					</div></div>
 				</td>
-				</tr>				
+				</tr>	
+				
+				<tr>
+					<td><strong>Vat Percentage</strong><br/>
+										<span class="small">(%)</span></td>
+					<td id="vat_perc">5%</td>
+						<td><strong>Vat Amount</strong></td>
+						<td id="vat_amount"></td>
+				</tr>
+
 			<tr>
 				<td><strong>Net Amount</strong><br/>
                                     <span class="small">(Inclusive of 5% VAT)</span></td>
@@ -213,7 +224,10 @@
 <div class="clearfix"></div>
 </section>
 
-<div id="viewModal" class="modal fade"></div>
+<div id="viewModal" class="modal fade">
+
+
+</div>
 
 <div id="addModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none; ">
     <div class="modal-dialog" style="width: 100%; margin-top: 100px">

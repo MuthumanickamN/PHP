@@ -226,6 +226,33 @@ Class Prepaid_credits_Model extends CI_Model {
 			return false;
 		}
 	}
+
+	public function get_customer_details_by_id($customer_id)
+	{
+		$this->db->select('*');
+                //$this->db->select("ct.*,wal.amount");
+		$this->db->from('parent as pt');
+		//$this->db->where('ct.mobile',$customer_mobile);
+		//$new_mobile = str_replace(' ','+',$customer_mobile);
+		
+        $this->db->where('pt.parent_id',$customer_id);
+		
+		
+		$this->db->join('prepaid_credits as pre', 'pt.parent_id = pre.parent_id', 'left');
+	
+		$this->db->order_by('pt.parent_id','DESC');
+		
+		$query = $this->db->get();
+		//echo $this->db->last_query();die;
+		if ( $query->num_rows() > 0 )
+		{
+		$row = $query->row_array();
+		return $row;
+		}else{
+			return false;
+		}
+	}
+
 	public function search_email_check($search_value){
 		
 		

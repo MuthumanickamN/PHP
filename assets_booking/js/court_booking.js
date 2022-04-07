@@ -98,7 +98,7 @@ jQuery(document).ready(function(){
         return return_var;
     });
    
-    $("form[name='regular_booking']").validate({
+    $("form[name='Court_booking']").validate({
         // Specify validation rules
         ignore: [],
         debug: false,
@@ -443,7 +443,7 @@ function show_booking_timeslot_old(){
       //  clear_cart_history();
         $.ajax({ 	
             type: "POST",   
-            url: base_url+"regular_booking/show_booking_timeslot",
+            url: base_url+"Court_booking/show_booking_timeslot",
             data:"sid="+sports+"&lid="+location+"&date="+date,
             //data:"sid="+sports+"&lid="+location,
             async: false,
@@ -494,7 +494,7 @@ function show_booking_cart_details(id, arraykey, fromtime, totime, date, btnid){
     id_array.push(arraykey);   
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"regular_booking/show_timeslot_details",
+        url: base_url+"Court_booking/show_timeslot_details",
         data:"id="+id+"&fromtime="+fromtime+"&totime="+totime+"&date="+date+"&btnid="+btnid,
         async: false,
         datatype: "html",
@@ -527,6 +527,7 @@ function show_booking_cart_details(id, arraykey, fromtime, totime, date, btnid){
                     $('#hide3').hide('slow');
                     $('#hide2').hide('slow');
                 }
+                get_customerDetailsbyID(parent_id);
                 total_price_cost();
                 selected_slot_ids(id_array);                
             });
@@ -617,6 +618,36 @@ function get_customerDetails(customer_email){
     }); 
 }
 
+function get_customerDetailsbyID(parent_id){
+    //var mob_no = $("#customer_mobile").val();
+	//alert(1);
+    $.ajax({ 	
+        type: "POST",   
+        url: base_url+"prepaid_credits_booking/get_customer_details_by_id",
+		data:{
+			id:parent_id
+			},
+       // data:"mob_no="+customer_mobile,		
+        async: false,
+        datatype: "json",
+        success : function(data)
+        {
+            //console.log(data);
+            var obj = JSON.parse(data);
+            $('#customer_email').val(obj.email_id);
+            $('#customer_name').val(obj.parent_name);
+            $('#customer_mobile').val(obj.mobile_no);
+            $('#cus_hid').val(obj.parent_id);
+            //var wallet_amount = parseInt(obj.amount);       
+            $('#customer_wallet_amount').val(obj.balance_credits);
+
+        },
+        fail: function( jqXHR, textStatus, errorThrown ) {
+                console.log( 'Could not get posts, server response: ' + textStatus + ': ' + errorThrown );
+        }
+    }); 
+}
+
 function get_customerWalletAmount(){
     //alert(2);
     var email = $("#customer_email").val();
@@ -649,7 +680,7 @@ function get_customerPenddingDeductableAmount(){
     var pennding_deductable_amount = 0;
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"regular_booking/get_customerPendingDeductableAmount",
+        url: base_url+"Court_booking/get_customerPendingDeductableAmount",
 		data:{
 			email:email
 			},
@@ -671,31 +702,38 @@ function get_customerPenddingDeductableAmount(){
 }
 
 function discount_calc(){
-    var gross_amount = ($('#hidden_gross_amount').val() !='') ? parseInt($('#hidden_gross_amount').val()) : 0;
-    var discount_amount = ($('#discount_amount').val() !='') ? parseInt($('#discount_amount').val()) : 0;
+    var gross_amount = ($('#hidden_gross_amount').val() !='') ? parseFloat($('#hidden_gross_amount').val()) : 0;
+    var discount_amount = ($('#discount_amount').val() !='') ? parseFloat($('#discount_amount').val()) : 0;
     var net_amount = 0;
     //if(discount_amount > 0){        
         if(discount_amount < gross_amount){
-            net_amount = gross_amount - discount_amount;
+            net_amount2 = gross_amount - discount_amount;
         }else{
             alert('Discount amount should be lesser than gross amount!');
              $("#hidden_discount_amount").val('');
              $("#discount_amount").val('');
-             net_amount = gross_amount;
+             net_amount2 = gross_amount;
         }
+
+        vat_amount = (parseFloat(net_amount2)*5/100).toFixed(2);
+        net_amount = parseFloat(net_amount2)+parseFloat(vat_amount);
+        $("#hidden_vat_amount").val(vat_amount);
+        $("#hidden_vat_perc").val(5.00);
         $("#hidden_discount_amount").val(discount_amount);
         $("#hidden_net_amount").val(net_amount);
         $("#net_amount").html(net_amount+'/-');
         $("#hidden_balance_amount").val(net_amount);
         $("#balance_amount").html(net_amount+'/-');
+        $("#vat_amount").html(vat_amount+'/-');
+        
     //}
 }
 
 
 function wallet_calc(){
     //get_customerWalletAmount();
-    var net_amount = ($('#hidden_net_amount').val() !='') ? parseInt($('#hidden_net_amount').val()) : 0 ;
-    var customer_wallet_amount = ($('#customer_wallet_amount').val() !='') ? parseInt($('#customer_wallet_amount').val()) : 0 ; 
+    var net_amount = ($('#hidden_net_amount').val() !='') ? parseFloat($('#hidden_net_amount').val()) : 0 ;
+    var customer_wallet_amount = ($('#customer_wallet_amount').val() !='') ? parseFloat($('#customer_wallet_amount').val()) : 0 ; 
     if( $('input[name=pay_mode]:checked').val() == '1' ){
         if($("#cus_hid").val() !=''){
             var amount_need_to_update = get_customerWalletAmount();
@@ -703,6 +741,7 @@ function wallet_calc(){
                 //alert(balance_amount+' '+customer_wallet_amount);
                 if(net_amount <= customer_wallet_amount){
                     amount_need_to_update = get_customerWalletAmount() - net_amount;
+                    
                 }else{
                     alert('Insufficient wallet amount!');
                     $('input[name=pay_mode]').attr('checked', false);
@@ -734,17 +773,26 @@ function total_price_cost(){
     $("#hidden_total_price").val(sum);
     $("#total_price strong").html(sum);
     $("#hidden_gross_amount").val(sum);
-    $("#hidden_net_amount").val(sum);  
-    $("#hidden_balance_amount").val(sum);
+
+    vat_amount = (parseFloat(sum)*5/100).toFixed(2);
+    net_amount = parseFloat(sum)+parseFloat(vat_amount);
+    $("#hidden_vat_amount").val(vat_amount);
+    $("#vat_amount").html(vat_amount+'/-');
+
+    $("#hidden_net_amount").val(net_amount);  
+    $("#hidden_vat_perc").val(5.00);  
+    $("#hidden_balance_amount").val(net_amount);
     $("#gross_amount").html(sum+'/-');
-    $("#net_amount").html(sum+'/-');
-    $("#balance_amount").html(sum+'/-');
+    $("#net_amount").html(net_amount+'/-');
+    $("#balance_amount").html(net_amount+'/-');
     $('#customer_name').val('');
     $('#customer_mobile').val('');
     $('#customer_email').val('');
     $('#cus_hid').val('');
     $('#customer_wallet_amount').val('');
     $('input[name=pay_mode]').attr('checked', false);
+    
+
     
 }
 
@@ -800,7 +848,8 @@ function view_modal_popup(booked_slotid){
                 var paid_amount =  $("#paid_amount").val();
                 var booking_id =  $("#booking_id").val();bookingslot_id
                 var bookingslot_id =  $("#bookingslot_id").val();
-                cancel_booking(customer_id,paid_amount,booking_id, bookingslot_id);
+                var remarks =  $("#remarks").val();
+                cancel_booking(customer_id,paid_amount,booking_id, bookingslot_id, remarks);
             });
             $('#sbt_btn').click(function(e){                 
                 $("form[name='update_booking_form']").submit();                
@@ -814,13 +863,13 @@ function view_modal_popup(booked_slotid){
     //$("#viewModal").html(output);
 }
 
-function cancel_booking(customer_id,paid_amount,booking_id, bookingslot_id){
+function cancel_booking(customer_id,paid_amount,booking_id, bookingslot_id, remarks=''){
     //alert('test1');
     if(confirm('Are you sure!,Do you want to cancel booking?')) {
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"regular_booking/cancel_booking",
-        data:"customer_id="+customer_id+"&booking_id="+booking_id+"&bookingslot_id="+bookingslot_id+"&paid_amount="+paid_amount,		
+        url: base_url+"Court_booking/cancel_booking",
+        data:"customer_id="+customer_id+"&booking_id="+booking_id+"&bookingslot_id="+bookingslot_id+"&paid_amount="+paid_amount+"&remarks="+remarks,		
         async: false,
         datatype: "html",
         success : function(data)
@@ -846,7 +895,7 @@ function getLocationNames(){
         //alert(selectedSports+' '+selectedLocation);
         $.ajax({
             type: "POST",
-            url: base_url+"regular_booking/get_locationnames",
+            url: base_url+"Court_booking/get_locationnames",
             data: { sports_id : selectedSports} 
         }).done(function(data){
             $("#location").html(data);
@@ -884,8 +933,18 @@ function addSlot(this_){
         success: function (result) {
           if(result['status'] == 'success'){
             $('#cart_slot').val(result['count'])
-            $('.cart_slot').html(result['count'])
-            $('.close').click()
+                $('.cart_slot').html(result['count'])
+                $('.close').click()
+                
+                swal({
+                  title: "Added to Cart!",
+                  text: "",
+                  type: "success",
+                  timer: 1000
+               });
+               
+                $('#calendar').fullCalendar('refetchEvents');
+
           }else{
             location.reload();
             
@@ -913,19 +972,26 @@ function show_cart_list(){
                  
                 var id = $(this).attr('data-id');
                 remove_cart_item(id); 
-                total_price_cost();
                 
+                total_price_cost();
+                //alert(9);
+                get_customerDetailsbyID(parent_id);
                 //selected_slot_ids(id_array);                
             });
             $('#checkout').click(function(){
-                $("#hide3").show("slow");
+                
                 var gross_amount = $("#hidden_gross_amount").val();
-                var net_amount = $("#hidden_net_amount").val();
-                var balance_amount = $("#hidden_balance_amount").val();
-                $("#gross_amount").html(gross_amount+'/-');
-                $("#net_amount").html(net_amount+'/-');
-                $("#balance_amount").html(balance_amount+'/-');
-                customer_mobile_autocomplete();
+                if(gross_amount > 0)
+                {
+                    $("#hide3").show("slow");
+                    get_customerDetailsbyID(parent_id);
+                    var net_amount = $("#hidden_net_amount").val();
+                    var balance_amount = $("#hidden_balance_amount").val();
+                    $("#gross_amount").html(gross_amount+'/-');
+                    $("#net_amount").html(net_amount+'/-');
+                    $("#balance_amount").html(balance_amount+'/-');
+                    customer_mobile_autocomplete();
+                }
             });
         },
         fail: function( jqXHR, textStatus, errorThrown ) {

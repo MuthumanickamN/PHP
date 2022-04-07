@@ -170,7 +170,7 @@
         <td style="text-align: center;"><?php if($coach['last_sign_in_at']) { ?><span style="display:none;"><?php echo strtotime($coach['last_sign_in_at']);?></span><?php  echo $coach['last_sign_in_at'];  } ?></td>
         <td style="text-align: center"><?php echo $statusVal; ?></td>
         <td align="center"><a type="button" style="color:white;text-decoration:none" onClick="view_coach(<?php echo $coach['coach_id'];?>)" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View">
-        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+        </a>
         
         
         <a type="button" style="color:white;text-decoration:none;" class="btn btn-warning fa fa-edit" data-id="4" data-toggle="tooltip" title="Edit" href="<?php echo base_url('coach/edit/'.$coach['coach_id']); ?>">
