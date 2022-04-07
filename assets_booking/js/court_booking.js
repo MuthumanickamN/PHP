@@ -36,10 +36,12 @@ jQuery(document).ready(function(){
     
     
     $('.view-booked-timeslot').click(function(e){
-        var booked_slotid = $(this).attr('data-id');
+        alert(1);  
+        /*var booked_slotid = $(this).attr('data-id');
         var fromtime = $(this).attr('data-fromtime');
-        var totime = $(this).attr('data-totime');                        
-        view_modal_popup(booked_slotid, fromtime, totime);
+        var totime = $(this).attr('data-totime');     
+                         
+        view_modal_popup(booked_slotid, fromtime, totime);*/
     });
     
     customer_mobile_autocomplete();
@@ -421,8 +423,16 @@ function set_form( activity_id, location_id, parent_id, clickDay, date)
         success:function(data){   
         $('#slotSelection').html(data);
         //document.getElementById('slotSelection tbody').innerHTML=data;
+        
+        $('.view-booked-timeslot').click(function(e){
+            //alert(1);  
+            var booked_slotid = $(this).attr('data-id');
+            view_modal_popup(booked_slotid);
+        });
+
         }
     });
+
 }
 
 function show_booking_timeslot_old(){
@@ -778,7 +788,7 @@ function view_modal_popup(booked_slotid){
     
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"regular_booking/get_bookedslot_details",
+        url: base_url+"Court_booking/get_bookedslot_details",
         data:"booked_slotid="+booked_slotid,		
         async: false,
         datatype: "html",
