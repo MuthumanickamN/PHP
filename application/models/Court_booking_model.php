@@ -79,7 +79,7 @@ Class Court_booking_model extends CI_Model {
 
     public function show_booking_timeslot($data){
 
-        $this->db->select('pr.id, pr.cid, ct.courtname, ct.from_time, ct.to_time');
+        $this->db->select('pr.id, pr.cid, ct.id as court_id, ct.courtname, ct.from_time, ct.to_time');
         $this->db->from('pricing as pr');
         $this->db->join('court as ct', 'ct.id = pr.cid', 'left');  
         if($data['sid'] != ''){
@@ -88,6 +88,7 @@ Class Court_booking_model extends CI_Model {
         if($data['lid'] != ''){
             $this->db->where('pr.lid', $data['lid'] );
         }
+        
         if($data['day'] != ''){
             $day = $data['day'];
             $where_a = "(pr.fromday = $day OR pr.today = $day OR (pr.fromday <= $day AND pr.today >= $day))";
@@ -271,20 +272,18 @@ Class Court_booking_model extends CI_Model {
         }
     }
     
-    public function show_timeslot_details($data){
+    public function show_timeslot_details($parent_id){
 
-        $this->db->select('pst.id, pst.pid, ct.courtname, pr.cid, pr.sid, sp.sportsname, pst.fromtime, pst.totime, pst.cost, pr.lid, loc.location');
-        $this->db->from('pricing as pr');
-        $this->db->join('court as ct', 'ct.id = pr.cid', 'left'); 
-        $this->db->join('sports as sp', 'sp.id = pr.sid', 'left'); 
-        $this->db->join('location_booking as loc', 'loc.id = pr.lid', 'left'); 
-        $this->db->join('pricingslot as pst', 'pst.pid = pr.id', 'left'); 
-        if($data['id'] != ''){
-            $this->db->where('pst.id', $data['id'] );
+        $this->db->select('tmp.*, ct.courtname, sp.sportsname, loc.location');
+        $this->db->from('tmp_booking_court as tmp');
+        $this->db->join('court as ct', 'ct.id = tmp.court_id', 'left'); 
+        $this->db->join('sports as sp', 'sp.id = tmp.activity_id', 'left'); 
+        $this->db->join('location_booking as loc', 'loc.id = tmp.location_id', 'left'); 
+        if($parent_id != ''){
+            $this->db->where('tmp.parent_id', $parent_id );
         }
-        $this->db->where('pr.delete_status !=', 1);
-        $this->db->order_by('pr.id','DESC');
-        $this->db->limit(1);
+        $this->db->order_by('tmp.id','ASC');
+        
         $query = $this->db->get();
         //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )

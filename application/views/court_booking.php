@@ -3,6 +3,11 @@
 
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" ></script>
+
 
 <script src="<?php echo base_url(); ?>assets_booking/js/court_booking.js"></script>
 <script src="<?php echo base_url(); ?>assets_booking/libraries/cookie.js"></script>
@@ -72,11 +77,25 @@
 </div>
 
 
-<div class="col-sm-12 col-md-3">
+<div class="col-sm-12 col-md-1">
 <p class="form_text1">&nbsp;</p>
 <button type="button" id="slots" class="btn btn-primary">Show Slots</button>
 </div>
+
+<div class="col-sm-12 col-md-1">
+<p class="form_text1">&nbsp;</p>
+<button type="button" id="show_cart" class="btn btn-success" style="display:none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+</div>
+
 <div class="clearfix"></div>
+
+<div class="row calendarDiv">
+	<div class="col-md-12">
+		<div id="calendar">
+		</div>
+	</div>
+</div>
+
 <div id="hide1" style="display: none;">
     <div class="pull-right"><img  src="<?php echo base_url(); ?>assets_booking/images/status_image.png" alt="Notes" title="Notes"></div>
     <div class="clearfix"></div>
@@ -110,10 +129,13 @@
 			</tr>
 		</thead>
 		<tbody>			
+			
+		</tbody>
+		<tfoot>
 			<tr>
                 <td colspan="7" class="total"><button type="button" title="Checkout" id="checkout" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-ok"></i> &nbsp; Checkout</button> Total : <span id="total_price"><strong></strong></span></td>
 			</tr>
-		</tbody>
+		</tfoot>
 	</table>
     
 </div>
@@ -193,6 +215,28 @@
 
 <div id="viewModal" class="modal fade"></div>
 
+<div id="addModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog" style="width: 100%; margin-top: 100px">
+  <div class="modal-content" style="width: 100%">
+      <div class="modal-body" style="width: 100%">
+        <div class="alert alert-info">
+          <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
+        
+        <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
+        </div>
+        <div class="alert alert-info">
+     <h4></h4>
+     <table id="slotSelection" class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%; background-color: white" >
+    
+  </table>
+   <br>
+   
+       
+    </div>
+  </div>
+</div>
+</div>
 <script>
 $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
 </script>

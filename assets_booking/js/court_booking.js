@@ -2,7 +2,20 @@ jQuery(document).ready(function(){
     //$('[data-toggle="tooltip"]').tooltip();
     $('.parent_id').select2();
     var date_last_clicked = null;
+    jQuery(document).on('change','.parent_id', function(e){
+        var parent_id = $(this).val();
+        if(parent_id != 0)
+        {
+            $('#show_cart').css('display', 'block');
+        }
+        else{
+            $('#show_cart').css('display', 'none');
+        }
+    });
     jQuery(document).on('click','#slots', function(e){
+        $('#hide2').css('display', 'none');
+        $('#hide3').css('display', 'none');
+        $('.calendarDiv').css('display', 'block');
         show_booking_timeslot();
     });
     numeric_input();   
@@ -31,6 +44,12 @@ jQuery(document).ready(function(){
     
     customer_mobile_autocomplete();
     
+    $('#show_cart').click(function(e){
+        $('.calendarDiv').css('display', 'none');
+        $('#hide2').css('display', 'block');
+        $('#hide3').css('display', 'none');
+        show_cart_list();
+    });
     $('#discount_btn').click(function(e){
         discount_calc();
         wallet_calc();
@@ -179,30 +198,23 @@ function show_booking_timeslot(){
     if(sports !='' && location !='' && parent_id !=''){
         var holidays = [];
         $.ajax({
-            url:"<?php echo base_url().'Student_profile_slot_booking/get_holidays/'; ?>",
+            url:base_url+"Student_profile_slot_booking/get_holidays/",
             type:"POST",
             success:function(data){   
                 var obj = JSON.parse(data);
                 holidays = obj;
             }
         });
-        
-        
+    
+    $('#calendar').fullCalendar('destroy');
     $('#calendar').fullCalendar({
-        defaultView: 'month',
+    defaultView: 'month',
     selectable: true,
         
     selectAllow: function(select) {
         return moment().diff(select.start) <= 0
     },
-    
-    events : '<?php echo base_url() ?>Court_booking/get_events/'+sports+'/'+location,
-    /* eventTimeFormat: { // like '14:30:00'
-        hour: '2-digit',
-        minute: false,
-        second: false,
-        meridiem: false
-    },*/
+    events : base_url+'Court_booking/get_events/'+sports+'/'+location+'/'+parent_id,
     eventMouseover: function (data, event, view) {
 
                 //tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'Activity ' + ': ' + data.title  + '</div>';
@@ -238,38 +250,23 @@ function show_booking_timeslot(){
         },
         eventRender: function (event, element) {
             var eventDate = event.start;
-            alert(1);
+            //alert(1);
             var calendarDate = $('#calendar').fullCalendar('getDate');
-            alert(eventDate.get('month'), calendarDate.get('month'));
+            //alert(eventDate.get('month'), calendarDate.get('month'));
             if (eventDate.get('month') !== calendarDate.get('month')) {
                 return false;
             }
         },
-        /*events: function(start, end, timezone, callback) {
-            $.ajax({
-                url: '<?php echo base_url() ?>index.php/Student_profile_slot_booking/get_events',
-                dataType: 'json',
-                data: {
-                    start: start.unix(),
-                    end: end.unix()
-                },
-                success: function(msg) {
-                    var events = msg.events;
-                    callback(events);
-                }
-            });
-            }*/
+        
         },
         ],
-        /*validRange: function(nowDate){
-            return {start: nowDate} //to prevent anterior dates
-        },*/
+        
         dayClick: function(date, jsEvent,allDay,  view) {
         date_last_clicked = $(this);
         var today=new Date();
-    if(today.getHours() != 0 && today.getMinutes() != 0 && 
-        today.getSeconds() != 0 && today.getMilliseconds() != 0){
-            today.setHours(0,0,0,0);
+        if(today.getHours() != 0 && today.getMinutes() != 0 && 
+            today.getSeconds() != 0 && today.getMilliseconds() != 0){
+                today.setHours(0,0,0,0);
         } 
         var month = today.getMonth() + 1; //months from 1-12
         var day = today.getDate();
@@ -335,27 +332,7 @@ function show_booking_timeslot(){
                 }*/
                 
             }
-            
-            
-            
-            if(slot_id !=0)
-                {
-                    
-                    if((t_month == d_month) && (t_year == d_year) )
-                    {
-                        
-                    }
-                    else
-                    {
-                        swal("Warning", "Sorry, you can swap only current month slot", "error");
-                        return false;
-                    }
-                }
-            
-            
-            
-            
-            if(role  == 'parent')
+            /*if(role  == 'parent')
             {
             
                 if(today === thatDay){
@@ -388,10 +365,10 @@ function show_booking_timeslot(){
                 
             }
             else
-            {
+            {*/
             day_val = $('#day_val').val();
             clickDay = date.day();
-            set_form( activity_id, slot_id, coach_id, location_id, hour,  clickDay, thatDay2);
+            set_form( sports, location, parent_id, clickDay, thatDay2);
             $('#addModal').modal();
             $(this).css('background-color', '#bed7f3');
             $(this).addClass('fc_highlighted');
@@ -405,9 +382,9 @@ function show_booking_timeslot(){
             document.getElementById('show_date').value=datas2;
             $('.dates').val(datas);
             $(this).css('background-color', '#bed7f3');
-            $('.daysDiv').hide();
+            //$('.daysDiv').hide();
             $('.showDays_'+clickDay).show(); 
-            }
+            //}
         }
                 
         
@@ -432,6 +409,21 @@ function show_booking_timeslot(){
 
 }
 
+
+function set_form( activity_id, location_id, parent_id, clickDay, date)
+{
+    
+    $.ajax({
+        url:base_url+'Court_booking/set_form/',
+        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id},
+        type:"POST",
+        async:false,
+        success:function(data){   
+        $('#slotSelection').html(data);
+        //document.getElementById('slotSelection tbody').innerHTML=data;
+        }
+    });
+}
 
 function show_booking_timeslot_old(){
     var sports = ( $('#sports').val() !=='' ) ? $('#sports').val() : '';
@@ -852,4 +844,97 @@ function getLocationNames(){
     }else{
         $("#location").children('option:not(:first)').remove();
     }
+}
+
+function addSlot(this_){
+    
+    
+    var activity_id = $(this_).attr('data-activity_id'); 
+    var location_id = $(this_).attr('data-location_id'); 
+    var parent_id = $(this_).attr('data-parent_id'); 
+    var court_id = $(this_).attr('data-court_id'); 
+    var slot_to_time = $(this_).attr('data-totime'); 
+    var slot_from_time = $(this_).attr('data-fromtime'); 
+    var dates = $(this_).attr('data-date'); 
+    
+    
+    jQuery.ajax({
+        type:'POST',
+        url:baseurl+'Court_booking/add_slot_booking',
+        data:{
+            activity_id:activity_id,
+            location_id:location_id,
+            parent_id:parent_id,
+            court_id:court_id,
+            slot_from_time:slot_from_time,
+            slot_to_time:slot_to_time,
+            dates:dates
+        },
+        dataType:'json',                       
+        success: function (result) {
+          if(result['status'] == 'success'){
+            $('#cart_slot').val(result['count'])
+            $('.cart_slot').html(result['count'])
+            $('.close').click()
+          }else{
+            location.reload();
+            
+          }
+        }, 
+               
+    });
+}
+
+function show_cart_list(){
+    var parent_id = $('#parent_id').val();
+    $.ajax({ 	
+        type: "POST",   
+        url: base_url+"Court_booking/show_timeslot_details",
+        data:"parent_id="+parent_id,
+        async: false,
+        datatype: "html",
+        success : function(data)
+        {   
+            //console.log(data);            
+            $("#example3 tbody").html(data); 
+            total_price_cost();
+            $('.rmve_btn').click(function(e){
+                $(this).closest('tr').remove(); 
+                 
+                var id = $(this).attr('data-id');
+                remove_cart_item(id); 
+                total_price_cost();
+                
+                //selected_slot_ids(id_array);                
+            });
+            $('#checkout').click(function(){
+                $("#hide3").show("slow");
+                var gross_amount = $("#hidden_gross_amount").val();
+                var net_amount = $("#hidden_net_amount").val();
+                var balance_amount = $("#hidden_balance_amount").val();
+                $("#gross_amount").html(gross_amount+'/-');
+                $("#net_amount").html(net_amount+'/-');
+                $("#balance_amount").html(balance_amount+'/-');
+                customer_mobile_autocomplete();
+            });
+        },
+        fail: function( jqXHR, textStatus, errorThrown ) {
+                console.log( 'Could not get posts, server response: ' + textStatus + ': ' + errorThrown );
+        }
+    });
+}
+
+function remove_cart_item(id)
+{
+    $.ajax({ 	
+        type: "POST",   
+        url: base_url+"Court_booking/remove_cart_item",
+        data:"id="+id,
+        async: false,
+        datatype: "html",
+        success : function(data)
+        {   
+
+        }
+    });
 }
