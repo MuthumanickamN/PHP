@@ -2053,9 +2053,9 @@ appearance:none
 .table-responsive > .table-bordered {
 	border:1px solid rgba(0, 0, 0, 0.05);
 }
-.table-responsive .btn {
+/*.table-responsive .btn {
 	min-width: 150px;
-}
+}*/
 .table-responsive .btn-xs {
 	min-width: auto;
 }
@@ -3485,6 +3485,9 @@ transition:transform .5s ease-in-out
 	z-index:5;
 	display:inline-block;
 	margin-top:-20px
+}
+.show{
+z-index:9999 !important
 }
 .modal {
 	background:rgba(0, 0, 0, 0.3);
