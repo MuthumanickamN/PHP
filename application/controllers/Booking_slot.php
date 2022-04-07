@@ -14,7 +14,7 @@ class Booking_slot extends CI_Controller {
 	{
 		//$this->load->view('includes/booking_header');
 		$data['sportslist'] = $this->Booking_slot_model->getSportsList();
-		$data['getLocationList'] = $this->Booking_slot_model->getLocationList();
+		//$data['getLocationList'] = $this->Booking_slot_model->getLocationList();
 		
 		//$user_id = $_SESSION['id'];
 		$user_id = $this->session->userdata('id');

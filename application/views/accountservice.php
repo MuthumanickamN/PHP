@@ -311,8 +311,8 @@ $.ajax({
     
      <div class="form-group lg-btm">
       <div class="col-md-6 control text-center">
-        <input id="save" type="submit" name="submit" value="Submit" class="btn btn-success" />           
-        <a href="<?php echo base_url().'accountservice' ?>"     class="btn btn-danger" >Cancel</a></div></div>
+        <input id="save" type="submit" name="submit" value="Submit" class="btn btn-success" />      
+        <a href="<?php echo base_url().'AccountService' ?>"     class="btn btn-danger" >Cancel</a></div></div>
   </form>
 </div>
 </div>

@@ -30,11 +30,11 @@
 	
 		<div class="col-sm-4">
 			<p class="form_text1" id="from">From</p>
-			<input type="text" class="date-picker" name="datepicker" id="datepicker">
+			<input type="text" class="date-picker" id="from_date" name="from_date" value="" readonly>
 		</div>
 		<div class="col-sm-4" id="hide1">
 			<p class="form_text1">To</p>
-			<input type="text" class="date-picker" name="datepicker1" id="datepicker1">
+			<input type="text" class="date-picker" id="to_date" name="to_date" value="" readonly>
 		</div>
 	<div class="col-sm-4">
 	<p class="form_text1">&nbsp;</p>
