@@ -300,9 +300,10 @@ function show_booking_timeslot(){
         var lastDay = new Date(l_t_date.getFullYear(), l_t_date.getMonth() + 1, 0);
         var lastDate = lastDay.getDate();
         //alert(lastDate);
-        if (date<today){
+		if (date<today){
         swal("Error! Please select valid date");
         }
+        
         else{
             
             if(t_year < d_year)
@@ -370,7 +371,7 @@ function show_booking_timeslot(){
             {*/
             day_val = $('#day_val').val();
             clickDay = date.day();
-            set_form( sports, location, parent_id, clickDay, thatDay2);
+            set_form( sports, location, parent_id, clickDay, thatDay2,today);
             $('#addModal').modal();
             $(this).css('background-color', '#bed7f3');
             $(this).addClass('fc_highlighted');
@@ -412,12 +413,12 @@ function show_booking_timeslot(){
 }
 
 
-function set_form( activity_id, location_id, parent_id, clickDay, date)
+function set_form( activity_id, location_id, parent_id, clickDay, date, today)
 {
     
     $.ajax({
         url:base_url+'Court_booking/set_form/',
-        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id},
+        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id, today:today},
         type:"POST",
         async:false,
         success:function(data){   
@@ -914,7 +915,8 @@ function addSlot(this_){
     var court_id = $(this_).attr('data-court_id'); 
     var slot_to_time = $(this_).attr('data-totime'); 
     var slot_from_time = $(this_).attr('data-fromtime'); 
-    var dates = $(this_).attr('data-date'); 
+    var dates = $(this_).attr('data-date');
+    var today = $(this_) .attr('data-today');	
     
     
     jQuery.ajax({
@@ -927,7 +929,8 @@ function addSlot(this_){
             court_id:court_id,
             slot_from_time:slot_from_time,
             slot_to_time:slot_to_time,
-            dates:dates
+            dates:dates,
+			today:today
         },
         dataType:'json',                       
         success: function (result) {
