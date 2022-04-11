@@ -689,6 +689,25 @@
 <?php }/**/ ?>
 
 
+
+<?php if( $role == 'parent') { ?>
+          <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Court Booking</span></a>
+            <ul class="dropdown-menu">
+
+            <?php } if( $role == 'parent') { ?>
+                  <li data-menu="Booking"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_court' ?>"><span data-i18n="Booking">Book Court</span></a></li>
+
+              <?php } ?>
+              </ul>
+  </li>
+<?php  ?>
+
+
+
+
+
+
+
     
    
         
