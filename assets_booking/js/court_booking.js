@@ -301,7 +301,27 @@ function show_booking_timeslot(){
         var lastDate = lastDay.getDate();
         //alert(lastDate);
 		if (date<today){
-        swal("Error! Please select valid date");
+			//swal("Error! Please select valid date");
+			
+			day_val = $('#day_val').val();
+            clickDay = date.day();
+            set_form( sports, location, parent_id, clickDay, thatDay2,'not_today');
+            $('#addModal').modal();
+            $(this).css('background-color', '#bed7f3');
+            $(this).addClass('fc_highlighted');
+            var data=new Date(date).toISOString();
+            var datas= moment(data).utc().format('YYYY-MM-DD');
+            var datas2= moment(data).utc().format('DD/MM/YYYY');
+            //document.getElementById('dates').value=datas;
+            $("button.form_date").each(function(){
+                $(this).attr("data-dates",datas);
+            });
+            document.getElementById('show_date').value=datas2;
+            $('.dates').val(datas);
+            $(this).css('background-color', '#bed7f3');
+            //$('.daysDiv').hide();
+            $('.showDays_'+clickDay).show(); 
+			
         }
         
         else{
@@ -371,7 +391,7 @@ function show_booking_timeslot(){
             {*/
             day_val = $('#day_val').val();
             clickDay = date.day();
-            set_form( sports, location, parent_id, clickDay, thatDay2,today);
+            set_form( sports, location, parent_id, clickDay, thatDay2,'today');
             $('#addModal').modal();
             $(this).css('background-color', '#bed7f3');
             $(this).addClass('fc_highlighted');
@@ -413,12 +433,12 @@ function show_booking_timeslot(){
 }
 
 
-function set_form( activity_id, location_id, parent_id, clickDay, date, today)
+function set_form( activity_id, location_id, parent_id, clickDay, date, date_info)
 {
     
     $.ajax({
         url:base_url+'Court_booking/set_form/',
-        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id, today:today},
+        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id, date_info:date_info},
         type:"POST",
         async:false,
         success:function(data){   
