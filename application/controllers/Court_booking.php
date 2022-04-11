@@ -1082,9 +1082,10 @@ class Court_booking extends CI_Controller{
                     $booked_by = ($check_booked_slot['booked_by'] == '0') ? 'btn-danger' : (($check_booked_slot['blocked_status'] == '0') ? 'btn-warning' : 'btn-danger' );
                     if($check_booked_slot['booking_for']=='')
                     {
-                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+						$value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
                     }else{
-                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+						
+                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot' >".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
                     }
                   
                }else{
@@ -1611,7 +1612,7 @@ class Court_booking extends CI_Controller{
             $new_output .='<td>'.date('h:i A', $value['from_time']).'-'.date('h:i A', $value['to_time']).'</td>'; // city_a ad
             foreach($new_array as $key => $courtnames) { // city_b headings
                 $holiday_id = $this->get_holiday_id($data['date']);
-                $new_output .= "<td>".$this->check_timeslot_exist($i.'_'.$key.'_'.strtotime($data['date']),$courtnames,date('H:i:s', $value['from_time']), date('H:i:s', $value['to_time']), $data['date'], $holiday_id, $activity_id, $location_id, $parent_id, $value['cid'])."</td>";
+                $new_output .= "<td>".$this->check_timeslot_exist($i.'_'.$key.'_'.strtotime($data['date']),$courtnames,date('H:i:s', $value['from_time']), date('H:i:s', $value['to_time']), $data['date'], $holiday_id, $activity_id, $location_id, $parent_id, $value['cid'] )."</td>";
             }
             //$new_output .='</form>';
             $new_output .='</tr>';
