@@ -339,7 +339,6 @@ class Court_booking extends CI_Controller{
                     $fromtime = $insert_booking_slot_details['slot_fromtimes'][$i];
                     $totime =  $insert_booking_slot_details['slot_totimes'][$i];
                     $amount =  $insert_booking_slot_details['slot_price'][$i];
-                    $today = $insert_booking_slot_details['today'][$i];
 
                     $amount2 = $amount-$discount_each;
                     $vat_amount = round(($amount2*$data2['vat_perc'])/100,2);
@@ -1059,7 +1058,7 @@ class Court_booking extends CI_Controller{
         return $dayid;
     }
     
-    private function check_timeslot_exist($i,$courtnames, $fromtime, $totime, $date, $holiday_id, $activity_id, $location_id, $parent_id, $court_id, $today) { 
+    private function check_timeslot_exist($i,$courtnames, $fromtime, $totime, $date, $holiday_id, $activity_id, $location_id, $parent_id, $court_id, $date_info) { 
         $cid = '';
         foreach($courtnames as $k => $court){
             $cid = $court['cid'];
@@ -1083,13 +1082,31 @@ class Court_booking extends CI_Controller{
                     $booked_by = ($check_booked_slot['booked_by'] == '0') ? 'btn-danger' : (($check_booked_slot['blocked_status'] == '0') ? 'btn-warning' : 'btn-danger' );
                     if($check_booked_slot['booking_for']=='')
                     {
-                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                        if($date_info=="today")
+                        {
+						    $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                        }
+                        else{
+                            $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot' disabled>".ucfirst($check_booked_slot['customer_name'])."</button>";
+                        }
                     }else{
-                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+						if($date_info=="today")
+                        {
+                         $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot' >".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+                        }
+                        else{
+                            $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot' disabled>".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+                        }
                     }
                   
                }else{
-                   $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn btn-info view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    if($date_info=="today")
+                    {
+                    $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn btn-info view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    }
+                    else{
+                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn btn-info view-booked-timeslot' disabled>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    }
                }
            }else{  
                 $this->load->helper('cookie');
@@ -1102,9 +1119,24 @@ class Court_booking extends CI_Controller{
                    $pstid = $chk['id'];
                    $hid = $chk['holiday_id'];
                }
-               $value = "<button type='button' id='$i' data-id='".$pstid."' data-holiday_id='".$hid."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."'  data-court_id='".$court_id."' data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' data-today='".$today."' onclick='addSlot(this)' class='btn booking-timeslot $cookie '>Book</button>"; 
+
+               if($date_info=="today")
+                {
+
+                    $value = "<button type='button' id='$i' data-id='".$pstid."' data-holiday_id='".$hid."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."'  data-court_id='".$court_id."' data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie '>Book</button>"; 
+                }
+                else{
+                    $value = "<button type='button' id='$i' data-id='".$pstid."' data-holiday_id='".$hid."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."'  data-court_id='".$court_id."' data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie ' disabled>Book</button>"; 
+                }
                }else{
-                $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' data-today='".$today."' onclick='addSlot(this)' class='btn booking-timeslot $cookie'>Book</button>";    
+
+                    if($date_info=="today")
+                    {
+                        $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."'   onclick='addSlot(this)' class='btn booking-timeslot $cookie'>Book</button>";  
+                    }  
+                    else{
+                        $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie' disabled>Book</button>";    
+                    }
                }
            }
         }else{
@@ -1358,7 +1390,7 @@ class Court_booking extends CI_Controller{
         echo $output;
     }
     
-    public function get_events($activity_id, $location_id, $parent_id, $today){
+    public function get_events($activity_id, $location_id, $parent_id){
         $data_events = array();
         $start =date('Y-m-d', strtotime($this->input->get("start")));
         $end =date('Y-m-d', strtotime($this->input->get("end")));
@@ -1424,12 +1456,11 @@ class Court_booking extends CI_Controller{
         $day=$this->input->post('clickDay');
         $date=$this->input->post('date');
         $parent_id=$this->input->post('parent_id');
-        $today = $this->input->post('today');
+        
         $data['sid'] = ($this->input->post('activity_id') !='') ? $this->input->post('activity_id') : '';
         $data['lid'] = ($this->input->post('location_id') !='') ? $this->input->post('location_id') : '';
         $data['date'] = ($this->input->post('date') !='') ? change_date_format($this->input->post('date')) : '';
         $data['day'] = $this->get_dayid(date('l', strtotime($data['date'])));
-        $data['today'] = ($this->input->post('today') !='') ? $this->input->post('today') : '';
         $get_details = $this->court_booking_model->show_booking_timeslot($data);
 
         $weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];          
@@ -1470,7 +1501,6 @@ class Court_booking extends CI_Controller{
                     <input type="hidden" name="sid" id="sid" value="'.$sid.'">
                     <input type="hidden" name="lane_id" id="lane_id" value="'.$slot['lane_court_id'].'">
                     <input type="hidden" name="day_val" id="day_val" value="'.array_search($slot['days'],$weekdays).'">
-                    <input type="hidden" name="today" id="today" value="'.$today.'">
             <tr class="daysDiv showDays_'.$dayvalue.'">       
             <td style="text-align: center;">'.$slot['slot_from_time'].'-'.$slot['slot_to_time'].'</td>
             <td style="text-align: center;"> ';
@@ -1491,7 +1521,6 @@ class Court_booking extends CI_Controller{
                     data-sid='".$sid."' 
                     data-activityselection_id='".$slot['id']."' 
                     data-slot_id='".$slot['id']."' 
-                    data-tpday='".$today."'
                     onClick='addSlot(this)'
                     class='btn btn-success form_date addSlot' > ADD TO CART</button>";
                 }
@@ -1509,7 +1538,6 @@ class Court_booking extends CI_Controller{
                     data-sid='".$sid."' 
                     data-activityselection_id='".$slot['id']."' 
                     data-slot_id='".$slot['id']."' 
-                    data-today='".$today."'
                     onClick='addSlot(this)'
                     class='btn btn-danger form_date addSlot' disabled> ADD TO CART</button>";
                     
@@ -1529,7 +1557,6 @@ class Court_booking extends CI_Controller{
                     data-activityselection_id='".$slot['id']."' 
                     data-slot_id='".$slot['id']."' 
                     data-slotid='".$slot_id."' 
-                    data-today='".$today."'
                     onClick='swapSlot(this)'
                     class='btn btn-warning form_date swapSlot' > Confirm to Swap</button>";
                     
@@ -1553,14 +1580,14 @@ class Court_booking extends CI_Controller{
         $data['parent_id'] = ($this->input->post('parent_id') !='') ? $this->input->post('parent_id') : '';
         $data['date'] = ($this->input->post('date') !='') ? change_date_format($this->input->post('date')) : '';
         $data['day'] = $this->get_dayid(date('l', strtotime($data['date'])));
-        $data['today'] = ($this->input->post('today') !='') ? $this->input->post('today') : '';
+        $data['date_info'] = ($this->input->post('date_info') !='') ? $this->input->post('date_info') : '';
         $get_details = $this->court_booking_model->show_booking_timeslot($data);
 
         $activity_id = $data['sid']; 
         $location_id = $data['lid']; 
         $day_value = $data['day'];
         $parent_id = $data['parent_id'];
-        $today=$data['today'];
+        
 
         $new_output = '';
         if($get_details)
@@ -1619,7 +1646,7 @@ class Court_booking extends CI_Controller{
             $new_output .='<td>'.date('h:i A', $value['from_time']).'-'.date('h:i A', $value['to_time']).'</td>'; // city_a ad
             foreach($new_array as $key => $courtnames) { // city_b headings
                 $holiday_id = $this->get_holiday_id($data['date']);
-                $new_output .= "<td>".$this->check_timeslot_exist($i.'_'.$key.'_'.strtotime($data['date']),$courtnames,date('H:i:s', $value['from_time']), date('H:i:s', $value['to_time']), $data['date'], $holiday_id, $activity_id, $location_id, $parent_id, $value['cid'],$data['today'])."</td>";
+                $new_output .= "<td>".$this->check_timeslot_exist($i.'_'.$key.'_'.strtotime($data['date']),$courtnames,date('H:i:s', $value['from_time']), date('H:i:s', $value['to_time']), $data['date'], $holiday_id, $activity_id, $location_id, $parent_id, $value['cid'],$data['date_info'])."</td>";
             }
             //$new_output .='</form>';
             $new_output .='</tr>';
@@ -1646,7 +1673,6 @@ class Court_booking extends CI_Controller{
          $from = $this->input->post('slot_from_time');
          $to = $this->input->post('slot_to_time');
          $day = $this->get_dayid(date('l', strtotime($dates)));
-         $today = $this->input->post('today');
     
        $email=$this->session->userdata('username');
        $user_id = $this->session->userid;
