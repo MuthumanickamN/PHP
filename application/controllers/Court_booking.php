@@ -1132,7 +1132,7 @@ class Court_booking extends CI_Controller{
 
                     if($date_info=="today")
                     {
-                        $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."'   onclick='addSlot(this)' class='btn booking-timeslot $cookie'>Book</button>";  
+                        $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."'  onclick='addSlot(this)' class='btn booking-timeslot $cookie'>Book</button>";  
                     }  
                     else{
                         $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie' disabled>Book</button>";    
@@ -1707,7 +1707,8 @@ class Court_booking extends CI_Controller{
         }
         //echo $fees_price.' '.$fees;die;
         $status='Approved';
-        $checkexists = $this->db->query('select * from tmp_booking_court where parent_id ="'.$parent_id.'" and activity_id ="'.$activity_id.'"  and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and to_time="'.$to.'"');
+        $checkexists = $this->db->query('select * from tmp_booking_court where parent_id ="'.$parent_id.'" and activity_id ="'.$activity_id.'"  and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and 
+        to_time="'.$to.'"');
         if (empty($checkexists->result_array())){
               $getRowsCount = $this->db->query('SELECT * FROM `tmp_booking_court`');
               $count =  $getRowsCount->num_rows();
