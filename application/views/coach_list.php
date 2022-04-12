@@ -36,6 +36,9 @@
         background-color: white;
 
     }
+	.coach-btn{
+		display:flex;
+	}
 </style>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -169,7 +172,7 @@
         <td style="text-align: center"><?php echo $coach['sign_in_count']; ?></td>
         <td style="text-align: center;"><?php if($coach['last_sign_in_at']) { ?><span style="display:none;"><?php echo strtotime($coach['last_sign_in_at']);?></span><?php  echo $coach['last_sign_in_at'];  } ?></td>
         <td style="text-align: center"><?php echo $statusVal; ?></td>
-        <td align="center"><a type="button" style="color:white;text-decoration:none" onClick="view_coach(<?php echo $coach['coach_id'];?>)" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View">
+        <td align="center" class="coach-btn"><a type="button" style="color:white;text-decoration:none" onClick="view_coach(<?php echo $coach['coach_id'];?>)" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View">
         </a>
         
         

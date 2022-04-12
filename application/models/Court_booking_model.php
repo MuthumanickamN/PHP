@@ -426,7 +426,26 @@ Class Court_booking_model extends CI_Model {
             return false;
         }
     }
+	public function slot_availability($court_id, $fromtime, $date, $totime)
+	{
+		
+		$this->db->select('*');
+        $this->db->from('tmp_booking_court');
+        $this->db->where('court_id', $court_id);
+		$this->db->where('checkout_date', $date);
+		$this->db->where('from_time', $fromtime);
+		//$this->db->where('to_time', $totime);
 
+        $query = $this->db->get();
+        if ( $query->num_rows() > 0 )
+        {
+            $row = $query->row_array();
+            return $row;
+        }else{
+            return '0';
+        }
+		
+	}
 }
 
 ?>
