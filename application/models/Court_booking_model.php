@@ -442,7 +442,7 @@ Class Court_booking_model extends CI_Model {
             $row = $query->row_array();
             return $row;
         }else{
-            return 0;
+            return '0';
         }
 		
 	}

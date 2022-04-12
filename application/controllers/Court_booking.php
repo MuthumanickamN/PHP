@@ -1070,7 +1070,7 @@ class Court_booking extends CI_Controller{
 		$slot_booked ='disabled style="background-color:orange!important; border-color:orange !important;"';
 		if($booked_slot['parent_id'] == $parent_id) 
 		{
-		$slot_status = 'Added to cart';	
+		$slot_status = 'Added to Cart';	
 		}
 		else 
 		{ 
