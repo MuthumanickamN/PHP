@@ -1676,9 +1676,6 @@ class Court_booking extends CI_Controller{
     
        $email=$this->session->userdata('username');
        $user_id = $this->session->userid;
-       
-       
-       
       $discount_val = 0.00;
       $discount_percentage = 0.00;
       $parentDetails = $this->default->getParentDetailById($parent_id);
@@ -1693,8 +1690,11 @@ class Court_booking extends CI_Controller{
         
        $s_fee = "select COALESCE(ps.cost,0.00) as fees from pricing p 
         left join pricingslot ps on ps.pid=p.id
-        where p.sid='$activity_id' and p.lid='$location_id' and p.cid='$court_id' and p.fromday='$day' and ps.fromtime='$slot_from_time' and ps.totime='$slot_to_time'   limit 1 ";
+        where p.sid='$activity_id' and p.lid='$location_id' and p.cid='$court_id' and ((p.fromday ='$day' and p.today='0') or (p.fromday <='$day' and p.today >='$day')) and ( ps.fromtime <='$slot_from_time' and ps.totime >='$slot_to_time' )   and p.delete_status=0 order by fees desc limit 1;";
         $f_query = $this->db->query($s_fee);
+
+        
+
         //echo $s_fee;die;
         if($f_query->num_rows() > 0)
         {
