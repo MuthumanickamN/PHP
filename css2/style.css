@@ -3071,3 +3071,10 @@ a.badge {color: #fff !important;}
 nav.header-navbar.navbar-expand-md.navbar.navbar-with-menu.navbar-without-dd-arrow.navbar-static-top.navbar-light.navbar-brand-center {
     margin-bottom: 0px !important;
 }
+table.dataTable thead .sorting:after {
+    opacity: 0.2;
+    content: "" !important;
+}
+table.dataTable thead .sorting_asc:after {
+    content: "" !important;
+}
