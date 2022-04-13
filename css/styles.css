@@ -2251,3 +2251,6 @@ input:read-only {
 ::-ms-input-placeholder { /* Microsoft Edge */
    color: #1570a6 !important;
 }
+.dataTable.sorting_desc:after {
+    content: "" !important;
+}

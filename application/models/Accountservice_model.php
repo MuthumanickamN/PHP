@@ -38,5 +38,32 @@ class Accountservice_model extends CI_Model {
       $query = $this->db->get();
      return $query->row()->percentage;
      }
+	 public function getlist()
+	 {
+		$query = $this->db->query('select * from accounts_service_entries');
+		$row = $query->result_array();
+		return $row;
+		
+	 }
+	 public function edit($id)
+	 {
+		$this->db->select('*');
+        $this->db->from('accounts_service_entries');
+        $this->db->where('Id', $id);
+
+        $query = $this->db->get();
+        $row = $query->row_array();
+        return $row;	
+	 }
+	 public function upload_items($id)
+	 {
+		$this->db->select('*');
+        $this->db->from('accountserviceuploadedfiles');
+        $this->db->where('accountservice_id', $id);
+
+        $query = $this->db->get();
+        $row = $query->result_array();
+        return $row;	
+	 }
 }
 ?>

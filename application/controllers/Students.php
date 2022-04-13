@@ -806,7 +806,7 @@ function file_uploads($FILES,$filepath,$insert_id)
 	    $qry = "select wt.*, p.parent_code, r.sid from wallet_transactions wt
 	    left join parent p on p.parent_id= wt.parent_id
 	    left join registrations r on r.id= wt.student_id
-	    where wt.parent_id= $pid order by wt.created_at asc";
+	    where wt.parent_id= 86 order by wt.created_at asc";
 	    
 	    $data = $this->db->query($qry)->result_array();
 	    $output = '';

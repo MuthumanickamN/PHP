@@ -81,7 +81,8 @@ h5
      
       <div class="card-content collapse show">
         <div class="card-body p-0">
-                 
+        <div class="table" style="overflow: scroll;">
+
                   <table class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%">
                   <thead>
         <tr>
@@ -120,6 +121,64 @@ h5
       
     </table>
     </br>
+
+    <div class="row1">
+        <div class="col-12"><div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Student Remarks </h4>
+            </div>
+            </div> 
+            </div> 
+            </div> 
+            
+             
+<div class="row">
+                <div class="col-12 col-md-12">
+    <div class="card">
+     
+      <div class="card-content collapse show">
+        <div class="card-body p-0">
+        <div class="table2" style="overflow: scroll;">
+                  <table class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                  <thead>
+        <tr>
+          <th style="text-align: center">Student ID</th>
+          <th style="text-align: center">Psa-id</th>
+          <th style="text-align: center">Student Name</th>
+          <th style="text-align: center">Activity</th>
+          <th style="text-align: center">Level</th>
+          <th style="text-align: center">Remark</th>
+          <th style="text-align: center">Date</th>
+        
+                 
+        </tr>
+      </thead>
+      <?php 
+      foreach($list as $key => $row1) 
+      {
+        $date_time = $row1['updated_at'];
+         ?>
+         <tr>  
+        
+          <td style="text-align: center"><?php echo $row1->sid;?></td>
+          <td style="text-align: center"><?php echo $row1->parent_code;?></td>
+          <td style="text-align: center"><?php echo $row1->name;?></td>
+          <td style="text-align: center"><?php echo $row1->game;?></td>
+          <td style="text-align: center"><?php echo $row1->level;?></td>
+          <td style="text-align: center"><?php echo $row1->remark;?></td>
+          <td style="text-align: center"><span style="display:none;"><?php echo strtotime("$date_time"); ?></span><?php echo date("d/m/Y H:i:s", strtotime("$date_time")); ?></td>
+
+      
+         </tr>
+        <?php
+        }
+        ?> 
+      
+    </table>
+    </br>
+
+
+    
 
       </section>
     </div>

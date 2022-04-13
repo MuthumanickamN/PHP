@@ -3723,3 +3723,6 @@ footer .widget{
     background-color: #fff;
     color: #000;
 }
+.dataTable.sorting_desc:after {
+    content: "" !important;
+}

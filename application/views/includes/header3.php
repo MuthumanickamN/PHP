@@ -695,14 +695,22 @@
   </li>
 <?php  ?>
 
-
-
-
-
-
-
+<?php if( $role == 'coach') { ?>
+	<li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Reports</span></a>
+		<ul class="dropdown-menu">
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Couch Roster</span></a></li> 
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/coach_profile_view' ?>"><span data-i18n="Booking">Couch Profile list</span></a></li> 
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Rating/rating_review_report' ?>"><span data-i18n="Booking">Rating & Review Report</span></a></li> 
+		</ul>
+	</li>
+	
+	<li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">User</span></a>
+		<ul class="dropdown-menu">
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Head Couch</span></a></li> 
+		</ul>
+	</li>
     
-   
+<?php } ?>  
         
 
       </ul>
