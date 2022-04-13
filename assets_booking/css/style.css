@@ -1716,6 +1716,7 @@ input[type="radio"] {
 }
 .mar_top_20 {
 	margin-top: 20px;
+	padding-right: 15px;
 }
 .mar_top_10 {
 	margin-top:10px;
@@ -2048,7 +2049,7 @@ appearance:none
 }
 .table-responsive {
 	border:none;
-	padding: 5px 0px 20px 0px;
+	padding: 5px 14px 20px 14px;
 }
 .table-responsive > .table-bordered {
 	border:1px solid rgba(0, 0, 0, 0.05);
@@ -2784,7 +2785,7 @@ margin-right:10px
 	border-radius:3px;
 	-webkit-box-shadow:none;
 	box-shadow:none;
-	border:1px solid transparent
+	border:1px solid transparent;
 }
 .btn.uppercase {
 	text-transform:uppercase
@@ -5179,4 +5180,38 @@ li.breadcrumb-item {
     background-color: #f2fcd2 !important;
     border-left: 5px solid red !important;
     padding: 10px !important;
+}
+#from_day {
+    width: 66% !important;
+}
+.pad_top_0 {
+    margin-left: 20px;
+}
+.admin_table{
+	margin-left: 29px !important;
+}
+.content-header {
+    padding-left: 6px!important;
+    margin-left: 11px !important;
+}
+.pad_le_ri_0 {
+    padding-left: 16px!important;
+}
+.day-type {
+    margin-left: 20px !important;
+}
+#show_court_timings {
+    margin-left: 20px;
+}
+#show_cart {
+    height: 40px !important;
+}
+.dataTable .sorting_desc:after {
+    content: "" !important;
+	position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: none !important;
+    font-family: 'Glyphicons Halflings';
+    opacity: 0.5;
 }

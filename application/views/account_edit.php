@@ -112,7 +112,21 @@ function calculate_amount()
   var a=(parseFloat((vat_value)?vat_value:0.00) + parseFloat((paid_amount)?paid_amount:0.00)).toFixed(2);
 document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
 }
+function remove_upload(id)
+{	
 
+     $.ajax({
+         type: "POST",
+         url: "<?php echo site_url();?>AccountService/remove_upload", 
+         data: {id: id},
+         cache:false,
+         success: 
+              function(data){
+				$('#upload_remove_'+id).remove();
+                alert('Removed successfully');
+              }
+          });
+}
 
 
 
@@ -185,7 +199,7 @@ $.ajax({
 </div>
      <div class="card-content collapse show">
     <div class="card-body card-dashboard">
-<form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
+<form action="<?php echo site_url();?>AccountService/remove_upload" id="loginForm" class="form-horizontal" role="form" name="form" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
 
 
 
@@ -219,7 +233,7 @@ $.ajax({
                 <option value="">Select</option>
                    <?php if(isset($account_service)){
                          foreach ($account_service as $account_service) { ?>
-                            <option value="<?php echo $account_service['Id'] ?>" <?php if(isset($service) && $account_service['Id']==$service ){ echo 'selected';} ?>><?php echo $account_service['Name']; ?></option>
+                            <option value="<?php echo $account_service['Id'] ?>" <?php if(isset($result['accountservice_id']) && $account_service['Id']==$result['accountservice_id'] ){ echo 'selected';} ?>><?php echo $account_service['Name']; ?></option>
                                 <?php }
                                    }?>
                 
@@ -236,7 +250,7 @@ $.ajax({
                     <b>Amount</b>*
                   </div>                            
             <div class="col-md-3">
-              <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo isset($amount_paid)?$amount_paid:'';  ?>"   class="form-control" onkeyup="calculate_amount();" oninput="allnumeric(document.form.paid_amount);">
+              <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo $result['gross_amount'];  ?>"   class="form-control" onkeyup="calculate_amount();" oninput="allnumeric(document.form.paid_amount);">
               <span class="errorMsg"></span>
             </div>
         </div>
@@ -265,7 +279,7 @@ $.ajax({
                           <strong>VAT Percentage(%)</strong>*
                         </div>                            
                         <div class="col-md-3 control text-right">
-                          <input type="text" id="vat_percentage" name="vat_percentage" required="" value="<?php echo isset($vat_perc)?    $vat_perc:'0'; ?>" class="form-control" readonly="">
+                          <input type="text" id="vat_percentage" name="vat_percentage" required="" value="<?php echo $result['vat_percentage'];  ?>" class="form-control" readonly="">
                           <span class="errorMsg"></span>
                         </div>
               </div>
@@ -277,7 +291,7 @@ $.ajax({
                 <strong>Vat Value</strong>*
                 </div>                            
               <div class="col-md-3">
-              <input type="text" id="vat_value" name="vat_value" required="" value="" readonly=""  class="form-control">
+              <input type="text" id="vat_value" name="vat_value" required="" value="<?php echo $result['vat_amount'];?>" readonly=""  class="form-control">
               <span class="errorMsg"></span>        
               </div>
           </div>
@@ -290,7 +304,7 @@ $.ajax({
                 <b>Payable Amount</b>*
               </div>     
               <div class="col-md-3">
-<input type="text" id="payable_amount" name="payable_amount" value="<?php echo isset($wallet['payable_amount'])?$wallet['payable_amount']:0; ?>"  readonly=""  class="form-control">
+<input type="text" id="payable_amount" name="payable_amount" value="<?php echo $result['payable_amount'];?>"  readonly=""  class="form-control">
 <span class="errorMsg"></span>
         </div>
     </div>
@@ -300,7 +314,7 @@ $.ajax({
     <div class="row">
         <div class="col-md-3 control text-left"><strong>Payable Date</strong>*</div>
         <div class="col-md-3 control text-left">
-        <input type="date"  name="payable_date"   class="form-control" id="payable_date"  required="" value="<?php echo isset($payable_date)?$payable_date:'';  ?>" >
+        <input type="date"  name="payable_date" class="form-control" id="payable_date"  required="" value="<?php echo $result['payable_date'];?>" >
         <span class="errorMsg"></span>
         </div>
     </div>
@@ -311,10 +325,25 @@ $.ajax({
     <input name="userfile[]" type="file" multiple="multiple" />
  </div>
     </div>	
+	<?php if(!empty($upload_items)) { ?>
+	<div class="row">
+        <div class="col-md-3 control text-left"><strong>Uploaded List</strong></div>
+        <div class="col-md-3 control text-left">
+	 <?php 
+	
+                        foreach($upload_items as $uploads){ ?>
+						 <p id="upload_remove_<?php echo $uploads['id']; ?>"><?php echo $uploads['filename']; ?>
+						 <span> |  </span>
+						 <span style="cursor:pointer;" onclick="remove_upload('<?php echo $uploads['id']; ?>')">Remove</span></p>
+						  <?php }
+                                  ?>
+						  </div>
+    </div>	
+	<?php } ?>
      <div class="form-group lg-btm">
       <div class="col-md-6 control text-center">
         <input id="save" type="submit" name="submit" value="Submit" class="btn btn-success" />      
-        <a href="<?php echo base_url().'AccountService' ?>"     class="btn btn-danger" >Cancel</a></div></div>
+        <a href="" onClick="window.location.reload();" class="btn btn-danger" >Cancel</a></div></div>
   </form>
 </div>
 </div>

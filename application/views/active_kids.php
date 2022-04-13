@@ -91,9 +91,9 @@ th, td {
             </div> 
           
  
-                    <div class="row">
-        <div class="col-12">
 <div class="row">
+	<div class="col-12">
+		<div class="row">
 
 <?php if(count($students) > 0){foreach($students as $key => $value) { ?>
     <div class="col-12 col-md-<?php if(count($students)%2 != 0 && $key+1 == count($students)){ echo '12';} else { echo '6'; }?>">
@@ -145,7 +145,7 @@ th, td {
           <th>Book slots</th>
           <th>View Booked Slots</th>
           <th>Refund/Swap Slot</th>
-          <!--<th>Coach Review</th>-->
+          <th>Coach Review</th>
          
           
                  
@@ -157,31 +157,40 @@ th, td {
             $activitylists = $this->db->query("select a_s.*, cd.contract_form_sent_to_parent, cd.parent_approved from activity_selections as a_s 
             left join contract_details cd on cd.activity_selection_id = a_s.id
             where a_s.student_id=".$id); 
+					
         	$activitylists=$activitylists->result_array();
         
+			$get_coach_id = '';
         	foreach ($activitylists as $key => $value) {
         		$activitylists[$key]['game'] = ($value['activity_id'] !='')?$this->transaction->getActivityDetail($value['activity_id']):'';
         		$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
+				
+				$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+				where 1 and c.coach_id =".$value['coach_id'].""); 
+				
+				
+				$get_coach = $get_coach_details->result_array();
+
+				$get_coach_id = $get_coach[0]['user_id'];
         	}
           
             foreach ($activitylists as $key2 => $row1) { 
           ?>
       
         <tr>
-           <td style="text-align: center"><?php   echo $row1['psa_id'];  ?></td>
+        <td style="text-align: center"><?php echo $row1['psa_id'];  ?></td>
         <td style="text-align: center"><?php echo $row1['game']; ?></td>
         <td style="text-align: center"><?php echo $row1['level']; ?></td>
         <td style="text-align: center">
             
   
-             <?php if($row1['contract_form_sent_to_parent'] == '1' && $row1['parent_approved']=="Pending")
-             { ?>
-                      
-                <button type="button" id="" data-id="<?php echo $row1['id'];?>" class="btn btn-primary contractBtn" onClick="$('#contractform').show();">Contract Form</button>
-            <?php }else{ echo $row1['contract']; } ?>
-        
-                      
-                    </a>
+		<?php if($row1['contract_form_sent_to_parent'] == '1' && $row1['parent_approved']=="Pending")
+		{ 
+		?>
+		<button type="button" id="" data-id="<?php echo $row1['id'];?>" class="btn btn-primary contractBtn" onClick="$('#contractform').show();">Contract Form</button>
+		<?php }else{ echo $row1['contract']; } ?>
+    
+		</a>
         
         </td>
                 <div id="contractform" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="width: 100%;display: none;overflow:scroll;"> 
@@ -233,7 +242,22 @@ th, td {
          <td style="text-align: center;" >
           <a id="myBtn2" class="btn btn-danger fa fa-exchange"  href="<?php echo base_url('student_profile_slot_booking/swap_slot_list/'.$row1['activity_id'].'/'.$row1['student_id'].'/'.$id); ?>"></a>
         </td>
-         <!--<td><button type="button" class="btn btn-warning">Coach Review</button></td> -->
+		
+		<?php
+		 $rating_reviews = $this->db->query("SELECT * FROM rating_reviews where coach_id=".$get_coach_id." and parent_id =".$row1['parent_user_id']." and activity_selection_id =".$row1['activity_id']."");
+		 
+		 $rating_num_row = $rating_reviews->num_rows();
+		if($rating_num_row>0)
+		{
+		?>
+		 <td>
+			<a disabled href="#" class="btn btn-warning">Coach Review</a>
+		</td>
+		<?php } else { ?>
+         <td>
+			<a href="<?php echo base_url() ?>Rating/index/<?php echo $get_coach_id?>/<?php echo $row1['parent_user_id'];  ?>/<?php echo $row1['activity_id']; ?>" class="btn btn-warning">Coach Review</a>
+		</td>
+		<?php } ?>
        
             
         </tr>
@@ -300,8 +324,6 @@ th, td {
   </div>
     </div>
   </div>
-
-
 
       </section>
     </div>
