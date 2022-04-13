@@ -21,7 +21,8 @@ class Dashboard extends CI_Controller {
 		$holidays = $this->db->query("select * from set_academy_holidays order by select_date ASC ");
 		$data['holidaysList'] = $holidays->result_array();
         
-        if($userrole == 'superadmin') { 
+        if($userrole == 'superadmin' || $userrole=='admin' || $userrole=='coach' || $userrole=='headcoach') { 
+
 		$active_kid = $this->db->query("select count(0) as cnt from registrations where status = 'Active'")->row()->cnt;
 		$data['active_kids'] = $active_kid;
 
