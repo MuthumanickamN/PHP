@@ -60,6 +60,10 @@ $userid = $this->session->userid;
                                         $url = base_url().'Coach?add='.$filter;
                                         echo '<a href="<?php echo $url;?>" class="float-right btn btn-primary btn-sm" style="margin: 4px;"><i class="fa fa-plus"></i> Add</a>';
                                     }
+                                  /*  else if($filter == "parent" || $filter == "headcoach"){
+                                        $url = base_url().'Students/transaction_history?id='.$filter;
+                                        echo '<a href="<?php echo $url;?>" class="btn btn-primary" style="margin: 4px;"><i class="fa fa-plus"></i>View Transaction</a>';
+                                    }*/
                                     else
                                     {
                                         echo '<a href="javascript:void(0);" data-toggle="modal" data-target="#add-user" class="float-right btn btn-primary btn-sm" style="margin: 4px;"><i class="fa fa-plus"></i> Add</a>';
@@ -108,9 +112,61 @@ $userid = $this->session->userid;
                                                 </thead>
                                                 <tbody>
                                                 </tbody>
+  </table>
+  <?php 
+$role = strtolower($this->session->userdata['role']);
+?>                                      
+<div id="transactionHistoryModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="width: 100%;display: none;">
+  <div class="modal-dialog" style="width: 100%;
+    float: none;
+    margin: 0 auto;
+    max-width: 38%;
+    position: absolute;
+    left: 4%;">
+    <div class="modal-content" style="width: 246%;">
+      <div class="modal-body" style="width: 100%;">
+      <div class="alert alert-info">
+        <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#transactionHistoryModal').hide();">&times;</button>
+        <strong> Transaction History </strong>
+      </div>
+      <div class="">
+        
+        <div class="table-responsive">
+        <table id="listTable" class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Wallet Transaction ID</th>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th>Parent ID</th>
+                    <th>Student ID</th>
+                    <th>Gross Amount</th>
+                    <th>Discount %</th>
+                    <th>VAT %</th>
+                    <th>VAT Amount</th>
+                    <th>Credit (AED)</th>
+                    <th>Debit (AED)</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            
+        </table>
+        </div>
+        
+          <br>
+          <br>
+          
+          <a onClick="$('#transactionHistoryModal').hide();"    class="btn btn-danger" >Cancel</a>
+        
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                                            </table>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -183,6 +239,10 @@ $this->load->view('templates/footer');
                     bindHtml += ' <a href="<?php echo base_url();?>Role_delegation?id=' + row[10] + '"  class="btn  btn-primary fa " data-userid="' + row[10] + '">Assign</a>';
                        
                     }
+                   if(row[4] == 'Parent')
+                    {
+                    bindHtml += '<button type="button" id="transactionHistoryBtn" class="btn btn-info" onClick="show_transaction(86);">Transaction History</button></td>';
+                    } 
                     return bindHtml;
                     }
                 },
@@ -215,4 +275,67 @@ $this->load->view('templates/footer');
     function ChangePassword(id){
         jQuery('#id_value').val(id);
     }
+
+
+    function show_transaction(role,pid)
+ {
+     $('#transactionHistoryModal').show();
+
+     
+     $.ajax({ 	
+            type: "POST",   
+            url: base_url+"Students/transaction_history",
+            data:{ parent_id:pid},		
+            async: false,
+            datatype: "html",
+            success : function(data)
+            {
+                  
+				$('#listTable').dataTable().fnDestroy();
+				$('#listTable tbody').html(data);
+				
+				if(role == "superadmin" || role == "admin")
+				{
+				$('#listTable').dataTable({
+				    dom: 'Bfrtip',
+                    buttons: [
+                    {
+                        extend: 'print',
+                        title: "Transaction History",
+                        
+                    },
+                    { 
+                        extend: 'pdf', 
+                        title: 'Transaction History', 
+                    },
+                    { 
+                        extend: 'excel', 
+                        title: 'Transaction History', 
+                    
+                    }],
+				    "order":[1, 'asc'],
+				    "ordering": false
+				    
+				});
+				}
+				else
+				{
+				    $('#listTable').dataTable({
+				        "order":[1, 'asc'],
+				        "ordering": false
+				    
+				    });
+				}
+				
+			},
+            fail: function( jqXHR, textStatus, errorThrown ) {
+                    console.log( 'Could not get posts, server response: ' + textStatus + ': ' + errorThrown );
+            }
+    });
+     
+ }
+
+
+
+
 </script>
