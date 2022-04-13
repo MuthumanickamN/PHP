@@ -17,6 +17,11 @@
       <div class="content-overlay"></div>
       <div class="content-wrapper">
         <div class="content-header row">
+		<?php
+			$role = strtolower($this->session->userdata['role']);
+			if($role!="coach")
+			{
+		?>
           <div class="content-header-left col-md-6 col-12 mb-2">
             <h3 class="content-header-title" style="color: green">Academy Activities</h3>
             <div class="row breadcrumbs-top">
@@ -31,15 +36,50 @@
               </div>
             </div>
           </div>
+		  <?php 
+			} elseif($role=="coach") {
+		  ?>
+		  <div class="content-header-left col-md-6 col-12 mb-2">
+            <h3 class="content-header-title" style="color: green">Coach List</h3>
+            <div class="row breadcrumbs-top">
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html">Coach List</a>
+                  </li>
+                  <li class="breadcrumb-item"><a href="#">Coach list</a>
+                  </li>
+                 
+                </ol>
+              </div>
+            </div>
+          </div>
+		  <?php
+			}
+		  ?>
           <div class="content-header-right col-md-6 col-12">
             <div class="media width-250 float-right">
               <media-left class="media-middle">
                 <div id="sp-bar-total-sales"></div>
               </media-left>
               <div class="media-body media-right text-right">
+			  
                  <ul class="list-inline mb-0">
-            <li> <a href="<?php echo site_url('Coach/list_'); ?>" class="btn btn-primary"   ><b>Back</b></a></li>
-          </ul>
+					<?php
+					if($role!="coach")
+					{
+					?>
+					<li> <a href="<?php echo site_url('Coach/list_'); ?>" class="btn btn-primary"><b>Back</b></a></li>
+					<?php
+					} else if($role=="coach") {
+					?>
+					<li> <a href="<?php echo site_url('Coach/coach_profile_view'); ?>" class="btn btn-primary"><b>Back</b></a></li>
+					<?php
+					}
+					else {
+					?>
+					<li> <a href="#" class="btn btn-primary"><b>Back</b></a></li>
+					<?php } ?>
+				</ul>
                 
               </div>
             </div>

@@ -42,6 +42,48 @@ class Coach extends CI_Controller {
     	$this->load->view('coach_list',$data);
 	}
 	
+	public function coach_profile_view()
+	{
+		
+		$role = $_SESSION['role'];
+		$code = $_SESSION['code'];
+
+		
+		$query = $this->db->query("select u.*, c.coach_id,c.activity_id,c.location_id from users u 
+    	left join coach c on c.code = u.code
+    	where u.role='".$role."' and c.code = '".$code."'and u.deleted !=1 ");
+		
+		
+    	$data['coachList'] = $query->result_array();
+    	foreach ($data['coachList'] as $key => $value) {
+    	$data['coachList'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
+    		$data['coachList'][$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
+    	}
+		
+		$this->load->view('coach_profile_view',$data);
+		
+	}
+	
+	public function head_coach_single_view()
+	{
+		
+		
+		$role = $_SESSION['role'];
+		$code = $_SESSION['code'];
+
+		
+		$query = $this->db->query("select u.*, c.coach_id,c.activity_id,c.location_id from users u 
+    	left join coach c on c.code = u.code
+    	where u.role='headcoach' and u.deleted !=1 ");
+		
+    	$data['coachList'] = $query->result_array();
+    	foreach ($data['coachList'] as $key => $value) {
+    	$data['coachList'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
+    		$data['coachList'][$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
+    	}
+		$this->load->view('head_coach_report_list',$data);
+		
+	}	
 
 	
 	public function add(){
