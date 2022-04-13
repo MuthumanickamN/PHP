@@ -1148,11 +1148,11 @@ class Court_booking extends CI_Controller{
 
                     if($date_info=="today")
                     {
-<<<<<<< HEAD
+                
                         $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."'   onclick='addSlot(this)' class='btn booking-timeslot 456 $cookie' $slot_booked>$slot_status</button>";  
-=======
+
                         $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."'  onclick='addSlot(this)' class='btn booking-timeslot $cookie'>Book</button>";  
->>>>>>> beb83f6ba563951d1c0bab99ec8fd1a958ca2ae3
+
                     }  
                     else{
                         $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie' disabled>Book</button>";    
