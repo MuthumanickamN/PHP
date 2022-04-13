@@ -253,7 +253,7 @@ Class Regular_booking_model extends CI_Model {
         $this->db->select('bst.id, bst.bid, bst.booking_fromtime, bst.booking_totime, bst.fromdate, bst.todate, bst.amount, dlt.dayname, sp.sportsname, loc.location, bk.booking_no, ct.courtname ');
         $this->db->from('bookingslot as bst');
         $this->db->join('booking as bk', 'bk.id = bst.bid', 'left');
-        $this->db->join('customer as cust', 'cust.id = bk.customerid', 'left');
+        $this->db->join('parent as cust', 'cust.parent_id = bk.customerid', 'left');
         $this->db->join('court as ct', 'ct.id = bst.courtid', 'left'); 
         $this->db->join('sports as sp', 'sp.id = bst.sid', 'left');
         $this->db->join('location_booking as loc', 'loc.id = bst.lid', 'left');

@@ -106,8 +106,9 @@ Class Court_booking_model extends CI_Model {
         }
 
         $this->db->where('pr.delete_status !=', 1);
+		$this->db->group_by('court_id');
         $this->db->order_by('pr.id','ASC');
-        $this->db->limit(1);
+        //$this->db->limit(1);
         $query = $this->db->get();
         //echo $this->db->last_query();die;
         if ( $query->num_rows() > 0 )

@@ -54,8 +54,8 @@
 				<tr class="noExl1">
 					<th>S.No</th>
 					<th>Recharged On</th>
-					<th>Amount Paid (AED)</th>
-					<th>Credits (AED)</th>
+					<th>Prepaid Paid (AED)</th>
+					<!--<th>Credits (AED)</th>-->
 					<th>Name</th>
 					<th>Mobile</th>
 					<!--<th>Mode</th>-->

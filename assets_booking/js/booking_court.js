@@ -98,7 +98,7 @@ jQuery(document).ready(function(){
         return return_var;
     });
    
-    $("form[name='Booking_court']").validate({
+    $("form[name='Court_booking']").validate({
         // Specify validation rules
         ignore: [],
         debug: false,
@@ -152,6 +152,48 @@ jQuery(document).ready(function(){
         $("#hidden_discount_amount").val($("#discount_amount").val());
        // discount_calc();
     });
+	
+	
+	$('#checkout').click(function(){
+		var parent_id = $('#parent_id').val();
+                $.ajax({ 	
+					type: "POST",   
+					url: base_url+"Booking_court/check_cart_items",
+					data:"parent_id="+parent_id,
+					async: false,
+					datatype: "html",
+					success : function(data)
+					{   
+					
+						if(data==1)
+						{
+							var gross_amount = $("#hidden_gross_amount").val();
+							if(gross_amount > 0)
+							{
+								$("#hide3").show("slow");
+								get_customerDetailsbyID(parent_id);
+								var net_amount = $("#hidden_net_amount").val();
+								var balance_amount = $("#hidden_balance_amount").val();
+								$("#gross_amount").html(gross_amount+'/-');
+								$("#net_amount").html(net_amount+'/-');
+								$("#balance_amount").html(balance_amount+'/-');
+								customer_mobile_autocomplete();
+							}
+						}
+						else{
+							 swal({
+							  title: "some slot(s) removed from your cart",
+							  text: "Sorry, those are booked by someone",
+							  type: "warning",
+							  //timer: 1000
+						   });
+							show_cart_list();
+						}
+				
+					}
+				});
+            });
+			
     
 });
 var id_array = [] ;
@@ -202,8 +244,13 @@ function show_booking_timeslot(){
         $.ajax({
             url:base_url+"Student_profile_slot_booking/get_holidays/",
             type:"POST",
+			async: false,
             success:function(data){   
                 var obj = JSON.parse(data);
+				//console.log(obj);
+				$.each(obj, function (key, val) {
+					holidays.push(val);
+				});
                 holidays = obj;
             }
         });
@@ -280,6 +327,9 @@ function show_booking_timeslot(){
         var thatDay = new Date(date).setHours(0, 0, 0, 0);
         var thatDay3 = new Date(date);
         var month2 = thatDay3.getMonth() + 1; //months from 1-12
+		if (month2 < 10){
+			month2 = '0'+month2;
+		}
         var day2 = thatDay3.getDate();
         var year2 = thatDay3.getFullYear();
         var thatDay2 = year2 + "-" + month2 + "-" + day2;
@@ -300,9 +350,30 @@ function show_booking_timeslot(){
         var lastDay = new Date(l_t_date.getFullYear(), l_t_date.getMonth() + 1, 0);
         var lastDate = lastDay.getDate();
         //alert(lastDate);
-        if (date<today){
-        swal("Error! Please select valid date");
+		if (date<today){
+			//swal("Error! Please select valid date");
+			
+			day_val = $('#day_val').val();
+            clickDay = date.day();
+            set_form( sports, location, parent_id, clickDay, thatDay2,'not_today');
+            $('#addModal').modal();
+            $(this).css('background-color', '#bed7f3');
+            $(this).addClass('fc_highlighted');
+            var data=new Date(date).toISOString();
+            var datas= moment(data).utc().format('YYYY-MM-DD');
+            var datas2= moment(data).utc().format('DD/MM/YYYY');
+            //document.getElementById('dates').value=datas;
+            $("button.form_date").each(function(){
+                $(this).attr("data-dates",datas);
+            });
+            document.getElementById('show_date').value=datas2;
+            $('.dates').val(datas);
+            $(this).css('background-color', '#bed7f3');
+            //$('.daysDiv').hide();
+            $('.showDays_'+clickDay).show(); 
+			
         }
+        
         else{
             
             if(t_year < d_year)
@@ -370,7 +441,7 @@ function show_booking_timeslot(){
             {*/
             day_val = $('#day_val').val();
             clickDay = date.day();
-            set_form( sports, location, parent_id, clickDay, thatDay2);
+            set_form( sports, location, parent_id, clickDay, thatDay2,'today');
             $('#addModal').modal();
             $(this).css('background-color', '#bed7f3');
             $(this).addClass('fc_highlighted');
@@ -412,12 +483,12 @@ function show_booking_timeslot(){
 }
 
 
-function set_form( activity_id, location_id, parent_id, clickDay, date)
+function set_form( activity_id, location_id, parent_id, clickDay, date, date_info)
 {
     
     $.ajax({
         url:base_url+'Booking_court/set_form/',
-        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id},
+        data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id, date_info:date_info},
         type:"POST",
         async:false,
         success:function(data){   
@@ -531,16 +602,7 @@ function show_booking_cart_details(id, arraykey, fromtime, totime, date, btnid){
                 total_price_cost();
                 selected_slot_ids(id_array);                
             });
-            $('#checkout').click(function(){
-                $("#hide3").show("slow");
-                var gross_amount = $("#hidden_gross_amount").val();
-                var net_amount = $("#hidden_net_amount").val();
-                var balance_amount = $("#hidden_balance_amount").val();
-                $("#gross_amount").html(gross_amount+'/-');
-                $("#net_amount").html(net_amount+'/-');
-                $("#balance_amount").html(balance_amount+'/-');
-                customer_mobile_autocomplete();
-            });
+            
         },
         fail: function( jqXHR, textStatus, errorThrown ) {
                 console.log( 'Could not get posts, server response: ' + textStatus + ': ' + errorThrown );
@@ -914,7 +976,8 @@ function addSlot(this_){
     var court_id = $(this_).attr('data-court_id'); 
     var slot_to_time = $(this_).attr('data-totime'); 
     var slot_from_time = $(this_).attr('data-fromtime'); 
-    var dates = $(this_).attr('data-date'); 
+    var dates = $(this_).attr('data-date');
+    var today = $(this_) .attr('data-today');	
     
     
     jQuery.ajax({
@@ -927,14 +990,15 @@ function addSlot(this_){
             court_id:court_id,
             slot_from_time:slot_from_time,
             slot_to_time:slot_to_time,
-            dates:dates
+            dates:dates,
+			today:today
         },
         dataType:'json',                       
         success: function (result) {
           if(result['status'] == 'success'){
             $('#cart_slot').val(result['count'])
                 $('.cart_slot').html(result['count'])
-                $('.close').click()
+                //$('.close').click()
                 
                 swal({
                   title: "Added to Cart!",
@@ -942,11 +1006,20 @@ function addSlot(this_){
                   type: "success",
                   timer: 1000
                });
-               
+               $('.refresh_btn').trigger("onclick"); 
                 $('#calendar').fullCalendar('refetchEvents');
 
           }else{
-            location.reload();
+            //location.reload();
+			
+			swal({
+                  title: result['message'],
+                  text: "",
+                  type: "warning",
+                  //timer: 1000
+               });
+            $('.refresh_btn').trigger("onclick");  
+			$('#calendar').fullCalendar('refetchEvents');
             
           }
         }, 
@@ -978,21 +1051,7 @@ function show_cart_list(){
                 get_customerDetailsbyID(parent_id);
                 //selected_slot_ids(id_array);                
             });
-            $('#checkout').click(function(){
-                
-                var gross_amount = $("#hidden_gross_amount").val();
-                if(gross_amount > 0)
-                {
-                    $("#hide3").show("slow");
-                    get_customerDetailsbyID(parent_id);
-                    var net_amount = $("#hidden_net_amount").val();
-                    var balance_amount = $("#hidden_balance_amount").val();
-                    $("#gross_amount").html(gross_amount+'/-');
-                    $("#net_amount").html(net_amount+'/-');
-                    $("#balance_amount").html(balance_amount+'/-');
-                    customer_mobile_autocomplete();
-                }
-            });
+            
         },
         fail: function( jqXHR, textStatus, errorThrown ) {
                 console.log( 'Could not get posts, server response: ' + textStatus + ': ' + errorThrown );

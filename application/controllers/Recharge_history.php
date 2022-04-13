@@ -36,12 +36,12 @@ class Recharge_history extends CI_Controller {
 			$to_date1 = ($to_date != "") ? $this->change_date_format($to_date): "";
 			
 			
-			$query  = "select rec.*,cus.user_name,cus.mobile from recharge as rec LEFT JOIN users as cus ON cus.user_id = rec.customer_id";
+			$query  = "select rec.*,res.wallet_transaction_date as date, cus.parent_name as user_name,cus.mobile_no as mobile from wallet_transaction as rec LEFT JOIN parent as cus ON cus.parent_id = rec.parent_id where rec.wallet_transaction_details='Prepaid credits'";
 			
 			if($to_date1 !== "" && $from_date1 !== "")
 			{
 				
-				$query  .=" where rec.date >= '$from_date1' and rec.date <= '$to_date1'  and cus.user_id='".$customer_id."'"; 
+				$query  .=" where rec.wallet_transaction_date >= '$from_date1' and rec.wallet_transaction_date <= '$to_date1'  and cus.parent_id='".$customer_id."'"; 
 			
 			}
 			
@@ -59,8 +59,8 @@ class Recharge_history extends CI_Controller {
 					$output .= "<tr>";
 					$output .= "<td>". ++$key ."</td>";
 					$output .= "<td>". $newDate ."</td>";
-					$output .= "<td>". ucfirst($row['amount_paid']) ."</td>";
-					$output .= "<td>". ucfirst($row['balance_credits']) ."</td>";
+					$output .= "<td>". ucfirst($row['wallet_transaction_amount']) ."</td>";
+					//$output .= "<td>". ucfirst($row['balance_credits']) ."</td>";
 
 					$output .= "<td>". ucfirst($row['name']) ."</td>";
 					$output .= "<td>". ucfirst($row['mobile']) ."</td>";

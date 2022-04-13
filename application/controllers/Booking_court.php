@@ -32,6 +32,11 @@ class Booking_court extends CI_Controller{
         $data['sports_list'] = $this->court_booking_model->get_sportslist();
         //$data['location_list'] = $this->pricing_model->get_locationlist();
         $data['form_action'] = base_url().'Booking_court/add_booking_details'; 
+		$id = $this->session->userdata('id');
+		$query = $this->db->query("SELECT parent_id FROM `parent` p
+		left join users u on u.code = p.parent_code
+		where u.user_id=$id");
+		$data['parent_id'] = $query->row()->parent_id;
         $this->load->view('includes/header3');
        // $this->load->view('templates/header', $data);
         $this->load->view('booking_court', $data);
@@ -42,6 +47,7 @@ class Booking_court extends CI_Controller{
     public function add_booking_details(){
         //die()
         //print_r($_POST);die;
+		$parent_id = $this->input->post('cus_hid');
         $pay_mode = $this->input->post('pay_mode');
         if($pay_mode == '1'){
             if($this->input->post('hidden_advance_amount') !=''){
@@ -53,7 +59,7 @@ class Booking_court extends CI_Controller{
             $paid_amount = $this->input->post('advance_amount');
         }
         $paid_status = ($this->input->post('hidden_balance_amount') > 0) ? 2 : 1;
-        $parent_id = $this->input->post('cus_hid');
+        
         $insert_data = array(
 			'booking_no' => 'NULL',
            // 'sid' => $this->input->post('sports'),
@@ -72,8 +78,8 @@ class Booking_court extends CI_Controller{
             'totamt' => $this->input->post('hidden_gross_amount'),	
             'paidamt' => $this->input->post('hidden_net_amount'),
             'balamt' => '0',
-            'booked_by' => '0',
-			'blocked_status' => '1',
+            'booked_by' => '1',
+			'blocked_status' => '0', //blocked
 			'reject_reason' => 'NULL',
             'booking_for' => $this->input->post('booking_for')
             
@@ -470,7 +476,7 @@ class Booking_court extends CI_Controller{
             }
 
             //Invoice 
-            $this->send_email_booked_direct($booking_id, $walletArray,  $resultp['parent_code'], $wallet_amount, $balance_credits);
+            $this->send_email_booked_direct_approval($booking_id, $walletArray,  $resultp['parent_code'], $wallet_amount, $balance_credits);
             $this->invoice_model->send_email_invoice($wallet_transaction_id, "CourtBooking");
         }
         elseif ($from=="court_booking_regular_cancellation"){
@@ -919,6 +925,154 @@ class Booking_court extends CI_Controller{
 		}
 		
 	}
+	
+	public function send_email_booked_direct_approval($booking_id,$wallet_data_array, $parent_code, $wallet_amount, $balance_credits)
+	{
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('Phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+        $mail->AddCC(CC_ADDRESS);
+		$mail->addAttachment(TERMS_CONDITION_ATTACHMENT);
+		if(SEND_TO_PARENT != 'NO'){
+		    $mail->addAddress($wallet_data_array['parent_email_id']);
+		}
+		else
+		{
+		    $mail->addAddress(DEFAULT_MAIL);
+		}
+		
+		
+		
+		
+		$mail->isHTML(true);
+
+		$mail->Subject = "Prime Star Sports Services - Your Courts Booking is Under Approval";
+		
+		$body = '';
+		$body .= "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <div class='main' style='font-family: sans-serif;'>
+        <p>Dear <b>".$wallet_data_array['parent_name'].",</b></p>
+        <p>We are pleased to inform you that your Court booking is under approval.</p>
+        <table>
+            <tr>
+                <th>BKId</th>
+                <th>Booking Date</th>
+                <th>Activity</th>
+                <th>Location</th>
+                <th>Time</th>
+                <th>Court</th>
+                
+            </tr>";
+            $sql ="select b.booking_no,bs.fromdate  as booked_date, s.sportsname as game,l.location,c.courtname,bs.booking_fromtime as from_time,bs.booking_totime as to_time
+            from booking b 
+            left join bookingslot bs on bs.bid=b.id
+           left join sports s on bs.sid=s.id
+           left join location_booking l on l.id=bs.lid
+           left join court c on bs.courtid=c.id
+           where b.id='$booking_id' and b.bstatus=1 and b.blocked_status=0 and bs.cancelled !=1
+            ";
+            
+            foreach($this->db->query($sql)->result_array() as $key => $value) { 
+        
+        $body .= "<tr>
+                <td>".$value['booking_no']."</td>
+                <td>".$value['booked_date']."</td>
+                <td>".$value['game']."</td>
+                <td>".$value['location']."</td>
+                <td>".$value['from_time']."-".$value['to_time']."</td>
+                <td>".$value['courtname']."</td>
+                
+            </tr>";
+        }
+         $body .= "</table>
+        <p>Your Wallet details as follows</p>
+        <p style='text-align: right;'>Transaction ID :<b>".$wallet_data_array['wallet_transaction_id']."</b></p>
+         <table>
+            <tr>
+                <th>Parent-Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Previous balance(AED)</th>
+                <th>Detected amount(AED)</th>
+                <th>Total balance(AED)</th>
+            </tr>
+            <tr>
+                <td>".$parent_code."</td>
+                <td>".$wallet_data_array['parent_name']."</td>
+                <td>".$wallet_data_array['wallet_transaction_date']."</td>
+                <td>".round(sprintf("%2f",$wallet_amount),2)."</td>
+                <td>".round(sprintf("%2f",$wallet_data_array['wallet_transaction_amount']),2)."</td>
+                <td>".round(sprintf("%2f",$balance_credits),2)."</td>
+            </tr>
+        </table>
+        
+        <h4>Thanks & Regards</h4>
+        <h4 style='color: grey'>PSSS Admin team</h4>
+        <hr>
+        <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
+    </div>";
+    $mail->Body = $body;
+		$mail->AltBody = "This is the plain text version of the email content";
+		
+		if(!$mail->send()) 
+		{
+			
+		   //echo "Mailer Error: " . $mail->ErrorInfo;die;
+		   return false;
+		}
+		else{
+			return true;
+		}
+		
+	}
     
     public function cancel_booking(){
         $data['customer_id'] = ($this->input->post('customer_id') !='') ? $this->input->post('customer_id') : '';
@@ -1058,13 +1212,29 @@ class Booking_court extends CI_Controller{
         return $dayid;
     }
     
-    private function check_timeslot_exist($i,$courtnames, $fromtime, $totime, $date, $holiday_id, $activity_id, $location_id, $parent_id, $court_id) { 
+    private function check_timeslot_exist($i,$courtnames, $fromtime, $totime, $date, $holiday_id, $activity_id, $location_id, $parent_id, $court_id, $date_info) { 
         $cid = '';
         foreach($courtnames as $k => $court){
             $cid = $court['cid'];
         }
         $day_id = $this->get_dayid(date('l', strtotime($date)));
-        $check = $this->court_booking_model->check_timeslot_exist($cid, $fromtime, $totime, $day_id, $holiday_id);        
+        $check = $this->court_booking_model->check_timeslot_exist($cid, $fromtime, $totime, $day_id, $holiday_id);  
+		$booked_slot = $this->court_booking_model->slot_availability($court_id, $fromtime, $date, $totime); 
+		if($booked_slot) { 
+		$slot_booked ='disabled style="background-color:orange!important; border-color:orange !important;"';
+		if($booked_slot['parent_id'] == $parent_id) 
+		{
+		$slot_status = 'Added to Cart';	
+		}
+		else 
+		{ 
+		$slot_status = 'Book';	
+		}		
+		}
+		else { 
+		$slot_booked ='';
+		$slot_status = 'Book';
+		}
 //        print_r($check);
         //echo $this->db->last_query(); 
 //        die();
@@ -1082,13 +1252,31 @@ class Booking_court extends CI_Controller{
                     $booked_by = ($check_booked_slot['booked_by'] == '0') ? 'btn-danger' : (($check_booked_slot['blocked_status'] == '0') ? 'btn-warning' : 'btn-danger' );
                     if($check_booked_slot['booking_for']=='')
                     {
-                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                        if($date_info=="today")
+                        {
+						    $value = "<button type='button'   class='btn $booked_by '>Booked</button>"; 
+                        }
+                        else{
+                            $value = "<button type='button'  class='btn $booked_by' disabled>Booked</button>";
+                        }
                     }else{
-                        $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn $booked_by view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."-".($check_booked_slot['booking_for'])."</button>"; 
+						if($date_info=="today")
+                        {
+                         $value = "<button type='button'   class='btn $booked_by ' >Booked </button>"; 
+                        }
+                        else{
+                            $value = "<button type='button'  class='btn $booked_by ' disabled>Booked</button>"; 
+                        }
                     }
                   
                }else{
-                   $value = "<button type='button' data-id='".$check_booked_slot['id']."' data-toggle='modal' data-target='#viewModal' class='btn btn-info view-booked-timeslot'>".ucfirst($check_booked_slot['customer_name'])."</button>"; 
+                    if($date_info=="today")
+                    {
+                    $value = "<button type='button'   class='btn btn-info'>Booked</button>"; 
+                    }
+                    else{
+                        $value = "<button type='button'   class='btn btn-info' disabled>Booked</button>"; 
+                    }
                }
            }else{  
                 $this->load->helper('cookie');
@@ -1101,9 +1289,29 @@ class Booking_court extends CI_Controller{
                    $pstid = $chk['id'];
                    $hid = $chk['holiday_id'];
                }
-               $value = "<button type='button' id='$i' data-id='".$pstid."' data-holiday_id='".$hid."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."'  data-court_id='".$court_id."' data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie '>Book</button>"; 
+
+               if($date_info=="today")
+                {
+
+                    $value = "<button type='button' id='$i' data-id='".$pstid."' data-holiday_id='".$hid."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."'  data-court_id='".$court_id."' data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot 123 $cookie ' $slot_booked>$slot_status</button>"; 
+                }
+                else{
+                    $value = "<button type='button' id='$i' data-id='".$pstid."' data-holiday_id='".$hid."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."'  data-court_id='".$court_id."' data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie ' $slot_booked disabled>$slot_status</button>"; 
+                }
                }else{
-                $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie'>Book</button>";    
+
+                    if($date_info=="today")
+                    {
+
+
+
+                        $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."'  onclick='addSlot(this)' class='btn booking-timeslot $cookie' $slot_booked>$slot_status</button>";  
+
+
+                    }  
+                    else{
+                        $value = "<button type='button' id='$i' data-id='".$check[0]['id']."' data-holiday_id='".$check[0]['holiday_id']."' data-arraykey='".$i."' data-parent_id='".$parent_id."' data-activity_id='".$activity_id."'  data-location_id='".$location_id."' data-court_id='".$court_id."'  data-date='".$date."' data-fromtime='".$fromtime."' data-totime='".$totime."' onclick='addSlot(this)' class='btn booking-timeslot $cookie'  $slot_booked disabled>$slot_status</button>";    
+                    }
                }
            }
         }else{
@@ -1162,7 +1370,7 @@ class Booking_court extends CI_Controller{
             $output .= '<h4 class="modal-title">Booking Details</h4>';
             $output .= '</div>';
             $output .= '<div class="modal-body">';
-            $output .= '<form action="'.base_url().'Court_booking/update_booking_details/'.$booking_details['bid'].'" name="update_booking_form" id="" method="post">';
+            $output .= '<form action="'.base_url().'Booking_court/update_booking_details/'.$booking_details['bid'].'" name="update_booking_form" id="" method="post">';
             $output .= '<div class="table-responsive">';
             $output .= '<table class="table table-bordered table-striped">';
             $output .= '<tbody>';
@@ -1547,81 +1755,91 @@ class Booking_court extends CI_Controller{
         $data['parent_id'] = ($this->input->post('parent_id') !='') ? $this->input->post('parent_id') : '';
         $data['date'] = ($this->input->post('date') !='') ? change_date_format($this->input->post('date')) : '';
         $data['day'] = $this->get_dayid(date('l', strtotime($data['date'])));
+        $data['date_info'] = ($this->input->post('date_info') !='') ? $this->input->post('date_info') : '';
         $get_details = $this->court_booking_model->show_booking_timeslot($data);
-
+		//print_r($get_details);die;
         $activity_id = $data['sid']; 
         $location_id = $data['lid']; 
         $day_value = $data['day'];
         $parent_id = $data['parent_id'];
-
+		$dates= $data['date'];
+		$date_info = $data['date_info'];
+		
+		
         $new_output = '';
-        if($get_details)
-        {
-        $distMatrix = array();
-        $new_array = $this->array_group_by($get_details, 'courtname' );
-        //print_r($new_array);die;
-        $time_slot_set = array();
-        foreach($get_details as $key => $value) { // city_b headings
-            $from_time = strtotime($value['from_time']);
-            $to_time = strtotime($value['to_time']);
-            $time_diff = $to_time - $from_time;
-            $postive =  ($time_diff / 600) / 6 ;
-            //echo $postive;die;
-            for($i = 1 ; $i <= $postive ; $i++ ){                
-                $timestamp = $from_time + ( 60*60) ;
-                $time = date('h:i A', $timestamp);
-                $new_fromtime = $time;
-                //$time_slot_set[] = date('h:i A', $from_time).'--'.$new_fromtime;
-                $time_slot_set[] = array(
-                    'from_time' => $from_time,
-                    'to_time' => strtotime($new_fromtime),
-                    'cid' => $value['cid']
-                 );
-                $from_time = strtotime($new_fromtime);
-                
-            }            
-        }
-        //print_r($time_slot_set);die;
-        sort($time_slot_set);
-        $time_slot_set = array_map("unserialize", array_unique(array_map("serialize", $time_slot_set)));
-        //print_r($time_slot_set);die;
-        $new_output .= '<thead>';
-        $new_output .= '<tr>';
-        $new_output .='<th>Time slot</th>';
-        foreach($new_array as $key => $courtnames) { // city_b headings
-            $new_output .= '<th>'.ucfirst($key).'</th>';
-        }
-        $new_output .= '</tr>';
-        $new_output .= '</thead>';
-        $new_output .= '<tbody>';
+		
+		if($data['date_info'] == 'today'){
+			if($get_details)
+			{
+			$distMatrix = array();
+			$new_array = $this->array_group_by($get_details, 'courtname' );
+			//print_r($new_array);die;
+			$time_slot_set = array();
+			foreach($get_details as $key => $value) { // city_b headings
+				$from_time = strtotime($value['from_time']);
+				$to_time = strtotime($value['to_time']);
+				$time_diff = $to_time - $from_time;
+				$postive =  ($time_diff / 600) / 6 ;
+				//echo $postive;die;
+				for($i = 1 ; $i <= $postive ; $i++ ){                
+					$timestamp = $from_time + ( 60*60) ;
+					$time = date('h:i A', $timestamp);
+					$new_fromtime = $time;
+					//$time_slot_set[] = date('h:i A', $from_time).'--'.$new_fromtime;
+					$time_slot_set[] = array(
+						'from_time' => $from_time,
+						'to_time' => strtotime($new_fromtime),
+						//'cid' => $value['cid']
+					 );
+					$from_time = strtotime($new_fromtime);
+					
+				}            
+			}
+			//print_r($time_slot_set);die;
+			sort($time_slot_set);
+			$time_slot_set = array_map("unserialize", array_unique(array_map("serialize", $time_slot_set)));
+			//print_r($time_slot_set);die;
+			$new_output .= '<thead>';
+			$new_output .= '<tr>';
+			$new_output .='<th><button class="btn btn-info refresh_btn" style=cursor:pointer onclick=set_form("'.$activity_id.'","'.$location_id.'","'.$parent_id.'","'.$day_value.'","'.$dates.'","'.$date_info.'")>Refresh</button></th>';
+			 $new_output .= '</tr>';
+			$new_output .= '<tr>';
+			$new_output .='<th>Time slot</th>';
+			foreach($new_array as $key => $courtnames) { // city_b headings
+				$new_output .= '<th>'.ucfirst($key).'</th>';
+			}
+			$new_output .= '</tr>';
+			$new_output .= '</thead>';
+			$new_output .= '<tbody>';
 
-        foreach($time_slot_set as $i => $value) { 
-            
-            /*<form id="addSlotSelection_'.$i.'" class="form-horizontal " name="form" method="POST" >
-            <input type="hidden" name="dates" id="dates"  class="dates" >
-            <input type="hidden" name="activity_id" id="activity_id" value="'.$activity_id.'">
-            <input type="hidden" name="location_id" id="location_id"  value="'.$location_id.'">
-            <input type="hidden" name="parent_id" id="parent_id" value="'.$parent_id.'">
-            <input type="hidden" name="day_val" id="day_val" value="'.$day_value.'">*/
-            $new_output .= '<tr class="daysDiv showDays_'.$day_value.'">
-            ';       
-            
-            
+			foreach($time_slot_set as $i => $value) { 
+				
+				/*<form id="addSlotSelection_'.$i.'" class="form-horizontal " name="form" method="POST" >
+				<input type="hidden" name="dates" id="dates"  class="dates" >
+				<input type="hidden" name="activity_id" id="activity_id" value="'.$activity_id.'">
+				<input type="hidden" name="location_id" id="location_id"  value="'.$location_id.'">
+				<input type="hidden" name="parent_id" id="parent_id" value="'.$parent_id.'">
+				<input type="hidden" name="day_val" id="day_val" value="'.$day_value.'">*/
+				$new_output .= '<tr class="daysDiv showDays_'.$day_value.'">
+				';       
+				
+				
 
-            $new_output .='<td>'.date('h:i A', $value['from_time']).'-'.date('h:i A', $value['to_time']).'</td>'; // city_a ad
-            foreach($new_array as $key => $courtnames) { // city_b headings
-                $holiday_id = $this->get_holiday_id($data['date']);
-                $new_output .= "<td>".$this->check_timeslot_exist($i.'_'.$key.'_'.strtotime($data['date']),$courtnames,date('H:i:s', $value['from_time']), date('H:i:s', $value['to_time']), $data['date'], $holiday_id, $activity_id, $location_id, $parent_id, $value['cid'])."</td>";
-            }
-            //$new_output .='</form>';
-            $new_output .='</tr>';
-           
-        }
-        }
-        else{
-            $new_output = '<tr><td colspan="3"><span>No slots available for the selected day!</span></td></tr>';
-        }
-        $new_output .= '</tbody>';
+				$new_output .='<td>'.date('h:i A', $value['from_time']).'-'.date('h:i A', $value['to_time']).'</td>'; // city_a ad
+				foreach($new_array as $key => $courtnames) { // city_b headings
+					$holiday_id = $this->get_holiday_id($data['date']);
+					$new_output .= "<td>".$this->check_timeslot_exist($i.'_'.$key.'_'.strtotime($data['date']),$courtnames,date('H:i:s', $value['from_time']), date('H:i:s', $value['to_time']), $data['date'], $holiday_id, $activity_id, $location_id, $parent_id, $courtnames[0]['cid'],$data['date_info'])."</td>";
+				}
+				//$new_output .='</form>';
+				$new_output .='</tr>';
+			   
+			}
+			}
+			else{
+				$new_output = '<tr><td colspan="3"><span>No slots available for the selected day!</span></td></tr>';
+			}
+			$new_output .= '</tbody>';
+		}
         echo $new_output;
     }
    
@@ -1641,9 +1859,6 @@ class Booking_court extends CI_Controller{
     
        $email=$this->session->userdata('username');
        $user_id = $this->session->userid;
-       
-       
-       
       $discount_val = 0.00;
       $discount_percentage = 0.00;
       $parentDetails = $this->default->getParentDetailById($parent_id);
@@ -1652,14 +1867,18 @@ class Booking_court extends CI_Controller{
       $postData1=$query1->row_array();
       if(empty($postData1)){
           $json['status'] = 'error';  
-          echo json_encode($json);
-          $this->session->set_flashdata('error', 'Please add prepaid credit to book slot.');
+		  $json['message'] = 'Please add prepaid credit to book slot.';  
+          //$this->session->set_flashdata('error', 'Please add prepaid credit to book slot.');
+		  echo json_encode($json);
       }else{
         
        $s_fee = "select COALESCE(ps.cost,0.00) as fees from pricing p 
         left join pricingslot ps on ps.pid=p.id
-        where p.sid='$activity_id' and p.lid='$location_id' and p.cid='$court_id' and p.fromday='$day' and ps.fromtime='$slot_from_time' and ps.totime='$slot_to_time'   limit 1 ";
+        where p.sid='$activity_id' and p.lid='$location_id' and p.cid='$court_id' and ((p.fromday ='$day' and p.today='0') or (p.fromday <='$day' and p.today >='$day')) and ( ps.fromtime <='$slot_from_time' and ps.totime >='$slot_to_time' )   and p.delete_status=0 order by fees desc limit 1;";
         $f_query = $this->db->query($s_fee);
+
+        
+
         //echo $s_fee;die;
         if($f_query->num_rows() > 0)
         {
@@ -1672,8 +1891,11 @@ class Booking_court extends CI_Controller{
         }
         //echo $fees_price.' '.$fees;die;
         $status='Approved';
-        $checkexists = $this->db->query('select * from tmp_booking_court where parent_id ="'.$parent_id.'" and activity_id ="'.$activity_id.'"  and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and to_time="'.$to.'"');
-        if (empty($checkexists->result_array())){
+		//parent_id ="'.$parent_id.' and "
+        $checkexists = $this->db->query('select * from tmp_booking_court where activity_id ="'.$activity_id.'" and location_id="'.$location_id.'" and court_id="'.$court_id.'" and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and 
+        to_time="'.$to.'"');
+		$result_tmp = $checkexists->result_array();
+        if (empty($result_tmp)){
               $getRowsCount = $this->db->query('SELECT * FROM `tmp_booking_court`');
               $count =  $getRowsCount->num_rows();
               $ticket = $this->school->getLastEntry('booking');
@@ -1693,8 +1915,16 @@ class Booking_court extends CI_Controller{
               echo json_encode($json);
               }
         }else{
-          $json['status'] = 'error';  
-            $this->session->set_flashdata('error', 'You have already booked a slot on selected date.');
+			if($result_tmp[0]['parent_id'] == $parent_id)
+			{
+				$json['status'] = 'error';  
+				$json['message'] = 'You have already booked a slot on selected date.';
+			}
+			else{
+				$json['status'] = 'error';  
+				$json['message'] = 'Sorry, Someone added just now. Please check in 5 mins.';
+			}
+            //$this->session->set_flashdata('error', 'You have already booked a slot on selected date.');
             echo json_encode($json);
         }
       }
@@ -1710,6 +1940,42 @@ class Booking_court extends CI_Controller{
         $sql="DELETE from tmp_booking_court where id='$id'";
         $this->db->query($sql);
         return true;
+    }
+	
+	public function check_cart_items()
+	{
+        $parent_id = $this->input->post('parent_id');
+        $sql="select tmp.*,bs.id as booking_id from tmp_booking_court as tmp 
+		LEFT JOIN bookingslot bs on bs.sid=tmp.activity_id and bs.lid=tmp.location_id and bs.courtid=tmp.court_id and bs.booked_date=tmp.checkout_date and bs.booking_fromtime=tmp.from_time and bs.booking_totime=tmp.to_time and bs.cancelled = 0
+		where tmp.parent_id='$parent_id'";
+        $query = $this->db->query($sql);
+		//echo $sql;die;
+		$ret = 'No';
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result_array() as $key => $value)
+			{
+				$id = $value['id'];
+				if($value['booking_id'] != NULL)
+				{
+					$ret = 'Yes';
+					$sql2="DELETE from tmp_booking_court where id='$id'";
+					$this->db->query($sql2);
+				}
+			}
+			
+			if($ret == 'Yes')
+			{
+				echo 0;
+			}
+			else{
+				echo 1;
+			}
+		}
+		else{
+			echo 0;
+		}
+        
     }
 	
 }

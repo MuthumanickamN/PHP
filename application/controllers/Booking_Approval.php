@@ -12,6 +12,7 @@ class Booking_Approval extends CI_Controller{
 
         $this->load->model('Booking_Approval_Model', 'booking_approval_model');
         $this->load->model('Regular_booking_model','regular_booking_model');
+		$this->load->model('School_profile_report_Model', 'school');
     }
 
     public function index(){
@@ -143,7 +144,10 @@ class Booking_Approval extends CI_Controller{
         //echo json_encode($update); 
         if($this->booking_approval_model->update_booking_details($update_data, $id))
         {
-            $this->send_email($id,$customerid,2);
+			$arr = array('cancelled'=>1);
+			$this->db->where('bid', $id);
+			$this->db->update('bookingslot', $arr);
+            $this->send_email_booked_rejected($id);
             $this->session->set_flashdata('success_message', 'Booking details Rejected successfully!');
             redirect('booking_approval');
         }else{
@@ -165,17 +169,19 @@ class Booking_Approval extends CI_Controller{
             $customerid = ($booking_details!='')  ? $booking_details['customerid'] : '';
             $update_data = array(
                 'bstatus' => '1',
-                'paidamt' => $total_amount,
+                //'paidamt' => $total_amount,
                 'blocked_status' => '1'
             );
             if($this->booking_approval_model->update_booking_details($update_data, $id))
             {             
-                $new_wallet_amount = $wallet_amount - $total_amount;       
+                /*$new_wallet_amount = $wallet_amount - $total_amount;       
                 $customer_update_data = array(
                     'amount' => $new_wallet_amount
                 );
                 $update = $this->booking_approval_model->update_customerWallet_details($customer_update_data, $customerid);
-                if($this->send_email($id,$customerid,1)){
+				*/
+                //if($this->send_email($id,$customerid,1)){
+                if($this->send_email_booked_direct($id)){
                     $exist_result = 'Not exist';
                 }
             }
@@ -255,7 +261,7 @@ class Booking_Approval extends CI_Controller{
         if($blocked_status == '2'){           
             $mail->Subject = "Booking Cancelled";
         }else{
-            $mail->Subject = "Court Booking Primestar Sport Academy";
+            $mail->Subject = "Court Booking Primestar Sports Services";
         }
         $mail->AddEmbeddedImage('images/logo.jpg','logo');
         $reset_password_link = base_url().'admin/';
@@ -275,6 +281,337 @@ class Booking_Approval extends CI_Controller{
         }                
     }
     
+	
+	
+	public function send_email_booked_direct($booking_id)
+	{
+		
+		$sql="select p.* from booking b left join parent p on p.parent_id = b.customerid where b.id='$booking_id'";
+		$row = $this->db->query($sql)->row_array();
+		
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('Phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+        $mail->AddCC(CC_ADDRESS);
+		$mail->addAttachment(TERMS_CONDITION_ATTACHMENT);
+		if(SEND_TO_PARENT != 'NO'){
+		    $mail->addAddress($row['email_id']);
+		}
+		else
+		{
+		    $mail->addAddress(DEFAULT_MAIL);
+		}
+		
+		
+		
+		
+		$mail->isHTML(true);
+
+		$mail->Subject = "Prime Star Sports Services - Your Courts Booking Approved";
+		
+		$body = '';
+		$body .= "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <div class='main' style='font-family: sans-serif;'>
+        <p>Dear <b>".$row['parent_name'].",</b></p>
+        <p>We are pleased to inform you that your Court booking is successful.</p>
+        <table>
+            <tr>
+                <th>BKId</th>
+                <th>Booking Date</th>
+                <th>Activity</th>
+                <th>Location</th>
+                <th>Time</th>
+                <th>Court</th>
+                
+            </tr>";
+            $sql ="select b.booking_no,bs.fromdate  as booked_date, s.sportsname as game,l.location,c.courtname,bs.booking_fromtime as from_time,bs.booking_totime as to_time
+            from booking b 
+            left join bookingslot bs on bs.bid=b.id
+           left join sports s on bs.sid=s.id
+           left join location_booking l on l.id=bs.lid
+           left join court c on bs.courtid=c.id
+           where b.id='$booking_id' and b.bstatus=1 and b.blocked_status=0 and bs.cancelled !=1
+            ";
+            
+            foreach($this->db->query($sql)->result_array() as $key => $value) { 
+        
+        $body .= "<tr>
+                <td>".$value['booking_no']."</td>
+                <td>".$value['booked_date']."</td>
+                <td>".$value['game']."</td>
+                <td>".$value['location']."</td>
+                <td>".$value['from_time']."-".$value['to_time']."</td>
+                <td>".$value['courtname']."</td>
+                
+            </tr>";
+        }
+         $body .= "</table>
+       
+        
+        <h4>Thanks & Regards</h4>
+        <h4 style='color: grey'>PSSS Admin team</h4>
+        <hr>
+        <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
+    </div>";
+    $mail->Body = $body;
+		$mail->AltBody = "This is the plain text version of the email content";
+		
+		if(!$mail->send()) 
+		{
+			
+		   //echo "Mailer Error: " . $mail->ErrorInfo;die;
+		   return false;
+		}
+		else{
+			return true;
+		}
+		
+	}
+	
+	public function send_email_booked_rejected($booking_id)
+	{
+		
+		$sql="select p.*,sum(bs.amount) as amount, bs. from booking b left join bookingslot bs on bs.bid=b.id 
+		left join parent p on p.parent_id = b.customerid where b.id='$booking_id'";
+		$row = $this->db->query($sql)->row_array();
+		$parent_id = $row['parent_id'];
+		$amount = $row['amount'];
+		
+		$vat_val = round((($amount*5)/100),2);
+		$gross_amount = $amount-$vat_val;
+		$credit = $this->db->query('select * from prepaid_credits where parent_id='.$parent_id);
+		$creditVal=$credit->row_array();
+		$total_credits=$creditVal['balance_credits'];
+		$balance_credits=round($total_credits+$row['amount'],2);
+		$sql="Update  prepaid_credits set balance_credits='".$balance_credits."',total_credits='".$balance_credits."' where parent_id='".$row['parent_id']."' ";
+		$insert=$this->db->query($sql);
+		
+		$txn_id = $this->school->getLastEntry('wallet_transactions');
+	  $wallet_transaction_id = 'WTXNO-'.$txn_id;
+
+	  //$inv_id = $this->default->getInvoiceId('wallet_transactions');
+	  //$invoice_id = 'PS'.date('Y').'-'.$inv_id;
+		
+	
+	  $walletArray = array(
+			'wallet_transaction_id' =>$wallet_transaction_id,
+			'ac_code' => 'REFWTR',
+			'wallet_transaction_date' =>date('Y-m-d'),
+			'wallet_transaction_type' =>'Credit',
+			'wallet_transaction_detail' => 'Court Booking Fees - Refund',
+			'updated_admin_id' => $this->session->userdata('user_id'),
+			'reg_id' => NULL,
+			'wallet_transaction_amount' => $row['amount'],
+			'gross_amount' => $gross_amount,
+			'vat_percentage' => 5.00,
+			'vat_value' => $vat_val,
+			'net_amount' => $row['amount'],
+			'credit' => $row['amount'],
+			'invoice' => '',
+			'invoice_id' =>'',
+			'slot_booking'=>$booking_id,
+			'student_id'=> NULL,
+			'parent_id'=> $row['parent_id'],
+			'parent_name'=> $row['parent_name'],
+			'parent_mobile'=> $row['mobile_no'],
+			'parent_email_id'=> $row['mail_id'],
+			'description'=> 'Court Booking Fees - Refund',
+		);
+		$this->db->insert('wallet_transactions', $walletArray);
+		
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('Phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+        $mail->AddCC(CC_ADDRESS);
+		$mail->addAttachment(TERMS_CONDITION_ATTACHMENT);
+		if(SEND_TO_PARENT != 'NO'){
+		    $mail->addAddress($row['email_id']);
+		}
+		else
+		{
+		    $mail->addAddress(DEFAULT_MAIL);
+		}
+		
+		
+		
+		
+		$mail->isHTML(true);
+
+		$mail->Subject = "Prime Star Sports Services - Your Courts Booking Approved";
+		
+		$body = '';
+		$body .= "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <div class='main' style='font-family: sans-serif;'>
+        <p>Dear <b>".$row['parent_name'].",</b></p>
+        <p>We are pleased to inform you that your Court booking is successful.</p>
+        <table>
+            <tr>
+                <th>BKId</th>
+                <th>Booking Date</th>
+                <th>Activity</th>
+                <th>Location</th>
+                <th>Time</th>
+                <th>Court</th>
+                
+            </tr>";
+            $sql ="select b.booking_no,bs.fromdate  as booked_date, s.sportsname as game,l.location,c.courtname,bs.booking_fromtime as from_time,bs.booking_totime as to_time
+            from booking b 
+            left join bookingslot bs on bs.bid=b.id
+           left join sports s on bs.sid=s.id
+           left join location_booking l on l.id=bs.lid
+           left join court c on bs.courtid=c.id
+           where b.id='$booking_id' and b.bstatus=1 and b.blocked_status=0 and bs.cancelled !=1
+            ";
+            
+            foreach($this->db->query($sql)->result_array() as $key => $value) { 
+        
+        $body .= "<tr>
+                <td>".$value['booking_no']."</td>
+                <td>".$value['booked_date']."</td>
+                <td>".$value['game']."</td>
+                <td>".$value['location']."</td>
+                <td>".$value['from_time']."-".$value['to_time']."</td>
+                <td>".$value['courtname']."</td>
+                
+            </tr>";
+        }
+         $body .= "</table>
+        <p>Your Wallet details as follows</p>
+        <p style='text-align: right;'>Transaction ID :<b>".$walletArray['wallet_transaction_id']."</b></p>
+         <table>
+            <tr>
+                <th>Parent-Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Previous balance(AED)</th>
+                <th>Detected amount(AED)</th>
+                <th>Total balance(AED)</th>
+            </tr>
+            <tr>
+                <td>".$row['parent_code']."</td>
+                <td>".$walletArray['parent_name']."</td>
+                <td>".$walletArray['wallet_transaction_date']."</td>
+                <td>".round(sprintf("%2f",$total_credits),2)."</td> 
+                <td>".round(sprintf("%2f",$walletArray['wallet_transaction_amount']),2)."</td>
+                <td>".round(sprintf("%2f",$balance_credits),2)."</td>
+            </tr>
+        </table>
+        <h4>Thanks & Regards</h4>
+        <h4 style='color: grey'>PSSS Admin team</h4>
+        <hr>
+        <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
+    </div>";
+    $mail->Body = $body;
+		$mail->AltBody = "This is the plain text version of the email content";
+		
+		if(!$mail->send()) 
+		{
+			
+		   //echo "Mailer Error: " . $mail->ErrorInfo;die;
+		   return false;
+		}
+		else{
+			return true;
+		}
+		
+	}
+	
     private function email_template($customer_details,$booking_details, $blocked_status){
         if($blocked_status == '1'){
             $message = 'Thanks for booking. Your booking court was approved.';

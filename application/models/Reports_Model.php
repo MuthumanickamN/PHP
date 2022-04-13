@@ -23,7 +23,7 @@ class Reports_Model extends CI_Model{
 	
 	public function get_transaction_search_history($from_date,$to_date,$user){
 
-		$this->db->select('bs.fromdate, bs.todate, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bok.totamt, bok.net_total, bok.paidamt, bok.discount_amount, spo.sportsname, loc.location, cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
+		$this->db->select('bs.fromdate, bs.todate, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bs.gross_amount as totamt, bs.amount as net_total, bs.amount as paidamt, bs.discount_amount, spo.sportsname, loc.location, cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
 		$this->db->from('booking as bok');
 		
 		$this->db->join('parent as cus','cus.parent_id = bok.customerid','left');
@@ -69,13 +69,13 @@ if($user != "" && $user != "All")
 	
 	public function get_booking_search_history($from_date,$to_date){
 
-		$this->db->select('bs.fromdate, bs.todate, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bok.totamt, bok.net_total, bok.paidamt, bok.discount_amount, spo.sportsname, loc.location, cus.name, cus.mobile, cus.email', false);
+		$this->db->select('bs.fromdate, bs.todate, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bs.gross_amount as totamt, bs.amount as net_total, bs.amount as paidamt, bs.discount_amount, spo.sportsname, loc.location, cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
 		
 		$this->db->from('booking as bok');
 		$this->db->join('bookingslot as bs','bs.bid=bok.id','left');
 		$this->db->join('sports as spo','spo.id = bs.sid','left');
 		$this->db->join('location_booking as loc','loc.id = bs.lid','left');
-		$this->db->join('customer as cus','cus.id = bok.customerid','left');
+		$this->db->join('parent as cus','cus.parent_id = bok.customerid','left');
 		
 		
 		$this->db->join('dayname_list as dl','dl.dayid = bs.days','left');
@@ -112,12 +112,12 @@ if($user != "" && $user != "All")
 	
 	public function get_cancellation_search_history($from_date,$to_date){
 
-		$this->db->select('bok.booking_no,bok.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.paidamt,bok.discount_amount,spo.sportsname,loc.location,cus.name,cus.mobile,cus.email', false);
+		$this->db->select('bok.booking_no,bok.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.paidamt,bok.discount_amount,spo.sportsname,loc.location,cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
 		$this->db->from('booking as bok');
 		$this->db->join('bookingslot as bs','bs.bid=bok.id','left');
 		$this->db->join('sports as spo','spo.id = bs.sid','left');
 		$this->db->join('location_booking as loc','loc.id = bs.lid','left');
-		$this->db->join('customer as cus','cus.id = bok.customerid','left');
+		$this->db->join('parent as cus','cus.parent_id = bok.customerid','left');
 		
 		
 		if($to_date !== "" && $from_date !== "")

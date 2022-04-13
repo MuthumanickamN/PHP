@@ -59,7 +59,7 @@
 </div>
 
 	<div>
-<input type="hidden" name="parent_id" id="parent_id" value="<?php echo $this->session->userdata('id');?>">
+<input type="hidden" name="parent_id" id="parent_id" value="<?php echo $parent_id;?>">
 </div>
 
 <div class="col-sm-12 col-md-1">
@@ -69,7 +69,7 @@
 
 <div class="col-sm-12 col-md-1">
 <p class="form_text1">&nbsp;</p>
-<button type="button" id="show_cart" class="btn btn-success" style="display:none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+<button type="button" id="show_cart" class="btn btn-success" style="display:block;"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
 </div>
 
 
