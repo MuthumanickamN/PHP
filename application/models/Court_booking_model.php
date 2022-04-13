@@ -434,7 +434,7 @@ Class Court_booking_model extends CI_Model {
         $this->db->where('court_id', $court_id);
 		$this->db->where('checkout_date', $date);
 		$this->db->where('from_time', $fromtime);
-		//$this->db->where('to_time', $totime);
+		$this->db->where('to_time', $totime);
 
         $query = $this->db->get();
         if ( $query->num_rows() > 0 )
