@@ -63,7 +63,7 @@ $count = ($id !='') ? count($pricing_slot_details) : '1';
 <div class="clearfix"></div>
 
 <h4 class="pad_top_0">Day Type</h4>
-<p>
+<p class="day-type">
 <input type="radio" name="day_type" id="single" <?php if($id !=''){ if($day_type == '0'){ ?> checked="checked" <?php } } else{ ?> checked="checked" <?php } ?> value="0" > Single Day
 <input type="radio" name="day_type" id="multiple" <?php if($id !=''){ if($day_type == '1'){ ?> checked="checked" <?php } } ?> value="1"> Multiple Day
 <input type="radio" name="day_type" id="holiday" <?php if($id !=''){ if($day_type == '2'){ ?> checked="checked" <?php } } ?> value="2"> Holiday
