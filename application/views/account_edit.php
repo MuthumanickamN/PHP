@@ -8,6 +8,9 @@
     vertical-align: middle;
     text-align:left !important;
 }
+.upload-remove img {
+    width: 30% !important;
+}
 </style>
 
 <script>
@@ -154,6 +157,7 @@ $.ajax({
 });
 
 }*/
+
 </script>
 <div class="app-content content">
 <div class="content-overlay"></div>
@@ -329,9 +333,9 @@ $.ajax({
 	 <?php 
 	
                         foreach($upload_items as $uploads){ ?>
-						 <p id="upload_remove_<?php echo $uploads['id']; ?>"><img src="<?php echo base_url().'assets/accounts_documents/'.$uploads['filename']; ?>">
-						 <span> |  </span>
-						 <span style="cursor:pointer;" onclick="remove_upload('<?php echo $uploads['id']; ?>')">Remove</span></p>
+						 <p class="upload-remove" id="upload_remove_<?php echo $uploads['id']; ?>"><img src="<?php echo base_url().'assets/accounts_documents/'.$uploads['filename']; ?>">
+						 
+						 <span title="Remove" id="hover-remove" style="cursor:pointer; padding-left:10px;" onclick="remove_upload('<?php echo $uploads['id']; ?>')"><i class="fa fa-remove"></i></span></p>
 						  <?php }
                                   ?>
 						  </div>
