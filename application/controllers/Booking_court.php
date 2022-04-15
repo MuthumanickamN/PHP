@@ -464,16 +464,10 @@ class Booking_court extends CI_Controller{
             }
 
             
-            $checkexists = $this->db->query('select id from wallet_transactions where slot_booking ="'.$booking_id.'" and  ac_code ="SBWT" and wallet_transaction_type = "Debit" and module="Court Booking" ');
-            $checkexistsArr = $checkexists->row_array();
-            if (empty($checkexistsArr)){
+            
             $this->db->insert('wallet_transactions', $walletArray); 
             $wallet_transaction_id = $this->db->insert_id();
-            }else{
-            $this->db->where('id', $checkexistsArr['id']);
-            $this->db->update('wallet_transactions', $walletArray); 
-            $wallet_transaction_id = $checkexistsArr['id'];
-            }
+            
 
             //Invoice 
             $this->send_email_booked_direct_approval($booking_id, $walletArray,  $resultp['parent_code'], $wallet_amount, $balance_credits);
@@ -1059,6 +1053,8 @@ class Booking_court extends CI_Controller{
         <hr>
         <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
     </div>";
+	
+	//echo $body;die;
     $mail->Body = $body;
 		$mail->AltBody = "This is the plain text version of the email content";
 		

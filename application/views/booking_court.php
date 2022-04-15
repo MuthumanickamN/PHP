@@ -161,14 +161,8 @@
 				<tr>
 					<td><strong>Gross Amount</strong></td>
                                         <td id="gross_amount"></td>
-                                        <td><strong>Discount</strong></td>
-					<td><div class="col-sm-6 col-md-6"><div class="input-group">
-                                                    <input class="form-control" type="hidden" name="hidden_discount_amount" id="hidden_discount_amount" value="" readonly="">
-                                                    <input class="form-control numeric_input" type="text" name="discount_amount" id="discount_amount" value="">
-						<div class="input-group-btn">
-                                                    <button class="btn btn-success" type="button" id="discount_btn">Apply</button>
-						</div>
-					</div></div>
+                                        <td></td>
+					<td>
 				</td>
 				</tr>	
 				

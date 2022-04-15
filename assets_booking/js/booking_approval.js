@@ -42,7 +42,7 @@ jQuery(document).ready(function(){
         var newdiv = '';
         $.ajax({ 	
             type: "POST",   
-            url: base_url+"booking_approval/booking_approved",
+            url: base_url+"Booking_Approval/booking_approved",
             data:"id="+id,		
             async: false,
             datatype: "html",
@@ -112,7 +112,7 @@ function format ( d ) {
     var html_data = '';
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"booking_approval/get_bookingslot_list",
+        url: base_url+"Booking_Approval/get_bookingslot_list",
         data:"id="+d,
         async: false,
         datatype: "html",
@@ -146,7 +146,7 @@ function get_booking_list(){
     //var court_name = ( $('#court_name').val() !=='' ) ? $('#court_name').val() : '';
     $.ajax({ 	
         type: "POST",   
-        url: base_url+"booking_approval/get_booking_list",
+        url: base_url+"Booking_Approval/get_booking_list",
         //data:"id="+court_name,
         async: false,
         datatype: "html",

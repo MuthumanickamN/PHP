@@ -654,9 +654,9 @@
                     <li>
                       <a class="dropdown-item" href="<?php echo base_url() . 'pricing' ?>">Pricing</a>
                     </li>
-                    <li>
+                    <!--<li>
                      <a class="dropdown-item" href="<?php echo base_url() . 'holidays' ?>">Holidays</a>
-                    </li>
+                    </li>-->
           </ul>
                 </li>
           <?php } ?>

@@ -324,11 +324,11 @@ Class Court_booking_model extends CI_Model {
     
     public function get_customerDetails($id){
         
-        $this->db->select('pt.parent_id,pt.email_id,pt.parent_name,wal.amount');
+        $this->db->select('pt.parent_id,pt.email_id,pt.parent_name,wal.balance_credits as amount');
         $this->db->from('parent as pt');
-        $this->db->join('wallet as wal', 'wal.custid = pt.parent_id', 'left');  
+        $this->db->join('prepaid_credits as wal', 'wal.parent_id = pt.parent_id', 'left');  
         if($id != ''){
-            $this->db->where('custid', $id );
+            $this->db->where('pt.parent_id', $id );
         }
         $query = $this->db->get();
         if ( $query->num_rows() > 0 )

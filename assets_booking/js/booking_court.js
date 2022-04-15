@@ -802,7 +802,7 @@ function wallet_calc(){
             if(customer_wallet_amount !=''){
                 //alert(balance_amount+' '+customer_wallet_amount);
                 if(net_amount <= customer_wallet_amount){
-                    amount_need_to_update = get_customerWalletAmount() - net_amount;
+                    amount_need_to_update = parseFloat(get_customerWalletAmount() - net_amount).toFixed(2);
                     
                 }else{
                     alert('Insufficient wallet amount!');

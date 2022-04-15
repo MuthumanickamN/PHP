@@ -19,7 +19,7 @@ class Booking_Approval extends CI_Controller{
         $data = array();
         $data['title'] = 'Customer Booking Approval';
         $data['username'] = $this->session->userdata('username');
-        $data['form_action'] = base_url().'booking_approval/booking_rejected';
+        $data['form_action'] = base_url().'Booking_Approval/booking_rejected';
         $this->load->view('includes/header3');
         //$this->load->view('templates_booking/header');
         $this->load->view('booking_approval',$data);
@@ -149,10 +149,10 @@ class Booking_Approval extends CI_Controller{
 			$this->db->update('bookingslot', $arr);
             $this->send_email_booked_rejected($id);
             $this->session->set_flashdata('success_message', 'Booking details Rejected successfully!');
-            redirect('booking_approval');
+            redirect('Booking_Approval');
         }else{
             $this->session->set_flashdata('error_message', 'Data are not updated Properly!');
-            redirect('booking_approval');
+            redirect('Booking_Approval');
         }
      }
      
@@ -361,7 +361,7 @@ class Booking_Approval extends CI_Controller{
     </div>
     <div class='main' style='font-family: sans-serif;'>
         <p>Dear <b>".$row['parent_name'].",</b></p>
-        <p>We are pleased to inform you that your Court booking is successful.</p>
+        <p>We are pleased to inform you that your Court booking is approved successfully.</p>
         <table>
             <tr>
                 <th>BKId</th>
@@ -378,7 +378,7 @@ class Booking_Approval extends CI_Controller{
            left join sports s on bs.sid=s.id
            left join location_booking l on l.id=bs.lid
            left join court c on bs.courtid=c.id
-           where b.id='$booking_id' and b.bstatus=1 and b.blocked_status=0 and bs.cancelled !=1
+           where b.id='$booking_id' and b.bstatus=1  and bs.cancelled !=1
             ";
             
             foreach($this->db->query($sql)->result_array() as $key => $value) { 
@@ -419,7 +419,7 @@ class Booking_Approval extends CI_Controller{
 	public function send_email_booked_rejected($booking_id)
 	{
 		
-		$sql="select p.*,sum(bs.amount) as amount, bs. from booking b left join bookingslot bs on bs.bid=b.id 
+		$sql="select p.*,sum(bs.amount) as amount from booking b left join bookingslot bs on bs.bid=b.id 
 		left join parent p on p.parent_id = b.customerid where b.id='$booking_id'";
 		$row = $this->db->query($sql)->row_array();
 		$parent_id = $row['parent_id'];
@@ -447,7 +447,7 @@ class Booking_Approval extends CI_Controller{
 			'wallet_transaction_date' =>date('Y-m-d'),
 			'wallet_transaction_type' =>'Credit',
 			'wallet_transaction_detail' => 'Court Booking Fees - Refund',
-			'updated_admin_id' => $this->session->userdata('user_id'),
+			'updated_admin_id' => $this->session->userdata('id'),
 			'reg_id' => NULL,
 			'wallet_transaction_amount' => $row['amount'],
 			'gross_amount' => $gross_amount,
@@ -462,7 +462,7 @@ class Booking_Approval extends CI_Controller{
 			'parent_id'=> $row['parent_id'],
 			'parent_name'=> $row['parent_name'],
 			'parent_mobile'=> $row['mobile_no'],
-			'parent_email_id'=> $row['mail_id'],
+			'parent_email_id'=> $row['email_id'],
 			'description'=> 'Court Booking Fees - Refund',
 		);
 		$this->db->insert('wallet_transactions', $walletArray);
@@ -502,7 +502,7 @@ class Booking_Approval extends CI_Controller{
 		
 		$mail->isHTML(true);
 
-		$mail->Subject = "Prime Star Sports Services - Your Courts Booking Approved";
+		$mail->Subject = "Prime Star Sports Services - Your Courts Booking is Rejected";
 		
 		$body = '';
 		$body .= "<!DOCTYPE>
@@ -556,8 +556,7 @@ class Booking_Approval extends CI_Controller{
            left join sports s on bs.sid=s.id
            left join location_booking l on l.id=bs.lid
            left join court c on bs.courtid=c.id
-           where b.id='$booking_id' and b.bstatus=1 and b.blocked_status=0 and bs.cancelled !=1
-            ";
+           where b.id='$booking_id' ";
             
             foreach($this->db->query($sql)->result_array() as $key => $value) { 
         
