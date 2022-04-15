@@ -154,18 +154,18 @@ h5
         </tr>
       </thead>
       <?php 
-      foreach($list as $key => $row1) 
+      foreach($list as  $row1) 
       {
         $date_time = $row1['updated_at'];
          ?>
          <tr>  
         
-          <td style="text-align: center"><?php echo $row1->sid;?></td>
-          <td style="text-align: center"><?php echo $row1->parent_code;?></td>
-          <td style="text-align: center"><?php echo $row1->name;?></td>
-          <td style="text-align: center"><?php echo $row1->game;?></td>
-          <td style="text-align: center"><?php echo $row1->level;?></td>
-          <td style="text-align: center"><?php echo $row1->remark;?></td>
+          <td style="text-align: center"><?php echo $row1['sid'];?></td>
+          <td style="text-align: center"><?php echo $row1['parent_code'];?></td>
+          <td style="text-align: center"><?php echo $row1['name'];?></td>
+          <td style="text-align: center"><?php echo $row1['game'];?></td>
+          <td style="text-align: center"><?php echo $row1['level'];?></td>
+          <td style="text-align: center"><?php echo $row1['remark'];?></td>
           <td style="text-align: center"><span style="display:none;"><?php echo strtotime("$date_time"); ?></span><?php echo date("d/m/Y H:i:s", strtotime("$date_time")); ?></td>
 
       

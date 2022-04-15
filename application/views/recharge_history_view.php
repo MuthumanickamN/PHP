@@ -28,19 +28,28 @@
 <form method="post" name="recharge_history" id="recharge_history" action="" onsubmit="return false;" enctype="multipart/form-data"> 
 		<h1>Range</h1>
 	
-		<div class="col-sm-4">
+		<div class="col-sm-12 col-md-4 pad_lef_0">
 			<p class="form_text1" id="from">From</p>
-			<input type="text" class="date-picker" id="from_date" name="from_date" value="" readonly>
+			<input type="text" class="date-picker" name="from_date" id="from-date" required>
 		</div>
-		<div class="col-sm-4" id="hide1">
+		<div class="col-sm-12 col-md-4 pad_lef_0">
 			<p class="form_text1">To</p>
-			<input type="text" class="date-picker" id="to_date" name="to_date" value="" readonly>
+			<input type="text" class="date-picker" name="to_date" id="to_date" required>
 		</div>
+
 	<div class="col-sm-4">
 	<p class="form_text1">&nbsp;</p>
 		<button type="submit" name="fetch1" id="fetch1" class="btn btn-primary" id="generate">Fetch</button>
 	</div>
 </form>
+
+
+
+
+
+
+
+
 
 	<div class="col-sm-12 col-md-12"><hr></div>
 	<div class="clearfix"></div>
