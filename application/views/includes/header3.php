@@ -619,17 +619,7 @@
 
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
-                  <li data-menu="Manage Sports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'sports' ?>"><span data-i18n="Manage Sports">Manage Sports</span></a></li>
-          <?php } ?>
-
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
-                  <li data-menu="Manage Location"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'location_booking' ?>"><span data-i18n="Manage Location">Manage Location</span></a></li>
-          <?php } ?>
-
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
-                  <li data-menu="Manage Court"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'court' ?>"><span data-i18n="Manage Court">Manage Court</span></a></li>
-          <?php } ?>
+          
 
           <?php //if($role == 'superadmin'|| $role == 'admin'|| $role == 'parent') { ?>
                   <!--<li data-menu="Manage Users"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Manage Users">Manage Users &raquo;</span></a>
@@ -654,6 +644,17 @@
                     <li>
                       <a class="dropdown-item" href="<?php echo base_url() . 'pricing' ?>">Pricing</a>
                     </li>
+					<?php if($role == 'superadmin'|| $role == 'admin') {?>
+                  <li data-menu="Manage Sports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'sports' ?>"><span data-i18n="Manage Sports">Manage Sports</span></a></li>
+          <?php } ?>
+
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+                  <li data-menu="Manage Location"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'location_booking' ?>"><span data-i18n="Manage Location">Manage Location</span></a></li>
+          <?php } ?>
+
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+                  <li data-menu="Manage Court"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'court' ?>"><span data-i18n="Manage Court">Manage Court</span></a></li>
+          <?php } ?>
                     <!--<li>
                      <a class="dropdown-item" href="<?php echo base_url() . 'holidays' ?>">Holidays</a>
                     </li>-->

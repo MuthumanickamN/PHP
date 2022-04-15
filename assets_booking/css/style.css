@@ -5215,3 +5215,10 @@ li.breadcrumb-item {
     font-family: 'Glyphicons Halflings';
     opacity: 0.5;
 }
+#slotSelection {
+    display: flow-root !important;
+	overflow: scroll;
+}
+.modal-dialog {
+    max-width: 99% !important;
+}
