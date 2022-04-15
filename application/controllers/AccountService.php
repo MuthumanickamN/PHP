@@ -118,6 +118,66 @@ class AccountService extends CI_Controller {
 		 $id =  $this->input->post('id');
 		 $this->db->delete('accountserviceuploadedfiles', array('id' => $id)); 
 	}
+	public function edit_details()
+	{	
+			$id = $this->input->post('id');
+			$type=$this->input->post('type');
+			$paid = $this->input->post('paid_amount');
+			$account_service=$this->input->post('account_service');
+			$service=$this->input->post('service');
+			$vat_percent=$this->input->post('vat_percentage');
+			$vat_value= $this->input->post('vat_value');
+			$payable_amount=$this->input->post('payable_amount');
+			$payable_date=$this->input->post('payable_date');
+			$created_at=date('Y-m-d H:i:s');
+			if ($type == 'Expense' || $type == 'Income') {
+				$service = $this->input->post('service');
+				if (empty($service)) {
+					$json['error']['service'] = 'Please enter service';
+				}
+			} 
+			$sql="update accounts_service_entries set accountservice_id	='".$service."',gross_amount='".$paid."',vat_percentage='".$vat_percent."',vat_amount='".$vat_value."',payable_amount='".$payable_amount."',payable_date='".$payable_date."',created_at='".$created_at."' where Id='".$id."'";
+		    $insert=$this->db->query($sql);	
+			$lastid = $id;
+				/***** Upload multiple files ********/	
+				$dataInfo = array();
+				$files = $_FILES;
+				$cpt = count($_FILES['userfile']['name']);
+				$myFile = $_FILES['userfile'];
+				for($i=0; $i<$cpt; $i++)
+				{   
+					$error = $myFile["error"][$i];
+					 if ($error == '4')  // error 4 is for "no file selected"
+             {
+             }
+            else
+             {
+					$_FILES['userfile']['name']= $files['userfile']['name'][$i];
+					$_FILES['userfile']['type']= $files['userfile']['type'][$i];
+					$_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'][$i];
+					$_FILES['userfile']['error']= $files['userfile']['error'][$i];
+					$_FILES['userfile']['size']= $files['userfile']['size'][$i];    
+
+					$this->upload->initialize($this->set_upload_options());
+					$this->upload->do_upload('userfile');
+					
+		$sql1="INSERT into accountserviceuploadedfiles(accountservice_id,filename) values('".$lastid."','".$files['userfile']['name'][$i]."')";
+		$this->db->query($sql1);
+				}
+				}				
+				/***************************End**********************************/
+			//$this->session->set_flashdata('success_msg', 'Accounts Details Added Successfully.');
+			redirect(base_url().'AccountService/all_list');	
+			
+	}
+	public function delete($id){
+		
+	$this->db->delete('accounts_service_entries', array('Id' => $id)); 
+	
+	$this->db->delete('accountserviceuploadedfiles', array('accountservice_id' => $id)); 
+	
+	redirect(base_url().'AccountService/all_list');	
+}
 }
 
 ?>

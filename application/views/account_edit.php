@@ -199,11 +199,8 @@ $.ajax({
 </div>
      <div class="card-content collapse show">
     <div class="card-body card-dashboard">
-<form action="<?php echo site_url();?>AccountService/remove_upload" id="loginForm" class="form-horizontal" role="form" name="form" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
-
-
-
-
+<form action="<?php echo site_url();?>AccountService/edit_details" class="form-horizontal" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
+<input type="hidden" name="id" value="<?php echo $result['Id'];  ?>">
 <div class="form-group lg-btm">
     <div class="row">
         <div class="col-md-3 control">
@@ -332,7 +329,7 @@ $.ajax({
 	 <?php 
 	
                         foreach($upload_items as $uploads){ ?>
-						 <p id="upload_remove_<?php echo $uploads['id']; ?>"><?php echo $uploads['filename']; ?>
+						 <p id="upload_remove_<?php echo $uploads['id']; ?>"><img src="<?php echo base_url().'assets/accounts_documents/'.$uploads['filename']; ?>">
 						 <span> |  </span>
 						 <span style="cursor:pointer;" onclick="remove_upload('<?php echo $uploads['id']; ?>')">Remove</span></p>
 						  <?php }
