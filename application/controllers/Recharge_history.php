@@ -34,7 +34,7 @@ class Recharge_history extends CI_Controller {
 			$to_date = ($_POST['to_date'])?$_POST['to_date'] : "";
 			$from_date1 = ($from_date != "") ? $this->change_date_format($from_date): "";
 			$to_date1 = ($to_date != "") ? $this->change_date_format($to_date): "";
-			
+		
 			
 			$query  = "select rec.*,res.wallet_transaction_date as date, cus.parent_name as user_name,cus.mobile_no as mobile from wallet_transaction as rec LEFT JOIN parent as cus ON cus.parent_id = rec.parent_id where rec.wallet_transaction_details='Prepaid credits'";
 			
