@@ -60,10 +60,7 @@ $userid = $this->session->userid;
                                         $url = base_url().'Coach?add='.$filter;
                                         echo '<a href="<?php echo $url;?>" class="float-right btn btn-primary btn-sm" style="margin: 4px;"><i class="fa fa-plus"></i> Add</a>';
                                     }
-                                  /*  else if($filter == "parent" || $filter == "headcoach"){
-                                        $url = base_url().'Students/transaction_history?id='.$filter;
-                                        echo '<a href="<?php echo $url;?>" class="btn btn-primary" style="margin: 4px;"><i class="fa fa-plus"></i>View Transaction</a>';
-                                    }*/
+                                
                                     else
                                     {
                                         echo '<a href="javascript:void(0);" data-toggle="modal" data-target="#add-user" class="float-right btn btn-primary btn-sm" style="margin: 4px;"><i class="fa fa-plus"></i> Add</a>';
@@ -241,7 +238,7 @@ $this->load->view('templates/footer');
                     }
                    if(row[4] == 'Parent')
                     {
-                    bindHtml += '<button type="button" id="transactionHistoryBtn" class="btn btn-info" onClick="show_transaction(86);">Transaction History</button></td>';
+                    bindHtml += '<button type="button" id="transactionHistoryBtn" class="btn btn-info" onClick="show_transaction("<?php echo $role;?>","<?php echo $pid;?>");">Transaction History</button></td>';
                     } 
                     return bindHtml;
                     }
@@ -280,11 +277,12 @@ $this->load->view('templates/footer');
     function show_transaction(role,pid)
  {
      $('#transactionHistoryModal').show();
-
+    // var id = $('#id').val();
+     var pid = $('#parent_id').val();
      
      $.ajax({ 	
             type: "POST",   
-            url: base_url+"Students/transaction_history",
+            url: base_url+"Users/transaction_history",
             data:{ parent_id:pid},		
             async: false,
             datatype: "html",
