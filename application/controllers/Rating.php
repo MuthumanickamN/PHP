@@ -60,7 +60,74 @@ class Rating extends CI_Controller {
 	
 	public function rating_review_report()
 	{
-		$this->load->view('rating_review_report_view');
+		
+	/*	$query2 = "SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+			where 1 and u.user_id =".$coach_id."";
+			*/
+		
+		$coach_id = $_SESSION['userid'];
+		$coach_detail = "SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+			where 1 and u.user_id =".$coach_id."";
+		$coach_profile = $this->db->query($coach_detail);	
+		
+		if($coach_profile->num_rows() > 0)
+		{
+			$result_array = $coach_profile->result_array();
+			$data['coach_profile'] = $result_array[0];
+		}
+		else
+		{
+			$data['coach_profile'] = "";
+		}
+		
+		
+		$review = "SELECT * FROM rating_reviews where 1 and coach_id =".$coach_id."";
+		$review_detail = $this->db->query($review);	
+		
+		if($review_detail->num_rows() > 0)
+		{
+			$data['review_detail'] = $review_detail->result_array();
+			//$data['review_count'] = $review_detail->num_rows();
+		}
+		else
+		{
+			$data['review_detail'] = '';
+		}	
+		
+		$this->load->view('rating_review_report_view',$data);
+	}
+	
+	public function rating_review_detail($coach_id)
+	{
+		$coach_detail = "SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+			where 1 and u.user_id =".$coach_id."";
+		$coach_profile = $this->db->query($coach_detail);	
+		
+		if($coach_profile->num_rows() > 0)
+		{
+			$result_array = $coach_profile->result_array();
+			$data['coach_profile'] = $result_array[0];
+		}
+		else
+		{
+			$data['coach_profile'] = "";
+		}
+		
+		$review = "SELECT a_s.*,rr.* FROM activity_selections as a_s right join rating_reviews as rr on rr.activity_selection_id = a_s.id where rr.coach_id=".$coach_id."";
+		$review_detail = $this->db->query($review);	
+		
+		if($review_detail->num_rows() > 0)
+		{
+			$data['review_detail'] = $review_detail->result_array();
+			//$data['review_count'] = $review_detail->num_rows();
+		}
+		else
+		{
+			$data['review_detail'] = '';
+		}
+	
+		$this->load->view('rating_review_single_view',$data);
+		
 	}
 }
 ?>

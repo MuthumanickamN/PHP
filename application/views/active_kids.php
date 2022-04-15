@@ -157,24 +157,51 @@ th, td {
             $activitylists = $this->db->query("select a_s.*, cd.contract_form_sent_to_parent, cd.parent_approved from activity_selections as a_s 
             left join contract_details cd on cd.activity_selection_id = a_s.id
             where a_s.student_id=".$id); 
-					
+			
+
+/* echo $sql  ="select a_s.*, cd.contract_form_sent_to_parent, cd.parent_approved from activity_selections as a_s 
+            left join contract_details cd on cd.activity_selection_id = a_s.id
+            where a_s.student_id=".$id;	
+*/		
         	$activitylists=$activitylists->result_array();
         
 			$get_coach_id = '';
-        	foreach ($activitylists as $key => $value) {
-        		$activitylists[$key]['game'] = ($value['activity_id'] !='')?$this->transaction->getActivityDetail($value['activity_id']):'';
-        		$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
+		
+			$activity_selection_id = '';
+			if(!empty($activitylists))
+			{
+				foreach ($activitylists as $key => $value) {
+					$activity_selection_id = $value['id'];
+					
+					$activitylists[$key]['game'] = ($value['activity_id'] !='')?$this->transaction->getActivityDetail($value['activity_id']):'';
+					$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
+					
+					if(!empty($value['coach_id']))
+					{
+					$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+					where 1 and c.coach_id =".$value['coach_id'].""); 
+					
+					
+					$get_coach = $get_coach_details->result_array();
+					$get_coach_id = $get_coach[0]['user_id'];
+					}
+					else
+					{
+						$get_coach_id  = "";
+					}
 				
-				$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
-				where 1 and c.coach_id =".$value['head_coach_id'].""); 
-				
-				
-				$get_coach = $get_coach_details->result_array();
 
-				$get_coach_id = $get_coach[0]['user_id'];
-        	}
-          
+				$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+				where 1 and c.coach_id =".$value['coach_id'].""); 
+
+				}
+
+				
+				
+			}
+			
             foreach ($activitylists as $key2 => $row1) { 
+
           ?>
       
         <tr>
@@ -244,9 +271,14 @@ th, td {
         </td>
 		
 		<?php
+		
+		if(!empty($get_coach_id))
+		{	
 		 $rating_reviews = $this->db->query("SELECT * FROM rating_reviews where coach_id=".$get_coach_id." and parent_id =".$row1['parent_user_id']." and activity_selection_id =".$row1['activity_id']."");
 		 
 		 $rating_num_row = $rating_reviews->num_rows();
+		 
+	
 		if($rating_num_row>0)
 		{
 		?>
@@ -255,13 +287,12 @@ th, td {
 		</td>
 		<?php } else { ?>
          <td>
-			<a href="<?php echo base_url() ?>Rating/index/<?php echo $get_coach_id?>/<?php echo $row1['parent_user_id'];  ?>/<?php echo $row1['activity_id']; ?>" class="btn btn-warning">Coach Review</a>
+			<a href="<?php echo base_url() ?>Rating/index/<?php echo $get_coach_id?>/<?php echo $row1['parent_user_id'];  ?>/<?php echo $row1['id']; ?>" class="btn btn-warning">Coach Review</a>
 		</td>
 		<?php } ?>
        
-            
         </tr>
-      <?php } ?>
+		<?php } } ?>
           
           
       </tbody>

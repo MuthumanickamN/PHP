@@ -25,7 +25,7 @@ class Active_kids extends CI_Controller {
         $data['parent_id'] = $parent_id;
         
         $query2 = "select *,DATE_FORMAT(FROM_DAYS(DATEDIFF(CURDATE(),dob)), '%Y')+0 AS age from registrations where parent_user_id='$parent_id' order by dob asc";
-	
+
         $data['students'] = $this->db->query($query2)->result_array();
         
         $query3 = $this->db->query('select game_id,game from games where active=1');

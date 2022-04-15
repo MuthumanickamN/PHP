@@ -86,12 +86,108 @@
             </div>
           </div>
         </div>
+		
+	<style>
+        .star{
+          color: goldenrod;
+          font-size: 2.0rem;
+          padding: 0 1rem; /* space out the stars */
+        }
+        .star::before{
+          content: '\2606';    /* star outline */
+          /*cursor: pointer;*/
+        }
+        .star.rated::before{
+          /* the style for a selected star */
+          content: '\2605';  /* filled star */
+        }
+        
+        .stars{
+            counter-reset: rateme 0;   
+            font-size: 2.0rem;
+            font-weight: 900;
+        }
+        .star.rated{
+            counter-increment: rateme 1;
+        }
+        .stars::after{
+            /*content: counter(rateme) '/5';*/
+        }
+		
+		.div_class
+		{
+			height:34px;
+		}
+    </style>		
        <div class="content-body"><!-- Zero configuration table -->
 <section id="configuration">
     <div class="row">
         <div class="col-12">
             <div class="card">
+<?php
 
+	if(!empty($coach_profile))
+	{
+		if(!empty($coach_profile['user_name']))
+		{
+			$coach_name = $coach_profile['user_name'];
+		}
+		else
+		{
+			$coach_name = "";
+		}
+		
+		if(!empty($coach_profile['user_id']))
+		{
+			$coach_id = $coach_profile['user_id'];
+		}
+		else
+		{
+			$coach_id = "";
+		}
+		
+		
+	}
+	
+	
+	
+?>
+
+			  <?php 
+					$one_star = 0;
+					$two_star = 0;
+					$three_star = 0;
+					$four_star = 0;
+					$five_star = 0;
+					$review_count = 0;
+					foreach($review_detail as $values)
+					{
+						if($values['star_count']==1)
+						{
+							$one_star=$one_star+1;
+						}
+						if($values['star_count']==2)
+						{
+							$two_star=$two_star+1;
+						}
+						if($values['star_count']==3)
+						{
+							$three_star=$three_star+1;
+						}
+						if($values['star_count']==4)
+						{
+							$four_star=$four_star+1;
+						}
+						if($values['star_count']==5)
+						{
+							$five_star=$five_star+1;
+						}
+						
+						$review_count = $review_count+1;
+					
+					}
+			  ?>
+			  
 
 <!-- #################(For Coaches AND HeadCoach)################## -->
 
@@ -116,17 +212,57 @@
         <td style="text-align:center;">
            <div class="card">
             <img src="<?php echo base_url() ?>/images/img_avatar.png" alt="Avatar" width="200" height="200" class="img-responsive">
-            <h4 style="text-align: center;"><b>Ravi</b></h4> 
-            <p style="text-align: center;"><b>Head coach</b></p> 
+            <h4 style="text-align: center;"><b><?php echo $coach_name; ?></b></h4> 
+            <p style="text-align: center;"><b>coach</b></p> 
          </div>
         </td>
-		<td style="text-align:center;">
-           <div class="card">
-            <img src="<?php echo base_url() ?>/images/boy.png" alt="Avatar" width="200" height="200" class="img-responsive">
-            <h4 style="text-align: center;"><b>Ravi</b></h4> 
-            <p style="text-align: center;"><b>Head coach</b></p> 
-         </div>
-        </td>
+		
+         <td style="text-align:center;">
+		 
+		 <?php if($one_star!=0) {  ?>
+			<div class="progress progress-striped div_class">
+			 <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20.0%;">
+				<span class="progress-type">1 Star</span>
+				<span class="progress-completed"><?php echo $one_star; ?>-Student</span>
+			 </div>
+		  </div>
+		 <?php } ?>
+		 
+		  <?php if($two_star!=0) {  ?>
+			<div class="progress progress-striped div_class">
+			 <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40.0%;">
+				<span class="progress-type">2 Star</span>
+				<span class="progress-completed"><?php echo $two_star; ?>-Student</span>
+			 </div>
+		  </div>
+		 <?php } ?>	
+		 
+		 <?php if($three_star!=0) {  ?>
+		  <div class="progress progress-striped div_class">
+			 <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60.0%;">
+				<span class="progress-type">3 Star</span>
+				<span class="progress-completed"><?php echo $three_star; ?>-Student</span>
+			 </div>
+		  </div>
+		<?php } ?>
+		<?php if($four_star!=0) {  ?>		
+		  <div class="progress progress-striped div_class">
+			 <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80.0%;">
+				<span class="progress-type">4 Star</span>
+				<span class="progress-completed"><?php echo $four_star; ?>-Student</span>
+			 </div>
+		  </div>
+		<?php } ?>	
+		
+		<?php if($five_star!=0) {  ?>
+		 <div class="progress progress-striped div_class">
+			 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100.0%;">
+				<span class="progress-type">5 Star</span>
+				<span class="progress-completed"><?php echo $five_star; ?>-Student</span>
+			 </div>
+		  </div>
+		<?php } ?>	
+		<p><strong><?php  echo $review_count; ?> Customer Reviewed</strong></p>
 
 		<td style="text-align:center;">
 
@@ -138,12 +274,13 @@
 			<span class="star " data-star="">&nbsp;</span>
 			<span class="star " data-star="">&nbsp;</span>
 			<span class="star " data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
 			<!-- </div> -->
 			<br>
 			<p><strong> 1.0 Out of 5 Stars</strong></p>
 			<!-- <br> -->
 			<br>
-			<a href="/admin/rating_review_detail/25" style="color:white;text-decoration:none" type="button" class="btn btn-success rating_review_submit" id="rating_review_submit" data-id=""><i class="fa fa-pencil-square-o" aria-hidden="true"> View</i></a>
+			<a href="<?php echo base_url() ?>/Rating/rating_review_detail/<?php echo $coach_id; ?>" style="color:white;text-decoration:none" type="button" class="btn btn-success rating_review_submit" id="rating_review_submit" data-id=""><i class="fa fa-pencil-square-o" aria-hidden="true"> View</i></a>
 		</td>
 
         
