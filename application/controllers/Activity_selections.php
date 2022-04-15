@@ -35,7 +35,7 @@ class Activity_Selections extends CI_Controller {
     	$query2 = $this->db->query("select * from game_levels order by games_level_id asc");
     	$data['levels']=$query2->result_array();
     	
-    	$query3 = $this->db->query("select * from coach where role='Head coach' and deleted=0  and activity_id='".$data['activity_id']."'");
+    	$query3 = $this->db->query("select * from coach where role='headcoach' and deleted=0  and activity_id='".$data['activity_id']."'");
     	$data['head_coaches']=$query3->result_array();
     	
     	$query4 = $this->db->query("select * from bank_details");

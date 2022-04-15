@@ -166,7 +166,7 @@ th, td {
         		$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
 				
 				$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
-				where 1 and c.coach_id =".$value['coach_id'].""); 
+				where 1 and c.coach_id =".$value['head_coach_id'].""); 
 				
 				
 				$get_coach = $get_coach_details->result_array();

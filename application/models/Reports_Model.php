@@ -3,11 +3,14 @@
 
 class Reports_Model extends CI_Model{
 	
-	public function get_user(){
+	public function get_user($parent_id=''){
 		
-		$this->db->select("id,name");
-		$this->db->from("customer");
-		
+		$this->db->select("*");
+		$this->db->from("parent");
+		if($parent_id)
+		{
+		    $this->db->where('parent_id', $parent_id);
+		}
 		$query = $this->db->get(); 
 		if ( $query->num_rows() > 0 )
 			{
@@ -67,7 +70,7 @@ if($user != "" && $user != "All")
 	}
 	
 	
-	public function get_booking_search_history($from_date,$to_date){
+	public function get_booking_search_history($from_date,$to_date,$user){
 
 		$this->db->select('bs.fromdate, bs.todate, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bs.gross_amount as totamt, bs.amount as net_total, bs.amount as paidamt, bs.discount_amount, spo.sportsname, loc.location, cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
 		
@@ -91,6 +94,11 @@ if($user != "" && $user != "All")
 		{
 			$this->db->where("bs.fromdate = '$from_date'");				
 		}
+		
+		if($user != "" && $user != "All")
+{
+	$this->db->where("cus.parent_id = $user");
+}
 		$this->db->where("bok.bstatus = 1");
 		
 		$query = $this->db->get();
@@ -110,7 +118,7 @@ if($user != "" && $user != "All")
 	}
 	
 	
-	public function get_cancellation_search_history($from_date,$to_date){
+	public function get_cancellation_search_history($from_date,$to_date,$user){
 
 		$this->db->select('bok.booking_no,bok.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.paidamt,bok.discount_amount,spo.sportsname,loc.location,cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
 		$this->db->from('booking as bok');
@@ -129,6 +137,12 @@ if($user != "" && $user != "All")
 		{
 			$this->db->where("bok.cancelled_on = '$from_date'");				
 		}
+		
+		if($user != "" && $user != "All")
+{
+	$this->db->where("cus.parent_id = $user");
+}
+
 		$this->db->where("bok.bstatus = 2");
 		
 		$query = $this->db->get();

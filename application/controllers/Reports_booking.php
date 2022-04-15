@@ -19,8 +19,22 @@ if(!$this->session->userdata('id')){
 		
 		
 		$data = array();
-		
-		$data['user_name'] = $this->reports_model->get_user();
+		$userrole = strtolower($this->session->userdata('role'));
+		if($userrole == 'parent')
+        {
+            $userid=$this->session->userdata('id');
+            $query = $this->db->query("SELECT parent_id FROM `parent` p
+            left join users u on u.code = p.parent_code
+            where u.user_id=$userid");
+            $parent_id = $query->row()->parent_id;
+		    $data['user_name'] = $this->reports_model->get_user($parent_id);
+		    $data['from'] = 'Parent';
+        }
+        else
+        {
+             $data['user_name'] = $this->reports_model->get_user();
+             $data['from'] = 'Admin';
+        }
 		$this->load->view('includes/header3');
 		//$this->load->view('templates/header');
         $this->load->view('reports',$data);
@@ -126,8 +140,8 @@ public function get_booking_search_history(){
 		
 		$from_date1 = ($from_date != "") ? change_date_format($from_date): "";
 		$to_date1 = ($to_date != "") ? change_date_format($to_date): "";
-		
-		$booking_details = $this->reports_model->get_booking_search_history($from_date1,$to_date1);
+		$user = ($this->input->post('user'))?$this->input->post('user') : "";
+		$booking_details = $this->reports_model->get_booking_search_history($from_date1,$to_date1,$user);
 		$output ='';
 		if($booking_details)
 		{
@@ -207,8 +221,8 @@ public function get_booking_search_history(){
 		
 		$from_date1 = ($from_date != "") ? change_date_format($from_date): "";
 		$to_date1 = ($to_date != "") ? change_date_format($to_date): "";
-		
-		$cancellation_details = $this->reports_model->get_cancellation_search_history($from_date1,$to_date1);
+		$user = ($this->input->post('user'))?$this->input->post('user') : "";
+		$cancellation_details = $this->reports_model->get_cancellation_search_history($from_date1,$to_date1,$user);
 		$output ='';
 		if($cancellation_details)
 		{

@@ -108,7 +108,7 @@ class Court_booking extends CI_Controller{
 
         $data2 = array(
             'vat_perc'=>$this->input->post('hidden_vat_perc'),
-            'discount'=>$this->input->post('discount_amount')
+            'discount'=>($this->input->post('discount_amount') !='')?($this->input->post('discount_amount')):0.00
         );
         $insert_id = $this->court_booking_model->add_booking_details($insert_data);
 		
@@ -327,8 +327,15 @@ class Court_booking extends CI_Controller{
             'booking_no' => $booking_no
         );
         $this->court_booking_model->update_booking_details($update_data, $booking_id);
-
-        $discount_each = round($data2['discount']/count($insert_booking_slot_details['court_ids']),2);
+        
+        if($data2['discount'])
+        {
+            $discount_each = round($data2['discount']/count($insert_booking_slot_details['court_ids']),2);
+        }
+        else
+        {
+            $discount_each = 0.00;
+        }
         if(!empty($insert_booking_slot_details)){
             for($i=0; $i<count($insert_booking_slot_details['court_ids']); $i++){
                     //echo  $key.'-->'.$value[$i].'<br/>';
