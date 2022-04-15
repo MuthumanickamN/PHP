@@ -22,19 +22,25 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 <div class="tab-content">
 <div id="sectionA" class="tab-pane fade in active">
 	<div class="col-sm-12 col-md-6">
+		
+		<?php if($from=="Admin") { ?>
 		<h4>Login</h4>
 		<select class="form-control" id="adminSelect">
-		 <option value="All">All</option>
+		 <option value="All" selected>All</option>
 	<?php
 	if($user_name)
 	{
       foreach($user_name as  $key=>$value){ ?>
-	   <option value="<?php echo $value['id']; ?>"> <?php echo $value['name']; ?></option>
+	   <option value="<?php echo $value['parent_id']; ?>"> <?php echo $value['parent_name']; ?></option>
 	 <?php	
 	     }
 	}
 ?>
 	</select>
+	<?php }else{ ?>
+	<input type="hidden" id="adminSelect" value="<?php echo $user_name[0]['parent_id']; ?>">
+	<?php } ?>	 
+
 	</div>
 	<div class="col-sm-12 col-md-12 mar_top_20">
 <form name="transaction_search" id="transaction_search" method="post" onsubmit="return false;" action="" enctype="multipart-enctype">

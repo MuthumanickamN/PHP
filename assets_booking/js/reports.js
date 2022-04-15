@@ -320,13 +320,13 @@ function add_day(date)
 
 			var from_date = $('#datepicker2').val();
 			var	to_date = $('#datepicker3').val();
-
+            var user = $('#adminSelect').val();
 			$.ajax({
 			url:base_url+"reports_booking/get_booking_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
-			from_date:from_date,to_date:to_date
+			from_date:from_date,to_date:to_date,user:user
 			},
 			success:function(data){
             $("#example2").dataTable().fnDestroy();
@@ -372,13 +372,13 @@ function add_day(date)
 			
 			var from_date = $('#datepicker4').val();
 	var	to_date = $('#datepicker5').val();
-	
+	var user = $('#adminSelect').val();
 		$.ajax({
 			url:base_url+"reports_booking/get_cancellation_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
-				from_date:from_date,to_date:to_date
+				from_date:from_date,to_date:to_date,user:user
 			},
 			success:function(data){
 				$("#example3").dataTable().fnDestroy();
@@ -415,12 +415,12 @@ function add_day(date)
 function get_transaction_list(){
 	$('#datepicker').val("");
 	$('#datepicker1').val("");
-	$('#adminSelect').val("All");
+	//$('#adminSelect').val("All");
 
 	
 	var from_date = "";
 	var	to_date = "";
-   var user = "";
+   var user = $('#adminSelect').val();
     $.ajax({
 			url:base_url+"reports_booking/get_transaction_search_history",
 			type:'post',
@@ -456,12 +456,13 @@ function get_booking_list(){
 	$('#datepicker3').val("");
     var from_date = "";
 	var	to_date = "";
+	var user = $('#adminSelect').val();
     $.ajax({
 			url:base_url+"reports_booking/get_booking_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
-			from_date:from_date,to_date:to_date
+			from_date:from_date,to_date:to_date,user:user
 			},
 			success:function(data){
             $("#example2").dataTable().fnDestroy();
@@ -491,12 +492,13 @@ function get_cancellation_list(){
 	
     var from_date = "";
 	var	to_date = "";
+	var user = $('#adminSelect').val();
     $.ajax({
 			url:base_url+"reports_booking/get_cancellation_search_history",
 			type:'post',
 			datatype:'json',
 			data:{
-				from_date:from_date,to_date:to_date
+				from_date:from_date,to_date:to_date,user:user
 			},
 			success:function(data){
 				$("#example3").dataTable().fnDestroy();

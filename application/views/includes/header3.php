@@ -676,7 +676,7 @@
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_court' ?>"><span data-i18n="Booking">Booking</span></a></li> 
 
 
-        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_reports' ?>"><span data-i18n="Reports">Reports</span></a></li>
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports_booking' ?>"><span data-i18n="Reports">Reports</span></a></li>
 
 
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Recharge_history' ?>"><span data-i18n="Recharge History">Recharge History</span></a></li>
