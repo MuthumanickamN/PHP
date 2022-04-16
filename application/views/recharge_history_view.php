@@ -25,30 +25,21 @@
 			<div class="col-12">
 <div class="tab-content">
 <div id="sectionA" class="tab-pane fade in active">
-<form method="post" name="recharge_history" id="recharge_history" action="" onsubmit="return false;" enctype="multipart/form-data"> 
-		<h1>Range</h1>
-	
-		<div class="col-sm-12 col-md-4 pad_lef_0">
-			<p class="form_text1" id="from">From</p>
-			<input type="text" class="date-picker" name="from_date" id="from-date" required>
-		</div>
-		<div class="col-sm-12 col-md-4 pad_lef_0">
-			<p class="form_text1">To</p>
-			<input type="text" class="date-picker" name="to_date" id="to_date" required>
-		</div>
-
-	<div class="col-sm-4">
-	<p class="form_text1">&nbsp;</p>
-		<button type="submit" name="fetch1" id="fetch1" class="btn btn-primary" id="generate">Fetch</button>
+<form method="post" name="recharge_history" id="recharge_history" action="" onsubmit="return false;" enctype="multipart/form-data" autocomplete="off"> 
+	<h4>Recharge History</h4>
+	<div class="col-sm-12 col-md-4">
+		<p class="form_text1">From</p>
+		<input type="text" class="date-picker" name="datepicker" id="datepicker">
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<p class="form_text1">To</p>
+		<input type="text" class="date-picker" name="datepicker1" id="datepicker1">
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<p class="form_text1">&nbsp;</p>
+		<input type="submit" id="fetch1" class="btn btn-primary" value="Fetch">
 	</div>
 </form>
-
-
-
-
-
-
-
 
 
 	<div class="col-sm-12 col-md-12"><hr></div>
@@ -63,7 +54,7 @@
 				<tr class="noExl1">
 					<th>S.No</th>
 					<th>Recharged On</th>
-					<th>Prepaid Paid (AED)</th>
+					<th>Prepaid Amount (AED)</th>
 					<!--<th>Credits (AED)</th>-->
 					<th>Name</th>
 					<th>Mobile</th>
@@ -123,3 +114,17 @@ $("#export_excel_button1").click(function(){
 	
 	
 </script>
+<script type="text/javascript">
+$(function () {
+//Date picker
+$('#datepicker, #datepicker1').datepicker({
+autoclose: true
+}).on("changeDate", function(e){
+	//$('#datepicker2').valid();	
+});
+
+
+});
+</script>
+</body>
+</html>

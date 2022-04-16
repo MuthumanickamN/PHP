@@ -86,7 +86,8 @@ $("form[name='recharge_history']").validate({
 		
 		$.ajax({ 	
             type: "POST",   
-            url: base_url+"Prepaid_credits_booking/get_recharge_history",
+            url: base_url+"Recharge_history/ajax_recharge_history",
+			//url: base_url+"Prepaid_credits_booking/get_recharge_history",
 		    //url: "ajax_recharge_history.php",
             data:"from_date="+from_date+"&to_date="+to_date,		
             async: false,
@@ -120,7 +121,7 @@ $("form[name='recharge_history']").validate({
             }
         }); 
 		
-		$("#hide2").show("slow");
+	//	$("#hide2").show("slow");
 		//$("#example1").DataTable();
 		
 		

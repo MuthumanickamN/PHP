@@ -376,7 +376,7 @@ public function list_(){
 		$data['creditList'][$key]['amount_paid'] = $totalAmount['total'];
 		$data['creditList'][$key]['total_credits'] = $totalAmount['total'];
 	}
-	$this->load->view('prepaid_credits/list_', $data);
+	$this->load->view('prepaid_credits/list', $data);
 }
 public function view($id){
 	$query = $this->db->query('select * from prepaid_credits where id='.$id);
