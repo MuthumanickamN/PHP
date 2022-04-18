@@ -650,13 +650,15 @@
 
 <?php $this->load->view('includes/footer_select2'); ?>
 <script type="text/javascript">
+
   $( document ).ready(function() {
 	 $('.level_id').select2();
 	 $('.head_coach_id').select2();
 	 $('#discount_type').select2();
-
+	  
   });
   //parent_details();
+
   function createActivity(){
     activity_id = jQuery('#activity_id').val();
     if(activity_id == ''){
@@ -826,7 +828,33 @@ function createContractPayment(){
     
 });
 
+  function payable_amount() {
+	 var totalPrice =[];
+	 $(".payable_amount").each(function(){
+        totalPrice.push(parseInt($(this).val()));
+    });
+	 
+	 var sum = totalPrice.reduce(function(a, b){
+            return a + b;
+        }, 0);
+		
+	var total = $('#tot_amount').val();
+	
+	if(total<=sum) {
+	$('.contract_payment_submit').show();
+	}
+	else
+	{
+	$('.contract_payment_submit').hide();
+	}
+  }
+ $(document).on('keyup','.payable_amount',function(e){
+payable_amount(); 
+});	
  $(document).on("click","#contractBtn",function(){
+	 
+	payable_amount(); 
+	
     $("input[name='contract_year'][value='1']").prop('checked', true);
     $('#contract_from').val('');
     $('#contract_to').val('');
@@ -883,7 +911,7 @@ function createContractPayment(){
  
  $(document).on("click",".del_payment",function(){
      $(this).closest('.payment_row').remove();
-     
+     payable_amount(); 
  });
  
  $(document).on("click","#add_payment_btn",function(){
