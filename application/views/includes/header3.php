@@ -641,9 +641,7 @@
           <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Settings"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Settings">Settings &raquo;</span></a>
                   <ul class="dropdown-submenu">
-                    <li>
-                      <a class="dropdown-item" href="<?php echo base_url() . 'pricing' ?>">Pricing</a>
-                    </li>
+                    
 					<?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Manage Sports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'sports' ?>"><span data-i18n="Manage Sports">Manage Sports</span></a></li>
           <?php } ?>
@@ -655,6 +653,12 @@
           <?php if($role == 'superadmin'|| $role == 'admin') {?>
                   <li data-menu="Manage Court"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'court' ?>"><span data-i18n="Manage Court">Manage Court</span></a></li>
           <?php } ?>
+          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+                    <li>
+                      <a class="dropdown-item" href="<?php echo base_url() . 'pricing' ?>">Pricing</a>
+                    </li>
+                    <?php } ?>
+
                     <!--<li>
                      <a class="dropdown-item" href="<?php echo base_url() . 'holidays' ?>">Holidays</a>
                     </li>-->
