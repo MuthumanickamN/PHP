@@ -281,7 +281,7 @@ class Activity_Selections extends CI_Controller {
 		
 		$mail->isHTML(true);
 
-		$mail->Subject = "Prime Star Sports Services - Contract approved";
+		$mail->Subject = "Prime Star Sports Services - Contract approval";
 		
 		
 		$from_html = "";
@@ -1091,7 +1091,7 @@ WHERE c.id=$insert_id order by p.id asc";
 $email_array_query = $this->db->query($sql_e);
 if($email_array_query->num_rows() > 0)
 {
-    $email_array = $email_array_query->result_array($email_array_query);
+    $email_array = $email_array_query->result_array();
     if($email_array[0]['contract_form_sent_to_parent'] == 0)
     {
         $this->send_contract_approval_mail($email_array);	
@@ -1110,18 +1110,7 @@ public function contract_approved($id)
 	//$id = $this->input->post('id');
 	if($id)
 	{
-	    $sql_e = "SELECT *, r.passport_id as student_passport,r.name as student_name,
-            date_format(str_to_date(c.contract_from_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_from, 
-            date_format(str_to_date(c.contract_to_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_to,
-            date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y') as cheque_date_,
-            date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y') as payment_date_
-            FROM `contract_details` as c 
-        left join contract_payments as p on p.contract_detail_id=c.id
-        left join activity_selections a on a.id= c.activity_selection_id
-        left join bank_details b on b.id= c.bank_id
-        left join registrations r on r.id= a.student_id
-        WHERE c.id=$insert_id";
-        
+	    
         $sql_u = "Update contract_details set parent_approved='Approved' where id=$id";
         $this->db->query($sql_u);
 	    $this->send_contract_form_mail($email_array);	

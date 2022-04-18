@@ -159,12 +159,9 @@ th, td {
             where a_s.student_id=".$id); 
 			
 
-/* echo $sql  ="select a_s.*, cd.contract_form_sent_to_parent, cd.parent_approved from activity_selections as a_s 
-            left join contract_details cd on cd.activity_selection_id = a_s.id
-            where a_s.student_id=".$id;	
-*/		
+
         	$activitylists=$activitylists->result_array();
-        
+        //echo $this->db->last_query();die;
 			$get_coach_id = '';
 		
 			$activity_selection_id = '';
@@ -176,10 +173,10 @@ th, td {
 					$activitylists[$key]['game'] = ($value['activity_id'] !='')?$this->transaction->getActivityDetail($value['activity_id']):'';
 					$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
 					
-					if(!empty($value['coach_id']))
+					if(!empty($value['head_coach_id']))
 					{
 					$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
-					where 1 and c.coach_id =".$value['coach_id'].""); 
+					where 1 and c.coach_id =".$value['head_coach_id'].""); 
 					
 					
 					$get_coach = $get_coach_details->result_array();
@@ -191,8 +188,7 @@ th, td {
 					}
 				
 
-				$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
-				where 1 and c.coach_id =".$value['coach_id'].""); 
+				
 
 				}
 
@@ -287,7 +283,7 @@ th, td {
 		</td>
 		<?php } else { ?>
          <td>
-			<a href="<?php echo base_url() ?>Rating/index/<?php echo $get_coach_id?>/<?php echo $row1['parent_user_id'];  ?>/<?php echo $row1['id']; ?>" class="btn btn-warning">Coach Review</a>
+			<a href="<?php echo base_url() ?>Rating/index/<?php echo $get_coach_id;?>/<?php echo $row1['parent_user_id'];  ?>/<?php echo $row1['id']; ?>" class="btn btn-warning">Coach Review</a>
 		</td>
 		<?php } ?>
        
