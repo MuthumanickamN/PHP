@@ -159,6 +159,9 @@ $.ajax({
 }*/
 
 </script>
+
+
+
 <div class="app-content content">
 <div class="content-overlay"></div>
 <div class="content-wrapper">
@@ -183,10 +186,11 @@ $.ajax({
 <div id="sp-bar-total-sales"></div>
 </media-left>
 <?php if($role == 'superadmin' || $role == 'admin'){?>
-<div class="media-body media-right text-right">
- 
-
-</div>
+  <div class="media-body media-right text-right">
+      <ul class="list-inline mb-0">
+          <li> <a href="<?php echo site_url('AccountService/all_list'); ?>" class="btn btn-primary"><b>AccountService List</b></a></li>
+      </ul>
+    </div>
 <?php } ?>
 </div>
 </div>
@@ -201,14 +205,13 @@ $.ajax({
     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
    
 </div>
-     <div class="card-content collapse show">
+<div class="card-content collapse show">
     <div class="card-body card-dashboard">
-<form action="<?php echo site_url();?>AccountService/edit_details" class="form-horizontal" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
-<input type="hidden" name="id" value="<?php echo $result['Id'];  ?>">
-<div class="form-group lg-btm">
-    <div class="row">
-        <div class="col-md-3 control">
-                <strong>Type</strong>*
+<form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" style="margin-top: 25px; margin-left: 5px;">
+
+  <div class="form-group lg-btm">
+  <div class="row">
+  <div class="col-md-3 control"><strong>Type</strong>*
               </div>                            
         <div class="col-md-3 control">
         
@@ -218,19 +221,23 @@ $.ajax({
            <?php if(isset($type) && $type==Income){ echo 'checked';} ?> />
           <label style="margin-left: 10px; margin-right: 10px">Income</label>
 
+    <span class="errorMsg"></span>
+  </div>
+  </div>
+  </div>
+  
+  
+  
 
-          <span class="errorMsg"></span>
-          
-        </div>
-    </div>
-     </div>
+    <div id="result"></div> 
     
     <div class="form-group lg-btm">
-  <div class="row">
-  <div class="col-md-3 control"><strong>Service</strong>*</div>                            
-  <div class="col-md-3 control text-right">
-  
-<select class="form-control" id="service" name="service" required="">
+    <div class="row">
+        <div class="col-md-3 control">
+                <strong>Service</strong>*
+              </div>                            
+        <div class="col-md-3 control">
+          <select class="form-control" id="service" name="service" required="">
                 <option value="">Select</option>
                    <?php if(isset($account_service)){
                          foreach ($account_service as $account_service) { ?>
@@ -239,113 +246,139 @@ $.ajax({
                                    }?>
                 
           </select>
-    <span class="errorMsg"></span>
-  </div>
-  </div>
-  </div>
-
-
-  <div id="result123"></div>
-        <div class="row">
-            <div class="col-md-3">
-                    <b>Amount</b>*
-                  </div>                            
-            <div class="col-md-3">
-              <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo $result['gross_amount'];  ?>"   class="form-control" onkeyup="calculate_amount();" oninput="allnumeric(document.form.paid_amount);">
-              <span class="errorMsg"></span>
-            </div>
-        </div>
-
-  <div class="form-group lg-btm">
-    <div class="row">
-        <div class="col-md-3 control">
-                <strong>VAT</strong>*
-              </div>                            
-        <div class="col-md-3 control">
-          <input id="vat" type="radio" value="yes" previousValue="" name="vat" <?php if(isset($pay_type) && $pay_type=='yes'){ echo 'checked';} else { 'checked'; }?> checked required/>
-          <label style="margin-left: 10px; margin-right: 10px">Yes</label>
-          <input id="vat" type="radio" value="no" previousValue="" name="vat" <?php if(isset($pay_type) && $pay_type=='no'){ echo 'checked';}?> >
-          <label style="margin-left: 10px; margin-right: 10px">No</label>
           <span class="errorMsg"></span>
           
         </div>
     </div>
      </div>
+
+
+
+
+    <div id="result1"></div>
+    
+    <div class="form-group lg-btm">
+        <div class="row">
+           <div class="col-md-3 control">
+              
+                <strong>Amount</strong>*
+              </div>                            
+        <div class="col-md-3 control">
+              <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo $result['gross_amount'];  ?>"   class="form-control" onkeyup="calculate_amount();" oninput="allnumeric(document.form.paid_amount);">
+              <span class="errorMsg"></span>
+			  </div>
+  </div>
+  </div>
   
   
-     <div class="vat">
-        <div class="form-group lg-btm">
-              <div class="row">
-                        <div class="col-md-3 control">
-                          <strong>VAT Percentage(%)</strong>*
-                        </div>                            
-                        <div class="col-md-3 control text-right">
-                          <input type="text" id="vat_percentage" name="vat_percentage" required="" value="<?php echo $result['vat_percentage'];  ?>" class="form-control" readonly="">
-                          <span class="errorMsg"></span>
-                        </div>
-              </div>
-         </div>
-      
-        <div class="form-group lg-btm">
+  
+    <div class="form-group lg-btm">
+        <div class="row">
+      <div class="col-md-3 control">
+              <strong>VAT</strong>*
+            </div>                            
+      <div class="col-md-3 control ">
+        
+          <input id="vat" type="radio" value="yes" previousValue="" name="vat" <?php if(isset($pay_type) && $pay_type=='yes'){ echo 'checked';} else { 'checked'; }?> checked required/>
+          <label style="margin-left: 10px; margin-right: 10px">Yes</label>
+          <input id="vat" type="radio" value="no" previousValue="" name="vat" <?php if(isset($pay_type) && $pay_type=='no'){ echo 'checked';}?> >
+          <label style="margin-left: 10px; margin-right: 10px">No</label>
+          <span class="errorMsg"></span>
+      </div>
+  </div>
+   </div>
+
+
+   <div class="vat">  
+     <div class="form-group lg-btm">
           <div class="row">
-                <div class="col-md-3 control">
-                <strong>Vat Value</strong>*
-                </div>                            
-              <div class="col-md-3">
-              <input type="text" id="vat_value" name="vat_value" required="" value="<?php echo $result['vat_amount'];?>" readonly=""  class="form-control">
-              <span class="errorMsg"></span>        
-              </div>
-          </div>
+        <div class="col-md-3 control">
+                <strong>VAT Percentage(%)</strong>*
+              </div>                            
+        <div class="col-md-3 control text-right">
+                          <input type="text" id="vat_percentage" name="vat_percentage" required="" value="<?php echo $result['vat_percentage'];  ?>" class="form-control" readonly="">
+          <span class="errorMsg"></span>
         </div>
     </div>
+     </div>
+    
+    <div class="form-group lg-btm">
+        <div class="row">
+        <div class="col-md-3 control">
+                <strong>VAT Value</strong>*
+              </div>                            
+        <div class="col-md-3 control text-right">
+              <input type="text" id="vat_value" name="vat_value" required="" value="<?php echo $result['vat_amount'];?>" readonly=""  class="form-control">
+          <span class="errorMsg"></span>
+        </div>
+    </div>
+ </div>
+</div>
     
      <div class="form-group lg-btm">
          <div class="row">
         <div class="col-md-3 control">
-                <b>Payable Amount</b>*
-              </div>     
-              <div class="col-md-3">
-<input type="text" id="payable_amount" name="payable_amount" value="<?php echo $result['payable_amount'];?>"  readonly=""  class="form-control">
-<span class="errorMsg"></span>
+                <b>Payable Amount(inclusive of VAT)</b>*
+              </div>                            
+        <div class="col-md-3 control text-right">
+                <input type="text" id="payable_amount" name="payable_amount" value="<?php echo $result['payable_amount'];?>"  readonly=""  class="form-control">
+          <span class="errorMsg"></span>
         </div>
     </div>
      </div>
-     
-    
-    <div class="row">
-        <div class="col-md-3 control text-left"><strong>Payable Date</strong>*</div>
-        <div class="col-md-3 control text-left">
-        <input type="date"  name="payable_date" class="form-control" id="payable_date"  required="" value="<?php echo $result['payable_date'];?>" >
-        <span class="errorMsg"></span>
+	 
+	 
+	    <div class="form-group lg-btm">
+         <div class="row">
+        <div class="col-md-3 control">
+                <b>Payable Date</b>*
+              </div>                            
+        <div class="col-md-3 control text-right">
+                  <input type="date"  name="payable_date" class="form-control" id="payable_date"  required="" value="<?php echo $result['payable_date'];?>" >
+          <span class="errorMsg"></span>
         </div>
     </div>
-	
- <div class="row">
-        <div class="col-md-3 control text-left"><strong>Upload</strong></div>
-        <div class="col-md-3 control text-left">
-    <input name="userfile[]" type="file" multiple="multiple" />
- </div>
-    </div>	
-	<?php if(!empty($upload_items)) { ?>
-	<div class="row">
-        <div class="col-md-3 control text-left"><strong>Uploaded List</strong></div>
-        <div class="col-md-3 control text-left">
-	 <?php 
-	
-                        foreach($upload_items as $uploads){ ?>
-						 <p class="upload-remove" id="upload_remove_<?php echo $uploads['id']; ?>"><img src="<?php echo base_url().'assets/accounts_documents/'.$uploads['filename']; ?>">
-						 
-						 <span title="Remove" id="hover-remove" style="cursor:pointer; padding-left:10px;" onclick="remove_upload('<?php echo $uploads['id']; ?>')"><i class="fa fa-remove"></i></span></p>
-						  <?php }
-                                  ?>
-						  </div>
-    </div>	
-	<?php } ?>
-     <div class="form-group lg-btm">
-      <div class="col-md-6 control text-center">
-        <input id="save" type="submit" name="submit" value="Submit" class="btn btn-success" />      
-        <a href="" onClick="window.location.reload();" class="btn btn-danger" >Cancel</a></div></div>
+     </div>
+	 
+	 
+	 
+	 <div class="form-group lg-btm">	
+            <div class="row">
+                  <div class="col-md-3 control"><strong>Upload</strong></div>
+             <div class="col-md-3 control">
+               <input name="userfile[]" type="file" multiple="multiple" />
+             </div>
+            </div>	
+            	<?php if(!empty($upload_items)) { ?>
+                  <div class="row">
+                      <div class="col-md-3 control"><strong>Uploaded List</strong></div>
+                        <div class="col-md-3 control">
+                          <?php 
+                              foreach($upload_items as $uploads){ ?>
+                                <p class="upload-remove" id="upload_remove_<?php echo $uploads['id']; ?>"><img src="<?php echo base_url().'assets/accounts_documents/'.$uploads['filename']; ?>">
+                                <span title="Remove" id="hover-remove" style="cursor:pointer; padding-left:10px;" onclick="remove_upload('<?php echo $uploads['id']; ?>')"><i class="fa fa-remove"></i></span></p>
+                          <?php } ?>
+                        </div>
+                      </div>	
+               <?php } ?>
+        </div> 
+	 
+	 
+
+<div class="form-group lg-btm">
+              <div class="col-md-6 control text-center">
+                <input id="save" type="submit" name="submit" value="Submit" class="btn btn-success" />      
+                <a href="" onClick="window.location.reload();" class="btn btn-danger" >Cancel</a>
+              </div>
+            </div>
+
+
+
+
+
+  
   </form>
+  
 </div>
 </div>
 </div>
@@ -356,5 +389,7 @@ $.ajax({
 </div>
 </div>
 </html>
+
+
 
 

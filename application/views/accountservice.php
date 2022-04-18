@@ -1,6 +1,7 @@
 <?php $this->load->view('includes/header3'); ?>
 <style>
-.select2-container {
+.select2-container 
+{
     box-sizing: border-box;
     display: inline-block;
     margin: 0;
@@ -11,8 +12,10 @@
 </style>
 
 <script>
-  jQuery(document).ready(function(){
-    $('input[type="radio"][name="service"]').on('change',function() {
+  jQuery(document).ready(function()
+  {
+    $('input[type="radio"][name="service"]').on('change',function() 
+    {
       var selected = $(this).val(); 
       $.ajax({
         type: "POST",
@@ -110,7 +113,7 @@ function calculate_amount()
   var vat_value = parseFloat((vat_percentage/100)*paid_amount).toFixed(2);
   $('#vat_value').val(vat_value);
   var a=(parseFloat((vat_value)?vat_value:0.00) + parseFloat((paid_amount)?paid_amount:0.00)).toFixed(2);
-document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
+  document.getElementById('payable_amount').value=parseFloat(a).toFixed(2);
 }
 
 
@@ -147,65 +150,69 @@ $.ajax({
 <div class="content-header row">
 <div class="content-header-left col-md-6 col-12 mb-2">
 <h3 class="content-header-title" style="color: green">Academy Activites</h3>
-<div class="row breadcrumbs-top">
-<div class="breadcrumb-wrapper col-12">
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="">Academy Activites</a>
-  </li>
-  <li class="breadcrumb-item"><a href="#"><?php echo $title;?></a>
-  </li>
- 
-</ol>
-</div>
-</div>
-</div>
-<div class="content-header-right col-md-6 col-12">
-<div class="media width-250 float-right">
-<media-left class="media-middle">
-<div id="sp-bar-total-sales"></div>
-</media-left>
-<?php if($role == 'superadmin' || $role == 'admin'){?>
-<div class="media-body media-right text-right">
- 
+    <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="">Academy Activites</a>
+        </li>
+        <li class="breadcrumb-item"><a href="#"><?php echo $title;?></a>
+        </li>
+    </ol>
+    </div>
+    </div>
+    </div>
 
-</div>
-<?php } ?>
-</div>
-</div>
-</div>
-<div class="content-body"><!-- Zero configuration table -->
-<section id="configuration">
-<div class="row">
-<div class="col-12">
-<div class="card">
-<div class="card-header">
-    <h4 class="card-title"><?php echo $title;?></h4>
-    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-   
-</div>
-     <div class="card-content collapse show">
-    <div class="card-body card-dashboard">
-<form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
-
-
-
-
-<div class="form-group lg-btm">
-    <div class="row">
-        <div class="col-md-3 control">
-                <strong>Type</strong>*
-              </div>                            
-        <div class="col-md-3 control">
-        
-          <input id="type" type="radio" value="Expenses" name="service"   <?php if(isset($type) && $type==Expense){ echo 'checked';} else { 'checked'; } ?>checked required />
-          <label style="margin-left: 10px; margin-right: 10px">Expense</label>
-           <input id="type" type="radio" value="Income" name="service" 
-           <?php if(isset($type) && $type==Income){ echo 'checked';} ?> />
-          <label style="margin-left: 10px; margin-right: 10px">Income</label>
-
-
-          <span class="errorMsg"></span>
+    <div class="media-body media-right text-right">
+      <ul class="list-inline mb-0">
+          <li> <a href="<?php echo site_url('AccountService/all_list'); ?>" class="btn btn-primary"><b>AccountService List</b></a></li>
+      </ul>
+    </div>
           
+              
+
+      <div class="content-header-right col-md-6 col-12">
+      <div class="media width-250 float-right">
+      <media-left class="media-middle">
+      <div id="sp-bar-total-sales"></div>
+      </media-left>
+      <?php if($role == 'superadmin' || $role == 'admin'){?>
+      <div class="media-body media-right text-right">
+      
+
+      </div>
+      <?php } ?>
+      </div>
+      </div>
+      </div>
+      <div class="content-body"><!-- Zero configuration table -->
+      <section id="configuration">
+      <div class="row">
+      <div class="col-12">
+      <div class="card">
+      <div class="card-header">
+          <h4 class="card-title"><?php echo $title;?></h4>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+        
+      </div>
+          <div class="card-content collapse show">
+          <div class="card-body card-dashboard">
+      <form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" enctype="multipart/form-data" style="margin-top: 25px; margin-left: 5px;">
+
+
+
+
+    <div class="form-group lg-btm">
+        <div class="row">
+            <div class="col-md-3 control">
+                    <strong>Type</strong>*
+            </div>                            
+          <div class="col-md-3 control">
+                <input id="type" type="radio" value="Expenses" name="service"   <?php if(isset($type) && $type==Expense){ echo 'checked';} else { 'checked'; } ?>checked required />
+                <label style="margin-left: 10px; margin-right: 10px">Expense</label>
+                <input id="type" type="radio" value="Income" name="service" 
+                <?php if(isset($type) && $type==Income){ echo 'checked';} ?> />
+                <label style="margin-left: 10px; margin-right: 10px">Income</label>
+                <span class="errorMsg"></span>
         </div>
     </div>
      </div>
@@ -231,11 +238,12 @@ $.ajax({
 
 
   <div id="result123"></div>
+  <div class="form-group lg-btm">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 control">
                     <b>Amount</b>*
                   </div>                            
-            <div class="col-md-3">
+            <div class="col-md-3 control">
               <input type="text" id="paid_amount" name="paid_amount" required=""  value="<?php echo isset($amount_paid)?$amount_paid:'';  ?>"   class="form-control" onkeyup="calculate_amount();" oninput="allnumeric(document.form.paid_amount);">
               <span class="errorMsg"></span>
             </div>
@@ -296,20 +304,23 @@ $.ajax({
     </div>
      </div>
      
-    
+     <div class="form-group lg-btm">
     <div class="row">
-        <div class="col-md-3 control text-left"><strong>Payable Date</strong>*</div>
-        <div class="col-md-3 control text-left">
+        <div class="col-md-3 control"><strong>Payable Date</strong>*</div>
+        <div class="col-md-3 control">
         <input type="date"  name="payable_date"   class="form-control" id="payable_date"  required="" value="<?php echo isset($payable_date)?$payable_date:'';  ?>" >
         <span class="errorMsg"></span>
         </div>
     </div>
-	
+    </div>
+
+    <div class="form-group lg-btm">	
  <div class="row">
-        <div class="col-md-3 control text-left"><strong>Upload</strong></div>
-        <div class="col-md-3 control text-left">
+        <div class="col-md-3 control"><strong>Upload</strong></div>
+        <div class="col-md-3 control">
     <input name="userfile[]" type="file" multiple="multiple" />
  </div>
+    </div>
     </div>	
      <div class="form-group lg-btm">
       <div class="col-md-6 control text-center">
@@ -321,10 +332,12 @@ $.ajax({
 </div>
 </div>
 </div>
+</div>
 </section>
 </div>
 </div>
 </div>
+
 </html>
 
 
