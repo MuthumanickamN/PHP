@@ -251,7 +251,8 @@ class Users extends CI_Controller {
             $this->users->setDateOfBirth($date_of_birth);
             try {
                 $last_id = $this->users->updateUser();
-                if(strtolower($role) == 'parent'){
+                if(strtolower($role) == 'parent')
+                {
                     
                     $query = $this->db->query("SELECT parent_id FROM `parent` p
                     left join users u on u.code = p.parent_code
@@ -398,11 +399,19 @@ class Users extends CI_Controller {
     public function transaction_history()
 	{
 		//$id = $this->input->post('id');
-	    $pid = $this->input->post('parent_id');
+	    $userid = $this->input->post('user_id');
+        //if(strtolower($role) == 'parent')
+        //{
+            
+        $query = $this->db->query("SELECT parent_id FROM `parent` p
+        left join users u on u.code = p.parent_code
+        where u.user_id=$userid");
+        $parent_id = $query->row()->parent_id;
+    
 	    $qry = "select wt.*, p.parent_code, r.sid from wallet_transactions wt
 	    left join parent p on p.parent_id= wt.parent_id
 	    left join registrations r on r.id= wt.student_id
-	    where wt.parent_id= $pid order by wt.created_at asc";
+	    where wt.parent_id= $parent_id order by wt.created_at asc";
 	    
 	    $data = $this->db->query($qry)->result_array();
 	    $output = '';
@@ -461,6 +470,8 @@ class Users extends CI_Controller {
 	        $output .="</tr>";
 	        
 	    }
+ //   }
+        
 	    
 	    echo $output;
 	    
