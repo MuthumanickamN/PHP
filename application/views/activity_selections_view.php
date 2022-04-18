@@ -402,9 +402,9 @@
     float: none;
     margin: 0 auto;
     max-width: 38%;
-    position: absolute;
-    left: 4%;">
-    <div class="modal-content" style="width: 246%;">
+ 
+   left:0%">
+    <div class="modal-content">
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
@@ -420,53 +420,53 @@
           <input type="hidden" name="parent_id" class="parent_id" value="<?php echo $parent_id; ?>">
           <div class="row">
 
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_student_name " class="col-12" style="display:block"> <strong> Student Name </strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_student_name " style="display:block"> <strong> Student Name </strong> </label>
                 <input type="text" name="contract_student_name" id="contract_student_name" class=" form-control" placeholder="Student Name" value="<?php echo $student_name;?>" required="">
                 </span>
                 </div>
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_student_passport_id" class="col-12" style="display:block"> <strong> Student Passport id </strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_student_passport_id" style="display:block"> <strong> Student Passport id </strong> </label>
                 <input type="text" name="contract_student_passport_id" class=" form-control" id="contract_student_passport_id" placeholder="student Passport id" value="<?php echo $student_passport;?>" required="">
                 </span>
                 </div>
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_student_emirates_id " class="col-12" style="display:block"> <strong> Student Emirates id </strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_student_emirates_id " style="display:block"> <strong> Student Emirates id </strong> </label>
                 <input type="text" name="contract_student_emirates_id" class=" form-control" id="contract_student_emirates_id" placeholder="Student Emirates id" value="<?php echo $student_emirate_id;?>" required="">
                 </span>
                 </div>
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_student_emirates_id_expiry " class="col-12" style="display:block"> <strong> Student Emirates id Expiry </strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_student_emirates_id_expiry "  style="display:block"> <strong> Student Emirates id Expiry </strong> </label>
                 <input type="date" name="contract_student_emirates_id_expiry" class=" form-control"  id="contract_student_emirates_id_expiry" placeholder="Student Emirates id Expiry" value="<?php echo $student_emirates_expiry;?>" required="">
                 </span><br><br>
                 </div>
                </div>
                <div class="row">
-                   <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_parent_name" class="col-md-12" style="display:block"> <strong> Parent Name </strong> </label>
+                   <div class="col-3">
+                <span class="col-12">
+                <label for="contract_parent_name"  style="display:block"> <strong> Parent Name </strong> </label>
                 <input type="text" name="contract_parent_name" class=" form-control " id="contract_parent_name" placeholder="Parent Name" value="<?php echo $parent_name;?>" required="">
                 </span>
                 </div>
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_parent_passport_id"  class="col-md-12" style="display:block"> <strong> Parent Passport id </strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_parent_passport_id"  style="display:block"> <strong> Parent Passport id </strong> </label>
                 <input type="text" name="contract_parent_passport_id" class=" form-control" id="contract_parent_passport_id" placeholder="Parent Passport id" value="<?php echo $parent_passport;?>" required="">
                 </span>
                 </div>
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_parent_emirates_id " class="col-md-12" style="display:block"> <strong> Parent Emirates id</strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_parent_emirates_id " style="display:block"> <strong> Parent Emirates id</strong> </label>
                 <input type="text" name="contract_parent_emirates_id" class=" form-control" id="contract_parent_emirates_id" placeholder="Parent Emirates id" value="<?php echo $parent_emirate_id;?>" required="">
                 </span>
                 </div>
-                <div class="row mx-1">
-                <span style="display:inline-block">
-                <label for="contract_parent_emirates_id_expiry" class="col-md-12" style="display:block"> <strong> Parent Emirates id Expiry </strong> </label>
+                <div class="col-3">
+                <span class="col-12">
+                <label for="contract_parent_emirates_id_expiry" style="display:block"> <strong> Parent Emirates id Expiry </strong> </label>
                 <input type="date" name="contract_parent_emirates_id_expiry" class=" form-control" id="contract_parent_emirates_id_expiry" placeholder="Parent Emirates id Expiry" value="<?php echo $parent_emirates_expiry;?>" required="" >
                 </span>
                 </div>
