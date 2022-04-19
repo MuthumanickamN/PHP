@@ -1104,14 +1104,14 @@ if($email_array_query->num_rows() > 0)
     echo true;
 }
 
-public function contract_approved($id)
+public function contract_approved()
 {
     
-	//$id = $this->input->post('id');
+	$id = $this->input->post('id');
 	if($id)
 	{
 	    
-        $sql_u = "Update contract_details set parent_approved='Approved' where id=$id";
+        $sql_u = "Update contract_details set parent_approved='Approved',active_contract='1' where activity_selection_id=$id and status=1";
         $this->db->query($sql_u);
 	    $this->send_contract_form_mail($email_array);	
         
@@ -1576,8 +1576,8 @@ understand its contents.</p>
 <p>By signing below, parents/guardian/student agree to all the above terms and conditions
 and Responsibility, any breach of this contract could result in suspension or termination
 of your contract with Prime Star Sport Academy.</p>
-<p>Athlete / Student Name: <span style="text-decoration:underline">Dhanwanth Ragavan</span>
-<p>Parent/Guardian Name:<span style="text-decoration:underline"> Mr/Mrs Raghavan NRS</span>
+<p>Athlete / Student Name: <span style="text-decoration:underline">'.$data[0]['student_name'].'</span>
+<p>Parent/Guardian Name:<span style="text-decoration:underline"> '.$data[0]['parent_name'].'</span>
 <p>Prime Star Sport Academy LLC</p>
 </div>';
         

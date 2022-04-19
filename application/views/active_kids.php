@@ -240,10 +240,10 @@ th, td {
       <label class="form-check-label" for="check1"> I have read and agreed to the <a href="#" style="color:blue;text-decoration: underline">Terms and Conditions</a> as mentioned above</label>
     </div>
      <div class="form_btn">
-    <div class="btn1_con" style="float:left;width:30%;text-align:center">
+    <div class="btn1_con" style="float:left;width:30%;text-align:center; display:none;">
     <button type="submit" class="btn btn-danger mr-10">No</button>
     </div>
-    <div class="btn2_con" style="float:left;width:50%;text-align:center">
+    <div class="btn2_con" data-id="<?php echo $row1['id'];?>" style="float:left;width:50%;text-align:center; display:none;">
     <button type="submit" class="btn btn-success">Yes</button>
     </div>
     </div>
@@ -393,7 +393,33 @@ $(document).on("click",".book_slots",function(){
 		}
     });
 });
-
+$(document).on("click",'#check1',function(){
+    if (this.checked) {
+       $('.btn1_con').show();
+	   $('.btn2_con').show();
+    }
+	else
+	{
+	  $('.btn1_con').hide();
+	   $('.btn2_con').hide();
+	}
+});
+$(document).on("click",".btn2_con",function(){
+var id= $(this).attr('data-id');
+    $.ajax({
+		type: "POST",
+		url: base_url+"Activity_selections/contract_approved",
+		data: {id:id},
+		async: true,
+		datatype: "text",
+		success : function(data)
+		{
+		    $('#contractform').hide();
+			
+		
+		}
+    });
+});	
 $(document).on("click",".contractBtn",function(){
     var id= $(this).attr('data-id');
     var activity_id= $(this).attr('data-activity_id');

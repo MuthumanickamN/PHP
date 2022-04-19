@@ -458,7 +458,6 @@ class Court_booking extends CI_Controller{
                 'module' => 'Court Booking'
             );
             
-
             if($discount)
             {
                 $walletArray['wallet_transaction_detail']= 'Court Booking Fees Discount';
