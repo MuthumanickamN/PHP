@@ -173,19 +173,7 @@ th, td {
 					$activitylists[$key]['game'] = ($value['activity_id'] !='')?$this->transaction->getActivityDetail($value['activity_id']):'';
 					$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
 					
-					if(!empty($value['head_coach_id']))
-					{
-					$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
-					where 1 and c.coach_id =".$value['head_coach_id'].""); 
 					
-					
-					$get_coach = $get_coach_details->result_array();
-					$get_coach_id = $get_coach[0]['user_id'];
-					}
-					else
-					{
-						$get_coach_id  = "";
-					}
 				
 
 				
@@ -197,7 +185,20 @@ th, td {
 			}
 			
             foreach ($activitylists as $key2 => $row1) { 
-
+			
+			if(!empty($row1['coach_id']))
+					{
+					$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+					where 1 and c.coach_id =".$row1['coach_id'].""); 
+					
+					
+					$get_coach = $get_coach_details->result_array();
+					$get_coach_id = $get_coach[0]['user_id'];
+					}
+					else
+					{
+						$get_coach_id  = "";
+					}
           ?>
       
         <tr>
@@ -222,10 +223,8 @@ th, td {
                                   <div class="modal-dialog" style="width: 100%;
                                         float: none;
                                         margin: 0 auto;
-                                        max-width: 38%;
-                                        position: absolute;
-                                        left: 4%;">
-                                        <div class="modal-content" style="width: 246%;">
+                                        max-width: 38%;">
+                                        <div class="modal-content">
                                           <div class="modal-body" style="width: 100%;white-space: normal !important;">
                                           <div class="alert alert-info">
                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractform').hide();">&times;</button>
@@ -237,7 +236,7 @@ th, td {
                             </div>
                             <div class="form-check">
       <input type="checkbox" class="form-check-input" id="check1" name="option1" value="">
-      <label class="form-check-label" for="check1"> I have read and agreed to the <a href="#" style="color:blue;text-decoration: underline">Terms and Conditions</a> as mentioned above</label>
+      <label class="form-check-label" for="check1" style="margin-left:14px;padding-left:14px"> I have read and agreed to the <a href="#" style="color:blue;text-decoration: underline">Terms and Conditions</a> as mentioned above</label>
     </div>
      <div class="form_btn">
     <div class="btn1_con" style="float:left;width:30%;text-align:center; display:none;">

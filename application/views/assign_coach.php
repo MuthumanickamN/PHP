@@ -31,10 +31,27 @@
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <script type="text/javascript">
-
+  
+  var coach_id = "<?php echo $coach_id;?>";
+  var game_id = "<?php echo $game_id;?>";
 
   $(document).ready(function(){
   //Chosen
+    if(coach_id)
+    {
+      $('#coach_id').val(coach_id);
+      
+    }
+    if(game_id)
+    {
+      $('#game_id').val(game_id);
+    }
+
+    if(coach_id !='' && game_id !='')
+    {
+      
+        $('#submit_btn').trigger( "click" );
+    }
   $(".choiceChosen, .productChosen").chosen({});
   //Logic
   $(".choiceChosen").change(function(){
@@ -67,7 +84,7 @@ $.ajax({
 
 }
 
- function view_student()
+ function view_student1()
 { 
   var game_id=document.getElementById('game_id').value;
   var coach_id=document.getElementById('coach_id').value;
@@ -87,6 +104,30 @@ $.ajax({
 });
 
 }
+
+
+function view_student()
+{ 
+  var game_id=document.getElementById('game_id').value;
+  var coach_id=document.getElementById('coach_id').value;
+  
+
+  
+$.ajax({
+  
+  url:"<?php echo base_url().'index.php/Assign_coach/select_student/'; ?>?game_id=game_id&coach_id=coach_id",
+  type:"POST",
+  data:{game_id:game_id,coach_id:coach_id},
+  success:function(data)
+  {   
+  document.getElementById('result1').innerHTML=data;
+  
+  }
+});
+
+}
+
+
 
 </script>
 <div class="app-content content">
@@ -154,17 +195,17 @@ $.ajax({
 						<select name="coach_id" id="coach_id" class="form-control choiceChosen"  required="" onchange="assign_coach()">
 						<option value="">Select Coach</option>
 						<?php                        
-						$osql1 = "select coach_id,coach_name from coach"; 
+						$osql1 = "select coach_id,coach_name,role from coach"; 
 						$result = $this->db->query($osql1)->result_array();
 						foreach($result as $row1)
 						{
 						?>
-						<option value="<?php echo $row1['coach_id'] ?>" <?php if($row1['coach_id']==$coach_id ){ echo 'selected';} ?>><?php echo $row1['coach_name'] ?>
+						<option value="<?php echo $row1['coach_id'] ?>" <?php if($row1['coach_id']==$coach_id ){ echo 'selected';} ?>><?php echo $row1['coach_name']?>-<?php echo $row1['role']?>
 						</option><?php }  ?></select>
 						</div>
 										
                  <div class="col-md-3 control text-left">
-                     <a onclick="view_student()"     class="btn btn-primary" style="color: white" >Submit</a>
+                     <a onclick="view_student()"  id="submit_btn"   class="btn btn-primary" style="color: white" >Submit</a>
             </div></div>
           </div>
         </div>
@@ -191,22 +232,17 @@ $.ajax({
             </tr>
         </thead>
         <tbody>
-           <?php                 $i=1;        
-                            $osql1 = "select * from coach";  
+           <?php                
+            $i=1;        
+            $osql1 = "select * from coach";  
 						$result = $this->db->query($osql1)->result_array();
 						foreach($result as $row1)
 						{
-   
-
-                            $sql = "select * from activity_selections where coach_id=".$row1['coach_id'];                              
-     
-							 $rowcount = $this->db->query($sql)->num_rows();
-							 
-                            
-                            
-                              ?>
-         <tr> <td style="text-align: center"><?php echo $i; ?></td>
-          <td><?php echo $row1['coach_name']; ?></td>
+             $sql = "select * from activity_selections where coach_id=".$row1['coach_id'];                              
+             $rowcount = $this->db->query($sql)->num_rows();
+            ?>
+              <tr> <td style="text-align: center"><?php echo $i; ?></td>
+              <td><?php echo $row1['coach_name']; ?></td>
               <td style="text-align: center"><?php echo $rowcount; ?></td></tr>
             <?php  $i++; } ?>
             </tbody>

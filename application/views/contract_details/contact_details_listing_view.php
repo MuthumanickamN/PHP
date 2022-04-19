@@ -107,10 +107,8 @@
   <div class="modal-dialog" style="width: 100%;
     float: none;
     margin: 0 auto;
-    max-width: 38%;
-    position: absolute;
-    left: 4%;">
-    <div class="modal-content" style="width: 246%;">
+    max-width: 38">
+    <div class="modal-content">
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
