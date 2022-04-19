@@ -319,9 +319,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </style>
 <div id="addModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none;">
-    <div class="modal-dialog" style="width: 100%; margin-top: 100px">
-  <div class="modal-content" style="width: 100%">
-      <div class="modal-body" style="width: 100%">
+    <div class="modal-dialog" style="width: 30%; margin-top: 100px">
+  <div class="modal-content" style="width: 30%">
+      <div class="modal-body" style="width: 30%">
         <div class="alert alert-info">
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>

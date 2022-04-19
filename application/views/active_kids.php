@@ -223,10 +223,8 @@ th, td {
                                   <div class="modal-dialog" style="width: 100%;
                                         float: none;
                                         margin: 0 auto;
-                                        max-width: 38%;
-                                        position: absolute;
-                                        left: 4%;">
-                                        <div class="modal-content" style="width: 246%;">
+                                        max-width: 38%;">
+                                        <div class="modal-content">
                                           <div class="modal-body" style="width: 100%;white-space: normal !important;">
                                           <div class="alert alert-info">
                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractform').hide();">&times;</button>
@@ -238,7 +236,7 @@ th, td {
                             </div>
                             <div class="form-check">
       <input type="checkbox" class="form-check-input" id="check1" name="option1" value="">
-      <label class="form-check-label" for="check1"> I have read and agreed to the <a href="#" style="color:blue;text-decoration: underline">Terms and Conditions</a> as mentioned above</label>
+      <label class="form-check-label" for="check1" style="margin-left:14px;padding-left:14px"> I have read and agreed to the <a href="#" style="color:blue;text-decoration: underline">Terms and Conditions</a> as mentioned above</label>
     </div>
      <div class="form_btn">
     <div class="btn1_con" style="float:left;width:30%;text-align:center">

@@ -111,7 +111,7 @@ class AccountService extends CI_Controller {
 		$data['result'] = $this->Accountservice_model->edit($id);
 		$data['upload_items'] = $this->Accountservice_model->upload_items($id);
 		$data['account_service'] = $this->Accountservice_model->gettype();
-		
+		//print_r ($data);die;
 		$this->load->view('account_edit',$data);
 	}
 	public function remove_upload() 	{

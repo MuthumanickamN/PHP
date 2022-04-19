@@ -93,7 +93,8 @@
                                 <thead>
                                     <tr>
 											<th style="text-align:center">No</th>
-                                            <th style="text-align:center">Accountservice ID	</th>
+                                            <th style="text-align:center">Accountservice Name</th>
+                                            <th style="text-align:center">Type</th>
                                             <th style="text-align:center">Gross_amount</th>
                                             <th style="text-align:center">Vat Percentage</th>
                                             <th style="text-align:center">Vat Amount</th>
@@ -108,7 +109,8 @@
         ?>
         <tr>
 		<td></td>
-        <td style="text-align: center"><?php echo $coach['accountservice_id']; ?></td>
+        <td style="text-align: center"><?php echo $coach['Name']; ?></td>
+        <td style="text-align: center"><?php echo $coach['Type']; ?></td>
         <td style="text-align: center"><?php echo $coach['gross_amount']; ?></td>
         <td style="text-align: center"><?php echo $coach['vat_percentage']; ?></td>
         <td style="text-align: center"><?php echo $coach['vat_amount']; ?></td>
