@@ -185,13 +185,11 @@ $.ajax({
 <media-left class="media-middle">
 <div id="sp-bar-total-sales"></div>
 </media-left>
-<?php if($role == 'superadmin' || $role == 'admin'){?>
   <div class="media-body media-right text-right">
       <ul class="list-inline mb-0">
           <li> <a href="<?php echo site_url('AccountService/all_list'); ?>" class="btn btn-primary"><b>AccountService List</b></a></li>
       </ul>
     </div>
-<?php } ?>
 </div>
 </div>
 </div>
