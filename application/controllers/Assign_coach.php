@@ -23,7 +23,8 @@ class Assign_coach extends CI_Controller {
 	$query=$this->db->query("select * from coach where activity_id='".$game_id."' and status='Active'");
 	$row=$query->row_array();
     
-    
+    $data['role'] = '';
+	$data['coach_name']='';
 	if(!empty($row['coach_name']))
 	{
 		$data['coach_name']=$row['coach_name'];
@@ -36,8 +37,8 @@ class Assign_coach extends CI_Controller {
 	
 	
 	$data['opcode']=1;
-		$data['game_id']=$game_id;
-	
+	$data['game_id']=$game_id;
+	//print_r($data);die;
 	$this->load->view('assign_coach_ajax', $data);	
 
 

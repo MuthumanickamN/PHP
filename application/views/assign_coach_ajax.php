@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+
 //ss============Student Details disply============ss//
 
 if($opcode==1)
@@ -41,14 +41,15 @@ if($opcode==2)
      <tbody>
 <?php $i=1;
 
-   $osql1 = "select * from activity_selections where Activity_id=".$game_id;                              
-   $oexe1 = mysqli_query( $con, $osql1 );
-   while ( $row1 = mysqli_fetch_assoc( $oexe1 ) ){  
-
+   $osql1 = "select * from activity_selections where activity_id=".$game_id." and (coach_id='' or coach_id is NULL)";
+	//$osql1 = "select * from activity_selections where activity_id=".$game_id." and (coach_id ='$coach_id' and coach_id is NOT NULL)";
+   $oexe1 = $this->db->query($osql1 );
+   foreach( $oexe1->result_array() as $key => $row1  ){  
+	
 
      $osql2 = "select game from games where game_id=".$row1['activity_id'];                              
-     $oexe2 = mysqli_query( $con, $osql2 );
-     $row2 = mysqli_fetch_assoc( $oexe2);
+     $oexe2 = $this->db->query($osql2 );
+     $row2 = $oexe2->row_array();
 
 
   ?>

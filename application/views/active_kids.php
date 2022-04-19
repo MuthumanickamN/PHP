@@ -173,19 +173,7 @@ th, td {
 					$activitylists[$key]['game'] = ($value['activity_id'] !='')?$this->transaction->getActivityDetail($value['activity_id']):'';
 					$activitylists[$key]['level'] = ($value['level_id'] !='')?$this->default->getLevelDetail($value['level_id']):'';
 					
-					if(!empty($value['head_coach_id']))
-					{
-					$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
-					where 1 and c.coach_id =".$value['head_coach_id'].""); 
 					
-					
-					$get_coach = $get_coach_details->result_array();
-					$get_coach_id = $get_coach[0]['user_id'];
-					}
-					else
-					{
-						$get_coach_id  = "";
-					}
 				
 
 				
@@ -197,7 +185,20 @@ th, td {
 			}
 			
             foreach ($activitylists as $key2 => $row1) { 
-
+			
+			if(!empty($row1['coach_id']))
+					{
+					$get_coach_details =  $this->db->query("SELECT c.*,u.* FROM coach as c left join users as u on u.code = c.code
+					where 1 and c.coach_id =".$row1['coach_id'].""); 
+					
+					
+					$get_coach = $get_coach_details->result_array();
+					$get_coach_id = $get_coach[0]['user_id'];
+					}
+					else
+					{
+						$get_coach_id  = "";
+					}
           ?>
       
         <tr>
