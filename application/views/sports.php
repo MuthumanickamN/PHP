@@ -168,7 +168,7 @@ $(document).on('click', '#sports_add', function () {
 <div class="modal-dialog">
 <div class="modal-content">
 <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<button type="button" class="close close-icon" data-dismiss="modal" aria-hidden="true">&times;<span class="close-x">Close</span></button>
 <h4 class="modal-title">Edit / Add New Sports</h4>
 </div>
 <div class="modal-body">

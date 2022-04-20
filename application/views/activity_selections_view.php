@@ -408,7 +408,7 @@
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractModal').hide();">&times;</button> Add Contract Details for
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#contractModal').hide();">&times;<span class="close-x">Close</button> Add Contract Details for
         <strong> <?php echo $student_name;?> - <?php echo $game;?></strong>
       </div>
       <div class="">

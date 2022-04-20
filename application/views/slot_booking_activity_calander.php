@@ -324,7 +324,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
         
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
         </div>
