@@ -121,19 +121,6 @@
         <input type="hidden" name="hidden_net_amount" id="hidden_net_amount" value="">
         <input type="hidden" name="hidden_balance_amount" id="hidden_balance_amount" value="">
         <table id="example3" class="table table-bordered table-striped">
-		<input type="hidden" name="sportsname" value="<?php echo $sportsname;?>">
-		<input type="hidden" name="date" value="<?php echo $date;?>">
-		<input type="hidden" name="time" value="<?php echo $fromtime;?>-<?php echo $totime;?>">
-		<input type="hidden" name="location" value="<?php echo $location_id;?>">
-		<input type="hidden" name="courtname" value="<?php echo $courtname;?>">
-		<input type="hidden" name="cost" value="<?php echo $cost;?>">
-		<input type="hidden" name="id" value="<?php echo $id;?>">
-		<input type="hidden" name="activity_id" value="<?php echo $activity_id;?>">
-		<input type="hidden" name="location_id" value="<?php echo $location_id;?>">
-		<input type="hidden" name="parent_id" value="<?php echo $parent_id;?>">
-
-
-		
 		<thead>
 			<tr>
 				<th>Activity</th>
@@ -249,9 +236,6 @@
   <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
-
-		<button type="button" id="show_cart" class="btn btn-success" data-dismiss="modal"> <i class="fa fa-shopping-cart" aria-hidden="true">Go to cart</button>
-
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
 
@@ -272,33 +256,6 @@
 </div>
 <script>
 $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
-  
-  var activity_id = "<?php echo $activity_id;?>";
-  var location_id = "<?php echo $location_id;?>";
-  var parent_id = "<?php echo $parent_id;?>";
-
-$(document).ready(function(){
-  //Chosen
-    if(activity_id)
-    {
-      $('#activity_id').val(activity_id);
-      
-    }
-    if(location_id)
-    {
-      $('#location_id').val(location_id);
-    }
-	if(parent_id)
-    {
-      $('#parent_id').val(parent_id);
-    }
-
-    if(activity_id !='' && location_id !='' && parent_id != '')
-    {
-      
-        $('#show_cart').trigger( "click" );
-    } 
-
 </script>
 
 <!-- View Modal HTML -->
