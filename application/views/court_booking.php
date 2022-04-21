@@ -1,23 +1,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
-<style rel="http://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"></style>
-  <style rel="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css"></style>
-  
+
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"  />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" ></script>
-<script type="text/javascript" src="http://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 
 
 <script src="<?php echo base_url(); ?>assets_booking/js/court_booking.js"></script>
@@ -251,14 +240,11 @@
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
-
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
 		 
 		  <div class="col-md-12 control text-right">
                      <a onclick="show_cart_list()" id="show_cart1"   class="btn btn-success" style="color: white" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>Go to cart</a>
 	</div>
-
         
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
 		
@@ -280,12 +266,8 @@
 <script>
 $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
 
-
   $(document).ready(function(){
   //Chosen
-
-    
-  
   jQuery(document).on('click','#show_cart1', function(e){
 	    //$('#addModal').hide();
 		$("#addModal .close").click()
