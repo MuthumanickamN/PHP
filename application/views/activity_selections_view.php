@@ -471,22 +471,7 @@
                 </span>
                 </div>
                 </div>
-          <div class="row">
-              <div class="col-md-3">
-                <label><strong>Contract Year</strong></label>
-              </div>
-            <div class="col-md-6"> 
-            
-               <input id="contract_year" type="radio" value="1" name="contract_year" checked/>
-              <label style="margin-left: 10px; margin-right: 10px">One</label>
-              <input id="contract_year" type="radio" value="2" name="contract_year" />
-              <label style="margin-left: 10px; margin-right: 10px">Two</label>
-               <input id="contract_year" type="radio" value="3" name="contract_year" />
-              <label style="margin-left: 10px; margin-right: 10px">Three</label>
-              <span class="errorMsg"></span>
-              
-            </div>
-          </div>
+
           
           <div class="row">
               <div class="col-md-3">
@@ -499,6 +484,23 @@
                 
                 
                
+              <span class="errorMsg"></span>
+              
+            </div>
+          </div>
+		  
+		            <div class="row">
+              <div class="col-md-3">
+                <label><strong>Contract Year</strong></label>
+              </div>
+            <div class="col-md-6"> 
+            
+               <input id="contract_year" type="radio" value="1" name="contract_year" checked/>
+              <label style="margin-left: 10px; margin-right: 10px">One</label>
+              <input id="contract_year" type="radio" value="2" name="contract_year" />
+              <label style="margin-left: 10px; margin-right: 10px">Two</label>
+               <input id="contract_year" type="radio" value="3" name="contract_year" />
+              <label style="margin-left: 10px; margin-right: 10px">Three</label>
               <span class="errorMsg"></span>
               
             </div>
@@ -620,7 +622,7 @@
                 <span class="errorMsg"></span>
             </div>
             
-            <button type="button" style="color:white;text-decoration:none;" class="del_payment btn btn-danger fa fa-trash-0" > <i class="fa fa-trash-o"></i></button>
+            <button type="button" style="color:white;text-decoration:none;height:33px" class="del_payment btn btn-danger fa fa-trash-0" > <i class="fa fa-trash-o"></i></button>
             
         </div>
         

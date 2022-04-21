@@ -807,7 +807,7 @@ function parent_details(){
 
 <!-- Trigger/Open The Modal -->
 <div id="myModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none;">
-  <div class="modal-dialog" style="width: 100%; margin-top: 100px">
+  <div class="modal-dialog" style="width: 30%; margin-top: 100px">
     <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
       <div class="alert alert-info">

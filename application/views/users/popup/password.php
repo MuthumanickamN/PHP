@@ -5,7 +5,7 @@
             <div class="modal-content panel panel-primary">
                 <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Change password</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
                 <input type="hidden" name="id"  id="id_value">
                 <div class="modal-body panel-body" id="render-update-data">
