@@ -1463,9 +1463,7 @@ class Court_booking extends CI_Controller{
                   "textColor" => '#fff'
               );
           }
-        echo json_encode($data_events);
-        //redirect('Court_booking/get_events/' .$activity_id. '/' .$location_id. '/' .$parent_id);
-        
+        echo json_encode($data_events);        
         die;
     }
     

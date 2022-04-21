@@ -1,12 +1,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
-
+<style rel="http://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"></style>
+  <style rel="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css"></style>
+  
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"  />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" ></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 
 
 <script src="<?php echo base_url(); ?>assets_booking/js/court_booking.js"></script>
@@ -121,19 +132,6 @@
         <input type="hidden" name="hidden_net_amount" id="hidden_net_amount" value="">
         <input type="hidden" name="hidden_balance_amount" id="hidden_balance_amount" value="">
         <table id="example3" class="table table-bordered table-striped">
-		<input type="hidden" name="sportsname" value="<?php echo $sportsname;?>">
-		<input type="hidden" name="date" value="<?php echo $date;?>">
-		<input type="hidden" name="time" value="<?php echo $fromtime;?>-<?php echo $totime;?>">
-		<input type="hidden" name="location" value="<?php echo $location_id;?>">
-		<input type="hidden" name="courtname" value="<?php echo $courtname;?>">
-		<input type="hidden" name="cost" value="<?php echo $cost;?>">
-		<input type="hidden" name="id" value="<?php echo $id;?>">
-		<input type="hidden" name="activity_id" value="<?php echo $activity_id;?>">
-		<input type="hidden" name="location_id" value="<?php echo $location_id;?>">
-		<input type="hidden" name="parent_id" value="<?php echo $parent_id;?>">
-
-
-		
 		<thead>
 			<tr>
 				<th>Activity</th>
@@ -249,9 +247,6 @@
   <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
-
-		<button type="button" id="show_cart" class="btn btn-success" data-dismiss="modal"> <i class="fa fa-shopping-cart" aria-hidden="true">Go to cart</button>
-
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
 <<<<<<< HEAD
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
@@ -276,33 +271,6 @@
 </div>
 <script>
 $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
-  
-  var activity_id = "<?php echo $activity_id;?>";
-  var location_id = "<?php echo $location_id;?>";
-  var parent_id = "<?php echo $parent_id;?>";
-
-$(document).ready(function(){
-  //Chosen
-    if(activity_id)
-    {
-      $('#activity_id').val(activity_id);
-      
-    }
-    if(location_id)
-    {
-      $('#location_id').val(location_id);
-    }
-	if(parent_id)
-    {
-      $('#parent_id').val(parent_id);
-    }
-
-    if(activity_id !='' && location_id !='' && parent_id != '')
-    {
-      
-        $('#show_cart').trigger( "click" );
-    } 
-
 </script>
 
 <!-- View Modal HTML -->
