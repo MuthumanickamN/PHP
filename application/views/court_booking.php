@@ -103,6 +103,7 @@
 <div class="row calendarDiv">
 	<div class="col-md-12">
 		<div id="calendar">
+
 		</div>
 	</div>
 </div>
@@ -121,6 +122,7 @@
 <div id="hide2" class="border_box" style="display: none;">
 <h4>Booking Summary</h4>
 <div class="table-responsive">
+
     
         <input type="hidden" name="hidden_total_price" id="hidden_total_price" value="">
         
@@ -247,6 +249,7 @@
         <div class="alert alert-info">
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
+
         
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
         </div>

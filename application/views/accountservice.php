@@ -167,11 +167,11 @@ $.ajax({
 <div class="content-wrapper">
 <div class="content-header row">
 <div class="content-header-left col-md-6 col-12 mb-2">
-<h3 class="content-header-title" style="color: green">Academy Activites</h3>
+<h3 class="content-header-title" style="color: green">Academy Activities</h3>
 <div class="row breadcrumbs-top">
 <div class="breadcrumb-wrapper col-12">
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="">Academy Activites</a>
+  <li class="breadcrumb-item"><a href="">Academy Activities</a>
   </li>
   <li class="breadcrumb-item"><a href="#"><?php echo $title;?></a>
   </li>
