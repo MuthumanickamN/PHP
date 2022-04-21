@@ -251,19 +251,14 @@
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-<<<<<<< HEAD
+
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
-=======
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
-<<<<<<< HEAD
+
 		 
 		  <div class="col-md-12 control text-right">
                      <a onclick="show_cart_list()" id="show_cart1"   class="btn btn-success" style="color: white" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>Go to cart</a>
 	</div>
-=======
 
->>>>>>> 1e1b75987a7bf462811058b281069510487a830e
->>>>>>> 61a48e27c05037ca80245eee2377637eb7b2223a
         
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
 		
