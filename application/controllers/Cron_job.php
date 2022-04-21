@@ -14,6 +14,7 @@ class Cron_job extends CI_Controller{
     public function clear_cart(){
 		
 		$current_time = time();
+		$date = new DateTime(date('Y-m-d'));
 		$sql="select * from tmp_booking_court";
 		foreach($this->db->query($sql)->result_array() as $key => $value)
 		{
@@ -23,6 +24,12 @@ class Cron_job extends CI_Controller{
 			{
 				$sql2="Delete from tmp_booking_court where id='$id'";
 				$this->db->query($sql2);
+			}
+			$checkout_date = $value['checkout_date'];
+			if($checkout_date > $date)
+			{
+				$sql1="Delete from tmp_booking_court where id='$id'";
+				$this->db->query($sql1);	
 			}
 		}
 		

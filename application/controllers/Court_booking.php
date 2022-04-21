@@ -1464,6 +1464,7 @@ class Court_booking extends CI_Controller{
               );
           }
         echo json_encode($data_events);
+        //redirect('Court_booking/get_events/' .$activity_id. '/' .$location_id. '/' .$parent_id);
         
         die;
     }
@@ -1643,6 +1644,7 @@ class Court_booking extends CI_Controller{
         $new_output .= '<thead>';
 		$new_output .= '<tr>';
         $new_output .='<th><button class="btn btn-info refresh_btn" style=cursor:pointer onclick=set_form("'.$activity_id.'","'.$location_id.'","'.$parent_id.'","'.$day_value.'","'.$dates.'","'.$date_info.'")>Refresh</button></th>';
+       // $new_output .= '<th><button type="button" id="show_cart" class="btn btn-success" data-dismiss="modal"> <i class="fa fa-shopping-cart" aria-hidden="true">Gotocart</button></th>';
 		 $new_output .= '</tr>';
         $new_output .= '<tr>';
         $new_output .='<th>Time slot</th>';
