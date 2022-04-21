@@ -812,7 +812,7 @@ function parent_details(){
       <div class="modal-body" style="width: 100%">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#myModal').hide();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black; opacity:0.6" onClick="$('#myModal').hide();">&times;<span style="font-size:15px">Close</span></button>
         <strong> Activity Selection </strong>
       </div>
       <div class="alert alert-info">
@@ -848,14 +848,12 @@ function parent_details(){
   <div class="modal-dialog" style="width: 100%;
     float: none;
     margin: 0 auto;
-    max-width: 38%;
-    position: absolute;
-    left: 4%;">
-    <div class="modal-content" style="width: 246%;">
+    max-width: 38%;">
+    <div class="modal-content">
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#transactionHistoryModal').hide();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#transactionHistoryModal').hide();">&times;<span class="close-x">Close</span></button>
         <strong> Transaction History </strong>
       </div>
       <div class="">

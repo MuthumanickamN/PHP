@@ -1097,7 +1097,8 @@ $(document).ready(function() {
           data:{activity_id:activity_id,slot_id:slot_id,coach_id:coach_id,location_id:location_id,hour:hour,clickDay:clickDay,date:date, sid:sid},
           type:"POST",
           async:false,
-          success:function(data){   
+          success:function(data){ 
+            $('#listTable').dataTable().fnDestroy();  
             $('#slotSelection tbody').html(data);
            //document.getElementById('slotSelection tbody').innerHTML=data;
           }

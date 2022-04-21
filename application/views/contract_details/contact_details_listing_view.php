@@ -112,7 +112,7 @@
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#confirmModal').hide();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#confirmModal').hide();">&times;<span class="close-x">Close</span></button>
         <strong>  Payment Details </strong>
       </div>
       <div class="student_append">
