@@ -29,11 +29,11 @@
 	<h4>Recharge History</h4>
 	<div class="col-sm-12 col-md-4">
 		<p class="form_text1">From</p>
-		<input type="text" class="date-picker" name="datepicker" id="datepicker">
+		<input type="text" class="date-picker" name="datepicker" id="datepicker" autocomplete="off">
 	</div>
 	<div class="col-sm-12 col-md-4">
 		<p class="form_text1">To</p>
-		<input type="text" class="date-picker" name="datepicker1" id="datepicker1">
+		<input type="text" class="date-picker" name="datepicker1" id="datepicker1" autocomplete="off">
 	</div>
 	<div class="col-sm-12 col-md-4">
 		<p class="form_text1">&nbsp;</p>

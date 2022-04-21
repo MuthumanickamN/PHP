@@ -227,7 +227,7 @@ th, td {
                                         <div class="modal-content">
                                           <div class="modal-body" style="width: 100%;white-space: normal !important;">
                                           <div class="alert alert-info">
-                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractform').hide();">&times;</button>
+                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black; opacity:0.6" onClick="$('#contractform').hide();">&times;<span class="close-x">Close</span></button>
                                 
                               <p>PRIME STAR SPORT SERVICES “YEARLY SPONSORSHIP CONTRACT”</p>
                             </div>
@@ -302,12 +302,12 @@ th, td {
   
   <!-- Trigger/Open The Modal -->
 <div id="myModal_<?php echo $id;?>" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none;">
-  <div class="modal-dialog" style="width: 100%; margin-top: 100px">
+  <div class="modal-dialog" style="width: 30%; margin-top: 100px">
     <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#myModal_<?php echo $id;?>').hide();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#myModal_<?php echo $id;?>').hide();">&times;<span class="close-x">Close</span></button>
         <strong> Activity Selection </strong>
       </div>
       <div class="alert alert-info">

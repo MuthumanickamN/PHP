@@ -34,13 +34,13 @@
 </div>
 
 <div class="panel panel-info" style="margin-top:20px; margin-left:20px;">
-	<div class="row input-daterange">
+	<div class="row input-daterange" >
 		<div class="col-md-3 col-md-offset-2 ">
-			<input type="text" name="start_date" id="start_date" class="form-control start_date" required />
+			<input type="text" name="start_date" id="start_date" class="form-control start_date" autocomplete="off" required />
 			<span class="errorMsg"></span>
 		</div>
 		<div class="col-md-3">
-			<input type="text" name="end_date" id="end_date" class="form-control end_date" required />
+			<input type="text" name="end_date" id="end_date" class="form-control end_date" autocomplete="off" required />
 		</div>
 		<div class="col-md-3">
 		<input type="button" name="select_listing" id="select_listing" value="Search" class="btn btn-info" />
