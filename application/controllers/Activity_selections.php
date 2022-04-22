@@ -1536,19 +1536,19 @@ form.</li>
 occur as a result of breach of terms & conditions.</li>
 </ul>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 28%;">INSURANCE INFORMATION:</h1>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, declare that my child has
+<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, declare that my child has
 medical insurance.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 31%;">EMERGENCY AUTHORIZATION:</h1>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, hereby authorize the designated instructor or official acting as an activity supervisor, as my agent to seek
+<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, hereby authorize the designated instructor or official acting as an activity supervisor, as my agent to seek
 medical, surgical, or dental examination and treatment in the event of an emergency.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 40%;">WAIVER OF LIABILITY AND DISCLAIMER:</h1>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, hereby agree to allow the
+<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, hereby agree to allow the
 individual names herein to participate in the aforementioned activity and further agree to
 indemnify and hold harmless, Prime Star Sport Academy, Dubai, UAE, its employees,
 volunteers, and other representatives from any claims arising out of or relating to any
 physical injury that may result from the participation in Academy practice, tournaments,
 workouts, training sessions, camps, clinics, classes, or activity.</p>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
+<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
 Sport Academy, Dubai, UAE, and its staff do not assume liability for any injuries that occur
 while at Prime Star Sport Academy practices, games, training sessions, events,
 tournaments, camps, clinics, or on the way to any Prime Star Sport Academy activities.
