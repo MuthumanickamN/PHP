@@ -38,35 +38,39 @@ class Cron_job extends CI_Controller{
 	{
 		$month = date('M Y');
 		$today = new DateTime(date('Y-m-d'));
+		$activity_selection_id = $this->input->post['activity_selection_id'];
 		
-		$sql="SELECT id,activity_selection_id,contract_from_date,contract_to_date,last_contract_amount_paid_month_year FROM `contract_details`";
+		$sql="SELECT id,activity_selection_id,contract_from_date,contract_to_date,last_contract_amount_paid_month_year FROM `contract_details` where id = '$activity_selection_id' ";
 		foreach($this->db->query($sql)->result_array() as $key => $value)
 		{  
 			$id = $value['id'];
+			$activity_selection_id = $value['activity_selection_id'];
 			$lastyear = $value['last_contract_amount_paid_month_year'];
 			$from_date = $value['contract_from_date'];
 			$to_date = $value['contract_to_date'];
 
 			if($from_date > $today) 
 			{
-			//	$sql1="Update contract_details as cd  join activity_selections as acs on cd.id = acs.id set cd.active_contract = 0 , acs.contract = 'No' where cd.id = '$id' ";
+			//	$sql1="Update contract_details as cd  join activity_selections as acs on cd.id = acs.id set cd.active_contract = 0  where cd.id = '$id' ";
+			   
 			    $sql1="Update contract_details set active_contract = 0 where id = '$id' ";
 				$this->db->query($sql1);
-				$sql2="Update activity_selections set contract = 'No' where id = '$id' ";
+				$sql2="Update activity_selections set contract = 'No' where id = '$activity_selection_id' ";
 				$this->db->query($sql2);
 			}
 			if ($to_date < $today) 
 			{
 				$sql1="Update contract_details set active_contract = 0, status = 0 where id = '$id' ";
 				$this->db->query($sql1);
-				$sql2="Update activity_selections set contract = 'No' where id = '$id' ";
+				$sql2="Update activity_selections set contract = 'No' where id = '$activity_selection_id' ";
 				$this->db->query($sql2);
 			}
 			if((($from_date <= $today) && ($to_date >= $today)) && ($lastyear == NULL || $lastyear == $month))
 			{
+				
 				$sql1="Update contract_details set active_contract = 1 where id = '$id' ";
 				$this->db->query($sql1);
-				$sql2="Update activity_selections set contract = 'Yes' where id = '$id' ";
+				$sql2="Update activity_selections set contract = 'Yes' where id = '$activity_selection_id' ";
 				$this->db->query($sql2);
 
 			}
@@ -74,7 +78,7 @@ class Cron_job extends CI_Controller{
 			{
 				$sql1="Update contract_details set active_contract = 0 where id = '$id' ";
 				$this->db->query($sql1);
-				$sql2="Update activity_selections set contract = 'Yes' where id = '$id' ";
+				$sql2="Update activity_selections set contract = 'Yes' where id = '$activity_selection_id' ";
 				$this->db->query($sql2);
 			}
 		}
