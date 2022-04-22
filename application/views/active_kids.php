@@ -211,13 +211,13 @@ th, td {
 		<?php if($row1['contract_form_sent_to_parent'] == '1' && $row1['parent_approved']=="Pending")
 		{ 
 		?>
-		<button type="button" id="" data-id="<?php echo $row1['id'];?>" class="btn btn-primary contractBtn" onClick="$('#contractform').show();">Contract Form</button>
+		<button type="button" id="" data-id="<?php echo $row1['id'];?>" class="btn btn-primary contractBtn" onClick="$('#contractform<?php echo $row1['id'];?>').show();">Contract Form</button>
 		<?php }else{ echo $row1['contract']; } ?>
     
 		</a>
         
         </td>
-                <div id="contractform" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="width: 100%;display: none;overflow:scroll;"> 
+                <div id="contractform<?php echo $row1['id'];?>" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="width: 100%;display: none;overflow:scroll;"> 
                  <!--     <div class="modal" id="contractform" role="dialog">  -->
                        
                                   <div class="modal-dialog" style="width: 100%;
@@ -227,7 +227,7 @@ th, td {
                                         <div class="modal-content">
                                           <div class="modal-body" style="width: 100%;white-space: normal !important;">
                                           <div class="alert alert-info">
-                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractform').hide();">&times;</button>
+                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractform<?php echo $row1['id'];?>').hide();">&times;</button>
                                 
                               <p>PRIME STAR SPORT SERVICES “YEARLY SPONSORSHIP CONTRACT”</p>
                             </div>
@@ -238,13 +238,13 @@ th, td {
       <input type="checkbox" class="form-check-input" id="check1" name="option1" value="">
       <label class="form-check-label" for="check1" style="margin-left:14px;padding-left:14px"> I have read and agreed to the <a href="#" style="color:blue;text-decoration: underline">Terms and Conditions</a> as mentioned above</label>
     </div>
-     <div class="form_btn">
-    <div class="btn1_con" style="float:left;width:30%;text-align:center; display:none;">
-    <button type="submit" class="btn btn-danger mr-10">No</button>
-    </div>
-    <div class="btn2_con" data-id="<?php echo $row1['id'];?>" style="float:left;width:50%;text-align:center; display:none;">
-    <button type="submit" class="btn btn-success">Yes</button>
-    </div>
+    <div class="form_btn">
+      <div class="btn1_con" style="float:left;width:30%;text-align:center; display:none;">
+        <button type="submit" data-id="<?php echo $row1['id'];?>" id="no_btn" class="btn btn-danger mr-10 no_btn">No</button>
+      </div>
+      <div class="btn2_con"  style="float:left;width:50%;text-align:center; display:none;">
+        <button type="submit" data-id="<?php echo $row1['id'];?>" id="yes_btn" class="btn btn-success yes_btn">Yes</button>
+      </div>
     </div>
                           </div>
                        </div>
@@ -394,16 +394,16 @@ $(document).on("click",".book_slots",function(){
 });
 $(document).on("click",'#check1',function(){
     if (this.checked) {
-       $('.btn1_con').show();
-	   $('.btn2_con').show();
+       $('.btn1_con').css('display','block');
+	   $('.btn2_con').css('display','block');
     }
 	else
 	{
-	  $('.btn1_con').hide();
-	   $('.btn2_con').hide();
+	  $('.btn1_con').css('display','none');
+	   $('.btn2_con').css('display','none');
 	}
 });
-$(document).on("click",".btn2_con",function(){
+$(document).on("click",".yes_btn",function(){
 var id= $(this).attr('data-id');
     $.ajax({
 		type: "POST",
@@ -413,12 +413,31 @@ var id= $(this).attr('data-id');
 		datatype: "text",
 		success : function(data)
 		{
-		    $('#contractform').hide();
-			
+		    $('#contractform'+id).hide();
+        location.reload();
 		
 		}
     });
 });	
+
+$(document).on("click",".no_btn",function(){
+var id= $(this).attr('data-id');
+    $.ajax({
+		type: "POST",
+		url: base_url+"Activity_selections/contract_rejected",
+		data: {id:id},
+		async: true,
+		datatype: "text",
+		success : function(data)
+		{
+		    $('#contractform'+id).hide();
+        location.reload();
+		
+		}
+    });
+});	
+
+
 $(document).on("click",".contractBtn",function(){
     var id= $(this).attr('data-id');
     var activity_id= $(this).attr('data-activity_id');

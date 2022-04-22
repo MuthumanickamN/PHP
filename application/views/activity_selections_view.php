@@ -249,7 +249,7 @@
                       </div>
                       <div class="col-md-3">
                         <select name="head_coach_id" id="head_coach_id" class="form-control select2 head_coach_id"  >
-                          
+                          <option value="">Select</option>
                           <?php foreach ($head_coaches as $key => $coach) { ?>
                           <option value="<?php echo $coach['coach_id'] ?>" <?php if($coach['coach_id']==$head_coach_id ){ echo 'selected';} ?>><?php echo $coach['coach_name'] ?></option>
                           <?php }  ?>
@@ -712,6 +712,12 @@ function createContractPayment(){
           success: function (json) {
               
             $('#contractModal').hide();
+            swal({
+                  title: "Contract Details Added Successfully",
+                  text: "",
+                  type: "success",
+                  timer: 1000
+               });
             $('#lblText2').html("Contract Details Added Successfully");
             $('#lblText2').show(); 
            
