@@ -588,7 +588,7 @@ font-size: 25px;
 	</div>
 	</div>
 	
-	<p>Dear Raghavan NRS</p>
+	<p>Dear '.$data[0]['parent_name'].'</p>
 	<p>We are pleased to offer Yearly Sponsorship Contract at Prime Star Sport
 Academy for your kid as per the terms and conditions stated below:</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">CONTRACT PERIOD:</p>
@@ -961,19 +961,19 @@ form.</li>
 occur as a result of breach of terms & conditions.</li>
 </ul>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">INSURANCE INFORMATION:</h1>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, declare that my child has
+<p><span style="text-decoration:underline">I '.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, declare that my child has
 medical insurance.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">EMERGENCY AUTHORIZATION:</h1>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, hereby authorize the designated instructor or official acting as an activity supervisor, as my agent to seek
+<p><span style="text-decoration:underline">I '.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, hereby authorize the designated instructor or official acting as an activity supervisor, as my agent to seek
 medical, surgical, or dental examination and treatment in the event of an emergency.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">WAIVER OF LIABILITY AND DISCLAIMER:</h1>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, hereby agree to allow the
+<p><span style="text-decoration:underline">I '.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, hereby agree to allow the
 individual names herein to participate in the aforementioned activity and further agree to
 indemnify and hold harmless, Prime Star Sport Services, Dubai, UAE, its employees,
 volunteers, and other representatives from any claims arising out of or relating to any
 physical injury that may result from the participation in Academy practice, tournaments,
 workouts, training sessions, camps, clinics, classes, or activity.</p>
-<p><span style="text-decoration:underline">I Raghavan NRS</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
+<p><span style="text-decoration:underline">I '.$data[0]['parent_name'].'</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
 Sport Services, Dubai, UAE, and its staff do not assume liability for any injuries that occur
 while at Prime Star Sport Services practices, games, training sessions, events,
 tournaments, camps, clinics, or on the way to any Prime Star Sport Services activities.
@@ -1001,8 +1001,8 @@ understand its contents.</p>
 <p>By signing below, parents/guardian/student agree to all the above terms and conditions
 and Responsibility, any breach of this contract could result in suspension or termination
 of your contract with Prime Star Sport Services.</p>
-<p>Athlete / Student Name: <span style="text-decoration:underline">Dhanwanth Ragavan</span>
-<p>Parent/Guardian Name:<span style="text-decoration:underline"> Mr/Mrs Raghavan NRS</span>
+<p>Athlete / Student Name: <span style="text-decoration:underline">'.$data[0]['student_name'].'</span>
+<p>Parent/Guardian Name:<span style="text-decoration:underline"> Mr/Mrs '.$data[0]['parent_name'].'</span>
 <p>Prime Star Sport Services LLC</p>';
         
         
@@ -1344,7 +1344,7 @@ public function contract_form_data()
 	</div>
 	</div>
 	<div class="contract1" style="float:left;width:100%">
-	<p>Dear Raghavan NRS</p>
+	<p>Dear '.$data[0]['parent_name'].'</p>
 	<p>We are pleased to offer Yearly Sponsorship Contract at Prime Star Sport
 Academy for your kid as per the terms and conditions stated below:</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">CONTRACT PERIOD:</p>
