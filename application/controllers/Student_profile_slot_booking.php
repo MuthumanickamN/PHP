@@ -442,6 +442,15 @@ public function add_slot_booking(){
     {
        $fees=100.00;  
     }
+
+        $as_sql="SELECT * FROM contract_details where activity_selection_id='$activityselection_id' and status=1 and active_contract=1";
+        $as_row = $this->db->query($as_sql);
+        $as_rows = $as_row->num_rows();
+        if($as_rows > 0)
+        {
+            $fees=1.00;
+
+        }
     //echo $fees_price.' '.$fees;die;
     $status='Pending';
     $checkexists = $this->db->query('select * from tmp_booking where parent_id ="'.$parent_id.'" and  student_id ="'.$sid.'" and activity_id ="'.$activity_id.'" and level_id ="'.$level_id.'" and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and to_time="'.$to.'"');

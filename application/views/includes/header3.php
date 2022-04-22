@@ -714,6 +714,20 @@
   </li>
 <?php }/**/ ?>
 
+<?php if($role == 'superadmin' || $role == 'admin') { ?>
+  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Accounts</span></a>
+    <ul class="dropdown-menu">
+      
+        
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Accountsreport/coach_activity_wise_revenue' ?>"><span data-i18n="Booking">Revenue Report</span></a></li> 
+
+
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'AccountService/all_list' ?>"><span data-i18n="Reports">Accounts Services</span></a></li>
+
+	</ul>
+  </li>
+<?php }/**/ ?>
+
 
 
 
