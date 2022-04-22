@@ -6,7 +6,7 @@ class Contract_customer_invoice extends CI_Controller
     public function __construct(){
         parent::__construct();
         $this->load->model('Default_Model', 'default');
-        $this->load->model('School_profile_report_Model', 'schools');
+        $this->load->model('School_profile_report_Model', 'school');
         $this->load->model('Daily_Transaction_Model', 'transaction');
     }
     public function index(){
@@ -98,7 +98,7 @@ class Contract_customer_invoice extends CI_Controller
                 $this->db->insert('wallet_transactions', $walletArray); 
                 $wallet_transaction_id = $this->db->insert_id();
                 $this->send_email_wt($walletArray, $resultp['parent_code'], $wallet_amount, $balance_credits, $resultp, $student_name);
-                $this->invoice_model->send_email_invoice($wallet_transaction_id, "Contract");
+                $this->load->invoice_model->send_email_invoice($wallet_transaction_id, "Contract");
                 $this->db->where('id', $contract_id);
                 $this->db->update('contract_details', array('active_contract'=>1, last_contract_amount_paid_month_year=>date('M Y')) );
 

@@ -233,7 +233,7 @@ th, td {
                                 
                               <p>PRIME STAR SPORT SERVICES “YEARLY SPONSORSHIP CONTRACT”</p>
                             </div>
-                            <div id="contract_form_data">
+                            <div id="contract_form_data<?php echo $row1['id'];?>">
                                 
                             </div>
                             <div class="form-check">
@@ -452,7 +452,7 @@ $(document).on("click",".contractBtn",function(){
 		datatype: "text",
 		success : function(data)
 		{
-		    $('#contract_form_data').html(data);
+		    $('#contract_form_data'+id).html(data);
 		
 		}
     });
