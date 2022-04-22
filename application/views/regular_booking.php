@@ -49,7 +49,7 @@
 
 <div class="col-sm-12 col-md-3">
 <p class="form_text1">Date (dd-mm-yyyy)</p>
-<input type="text" class="date-picker" id="datepicker" name="slot_date" value="">
+<input type="text" class="date-picker" id="datepicker" name="slot_date" value="" autocomplete="off">
 </div>
 <div class="col-sm-12 col-md-3">
 <p class="form_text1">&nbsp;</p>

@@ -5,7 +5,7 @@
             <div class="modal-content panel panel-primary">
                 <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Users</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
                 <div class="modal-body panel-body" id="render-dispaly-data">
                     <div class="text-center"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div>

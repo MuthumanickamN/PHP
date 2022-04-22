@@ -3096,3 +3096,12 @@ bottom:1px;
 .label {
     text-align: left !important;
 }
+.del_payment {
+    height: 33px;
+}
+tr.odd, tr.even{
+    text-align: center;
+}
+input#check1 {
+    position: relative !important;
+}
