@@ -6,21 +6,31 @@
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12 mb-2">
                 <h3 class="content-header-title" style="color: green">School Credit Invoice</h3>
-                <div class="row breadcrumbs-top">
+              <!--  <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
-
+					
+						
                     </div>
-                </div>
+                </div>-->
             </div>
             
         </div>
+		<div class="row">
+	
+		<div class="col-lg-12">
+		<div class="card">
+		<div class="card-header">
+                                <h4 class="card-title">School Credit Invoice</h4>
+
+                            </div>
+		<div class="card-content">
         <div class="content-body">
 			<div class="col-lg-12"><span id="success-msg"></span></div>
-            <div class="row">
-				<div class="container_wrapper">
+         <!--   <div class="row">
+				<div class="container_wrapper">-->
 				<form id="add-school-credit-form" method="post">
 					<div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Transaction date</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -29,20 +39,20 @@
                     </div>
 					
 					<div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Transaction type</label></legend>
 						</div>
 						<div class="col-lg-4">
 							<fieldset class="choices">
-							<ol class="choices-group input-credit-transaction_type" style="list-style: none;">
-								<li class="choice"><label for="credit_transaction_type_credit"><input id="credit_transaction_type_credit" type="radio" value="credit" name="transaction_type">Credit</label></li>
-							</ol>
+							<li class="choices-group input-credit-transaction_type" style="list-style: none;">
+								<li class="choice" style="list-style: none;"><label for="credit_transaction_type_credit" ><input id="credit_transaction_type_credit" type="radio" value="credit" name="transaction_type">Credit</label></li>
+							</li>
 							</fieldset>
 							
 						</div>						                                
                     </div>
 					<div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Account code</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -57,7 +67,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>School Name / Contact</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -72,7 +82,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>School name</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -80,7 +90,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Location</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -88,7 +98,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Contact number</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -96,7 +106,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Contact person</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -104,7 +114,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>TRN number</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -112,7 +122,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Email id</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -120,7 +130,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Activity</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -135,7 +145,7 @@
 						</div>						                                
                     </div>
                     <div class="row" style="margin-bottom:15px;">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Description</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -143,7 +153,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Transaction amount (AED)</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -151,7 +161,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>Gross amount (AED)</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -159,7 +169,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>VAT Percentage</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -167,7 +177,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>VAT value</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -175,7 +185,7 @@
 						</div>						                                
                     </div>
                     <div class="row">
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<legend class="label"><label>NET Amount (AED)</label></legend>
 						</div>
 						<div class="col-lg-4">
@@ -186,10 +196,14 @@
                         <div class="col-sm-12 centerAlign">                            
                             <button type="button" class="btn rkmd-btn btn-success" id="add-school-credit">Submit</button> 
                             <button type="button" class="btn rkmd-btn btn-danger">Cancel</button>
-                        </div>                    
-                    </div>
-
+                      <!--  </div>                    
+                    </div>-->
+					
 				</form>
+				</div>
+				</div>
+				</div>
+				</div>
 				</div>
             </div>
         </div>
@@ -202,3 +216,8 @@ $this->load->view('templates/footer');
 <script>
     jQuery('.datepicker').datepicker();
 </script>
+<style>
+	.label{
+		border-bottom:none !important;
+	}
+	</style>
