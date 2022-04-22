@@ -210,26 +210,40 @@
 </div>
 
 <div id="addModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none; ">
-    <div class="modal-dialog" style="width: 30%; margin-top: 100px">
+    <div class="modal-dialog" style="width: 100%; margin-top: 100px">
   <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
-          <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
-        
-
-		  <div class="col-md-12 control text-right">
+		<div class="row">
+		<div class="col-md-11 control text-right">
                      <a onclick="show_cart_list()" id="show_cart1"   class="btn btn-success" style="color: white" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>Go to cart</a>
 	      </div>
+		<div class="col-md-1 text-right">
+          <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6;position: relative;top:9px" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button></div>
+        
+
+		  
+		  </div>
+		  <div class="row">
+		  <div class="col-md-12">
 
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
+		</div>
+		</div>
         </div>
         <div class="alert alert-info">
      <h4></h4>
      <table id="slotSelection" class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%; background-color: white" >
     
   </table>
-   <br>
+  <br>
+  <div class="row">
+  <div class="col-md-12">
+  <button type="button" class="btn btn-danger" title="Cancel" onclick="$('#addModal .close').click();">Cancel</button>
+  </div>
+  </div>
+  
    
        
     </div>
