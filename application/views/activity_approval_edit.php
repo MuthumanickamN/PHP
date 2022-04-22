@@ -241,7 +241,7 @@ function classes(){
         <div class="modal-content panel panel-primary">
             <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Confirmation</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
             <div class="modal-body" id="confirmMessage">
             </div>
@@ -258,7 +258,7 @@ function classes(){
             <div class="modal-content panel panel-warning">
                 <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Contract Form</h4>
-                    <button type="button" class="close close_button" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close close_button" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
                 <div class="modal-body panel-body">
                     <div class="col-md-12">

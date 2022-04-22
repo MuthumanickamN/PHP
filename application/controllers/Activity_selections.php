@@ -365,7 +365,122 @@ class Activity_Selections extends CI_Controller {
 		if(!$mail->send()) 
 		{
 			return false;
-		   //echo "Mailer Error: " . $mail->ErrorInfo;
+		   echo "Mailer Error: " . $mail->ErrorInfo;die;
+		}
+		else{
+			return true;
+		}
+		
+	}
+
+	public function send_contract_rejected_mail($email_data_array)
+	{
+		
+	
+		
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+        $mail->AddCC(CC_ADDRESS);
+		$mail->addAttachment(TERMS_CONDITION_ATTACHMENT);
+		$mail->addAddress(DEFAULT_MAIL);
+		
+		
+		$mail->isHTML(true);
+
+		$mail->Subject = "Prime Star Sports Services - Contract Request is Rejected";
+		
+		
+		$from_html = "";
+		$from_html .= "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <p style='color:black;font-weight:700;'> Parent Name: ".$email_data_array[0]['parent_name']." ,</p>
+    <p>We are pleased to inform you that parent's kid <b>".$email_data_array[0]['student_name']."</b>`s ".$email_data_array[0]['game']." contract is
+    rejected by parent </p>
+    <p style='color:black;font-weight:700;'>Contract From ".$email_data_array[0]['contract_from']." To ".$email_data_array[0]['contract_to']."</p>
+    
+    <table style='width:100%;text-align:center'>
+        <tr>
+            <th>Sl No.</th>
+            <th>Payment Type</th>
+            <th>Bank</th>
+            <th>Cheque Number</th>
+            <th>Cheque Date</th>
+		    <th>Payable Date</th>
+			<th>Payable Amount</th>
+        </tr>";
+        foreach($email_data_array as $key=> $value) {
+        $from_html .= "<tr>
+            <td>".($key+1)."</td>
+            <td>".$value['payment_type']."</td>
+            <td>".$value['bank_name']."</td>
+            <td>".$value['cheque_number']."</td>
+            <td>".$value['cheque_date_']."</td>
+            <td>".$value['payable_date_']."</td>
+            <td>".$value['payable_amount']."</td>
+        </tr>";
+        }
+        
+    $from_html .= "</table>
+        <h4>Thanks & Regards</h4>
+        <h4 style='color: grey'>PSSS Admin team</h4>
+        <hr>
+        <p>Click here to visit our website:<a href='http://sports.primestaruae.com/'>www.primestaruae.com</a></p>
+   ";
+		$mail->Body = $from_html;
+		$mail->AltBody = "This is the plain text version of the email content";
+		
+		if(!$mail->send()) 
+		{
+			return false;
+		   echo "Mailer Error: " . $mail->ErrorInfo;die;
 		}
 		else{
 			return true;
@@ -496,7 +611,7 @@ terminate the Sponsorship yearly contract according to the Termination clause se
 out here.</li>
 </ol>
 <p style="color:#b13636; font-size:20px;font-weight:700;">BENEFITS OF CONTRACT:</p>
-<p>As a Yearly Sponsorship Contract member of Prime Star Sport Academy, you will be
+<p>As a Yearly Sponsorship Contract member of Prime Star Sport Services, you will be
 provided with the best of coaching and support by our staff, for your chosen sport. We
 kindly request you to follow the responsibilities outlined to you in your membership
 description, this will be presented to you on joining and is available as an appendices to
@@ -505,7 +620,7 @@ in your role.</p>
 <p>Yearly Sponsorship Contract Students will get Unlimited classes as per coaches guidance
 at Prime Star venues only. These additional classes will be charged at normal fees cost
 and will given as discount in every month invoice.</p>
-<p>Prime Star Sport Academy reserves the right to assign additional rules and
+<p>Prime Star Sport Services reserves the right to assign additional rules and
 responsibilities to your “Yearly Sponsorship Contract” according to the needs and
 requirements of the academy, prevailing at the time.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">CANCELLATION OF CONTRACT:</p>
@@ -515,7 +630,7 @@ by issuance of a minimum of <span style="color:red;font-weight:700">90</span> da
 <p style="padding-left: 20px;
     margin-left: 20px;">After the sign of Contract between Student / Parent / Guardian & Academy and If
 Student / Parent / Guardian, decided to withdraw or the student Terminated by Prime
-Star Sport Academy for the breach of terms and conditions the entire Sponsored
+Star Sport Services for the breach of terms and conditions the entire Sponsored
 amount spent by Academy (The monthly discount amount enjoyed as a sponsorship
 has to be paid in full upon withdraw or termination.) to be paid back by Parents /
 Guaridan / Students.</p>
@@ -523,7 +638,7 @@ Guaridan / Students.</p>
     margin-left: 20px;">In the instance of Disciplinary matters, breach of contract or terminated, the
 sponsorship Terms and Conditions set out below.</p>
 <p style="padding-left: 20px;
-    margin-left: 20px;">Prime Star Sport Academy disciplinary procedure of terminating immediately shall be
+    margin-left: 20px;">Prime Star Sport Services disciplinary procedure of terminating immediately shall be
 followed, such termination of this Sponsorship contract without due notice will result
 in you forfeiting your Contract fee and Termination clause set out here will be
 impiimented.</p>
@@ -536,10 +651,10 @@ be paid in full upon withdraw or termination, to be paid back by Parents / Guari
 Students in full payment immediately within 5 working days upon submitting the
 notice.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 80%;">STUDENT-ATHLETE COMMITMENT & CODE OF CONDUCT:</h1>
-<p><span style="color:black">1.</span> You will pledge to make Academic Studies and Prime Star Sport Academy your top
+<p><span style="color:black">1.</span> You will pledge to make Academic Studies and Prime Star Sport Services your top
 priorities.</p>
 <p>2. You are expected to give 100% effort in training</p>
-<P>3. You are expected to obey the rules and regulations of our Prime Star Sport Academy,
+<P>3. You are expected to obey the rules and regulations of our Prime Star Sport Services,
 Coaches, and other staff members of the Academy.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">SPORTSMANSHIP:</p>
 <p><span style="color:black">1.</span> Give your fullest mental, physical, and emotional effort at every team meeting, training,practice, and game.</p>
@@ -548,7 +663,7 @@ Coaches, and other staff members of the Academy.</p>
 <p style="padding-bottom:20px">c. Compete with 100% effort at all times and then respectfully accept the results of the
 competition (victory or defeat)</p>
 <p>2. Respect every person with whom you come in contact with. You will respect all referees
-and opposing teams at all times. You are a representative of Prime Star Sport Academy
+and opposing teams at all times. You are a representative of Prime Star Sport Services
 and you are expected to act in a respectful manner at all times, especially in times of
 frustration or conflict. You will respect and care for others with:</p>
 <p>a. Your words</p>
@@ -564,7 +679,7 @@ practice time and playing time.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">COMPETITON CLAUSE:</p>
 <p>Once we sign the yearly contract the Athletes / Players / Students are not allowed to join
 any of our direct / indirect competitor clubs / academies in UAE, after the
-completion/Termination of contract with Prime Star Sport Academy LLC for the period of 1
+completion/Termination of contract with Prime Star Sport Services LLC for the period of 1
 year.</p>
 <p>Upon signing the contract, you are agreeing to this Contract, if any contract terms
 breached, then you need to fulfill contract obligation to avoid any legal issues.</p>
@@ -580,7 +695,7 @@ Any cost incurred by the academy to repair/replace such property if damaged as a
 of any deliberate attempt and/or negligence will be charged to the respective student.
 Further, the student should take care of their personal belongings and the institute will not
 take any responsibility for the safe keeping of such personal belongings.</p>
-<p>Prime Star Sport Academy LLC reserves the right to exclude any person from lessons for
+<p>Prime Star Sport Services LLC reserves the right to exclude any person from lessons for
 a breach of these conditions or whom they consider unfit to take the provided sport
 activity, a danger to themselves or others or who are displaying abusive or disruptive
 behavior.</p>
@@ -603,7 +718,7 @@ students/athletes and parents cannot and should not interfere in Coaches / Manag
 decision.</p>
 <p>By signing below, you agree to the Student-Athlete Commitment & Code of Conduct and
 Student Obligation, any breach of this contract could result in suspension or termination
-of your membership with Prime Star Sport Academy.</p>
+of your membership with Prime Star Sport Services.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">PARENTS CODE OF CONDUCT:</h1>
 <p>Parents play an import role in the development of a successful Athlete / player / Sports
 Person. Parents MUST be a positive influence in the sports experience. Parents will do
@@ -638,24 +753,24 @@ the student/athletes, both students/athletes and parents cannot and should not i
 Coaches / Management decision.</p>
 <p>By signing below, you agree to the Parent Code of Conduct and any breach of this
 contract could result in suspension or termination of your membership with Prime Star
-Sport Academy.</p>
+Sport Services.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">FEES AND PRIME STAR SPORT ACADEMY SPONSORSHIP DETAILS:</h1>
 <p>To ensure proper functioning of the academy, it is important for all of us to follow certain
 terms & conditions and most of them are listed below. We request you to please go thru
 them carefully to avoid any ambiguity going forward.</p>
-<p>Only Registered Members can take part in Prime Star Sport Academy activities</p>
+<p>Only Registered Members can take part in Prime Star Sport Services activities</p>
 <p>Annual Registration Fees: (Every January): AED 200</p>
 <p>Document Required: Filled up agreement form, Singed by parents and athletes, Online
 Registrationa and upload all document required (i.e Passport Copy, Emirates ID Copy
 Passport Size Photo and sponsor PP copy with visa page and Emirates ID.)</p>
 <p>Parents Yearly Contribution: Per Annum AED <span style="text-decoration:underline">18900</span> payable in <span style="text-decoration:underline">1</span> Equal Instalment by Post
 Dated Cheques.</p>
-<p>Prime Star Sport Academy, Supports the Sposnsored Yearly Contract Students by
+<p>Prime Star Sport Services, Supports the Sposnsored Yearly Contract Students by
 providing Unlimited classes as per coaches guidance at Prime Star venues only. These
 additional classes will be charged at normal fees cost and will given as discount in every
 month invoice.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">PARENTS FINANCIAL RESPONSIBILITY & TERMS AND CONDITIONS OF ACADEMY SPONSORSHIP:</h1>
-<p>Annual Registration Fees: AED <span style="text-decoration:underline">210</span></p>
+<p>Annual Registration Fees: AED <span style="text-decoration:underline">105</span></p>
 <p>Parents Yearly Contribution: Per Annum AED <span style="text-decoration:underline">18900</span> payable in <span style="text-decoration:underline">1</span> Equal Instalment by Post
 Dated Cheques.</p>
 
@@ -684,7 +799,7 @@ foreach($data as $key=> $value) {
 		
 			
 $from_html .= '		</table>
-		<p>Prime Star Sport Academy, Supports the Sposnsored Yearly Contract Students by
+		<p>Prime Star Sport Services, Supports the Sponsored Yearly Contract Students by
 providing Unlimited classes as per coaches guidance at Prime Star venues only. These
 additional classes will be charged at normal fees cost and will given as discount in every
 month invoice.</p>
@@ -698,15 +813,15 @@ individual coaches. Whilst every effort will be taken to ensure that training sc
 remains consistent, occasionally sessions may be reduced and coaches may be
 substituted due to tapering and competition commitments.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">STUDENTS WHO WISH WITHDRAW OR TERMINATED BY ACADEMY FOR BREACHING THE TERMS AND CONDITIONS NEED TO FOLLOW THE BELOW CONTRACT OBLIGATION ON FEES & PAYMENT:</p>
-<p>Students who availed “Sponsorship – Yearly Contract” from Prime Star Sport Academy
+<p>Students who availed “Sponsorship – Yearly Contract” from Prime Star Sport Services
 upon withdraw / termination for any reason WILL NOT be entitled to any refund.</p>
 <p>After the sign of Contract between Student / Parent & Academy and If Student or Parent /
-decided to withdraw or the student Terminated by Prime Star Sport Academy for the
+decided to withdraw or the student Terminated by Prime Star Sport Services for the
 breach of terms and conditions the entire Sponsored amount spent by Academy (The
 monthly discount amount enjoyed as a sponsorship has to be paid in full upon withdraw
 or termination.) to be paid back by Parents / Students.</p>
 <p>If any payments above are not paid, and collection services are necessary, Prime Star
-Sport Academy may also recover any and all costs and fees incurred as a result of
+Sport Services may also recover any and all costs and fees incurred as a result of
 collections, including reasonable attorney fees and costs.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">PAYMENT OF FEE:</h1>
 <div style="width:100%;float:left;">
@@ -787,7 +902,7 @@ beyond this period for what so ever reason.</li>
 conducted as a result of public holidays applicable to the private sector as
 published in the local newspapers.</li>
 <li>Compensation classes will only be offered when classes have had to be cancelled
-by Prime Star Sport Academy.</li>
+by Prime Star Sport Services.</li>
 </ul>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">PROGRESS REPORT</h1>
 <p>We encourage the parents to obtain feedback regarding the progress of their children at
@@ -821,14 +936,14 @@ staff to seek support or help with any issue.</li>
 <li>If I see a teammate post something potentially negative online, I will have a
 conversation with that teammate. If I do not feel comfortable doing so, I will talk to
 my coach.</li>
-<li>I am aware that I represent my Prime Star Sport Academy, team, family and
+<li>I am aware that I represent my Prime Star Sport Services, team, family and
 community at all times, and will do so in a positive manner.</li>
 </ul>
 <p>In Permitting my Son/Daughter/My Self to take part in Lesson/Class, I am specifically
-granting my permission to Prime Star Sport Academy LLC to use the Student’s Name,
+granting my permission to Prime Star Sport Services LLC to use the Student’s Name,
 Picture, Photos, Interview, Voice, Videos and Words in Television, Radio, Film,
 Publications, Newspaper, Magazine and other medias and form for the purpose and
-communication of Prime Star Sport Academy LLC During the tenure of the student and
+communication of Prime Star Sport Services LLC During the tenure of the student and
 thereafter.</p>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">DO`S & DON`TS:</h1>
 <ul>
@@ -842,7 +957,7 @@ form.</li>
 <li>Jewelry and watches NOT to be worn while attending lessons.</li>
 <li>Academy Students should wear appropriate sports dress and non-marking shoes.</li>
 <li>Parents are NOT allowed to communicate with the Coaches during the class hours.</li>
-<li>No liability will attach to the Prime Star Sport Academy LLC for incidents, which
+<li>No liability will attach to the Prime Star Sport Services LLC for incidents, which
 occur as a result of breach of terms & conditions.</li>
 </ul>
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">INSURANCE INFORMATION:</h1>
@@ -854,14 +969,14 @@ medical, surgical, or dental examination and treatment in the event of an emerge
 <h1 style="font-size:37px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 100%;">WAIVER OF LIABILITY AND DISCLAIMER:</h1>
 <p><span style="text-decoration:underline">I Raghavan NRS</span>, the undersigned parent or legal guardian, hereby agree to allow the
 individual names herein to participate in the aforementioned activity and further agree to
-indemnify and hold harmless, Prime Star Sport Academy, Dubai, UAE, its employees,
+indemnify and hold harmless, Prime Star Sport Services, Dubai, UAE, its employees,
 volunteers, and other representatives from any claims arising out of or relating to any
 physical injury that may result from the participation in Academy practice, tournaments,
 workouts, training sessions, camps, clinics, classes, or activity.</p>
 <p><span style="text-decoration:underline">I Raghavan NRS</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
-Sport Academy, Dubai, UAE, and its staff do not assume liability for any injuries that occur
-while at Prime Star Sport Academy practices, games, training sessions, events,
-tournaments, camps, clinics, or on the way to any Prime Star Sport Academy activities.
+Sport Services, Dubai, UAE, and its staff do not assume liability for any injuries that occur
+while at Prime Star Sport Services practices, games, training sessions, events,
+tournaments, camps, clinics, or on the way to any Prime Star Sport Services activities.
 Parents or guardians should contact their own insurance carrier to get additional
 insurance for the participant, if necessary. As a condition of enrollment, the following
 disclaimer of liability must be signed and dated by the participant’s parent or legal
@@ -871,24 +986,24 @@ Academy and its officers, agents, and staff shall not be liable for any damages 
 from personal injury sustained by the participant while at or on the way to and from any
 activity. The participant and his or her parent or guardians assume full responsibility for
 any damages or injuries which may occur to the participant during the season and so
-hereby full and forever exonerate and discharge Prime Star Sport Academy, it officers,
+hereby full and forever exonerate and discharge Prime Star Sport Services, it officers,
 agents, and staff from any and all claims, demands, damages, rights of action or causes of
 action, present or future, whether the same be known, participated, or unanticipated,
 resulting from or arising out of the participants participation in the program, I understand
 that Sports activity is a potentially risky activity in which my child might be injured
-severely. This includes death. I, therefore, release any and all Prime Star Sport Academy
+severely. This includes death. I, therefore, release any and all Prime Star Sport Services
 staff members from liability of any kind of injury to my child, however serious it may be,
 because of the connection with the activity. I/we allow the use of my/our likeness for the
-program publicity. Prime Star Sport Academy reserves the right to use any photos or
+program publicity. Prime Star Sport Services reserves the right to use any photos or
 video taken during clinics, camps, training sessions, workouts, practice, tournaments,
 travel tournaments, etc. I acknowledge that I have read the above information and
 understand its contents.</p>
 <p>By signing below, parents/guardian/student agree to all the above terms and conditions
 and Responsibility, any breach of this contract could result in suspension or termination
-of your contract with Prime Star Sport Academy.</p>
+of your contract with Prime Star Sport Services.</p>
 <p>Athlete / Student Name: <span style="text-decoration:underline">Dhanwanth Ragavan</span>
 <p>Parent/Guardian Name:<span style="text-decoration:underline"> Mr/Mrs Raghavan NRS</span>
-<p>Prime Star Sport Academy LLC</p>';
+<p>Prime Star Sport Services LLC</p>';
         
         
     $from_html .= "</table>
@@ -1080,8 +1195,13 @@ public function addContractPayment()
     $sql_e = "SELECT *, 
     date_format(str_to_date(c.contract_from_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_from, 
     date_format(str_to_date(c.contract_to_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_to,
-    date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y') as cheque_date_,
-    date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y') as payment_date_
+	CASE WHEN p.cheque_date is NOT NULL
+    THEN date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y')
+	ELSE '' END as cheque_date_,
+	CASE WHEN p.payable_date is NOT NULL THEN
+    date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y')
+	ELSE '' END as payable_date_,
+    date_format(str_to_date(c.created_at, '%Y-%m-%d'), '%d-%m-%Y') as created_at
     FROM `contract_details` as c 
 left join contract_payments as p on p.contract_detail_id=c.id
 left join activity_selections a on a.id= c.activity_selection_id
@@ -1111,12 +1231,71 @@ public function contract_approved()
 	if($id)
 	{
 	    
-        $sql_u = "Update contract_details set parent_approved='Approved',active_contract='1' where activity_selection_id=$id and status=1";
+        $sql_u = "Update contract_details set parent_approved='Approved',active_contract='0' where activity_selection_id=$id and status=1";
         $this->db->query($sql_u);
-	    $this->send_contract_form_mail($email_array);	
-        
+		$sql_e = "SELECT *, 
+    date_format(str_to_date(c.contract_from_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_from, 
+    date_format(str_to_date(c.contract_to_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_to,
+	CASE WHEN p.cheque_date is NOT NULL
+    THEN date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y')
+	ELSE '' END as cheque_date_,
+	CASE WHEN p.payable_date is NOT NULL THEN
+    date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y')
+	ELSE '' END as payable_date_,
+    date_format(str_to_date(c.created_at, '%Y-%m-%d'), '%d-%m-%Y') as created_at
+    FROM `contract_details` as c 
+	left join contract_payments as p on p.contract_detail_id=c.id
+	left join activity_selections a on a.id= c.activity_selection_id
+	left join bank_details b on b.id= p.bank_id
+	left join games g on g.game_id= a.activity_id
+	WHERE c.activity_selection_id=$id and c.status=1 order by p.id asc";
+	$email_array_query = $this->db->query($sql_e);
+		if($email_array_query->num_rows() > 0)
+		{
+			$email_array = $email_array_query->result_array();
+			$this->send_contract_form_mail($email_array);	
+				
+		}
+		
 	}
-	
+}
+
+public function contract_rejected()
+{
+    
+	$id = $this->input->post('id');
+	if($id)
+	{
+	    
+		$sql_e = "SELECT *, 
+		date_format(str_to_date(c.contract_from_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_from, 
+		date_format(str_to_date(c.contract_to_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_to,
+		CASE WHEN p.cheque_date is NOT NULL
+		THEN date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y')
+		ELSE '' END as cheque_date_,
+		CASE WHEN p.payable_date is NOT NULL THEN
+		date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y')
+		ELSE '' END as payment_date_,
+		date_format(str_to_date(c.created_at, '%Y-%m-%d'), '%d-%m-%Y') as created_at
+		FROM `contract_details` as c 
+		left join contract_payments as p on p.contract_detail_id=c.id
+		left join activity_selections a on a.id= c.activity_selection_id
+		left join bank_details b on b.id= p.bank_id
+		left join games g on g.game_id= a.activity_id
+		WHERE c.activity_selection_id=$id and c.status=1 order by p.id asc";
+		$email_array_query = $this->db->query($sql_e);
+
+		$sql_u = "Update contract_details set parent_approved='Rejected',active_contract='0',status=0 where activity_selection_id=$id and status=1";
+		$this->db->query($sql_u);
+			
+		if($email_array_query->num_rows() > 0)
+		{
+			$email_array = $email_array_query->result_array();
+				$this->send_contract_rejected_mail($email_array);	
+				
+		}
+		
+	}
 }
 
 public function contract_form_data()
@@ -1125,9 +1304,14 @@ public function contract_form_data()
     $id = $this->input->post('id');
     $sql = "SELECT *, r.passport_id as student_passport,r.name as student_name,
             date_format(str_to_date(c.contract_from_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_from, 
-            date_format(str_to_date(c.contract_to_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_to,
-            date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y') as cheque_date_,
-            date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y') as payment_date_
+			date_format(str_to_date(c.contract_to_date, '%Y-%m-%d'), '%d-%m-%Y') as contract_to,
+			CASE WHEN p.cheque_date is NOT NULL
+			THEN date_format(str_to_date(p.cheque_date, '%Y-%m-%d'), '%d-%m-%Y')
+			ELSE '' END as cheque_date_,
+			CASE WHEN p.payable_date is NOT NULL THEN
+			date_format(str_to_date(p.payable_date, '%Y-%m-%d'), '%d-%m-%Y')
+			ELSE '' END as payment_date_,
+			date_format(str_to_date(c.created_at, '%Y-%m-%d'), '%d-%m-%Y') as created_at
             FROM `contract_details` as c 
         left join contract_payments as p on p.contract_detail_id=c.id
         left join activity_selections a on a.id= c.activity_selection_id
@@ -1138,7 +1322,7 @@ public function contract_form_data()
     $data = $this->db->query($sql)->result_array();
     //print_r($data[0]['student_name']);die;    
     $from_html = '<div style="text-align: left; ">
-	<p>THIS CONTRACT is made on '.date('d-m-Y').'.</p></div>
+	<p>THIS CONTRACT is made on '.$data[0]['created_at'].'.</p></div>
 	<div style="width:100%; float:left">
 	<div style="width:30%; float:left">
 	<p>BETWEEN</p>
@@ -1183,7 +1367,7 @@ terminate the Sponsorship yearly contract according to the Termination clause se
 out here.</li>
 </ol>
 <p style="color:#b13636; font-size:20px;font-weight:700;">BENEFITS OF CONTRACT:</p>
-<p>As a Yearly Sponsorship Contract member of Prime Star Sport Academy, you will be
+<p>As a Yearly Sponsorship Contract member of Prime Star Sport Services, you will be
 provided with the best of coaching and support by our staff, for your chosen sport. We
 kindly request you to follow the responsibilities outlined to you in your membership
 description, this will be presented to you on joining and is available as an appendices to
@@ -1192,7 +1376,7 @@ in your role.</p>
 <p>Yearly Sponsorship Contract Students will get Unlimited classes as per coaches guidance
 at Prime Star venues only. These additional classes will be charged at normal fees cost
 and will given as discount in every month invoice.</p>
-<p>Prime Star Sport Academy reserves the right to assign additional rules and
+<p>Prime Star Sport Services reserves the right to assign additional rules and
 responsibilities to your “Yearly Sponsorship Contract” according to the needs and
 requirements of the academy, prevailing at the time.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">CANCELLATION OF CONTRACT:</p>
@@ -1202,7 +1386,7 @@ by issuance of a minimum of <span style="color:red;font-weight:700">90</span> da
 <p style="padding-left: 20px;
     margin-left: 20px;">After the sign of Contract between Student / Parent / Guardian & Academy and If
 Student / Parent / Guardian, decided to withdraw or the student Terminated by Prime
-Star Sport Academy for the breach of terms and conditions the entire Sponsored
+Star Sport Services for the breach of terms and conditions the entire Sponsored
 amount spent by Academy (The monthly discount amount enjoyed as a sponsorship
 has to be paid in full upon withdraw or termination.) to be paid back by Parents /
 Guaridan / Students.</p>
@@ -1210,7 +1394,7 @@ Guaridan / Students.</p>
     margin-left: 20px;">In the instance of Disciplinary matters, breach of contract or terminated, the
 sponsorship Terms and Conditions set out below.</p>
 <p style="padding-left: 20px;
-    margin-left: 20px;">Prime Star Sport Academy disciplinary procedure of terminating immediately shall be
+    margin-left: 20px;">Prime Star Sport Services disciplinary procedure of terminating immediately shall be
 followed, such termination of this Sponsorship contract without due notice will result
 in you forfeiting your Contract fee and Termination clause set out here will be
 impiimented.</p>
@@ -1223,10 +1407,10 @@ be paid in full upon withdraw or termination, to be paid back by Parents / Guari
 Students in full payment immediately within 5 working days upon submitting the
 notice.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 56%;">STUDENT-ATHLETE COMMITMENT & CODE OF CONDUCT:</h1>
-<p><span style="color:black">1.</span> You will pledge to make Academic Studies and Prime Star Sport Academy your top
+<p><span style="color:black">1.</span> You will pledge to make Academic Studies and Prime Star Sport Services your top
 priorities.</p>
 <p>2. You are expected to give 100% effort in training</p>
-<P>3. You are expected to obey the rules and regulations of our Prime Star Sport Academy,
+<P>3. You are expected to obey the rules and regulations of our Prime Star Sport Services,
 Coaches, and other staff members of the Academy.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">SPORTSMANSHIP:</p>
 <p><span style="color:black">1.</span> Give your fullest mental, physical, and emotional effort at every team meeting, training,practice, and game.</p>
@@ -1235,7 +1419,7 @@ Coaches, and other staff members of the Academy.</p>
 <p style="padding-bottom:20px">c. Compete with 100% effort at all times and then respectfully accept the results of the
 competition (victory or defeat)</p>
 <p>2. Respect every person with whom you come in contact with. You will respect all referees
-and opposing teams at all times. You are a representative of Prime Star Sport Academy
+and opposing teams at all times. You are a representative of Prime Star Sport Services
 and you are expected to act in a respectful manner at all times, especially in times of
 frustration or conflict. You will respect and care for others with:</p>
 <p>a. Your words</p>
@@ -1251,7 +1435,7 @@ practice time and playing time.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">COMPETITON CLAUSE:</p>
 <p>Once we sign the yearly contract the Athletes / Players / Students are not allowed to join
 any of our direct / indirect competitor clubs / academies in UAE, after the
-completion/Termination of contract with Prime Star Sport Academy LLC for the period of 1
+completion/Termination of contract with Prime Star Sport Services LLC for the period of 1
 year.</p>
 <p>Upon signing the contract, you are agreeing to this Contract, if any contract terms
 breached, then you need to fulfill contract obligation to avoid any legal issues.</p>
@@ -1267,7 +1451,7 @@ Any cost incurred by the academy to repair/replace such property if damaged as a
 of any deliberate attempt and/or negligence will be charged to the respective student.
 Further, the student should take care of their personal belongings and the institute will not
 take any responsibility for the safe keeping of such personal belongings.</p>
-<p>Prime Star Sport Academy LLC reserves the right to exclude any person from lessons for
+<p>Prime Star Sport Services LLC reserves the right to exclude any person from lessons for
 a breach of these conditions or whom they consider unfit to take the provided sport
 activity, a danger to themselves or others or who are displaying abusive or disruptive
 behavior.</p>
@@ -1290,7 +1474,7 @@ students/athletes and parents cannot and should not interfere in Coaches / Manag
 decision.</p>
 <p>By signing below, you agree to the Student-Athlete Commitment & Code of Conduct and
 Student Obligation, any breach of this contract could result in suspension or termination
-of your membership with Prime Star Sport Academy.</p>
+of your membership with Prime Star Sport Services.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 30%;">PARENTS CODE OF CONDUCT:</h1>
 <p>Parents play an import role in the development of a successful Athlete / player / Sports
 Person. Parents MUST be a positive influence in the sports experience. Parents will do
@@ -1325,24 +1509,24 @@ the student/athletes, both students/athletes and parents cannot and should not i
 Coaches / Management decision.</p>
 <p>By signing below, you agree to the Parent Code of Conduct and any breach of this
 contract could result in suspension or termination of your membership with Prime Star
-Sport Academy.</p>
+Sport Services.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 63%;">FEES AND PRIME STAR SPORT ACADEMY SPONSORSHIP DETAILS:</h1>
 <p>To ensure proper functioning of the academy, it is important for all of us to follow certain
 terms & conditions and most of them are listed below. We request you to please go thru
 them carefully to avoid any ambiguity going forward.</p>
-<p>Only Registered Members can take part in Prime Star Sport Academy activities</p>
+<p>Only Registered Members can take part in Prime Star Sport Services activities</p>
 <p>Annual Registration Fees: (Every January): AED 200</p>
 <p>Document Required: Filled up agreement form, Singed by parents and athletes, Online
 Registrationa and upload all document required (i.e Passport Copy, Emirates ID Copy
 Passport Size Photo and sponsor PP copy with visa page and Emirates ID.)</p>
 <p>Parents Yearly Contribution: Per Annum AED <span style="text-decoration:underline">18900</span> payable in <span style="text-decoration:underline">1</span> Equal Instalment by Post
 Dated Cheques.</p>
-<p>Prime Star Sport Academy, Supports the Sposnsored Yearly Contract Students by
+<p>Prime Star Sport Services, Supports the Sposnsored Yearly Contract Students by
 providing Unlimited classes as per coaches guidance at Prime Star venues only. These
 additional classes will be charged at normal fees cost and will given as discount in every
 month invoice.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 93%;">PARENTS FINANCIAL RESPONSIBILITY & TERMS AND CONDITIONS OF ACADEMY SPONSORSHIP:</h1>
-<p>Annual Registration Fees: AED <span style="text-decoration:underline">210</span></p>
+<p>Annual Registration Fees: AED <span style="text-decoration:underline">105</span></p>
 <p>Parents Yearly Contribution: Per Annum AED <span style="text-decoration:underline">18900</span> payable in <span style="text-decoration:underline">1</span> Equal Instalment by Post
 Dated Cheques.</p>
 
@@ -1371,7 +1555,7 @@ foreach($data as $key=> $value) {
 		
 			
 $from_html .= '		</table>
-		<p>Prime Star Sport Academy, Supports the Sposnsored Yearly Contract Students by
+		<p>Prime Star Sport Services, Supports the Sponsored Yearly Contract Students by
 providing Unlimited classes as per coaches guidance at Prime Star venues only. These
 additional classes will be charged at normal fees cost and will given as discount in every
 month invoice.</p>
@@ -1385,15 +1569,15 @@ individual coaches. Whilst every effort will be taken to ensure that training sc
 remains consistent, occasionally sessions may be reduced and coaches may be
 substituted due to tapering and competition commitments.</p>
 <p style="color:#b13636; font-size:20px;font-weight:700;">STUDENTS WHO WISH WITHDRAW OR TERMINATED BY ACADEMY FOR BREACHING THE TERMS AND CONDITIONS NEED TO FOLLOW THE BELOW CONTRACT OBLIGATION ON FEES & PAYMENT:</p>
-<p>Students who availed “Sponsorship – Yearly Contract” from Prime Star Sport Academy
+<p>Students who availed “Sponsorship – Yearly Contract” from Prime Star Sport Services
 upon withdraw / termination for any reason WILL NOT be entitled to any refund.</p>
 <p>After the sign of Contract between Student / Parent & Academy and If Student or Parent /
-decided to withdraw or the student Terminated by Prime Star Sport Academy for the
+decided to withdraw or the student Terminated by Prime Star Sport Services for the
 breach of terms and conditions the entire Sponsored amount spent by Academy (The
 monthly discount amount enjoyed as a sponsorship has to be paid in full upon withdraw
 or termination.) to be paid back by Parents / Students.</p>
 <p>If any payments above are not paid, and collection services are necessary, Prime Star
-Sport Academy may also recover any and all costs and fees incurred as a result of
+Sport Services may also recover any and all costs and fees incurred as a result of
 collections, including reasonable attorney fees and costs.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 18%;">PAYMENT OF FEE:</h1>
 
@@ -1477,7 +1661,7 @@ beyond this period for what so ever reason.</li>
 conducted as a result of public holidays applicable to the private sector as
 published in the local newspapers.</li>
 <li>Compensation classes will only be offered when classes have had to be cancelled
-by Prime Star Sport Academy.</li>
+by Prime Star Sport Services.</li>
 </ul>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 19%;">PROGRESS REPORT</h1>
 <p>We encourage the parents to obtain feedback regarding the progress of their children at
@@ -1511,14 +1695,14 @@ staff to seek support or help with any issue.</li>
 <li>If I see a teammate post something potentially negative online, I will have a
 conversation with that teammate. If I do not feel comfortable doing so, I will talk to
 my coach.</li>
-<li>I am aware that I represent my Prime Star Sport Academy, team, family and
+<li>I am aware that I represent my Prime Star Sport Services, team, family and
 community at all times, and will do so in a positive manner.</li>
 </ul>
 <p>In Permitting my Son/Daughter/My Self to take part in Lesson/Class, I am specifically
-granting my permission to Prime Star Sport Academy LLC to use the Student’s Name,
+granting my permission to Prime Star Sport Services LLC to use the Student’s Name,
 Picture, Photos, Interview, Voice, Videos and Words in Television, Radio, Film,
 Publications, Newspaper, Magazine and other medias and form for the purpose and
-communication of Prime Star Sport Academy LLC During the tenure of the student and
+communication of Prime Star Sport Services LLC During the tenure of the student and
 thereafter.</p>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 16%;">DO`S & DON`TS:</h1>
 <ul>
@@ -1532,7 +1716,7 @@ form.</li>
 <li>Jewelry and watches NOT to be worn while attending lessons.</li>
 <li>Academy Students should wear appropriate sports dress and non-marking shoes.</li>
 <li>Parents are NOT allowed to communicate with the Coaches during the class hours.</li>
-<li>No liability will attach to the Prime Star Sport Academy LLC for incidents, which
+<li>No liability will attach to the Prime Star Sport Services LLC for incidents, which
 occur as a result of breach of terms & conditions.</li>
 </ul>
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 28%;">INSURANCE INFORMATION:</h1>
@@ -1544,14 +1728,13 @@ medical, surgical, or dental examination and treatment in the event of an emerge
 <h1 style="font-size:25px;border-bottom:2px dotted #b13636;color:#b13636;font-weight:700;width: 40%;">WAIVER OF LIABILITY AND DISCLAIMER:</h1>
 <p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>, the undersigned parent or legal guardian, hereby agree to allow the
 individual names herein to participate in the aforementioned activity and further agree to
-indemnify and hold harmless, Prime Star Sport Academy, Dubai, UAE, its employees,
+indemnify and hold harmless, Prime Star Sport Services, Dubai, UAE, its employees,
 volunteers, and other representatives from any claims arising out of or relating to any
 physical injury that may result from the participation in Academy practice, tournaments,
 workouts, training sessions, camps, clinics, classes, or activity.</p>
-<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
-Sport Academy, Dubai, UAE, and its staff do not assume liability for any injuries that occur
-while at Prime Star Sport Academy practices, games, training sessions, events,
-tournaments, camps, clinics, or on the way to any Prime Star Sport Academy activities.
+<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>,the undersigned parent or legal guardian, hereby agree that Prime Star Sport Services, Dubai, UAE, and its staff do not assume liability for any injuries that occur
+while at Prime Star Sport Services practices, games, training sessions, events,
+tournaments, camps, clinics, or on the way to any Prime Star Sport Services activities.
 Parents or guardians should contact their own insurance carrier to get additional
 insurance for the participant, if necessary. As a condition of enrollment, the following
 disclaimer of liability must be signed and dated by the participant’s parent or legal
@@ -1561,24 +1744,24 @@ Academy and its officers, agents, and staff shall not be liable for any damages 
 from personal injury sustained by the participant while at or on the way to and from any
 activity. The participant and his or her parent or guardians assume full responsibility for
 any damages or injuries which may occur to the participant during the season and so
-hereby full and forever exonerate and discharge Prime Star Sport Academy, it officers,
+hereby full and forever exonerate and discharge Prime Star Sport Services, it officers,
 agents, and staff from any and all claims, demands, damages, rights of action or causes of
 action, present or future, whether the same be known, participated, or unanticipated,
 resulting from or arising out of the participants participation in the program, I understand
 that Sports activity is a potentially risky activity in which my child might be injured
-severely. This includes death. I, therefore, release any and all Prime Star Sport Academy
+severely. This includes death. I, therefore, release any and all Prime Star Sport Services
 staff members from liability of any kind of injury to my child, however serious it may be,
 because of the connection with the activity. I/we allow the use of my/our likeness for the
-program publicity. Prime Star Sport Academy reserves the right to use any photos or
+program publicity. Prime Star Sport Services reserves the right to use any photos or
 video taken during clinics, camps, training sessions, workouts, practice, tournaments,
 travel tournaments, etc. I acknowledge that I have read the above information and
 understand its contents.</p>
 <p>By signing below, parents/guardian/student agree to all the above terms and conditions
 and Responsibility, any breach of this contract could result in suspension or termination
-of your contract with Prime Star Sport Academy.</p>
+of your contract with Prime Star Sport Services.</p>
 <p>Athlete / Student Name: <span style="text-decoration:underline">'.$data[0]['student_name'].'</span>
 <p>Parent/Guardian Name:<span style="text-decoration:underline"> '.$data[0]['parent_name'].'</span>
-<p>Prime Star Sport Academy LLC</p>
+<p>Prime Star Sport Services LLC</p>
 </div>';
         
         

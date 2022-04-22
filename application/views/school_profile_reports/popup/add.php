@@ -5,7 +5,7 @@
             <div class="modal-content panel panel-primary">
                 <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">School registration</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
                 <div class="modal-body panel-body">
                     <div class="row">

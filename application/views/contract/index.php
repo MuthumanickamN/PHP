@@ -67,7 +67,9 @@
                                     foreach ($arrayList as $contract) { ?>
                                 <tr>
                                     <td style="text-align: center">
-                                        <input type="checkbox" data-val="<?php echo $contract['id'];?>" id="selectContract" value="<?php echo $contract['id'];?>" class="selectContract" name="contract_id[<?php echo $contract['id'];?>]">
+                                        <?php if(($contract['balance_credits'] >= $contract['monthly_amount']) && (date('M Y')!=$contract['last_contract_amount_paid_month_year'])){ ?>
+                                            <input type="checkbox" data-val="<?php echo $contract['id'];?>" id="selectContract" value="<?php echo $contract['id'];?>" class="selectContract" name="contract_id[<?php echo $contract['id'];?>]">
+                                        <?php } ?>
                                     </td>
                                     <td></td>                                    
                                     <td><?php echo $contract['student_name'];?></td>
@@ -75,15 +77,22 @@
                                     <td><?php echo $contract['parent_name'];?></td>
                                     <td><?php echo $contract['parent_mobile'];?></td>
                                     <td><?php echo date('F');?></td>
-                                    <td><?php echo isset($contract['balance_credits'])?$contract['balance_credits']:'0';?></td>
-                                    <td><?php echo $contract['amount'];?></td>
+                                    <td><?php echo isset($contract['balance_credits'])?$contract['balance_credits']:'0.00';?></td>
+                                    <td><?php echo $contract['monthly_amount'];?></td>
                                     <td>
                                         <?php 
-                                        if($contract['balance_credits'] == 0){ ?>
-                                            <button  class="btn btn-danger" >Insufficient Balance </button>
-                                        <?php }else{ ?>
+                                        if($contract['balance_credits'] < $contract['monthly_amount']){ ?>
+                                            <button  class="btn btn-danger" disabled>Insufficient Balance </button>
+                                        <?php }else{ 
+                                            if(date('M Y')==$contract['last_contract_amount_paid_month_year']){
+                                            ?>
+                                        <button  class="btn btn-success "  title="Invoice" disabled>Invoice  </button>
+                                        <?php }
+                                    else{
+                                        ?>
                                         <button  data-toggle="modal" data-target="#confirmModal" data-val="<?php echo $contract['id'];?>" class="btn btn-warning changeStatus"  title="Invoice">Invoice  </button>
-                                        <?php } ?>
+                                   <?php }
+                                    } ?>
                                     </td>
                                 </tr>
                                 <?php }
@@ -111,13 +120,13 @@
         <div class="modal-content panel panel-success">
             <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Customer Contract Invoice</h4>
-                    <button type="button" class="close" onclick="clearForm()" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" onclick="clearForm()" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
               <form id="updateContract" name="updateContract" method="POST">
               <input type="hidden" name="contract_id[]" id="id_val">
               <div class="modal-body row" id="confirmMessage">     
                   <div class="col-lg-6 alignCenter">
-                    <button type="button" class="btn btn-success" onclick="updateRequest1()">Invoice Now</button>  
+                    <button type="button" class="btn btn-success" onclick="updateRequest()">Invoice Now</button>  
                   </div>
                   <div class="col-lg-6 alignCenter">
                     <button type="button" class="btn btn-danger"onclick="clearForm()"  data-dismiss="modal">Cancel</button>

@@ -48,11 +48,11 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		<p><input type="checkbox" id="single" /> Single Day</p>
 		<div class="col-sm-12 col-md-6 pad_lef_0">
 			<p class="form_text1" id="from">From</p>
-			<input type="text" class="date-picker" name="datepicker" id="datepicker">
+			<input type="text" class="date-picker" name="datepicker" id="datepicker" autocomplete="off">
 		</div>
 		<div class="col-sm-12 col-md-6 pad_lef_0" id="hide1">
 			<p class="form_text1">To</p>
-			<input type="text" class="date-picker" name="datepicker1" id="datepicker1">
+			<input type="text" class="date-picker" name="datepicker1" id="datepicker1" autocomplete="off">
 		</div>
 
 	</div>
@@ -123,11 +123,11 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		<p><input type="checkbox" id="single1" /> Single Day</p>
 		<div class="col-sm-12 col-md-6 pad_lef_0">
 			<p class="form_text1" id="from1">From</p>
-			<input type="text" class="date-picker" name="datepicker2" id="datepicker2">
+			<input type="text" class="date-picker" name="datepicker2" id="datepicker2" autocomplete="off">
 		</div>
 		<div class="col-sm-12 col-md-6 pad_lef_0" id="hide2">
 			<p class="form_text1">To</p>
-			<input type="text" class="date-picker" name="datepicker3" id="datepicker3">
+			<input type="text" class="date-picker" name="datepicker3" id="datepicker3" autocomplete="off">
 		</div>
 		<div class="clearfix"></div>
 		<div class="col-sm-12 col-md-6 pad_lef_0">
@@ -212,11 +212,11 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		<p><input type="checkbox" id="single2" /> Single Day</p>
 		<div class="col-sm-12 col-md-6 pad_lef_0">
 			<p class="form_text1" id="from2">From</p>
-			<input type="text" class="date-picker" name="datepicker4" id="datepicker4">
+			<input type="text" class="date-picker" name="datepicker4" id="datepicker4" autocomplete="off">
 		</div>
 		<div class="col-sm-12 col-md-6 pad_lef_0" id="hide3">
 			<p class="form_text1">To</p>
-			<input type="text" class="date-picker" name="datepicker5" id="datepicker5">
+			<input type="text" class="date-picker" name="datepicker5" id="datepicker5" autocomplete="off">
 		</div>
 		<div class="clearfix"></div>
 	</div>

@@ -92,6 +92,7 @@
 <div class="row calendarDiv">
 	<div class="col-md-12">
 		<div id="calendar">
+
 		</div>
 	</div>
 </div>
@@ -110,6 +111,7 @@
 <div id="hide2" class="border_box" style="display: none;">
 <h4>Booking Summary</h4>
 <div class="table-responsive">
+
     
         <input type="hidden" name="hidden_total_price" id="hidden_total_price" value="">
         
@@ -119,6 +121,9 @@
         <input type="hidden" name="hidden_net_amount" id="hidden_net_amount" value="">
         <input type="hidden" name="hidden_balance_amount" id="hidden_balance_amount" value="">
         <table id="example3" class="table table-bordered table-striped">
+		<input type="hidden" name="parent_id"  value="<?php echo $parent_id;?>">
+
+
 		<thead>
 			<tr>
 				<th>Activity</th>
@@ -234,11 +239,32 @@
   <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
+<<<<<<< HEAD
+          <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> 
+<<<<<<< HEAD-->
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
+<!--=======  
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
+
+>>>>>>> 1e1b75987a7bf462811058b281069510487a830e-->
+=======
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
+		 
+		  <div class="col-md-12 control text-right">
+                     <a onclick="show_cart_list()" id="show_cart1"   class="btn btn-success" style="color: white" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>Go to cart</a>
+	</div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 19be13290480c7de430ae496d02a2a47580a2d7a
+>>>>>>> ea441feb76d378e6f35109b50a472958048982b8
         
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
+		
+
         </div>
+		
         <div class="alert alert-info">
      <h4></h4>
      <table id="slotSelection" class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%; background-color: white" >
@@ -253,6 +279,17 @@
 </div>
 <script>
 $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
+
+  $(document).ready(function(){
+  //Chosen
+  jQuery(document).on('click','#show_cart1', function(e){
+	    //$('#addModal').hide();
+		$("#addModal .close").click()
+		$('#show_cart').trigger( "click" );
+        
+    });
+});
+
 </script>
 
 <!-- View Modal HTML -->

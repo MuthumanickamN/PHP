@@ -249,7 +249,7 @@
                       </div>
                       <div class="col-md-3">
                         <select name="head_coach_id" id="head_coach_id" class="form-control select2 head_coach_id"  >
-                          
+                          <option value="">Select</option>
                           <?php foreach ($head_coaches as $key => $coach) { ?>
                           <option value="<?php echo $coach['coach_id'] ?>" <?php if($coach['coach_id']==$head_coach_id ){ echo 'selected';} ?>><?php echo $coach['coach_name'] ?></option>
                           <?php }  ?>
@@ -408,7 +408,7 @@
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#contractModal').hide();">&times;</button> Add Contract Details for
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#contractModal').hide();">&times;<span class="close-x">Close</button> Add Contract Details for
         <strong> <?php echo $student_name;?> - <?php echo $game;?></strong>
       </div>
       <div class="">
@@ -471,22 +471,7 @@
                 </span>
                 </div>
                 </div>
-          <div class="row">
-              <div class="col-md-3">
-                <label><strong>Contract Year</strong></label>
-              </div>
-            <div class="col-md-6"> 
-            
-               <input id="contract_year" type="radio" value="1" name="contract_year" checked/>
-              <label style="margin-left: 10px; margin-right: 10px">One</label>
-              <input id="contract_year" type="radio" value="2" name="contract_year" />
-              <label style="margin-left: 10px; margin-right: 10px">Two</label>
-               <input id="contract_year" type="radio" value="3" name="contract_year" />
-              <label style="margin-left: 10px; margin-right: 10px">Three</label>
-              <span class="errorMsg"></span>
-              
-            </div>
-          </div>
+
           
           <div class="row">
               <div class="col-md-3">
@@ -499,6 +484,23 @@
                 
                 
                
+              <span class="errorMsg"></span>
+              
+            </div>
+          </div>
+		  
+		            <div class="row">
+              <div class="col-md-3">
+                <label><strong>Contract Year</strong></label>
+              </div>
+            <div class="col-md-6"> 
+            
+               <input id="contract_year" type="radio" value="1" name="contract_year" checked/>
+              <label style="margin-left: 10px; margin-right: 10px">One</label>
+              <input id="contract_year" type="radio" value="2" name="contract_year" />
+              <label style="margin-left: 10px; margin-right: 10px">Two</label>
+               <input id="contract_year" type="radio" value="3" name="contract_year" />
+              <label style="margin-left: 10px; margin-right: 10px">Three</label>
               <span class="errorMsg"></span>
               
             </div>
@@ -620,7 +622,7 @@
                 <span class="errorMsg"></span>
             </div>
             
-            <button type="button" style="color:white;text-decoration:none;" class="del_payment btn btn-danger fa fa-trash-0" > <i class="fa fa-trash-o"></i></button>
+            <button type="button" style="color:white;text-decoration:none;height:33px" class="del_payment btn btn-danger fa fa-trash-0" > <i class="fa fa-trash-o"></i></button>
             
         </div>
         
@@ -712,6 +714,12 @@ function createContractPayment(){
           success: function (json) {
               
             $('#contractModal').hide();
+            swal({
+                  title: "Contract Details Added Successfully",
+                  text: "",
+                  type: "success",
+                  timer: 1000
+               });
             $('#lblText2').html("Contract Details Added Successfully");
             $('#lblText2').show(); 
            

@@ -118,7 +118,7 @@
         <div class="modal-content panel panel-primary">
             <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Update Status</h4>
-                    <button type="button" class="close" onclick="clearForm()" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" onclick="clearForm()" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
               <form id="updateStatus" name="updateStatus" method="POST">
               <input type="hidden" name="booking_id" id="booking_id">

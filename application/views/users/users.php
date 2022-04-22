@@ -40,42 +40,42 @@
                       <form method="post" id="usercreate">
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Name</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="user_name" name="user_name" value="" placeholder="user name">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Email</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="email" name="email" value="" placeholder="email@example.com">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Password</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Password</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="password" name="password" value="" placeholder="******">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Password Confirmation</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Password Confirmation</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="password_confirmation" name="password_confirmation" value="" placeholder="******">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Mobile number</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Mobile number</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="mobile" name="mobile" value="" placeholder="ex:9876543210">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Gender</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Gender</label>
                             <div class="col-sm-10">
                               <div class="form-check-inline">
                                 <input class="form-check-input" type="radio" name="gender" id="user_gender_male" value="Male">
@@ -93,14 +93,14 @@
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Date of Birth</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Date of Birth</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" value="" placeholder="user name">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Role</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Role</label>
                             <div class="col-sm-10">
                               <div class="form-check-inline">
                                 <input class="form-check-input" type="radio" name="role" id="user_role_superadmin" value="superadmin" >
@@ -110,25 +110,25 @@
                               </div>
                               <div class="form-check-inline">
                                 <input class="form-check-input" type="radio" name="role" id="user_role_admin" value="admin">
-                                <label class="form-check-label" for="user_role_admin">
+                                <label class="form-check-label" for="user_role_admin" style="text-align:left">
                                 Administrator
                                 </label>
                               </div>
                               <div class="form-check-inline">
                                 <input class="form-check-input" type="radio" name="role" id="user_role_parent" value="parent">
-                                <label class="form-check-label" for="user_role_parent">
+                                <label class="form-check-label" for="user_role_parent" style="text-align:left">
                                 Parent
                                 </label>
                               </div>
                               <div class="form-check-inline">
                                 <input class="form-check-input" type="radio" name="role" id="user_role_headcoach" value="headcoach">
-                                <label class="form-check-label" for="user_role_headcoach">
+                                <label class="form-check-label" for="user_role_headcoach" style="text-align:left">
                                 HeadCoach
                                 </label>
                               </div>
                               <div class="form-check-inline">
                                 <input class="form-check-input" type="radio" name="role" id="user_role_coach" value="coach">
-                                <label class="form-check-label" for="user_role_coach">
+                                <label class="form-check-label" for="user_role_coach" style="text-align:left">
                                 Coach
                                 </label>
                               </div>
@@ -136,7 +136,7 @@
                           </div>
 
                           <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Status</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:left">Status</label>
                             <div class="col-sm-10">
                               <select class="form-control" id="status" name="status">
                                 <option value=""></option>

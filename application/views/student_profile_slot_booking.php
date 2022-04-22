@@ -134,7 +134,7 @@
           <div class="modal-content panel panel-primary">
               <div class="modal-header panel-heading">
                   <h4 class="modal-title -remove-title">Activity Selection</h4>
-                  <button type="button" class="close close_button" data-dismiss="modal">&times;</button>
+                  <button type="button" class="close close_button" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
               </div>
               <div class="modal-body panel-body">
                     <form id="addActivityForm" method="post">   

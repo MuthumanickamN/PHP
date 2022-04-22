@@ -42,7 +42,7 @@ if($opcode==1)
 <?php $i=1;
 
    //$osql1 = "select * from activity_selections where activity_id=".$game_id." and (coach_id='' or coach_id is NULL)";
-	$osql1 = "select * from activity_selections where activity_id=".$game_id." and (coach_id ='$coach_id' and coach_id is NOT NULL)";
+	$osql1 = "select acs.*,coach.coach_name,parent.parent_code from activity_selections as acs left join coach on coach.coach_id=acs.coach_id left join parent on parent.parent_id = acs.parent_user_id where acs.activity_id=".$game_id." and (coach.coach_id ='$coach_id' and coach.coach_id is NOT NULL)";
    $oexe1 = $this->db->query($osql1 );
    foreach( $oexe1->result_array() as $key => $row1  ){  
 	
@@ -52,14 +52,14 @@ if($opcode==1)
 
   ?>
       <tr>
-      <td style="text-align:center" ><input type="checkbox" name="remove_coach_checkbox[]" value ="<?php echo $row1['id']; ?>"/>&nbsp;</td>
+      <td style="text-align:center" ><input type="checkbox" id="checkbox" name="remove_coach_checkbox[]" value ="<?php echo $row1['id']; ?>"/>&nbsp;</td>
         <td style="text-align:center;"><?php echo $i; ?></td>
         <td style="text-align:center;"><?php echo $row1['sid']; ?></td>
         <td style="text-align:center;"><?php echo $row1['student_name']; ?></td>
         <td style="text-align:center;"><?php echo $row2['game']; ?></td>
-        <td style="text-align:center;"></td>
+        <td style="text-align:center;"><?php echo $row1['coach_name']?></td>
         <td style="text-align:center;"><?php echo $row1['parent_name']; ?></td>
-        <td style="text-align:center;"><?php echo $row1['user_id']; ?></td>
+        <td style="text-align:center;"><?php echo $row1['parent_code']; ?></td>
         <td style="text-align:center;"><?php echo $row1['parent_mobile']; ?></td>
         <td style="text-align:center;"><?php echo $row1['parent_email_id']; ?></td>
         <td style="text-align:center;"><?php echo $row1['status']; ?></td>
@@ -114,7 +114,6 @@ if($opcode==1)
             <th style="text-align:center;">Reg-Id</th>
             <th style="text-align:center;">Name</th>
             <th style="text-align:center;">Activity</th>
-            <th style="text-align:center;">Coach</th>
             <th style="text-align:center;">Parent Name</th>
             <th style="text-align:center;">Parent-Id</th>
             <th style="text-align:center;">Mobile</th>
@@ -127,7 +126,7 @@ if($opcode==1)
      <tbody>
 <?php $i=1;
 
-   $osql1 = "select * from activity_selections where activity_id=".$game_id." and (coach_id='' or coach_id is NULL)";
+   $osql1 = "select acs.*, parent.parent_code from activity_selections as acs left join parent on parent.parent_id = acs.parent_user_id where acs.activity_id=".$game_id." and (acs.coach_id='' or acs.coach_id is NULL)";
 	//$osql1 = "select * from activity_selections where activity_id=".$game_id." and (coach_id ='$coach_id' and coach_id is NOT NULL)";
    $oexe1 = $this->db->query($osql1 );
    foreach( $oexe1->result_array() as $key => $row1  ){  
@@ -138,14 +137,13 @@ if($opcode==1)
 
   ?>
       <tr>
-      <td style="text-align:center" ><input type="checkbox" name="assign_coach_checkbox[]" value ="<?php echo $row1['id']; ?>"/>&nbsp;</td>
+      <td style="text-align:center" ><input type="checkbox" id = "checkbox" name="assign_coach_checkbox[]" value ="<?php echo $row1['id']; ?>"/>&nbsp;</td>
         <td style="text-align:center;"><?php echo $i; ?></td>
         <td style="text-align:center;"><?php echo $row1['sid']; ?></td>
         <td style="text-align:center;"><?php echo $row1['student_name']; ?></td>
         <td style="text-align:center;"><?php echo $row2['game']; ?></td>
-        <td style="text-align:center;"></td>
         <td style="text-align:center;"><?php echo $row1['parent_name']; ?></td>
-        <td style="text-align:center;"><?php echo $row1['user_id']; ?></td>
+        <td style="text-align:center;"><?php echo $row1['parent_code']; ?></td>
         <td style="text-align:center;"><?php echo $row1['parent_mobile']; ?></td>
         <td style="text-align:center;"><?php echo $row1['parent_email_id']; ?></td>
         <td style="text-align:center;"><?php echo $row1['status']; ?></td>

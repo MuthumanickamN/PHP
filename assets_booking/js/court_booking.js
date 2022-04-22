@@ -493,7 +493,33 @@ function set_form( activity_id, location_id, parent_id, clickDay, date, date_inf
         type:"POST",
         async:false,
         success:function(data){   
+        //$('#slotSelection').dataTable().fnDestroy();    
         $('#slotSelection').html(data);
+        $('#slotSelection').dataTable({
+            dom: 'Bfrtip',
+            buttons: [
+            {
+                extend: 'print',
+                title: "Transaction History",
+                
+            },
+            { 
+                extend: 'pdf', 
+                title: 'Transaction History', 
+            },
+            { 
+                extend: 'excel', 
+                title: 'Transaction History', 
+            
+            }],
+            //"order":[1, 'asc'],
+            "ordering": false,
+            "bDestroy":true,
+            "bPaginate": false,
+            "searching": false,
+            "info":false
+            
+        });
         //document.getElementById('slotSelection tbody').innerHTML=data;
         
         $('.view-booked-timeslot').click(function(e){

@@ -181,7 +181,7 @@
         <div class="modal-content panel panel-success">
             <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Refund Slot</h4>
-                    <button type="button" class="close" onclick="clearForm()" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" onclick="clearForm()" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
               <form id="updateRefund" name="updateRefund" method="POST">
               <input type="hidden" name="refund_id[]" id="id_val">

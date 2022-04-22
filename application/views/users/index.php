@@ -239,7 +239,7 @@ $this->load->view('templates/footer');
                     }
                    if(row[4] == 'Parent')
                     {
-                    bindHtml += '<button type="button" id="transactionHistoryBtn" class="btn btn-info transaction_history_btn" data-role="<?php echo $role;?>" data-userid="' + row[10] + '"> Transaction History</button></td>';
+                    bindHtml += '<button type="button" id="transactionHistoryBtn" class="btn btn-info transaction_history_btn" data-role="<?php echo $role;?>" data-userid="' + row[10] + '" onclick="show_transaction(this);"> Transaction History</button></td>';
                     } 
                     return bindHtml;
                     }
@@ -269,12 +269,7 @@ $this->load->view('templates/footer');
             jQuery('#userListing').DataTable().ajax.reload();
         });*/
 
-        $('.transaction_history_btn').on('click', function() {
-            var role = $(this).attr('data-role');
-            var userid = $(this).attr('data-userid');
-            alert(1);
-            show_transaction(role,userid);
-        });
+        
     });
 
     function ChangePassword(id){
@@ -282,9 +277,10 @@ $this->load->view('templates/footer');
     }
 
 
-    function show_transaction(role,userid)
+    function show_transaction(this_)
     {
-       
+        var role = $(this_).attr('data-role');
+        var userid = $(this_).attr('data-userid');
         $('#transactionHistoryModal').show();
         // var id = $('#id').val();
         //var pid = $('#parent_id').val();

@@ -34,13 +34,13 @@
 </div>
 
 <div class="panel panel-info" style="margin-top:20px; margin-left:20px;">
-	<div class="row input-daterange">
+	<div class="row input-daterange" >
 		<div class="col-md-3 col-md-offset-2 ">
-			<input type="text" name="start_date" id="start_date" class="form-control start_date" required />
+			<input type="text" name="start_date" id="start_date" class="form-control start_date" autocomplete="off" required />
 			<span class="errorMsg"></span>
 		</div>
 		<div class="col-md-3">
-			<input type="text" name="end_date" id="end_date" class="form-control end_date" required />
+			<input type="text" name="end_date" id="end_date" class="form-control end_date" autocomplete="off" required />
 		</div>
 		<div class="col-md-3">
 		<input type="button" name="select_listing" id="select_listing" value="Search" class="btn btn-info" />
@@ -112,7 +112,7 @@
       <div class="modal-body" style="width: 100%;">
       <div class="alert alert-info">
         <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#confirmModal').hide();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#confirmModal').hide();">&times;<span class="close-x">Close</span></button>
         <strong>  Payment Details </strong>
       </div>
       <div class="student_append">

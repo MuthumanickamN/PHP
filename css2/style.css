@@ -3038,7 +3038,7 @@ form .row{
 	display:block !important;
 }
 .modal-header .close {
-    margin-top: -13px !important;
+    margin-top: -35px !important;
 }
 table.dataTable thead th, table.dataTable thead td {
     padding: 10px 12px !important;
@@ -3083,4 +3083,25 @@ table.dataTable thead.sorting_desc:after {
 }
 table.dataTable thead.sorting_desc{
 	display:none !important;
+}
+.close-x{
+	font-size:15px;
+padding-left:3px;
+position:relative;
+bottom:1px;
+}
+.modal-header .close-icon{
+	margin-top: -11px !important;
+}
+.label {
+    text-align: left !important;
+}
+.del_payment {
+    height: 33px;
+}
+tr.odd, tr.even{
+    text-align: center;
+}
+input#check1 {
+    position: relative !important;
 }

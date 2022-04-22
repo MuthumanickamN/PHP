@@ -64,19 +64,27 @@ public function select_student()
 public function assign_coach(){
 	$game_id=$this->input->post('game_id');
 	$coach_id=$this->input->post('coach_id');
-	if(isset($_POST['sub'])&&($_POST['sub']=='Assign')){ 
-		$checkbox1=$_POST['assign_coach_checkbox'];  
-		$chk="";  
-		foreach($checkbox1 as $key => $chk1){  
-			if(count($checkbox1)==$key+1)
-			{
-				$chk .= $chk1;  
-			}
-			else{
-				$chk .= $chk1.",";  
-			}
-	     
-	   }  
+
+	if(isset($_POST['sub'])&&($_POST['sub']=='Assign'))
+	{ 
+		if(('#checkbox' != '') && ($_POST['assign_coach_checkbox'] != ''))
+		{
+				$checkbox1=$_POST['assign_coach_checkbox'];  
+				$chk="";  
+				foreach($checkbox1 as $key => $chk1){  
+					if(count($checkbox1)==$key+1)
+					{
+						$chk .= $chk1;  
+					}
+					else{
+						$chk .= $chk1.",";  
+					}
+				}
+		}
+		else{
+			redirect('Assign_coach/index/'.$game_id.'/'.$coach_id);
+
+		}
 		$coach_id=$this->session->userdata('coach_id');
 	 	$sql="Update  activity_selections set coach_id='$coach_id' where id in ($chk)";
 		//echo $sql;die;
@@ -87,17 +95,28 @@ public function assign_coach(){
 	}
 	if(isset($_POST['sub'])&&($_POST['sub']=='Remove'))
 	{ 
-		$checkbox1=$_POST['remove_coach_checkbox'];  
-		$chk2="";  
-		foreach($checkbox1 as $key => $chk1){  
-			if(count($checkbox1)==$key+1)
-			{
-				$chk2 .= $chk1;  
+		if(('#checkbox' != '') && ($_POST['remove_coach_checkbox'] != ''))
+		{
+				$checkbox1=$_POST['remove_coach_checkbox'];  
+				$chk2="";  
+				foreach($checkbox1 as $key => $chk1)
+				{  
+					if(count($checkbox1)==$key+1)
+					{
+						$chk2 .= $chk1;  
+					}
+					else
+					{
+						$chk2 .= $chk1.",";  
+					} 
+				}
 			}
-			else{
-				$chk2 .= $chk1.",";  
-			} 
+		else
+		{
+			redirect('Assign_coach/index/'.$game_id.'/'.$coach_id);
+		
 		}
+	
 		$coach_id=$this->session->userdata('coach_id');
 		$sql="Update activity_selections set coach_id=' ' where id in ($chk2)";
 		//echo $sql;die;

@@ -210,13 +210,18 @@
 </div>
 
 <div id="addModal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none; ">
-    <div class="modal-dialog" style="width: 100%; margin-top: 100px">
+    <div class="modal-dialog" style="width: 30%; margin-top: 100px">
   <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
         
+
+		  <div class="col-md-12 control text-right">
+                     <a onclick="show_cart_list()" id="show_cart1"   class="btn btn-success" style="color: white" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>Go to cart</a>
+	      </div>
+
         <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
         </div>
         <div class="alert alert-info">
@@ -233,6 +238,17 @@
 </div>
 <script>
 $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
+
+$(document).ready(function(){
+  //Chosen
+  jQuery(document).on('click','#show_cart1', function(e){
+	    //$('#addModal').hide();
+		$("#addModal .close").click()
+		$('#show_cart').trigger( "click" );
+        
+    });
+});
+
 </script>
 
 <!-- View Modal HTML -->
