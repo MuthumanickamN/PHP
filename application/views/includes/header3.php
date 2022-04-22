@@ -122,20 +122,19 @@
     }
 	.coach-menu {
     display: inline-block;
-    position: relative;
-    top: 3px;
+    
 	
 }
-.coach-menu : hover {
-	background-color:red !important;
+.coach-menu  : hover {
+	background-color:rgba(255,255,255,.05)  !important;
+	color:#cdced2 !important;
 }
-.coach-menu a :hover {
-	color:grey !important;
-	
+
+.coach-menu {
+	color: #888e8f !important;
+   
 }
-.coach-menu a{
-	color:grey !important
-}
+
   </style>
   
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets_booking/css/style.css"> 
@@ -722,19 +721,21 @@
 <?php  ?>
 
 <?php if( $role == 'coach') { ?>
-	<ul class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Reports</span></a>
+<ul class="nav navbar-nav"  id="main-menu-navigation" data-menu="menu-navigation">
+	<li class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Reports</span></a>
 		<ul class="dropdown-menu">
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Couch Roster</span></a></li> 
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/coach_profile_view' ?>"><span data-i18n="Booking">Couch Profile list</span></a></li> 
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Rating/rating_review_report' ?>"><span data-i18n="Booking">Rating & Review Report</span></a></li> 
 		</ul>
-	
+	</li>
 	</ul>
-	
-	<ul class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">User</span></a>
+	<ul class="nav navbar-nav"   id="main-menu-navigation" data-menu="menu-navigation">
+	<li class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">User</span></a>
 		<ul class="dropdown-menu">
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Head Couch</span></a></li> 
 		</ul>
+		</li>
 	</ul>
     
 <?php } ?>  
