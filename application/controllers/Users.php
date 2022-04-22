@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 class Users extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('User_model', 'users');
+        $this->load->model('User_Model', 'users');
         $this->load->model('Default_Model', 'default');
         $role = strtolower($this->session->userdata['role']);
         

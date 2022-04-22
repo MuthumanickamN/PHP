@@ -239,28 +239,16 @@
   <div class="modal-content" style="width: 100%">
       <div class="modal-body" style="width: 100%">
         <div class="alert alert-info">
-<<<<<<< HEAD
-          <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> 
-<<<<<<< HEAD-->
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
-<!--=======  
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
 
->>>>>>> 1e1b75987a7bf462811058b281069510487a830e-->
-=======
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;opacity:0.6" onClick="$('#addModal').hide();">&times;<span class="close-x">Close</span></button>
+
           <!-- <a href="#" class="close" data-dismiss="modal" aria-label="close">X</a> -->
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black" onClick="$('#addModal').hide();">&times;</button>
 		 
 		  <div class="col-md-12 control text-right">
                      <a onclick="show_cart_list()" id="show_cart1"   class="btn btn-success" style="color: white" ><i class="fa fa-shopping-cart" aria-hidden="true"></i>Go to cart</a>
 	</div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 19be13290480c7de430ae496d02a2a47580a2d7a
->>>>>>> ea441feb76d378e6f35109b50a472958048982b8
-        
-        <strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
+	<strong>Time Slot on<input type="text" name="show_date" id="show_date" style="border:0; background-color:#d9edf7"></strong>
 		
 
         </div>
