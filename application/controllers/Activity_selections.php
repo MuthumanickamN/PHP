@@ -1732,8 +1732,7 @@ indemnify and hold harmless, Prime Star Sport Services, Dubai, UAE, its employee
 volunteers, and other representatives from any claims arising out of or relating to any
 physical injury that may result from the participation in Academy practice, tournaments,
 workouts, training sessions, camps, clinics, classes, or activity.</p>
-<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>,the undersigned parent or legal guardian, hereby agree that Prime Star
-Sport Services, Dubai, UAE, and its staff do not assume liability for any injuries that occur
+<p><span style="text-decoration:underline">'.$data[0]['parent_name'].'</span>,the undersigned parent or legal guardian, hereby agree that Prime Star Sport Services, Dubai, UAE, and its staff do not assume liability for any injuries that occur
 while at Prime Star Sport Services practices, games, training sessions, events,
 tournaments, camps, clinics, or on the way to any Prime Star Sport Services activities.
 Parents or guardians should contact their own insurance carrier to get additional

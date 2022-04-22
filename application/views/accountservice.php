@@ -205,7 +205,7 @@ $.ajax({
 </div>
 <div class="card-content collapse show">
     <div class="card-body card-dashboard">
-<form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" style="margin-top: 25px; margin-left: 5px;">
+<form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" style="margin-top: 25px; margin-left: 5px;" enctype="multipart/form-data">
 
   <div class="form-group lg-btm">
   <div class="row">
