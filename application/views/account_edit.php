@@ -205,8 +205,8 @@ $.ajax({
 </div>
 <div class="card-content collapse show">
     <div class="card-body card-dashboard">
-<form id="loginForm" class="form-horizontal" role="form" name="form" method="POST" style="margin-top: 25px; margin-left: 5px;">
-
+<form action="<?php echo site_url('AccountService/edit_details'); ?>" id="loginForm" class="form-horizontal" role="form" name="form" method="POST" style="margin-top: 25px; margin-left: 5px;" enctype="multipart/form-data">
+<input type="hidden" name="id" value="<?php echo $result['Id'] ?>">
   <div class="form-group lg-btm">
   <div class="row">
   <div class="col-md-3 control"><strong>Type</strong>*

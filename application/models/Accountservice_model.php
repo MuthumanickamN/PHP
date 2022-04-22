@@ -31,13 +31,13 @@ class Accountservice_model extends CI_Model {
 	 public function edit($id)
 	 {
 		
-        $query = $this->db->query("select ase.*,acs.Name,acs.Type from accounts_service_entries as ase left join accounts_service as acs on acs.Id=ase.accountservice_id where ase.Id='$id'");
+        $query = $this->db->query("select * from accounts_service_entries where Id='$id'");
         $row = $query->row_array();
         return $row;	
 	 }
 	 public function upload_items($id)
 	 {
-        $query = $this->db->query("select ase.*, acs.Name,acs.Type from accounts_service_entries as ase left join accounts_service as acs on acs.Id=ase.accountservice_id where ase.accountservice_id='$id'");
+        $query = $this->db->query("select * from accountserviceuploadedfiles where accountservice_id='$id'");
         $row = $query->result_array();
         return $row;	
 	 }
