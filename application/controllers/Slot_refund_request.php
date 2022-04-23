@@ -221,7 +221,7 @@ class Slot_refund_request extends CI_Controller {
 	    		$data['list'][$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
 				$data['list'][$key]['coach_id'] = $this->transaction->getCoachDetail($value['coach_id']);
 	   		}
-			$this->load->view('slotRefund/list_', $data);
+			$this->load->view('slotRefund/list', $data);
 		}else{
 			$this->session->set_flashdata('error', 'You do not have permission to access.');
 			redirect('/dashboard');
