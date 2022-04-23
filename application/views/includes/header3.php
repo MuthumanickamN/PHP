@@ -693,7 +693,7 @@
           <?php //echo "<pre>"; print_r($menu_model); die; ?>
 
 <?php if($role == 'parent') { ?>
-  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Court Booking</span></a>
+  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fas fa-running"></i><span data-i18n="UI">Court Booking</span></a>
     <ul class="dropdown-menu">
       
         
