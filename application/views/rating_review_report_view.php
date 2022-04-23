@@ -118,6 +118,10 @@
 		{
 			height:34px;
 		}
+		.img-responsive{
+			position: relative;
+			left: 25%;
+		}
     </style>		
        <div class="content-body"><!-- Zero configuration table -->
 <section id="configuration">

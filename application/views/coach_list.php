@@ -38,6 +38,9 @@
     }
 	.coach-btn{
 		display:flex;
+		position: relative;
+    top: 11px;
+    border: none !important;
 	}
 </style>
 <meta charset="UTF-8" />

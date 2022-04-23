@@ -604,7 +604,7 @@
         <?php //echo "<pre>"; print_r($menu_model); die; ?>
 
 <?php if($role == 'superadmin' || $role == 'admin' ) { ?>
-  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Court Booking</span></a>
+  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fas fa-running"></i><span data-i18n="UI">Court Booking</span></a>
     <ul class="dropdown-menu">
       
           <?php /*if($role == 'superadmin'|| $role == 'admin') {?>
@@ -714,7 +714,7 @@
 <?php }/**/ ?>
 
 <?php if($role == 'superadmin' || $role == 'admin') { ?>
-  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Accounts</span></a>
+  <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fas fa-donate"></i><span data-i18n="UI">Accounts</span></a>
     <ul class="dropdown-menu">
       
         
@@ -738,8 +738,8 @@
 <ul class="nav navbar-nav"  id="main-menu-navigation" data-menu="menu-navigation">
 	<li class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Reports</span></a>
 		<ul class="dropdown-menu">
-			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Couch Roster</span></a></li> 
-			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/coach_profile_view' ?>"><span data-i18n="Booking">Couch Profile list</span></a></li> 
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Coach Roster</span></a></li> 
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/coach_profile_view' ?>"><span data-i18n="Booking">Coach Profile list</span></a></li> 
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Rating/rating_review_report' ?>"><span data-i18n="Booking">Rating & Review Report</span></a></li> 
 		</ul>
 	</li>
@@ -747,7 +747,7 @@
 	<ul class="nav navbar-nav"   id="main-menu-navigation" data-menu="menu-navigation">
 	<li class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">User</span></a>
 		<ul class="dropdown-menu">
-			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Head Couch</span></a></li> 
+			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Head Coach</span></a></li> 
 		</ul>
 		</li>
 	</ul>

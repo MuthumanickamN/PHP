@@ -36,6 +36,7 @@
         background-color: white;
 
     }
+	
 </style>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -117,6 +118,10 @@
 		.div_class
 		{
 			height:34px;
+		}
+		.img-responsive{
+			position: relative;
+			left: 25%;
 		}
     </style>		
        <div class="content-body"><!-- Zero configuration table -->

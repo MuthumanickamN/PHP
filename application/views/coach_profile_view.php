@@ -103,7 +103,7 @@
                                 <thead>
                                     <tr>
                                             <th style="text-align:center">#</th>
-                                            <th style="text-align:center"><?php echo ucfirst($from);?>-ID</th>
+                                            <th style="text-align:center"><?php echo ucfirst($from);?>ID</th>
                                             <th style="text-align:center">Name</th>
                                             <th style="text-align:center">Email</th>
                                             <th style="text-align:center">Role</th>

@@ -157,7 +157,7 @@ function ChangePassword(id){
         <td style="text-align: center"><?php echo $coach['sign_in_count']; ?></td>
         <td style="text-align: center;"><?php if($coach['last_sign_in_at']) { ?><span style="display:none;"><?php echo strtotime($coach['last_sign_in_at']);?></span><?php  echo $coach['last_sign_in_at'];  } ?></td>
         <td style="text-align: center"><?php echo $statusVal; ?></td>
-        <td align="center" style="display:flex"><a type="button" style="color:white;text-decoration:none" onClick="view_admin(<?php echo $coach['admin_id'];?>, '<?php echo $from;?>' )" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View">
+        <td align="center" style="display:flex;position:relative;top:5px;border:none"><a type="button" style="color:white;text-decoration:none" onClick="view_admin(<?php echo $coach['admin_id'];?>, '<?php echo $from;?>' )" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View">
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
         
         <?php if($from=='superadmin') { ?>

@@ -3095,6 +3095,9 @@ bottom:1px;
 }
 .label {
     text-align: left !important;
+	font-family: initial;
+    line-height: 0.5px !important;
+    color: black !important;
 }
 .del_payment {
     height: 33px;
@@ -3104,4 +3107,9 @@ tr.odd, tr.even{
 }
 input#check1 {
     position: relative !important;
+}
+form#add-school-credit-form {
+    font-family: inherit !important;
+    color: black !important;
+    font-weight: 500 !important;
 }
