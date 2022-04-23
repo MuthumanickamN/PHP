@@ -386,6 +386,7 @@ public function add_slot_booking(){
    
   $postData4=$query4->row_array();
   $level_id=$postData4['level_id'];
+  if($level_id == ''){$level_id=1;}
   $discount_name=$postData4['discount_name'];
   $discount_percentage=$postData4['discount_percentage'];
   $discount_applicable=$postData4['discount_applicable'];
@@ -442,15 +443,22 @@ public function add_slot_booking(){
     {
        $fees=100.00;  
     }
-
-        $as_sql="SELECT * FROM contract_details where activity_selection_id='$activityselection_id' and status=1 and active_contract=1";
-        $as_row = $this->db->query($as_sql);
-        $as_rows = $as_row->num_rows();
-        if($as_rows > 0)
+        $sql_as = "select * from activity_selections where student_id=$sid and activity_id=$activity_id";
+        $query_as = $this->db->query($sql_as);
+        if($query_as->num_rows() > 0)
         {
-            $fees=1.00;
-
+            $as_id = $query_as->row()->id; 
+            $as_sql="SELECT * FROM contract_details where activity_selection_id='$as_id' and status=1 and active_contract=1";
+            //echo $as_sql;die;
+            $as_row = $this->db->query($as_sql);
+            $as_rows = $as_row->num_rows();
+            if($as_rows > 0)
+            {
+                $fees=1.00;
+    
+            }
         }
+        
     //echo $fees_price.' '.$fees;die;
     $status='Pending';
     $checkexists = $this->db->query('select * from tmp_booking where parent_id ="'.$parent_id.'" and  student_id ="'.$sid.'" and activity_id ="'.$activity_id.'" and level_id ="'.$level_id.'" and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and to_time="'.$to.'"');
@@ -531,6 +539,7 @@ public function add_slot_booking(){
       
       $postData4=$query4->row_array();
       $level_id=$postData4['level_id'];
+      if($level_id == ''){$level_id=1;}
       $discount_name=$postData4['discount_name'];
       $discount_percentage=$postData4['discount_percentage'];
       $discount_applicable=$postData4['discount_applicable'];
@@ -580,6 +589,23 @@ public function add_slot_booking(){
             {
                $fees=100.00;  
             }
+            
+            $sql_as = "select * from activity_selections where student_id=$sid and activity_id=$activity_id";
+            $query_as = $this->db->query($sql_as);
+            if($query_as->num_rows() > 0)
+            {
+                $as_id = $query_as->row()->id; 
+                $as_sql="SELECT * FROM contract_details where activity_selection_id='$as_id' and status=1 and active_contract=1";
+                //echo $as_sql;die;
+                $as_row = $this->db->query($as_sql);
+                $as_rows = $as_row->num_rows();
+                if($as_rows > 0)
+                {
+                    $fees=1.00;
+        
+                }
+            }
+            
             $sql2="UPDATE tmp_booking set amount='".$fees."' where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates')";
             $update=$this->db->query($sql2);
             

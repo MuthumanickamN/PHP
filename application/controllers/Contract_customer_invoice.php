@@ -8,6 +8,7 @@ class Contract_customer_invoice extends CI_Controller
         $this->load->model('Default_Model', 'default');
         $this->load->model('School_profile_report_Model', 'school');
         $this->load->model('Daily_Transaction_Model', 'transaction');
+		$this->load->model('Invoice_Model', 'invoice_model');
     }
     public function index(){
         $data['title'] ='Contract Customer Invoice';
@@ -49,7 +50,7 @@ class Contract_customer_invoice extends CI_Controller
                 $creditsDetailsData1 = $creditsDetails1->row_array();
                 $wallet_amount = $creditsDetailsData1['balance_credits'];
                 $gross = $row['monthly_amount'];
-                $vat_amount = (sprintf("%2f", ($row['monthly_amount']/5)*100)); 
+                $vat_amount = (sprintf("%2f", ($row['monthly_amount']*5)/100)); 
                 $net_amount = sprintf("%2f", $gross+$vat_amount);
                 $balance_credits = sprintf("%2f",$wallet_amount - $net_amount);
                 
@@ -98,7 +99,7 @@ class Contract_customer_invoice extends CI_Controller
                 $this->db->insert('wallet_transactions', $walletArray); 
                 $wallet_transaction_id = $this->db->insert_id();
                 $this->send_email_wt($walletArray, $resultp['parent_code'], $wallet_amount, $balance_credits, $resultp, $student_name);
-                $this->load->invoice_model->send_email_invoice($wallet_transaction_id, "Contract");
+                $this->invoice_model->send_email_invoice($wallet_transaction_id, "Contract");
                 $this->db->where('id', $contract_id);
                 $this->db->update('contract_details', array('active_contract'=>1, last_contract_amount_paid_month_year=>date('M Y')) );
 

@@ -199,10 +199,9 @@ function updateRequest(){
         type:'POST',
         url:baseurl+'Contract_customer_invoice/invoice',
         data:formData,
-        dataType:'json',    
-             
+        dataType:'text',    
         success: function (json) {
-        $(".errorMsg").html('');
+        /*$(".errorMsg").html('');
           if(json['error']){
             for (i in json['error']) {
             if(i == 'error_msg'){
@@ -218,10 +217,13 @@ function updateRequest(){
                 });
                   location.reload();
               }
-          }
+          }*/
+          
+           location.reload();
         },
         error: function (xhr, ajaxOptions, thrownError) {
           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+           location.reload();
         }          
         });
     }
