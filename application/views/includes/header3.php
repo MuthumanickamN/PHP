@@ -736,7 +736,7 @@
 
 <?php if( $role == 'coach') { ?>
 <ul class="nav navbar-nav"  id="main-menu-navigation" data-menu="menu-navigation">
-	<li class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-user"></i><span data-i18n="UI">Reports</span></a>
+	<li class="dropdown nav-item coach-menu" data-menu="dropdown"><a class="dropdown-toggle nav-link coach_menu" href="#" data-toggle="dropdown"><i class="fa fa-list"></i><span data-i18n="UI">Reports</span></a>
 		<ul class="dropdown-menu">
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/head_coach_single_view' ?>"><span data-i18n="Booking">Coach Roster</span></a></li> 
 			<li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Coach/coach_profile_view' ?>"><span data-i18n="Booking">Coach Profile list</span></a></li> 
