@@ -146,7 +146,6 @@
 			$coach_id = "";
 		}
 		
-		
 	}
 	
 	
@@ -160,8 +159,13 @@
 					$four_star = 0;
 					$five_star = 0;
 					$review_count = 0;
+					$overall_star_count = 0;
+					$count = 1;
+					
+					$overall_count = 0;
 					foreach($review_detail as $values)
 					{
+						
 						if($values['star_count']==1)
 						{
 							$one_star=$one_star+1;
@@ -184,7 +188,17 @@
 						}
 						
 						$review_count = $review_count+1;
+						
+						$overall_star_count += $values['star_count'];
+						
+								
+						$overall_count = $count++;
+					}
 					
+					if($overall_star_count !=0)
+					{
+						$coach_review = $overall_star_count/$overall_count;
+						$round_value_review = round($coach_review);
 					}
 			  ?>
 			  
@@ -269,15 +283,53 @@
 			<h3>Coach Star Rating</h3>
 
 			<!-- <div class="stars" id="star_ratings" data-rating=""> -->
+			
+			<?php if($round_value_review==1){ ?>
 			<span class="star rated" data-star="">&nbsp;</span>
-
 			<span class="star " data-star="">&nbsp;</span>
 			<span class="star " data-star="">&nbsp;</span>
 			<span class="star " data-star="">&nbsp;</span>
 			<span class="star " data-star="">&nbsp;</span>
+			<?php } ?>	
+			
+			<?php if($round_value_review==2){ ?>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
+			<?php } ?>
+			
+			<?php if($round_value_review==3){ ?>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
+			<?php } ?>
+			
+			
+			<?php if($round_value_review==4){ ?>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star " data-star="">&nbsp;</span>
+			<?php } ?>
+			
+			
+			<?php if($round_value_review==5){ ?>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<span class="star rated" data-star="">&nbsp;</span>
+			<?php } ?>
+			
+			
 			<!-- </div> -->
 			<br>
-			<p><strong> 1.0 Out of 5 Stars</strong></p>
+			<p><strong> <?php echo $round_value_review ?>.0 Out of 5 Stars</strong></p>
 			<!-- <br> -->
 			<br>
 			<a href="<?php echo base_url() ?>/Rating/rating_review_detail/<?php echo $coach_id; ?>" style="color:white;text-decoration:none" type="button" class="btn btn-success rating_review_submit" id="rating_review_submit" data-id=""><i class="fa fa-pencil-square-o" aria-hidden="true"> View</i></a>

@@ -176,10 +176,9 @@
 		$i=1;
 		$review_count = 0;
 		$star_count = "0";
-		$overall_star_count = 0;
-	
 		foreach($review_detail as $values)
 		{
+
 			$student_name = $values['student_name'];
 			$parent_name = $values['parent_name'];
 			$parent_mobile = $values['parent_mobile'];
