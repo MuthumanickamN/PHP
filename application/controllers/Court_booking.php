@@ -517,7 +517,7 @@ class Court_booking extends CI_Controller{
                 'vat_percentage' => 5,
                 'vat_value' => $vat_val1,
                 'net_amount' => $tot_amount,
-                'debit' => $tot_amount,
+                'credit' => $tot_amount,
                 'invoice' => '',
                 'invoice_id' =>'',
                 'slot_booking'=>$booking_id,
