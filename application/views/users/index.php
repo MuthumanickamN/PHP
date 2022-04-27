@@ -143,6 +143,9 @@ $role = strtolower($this->session->userdata['role']);
                     <th>VAT Amount</th>
                     <th>Credit (AED)</th>
                     <th>Debit (AED)</th>
+                    <th>Balance</th>
+
+                    
                 </tr>
             </thead>
             <tbody>

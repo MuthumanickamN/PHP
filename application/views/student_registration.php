@@ -873,6 +873,8 @@ function parent_details(){
                     <th>VAT Amount</th>
                     <th>Credit (AED)</th>
                     <th>Debit (AED)</th>
+                    <th>Balance</th>
+
                 </tr>
             </thead>
             <tbody>

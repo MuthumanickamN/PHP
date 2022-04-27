@@ -465,7 +465,10 @@ class Users extends CI_Controller {
 	        $output .="<td>";
 	        $output .=$value['debit'];
 	        $output .="</td>";
-	        
+
+            $output .="<td>";
+	        $output .=$value['balance_credit'];
+	        $output .="</td>";	        
 	        
 	        $output .="</tr>";
 	        

@@ -237,10 +237,13 @@
                           
                           <span class="errorMsg"></span>
                         </div>
+
+                        <div class="contract" style="<?php if(isset($contract) && ($contract=="Yes" || $contract=="yes" )){ echo 'display:block;';}else{ echo 'display:none;'; } ?>">
                         <div class="col-md-3 contract_form" style="display:block;">
                           <button type="button" id="contractBtn" class="btn btn-primary" onClick="$('#contractModal').show();">Add Contract Details</button>
                         </div>
-                      </div>   
+                      </div>
+                          </div>   
                       
                       
                       
@@ -494,12 +497,12 @@
                 <label><strong>Contract Year</strong></label>
               </div>
             <div class="col-md-6"> 
-            
-               <input id="contract_year" type="radio" value="1" name="contract_year" checked/>
+
+              <input id="contract_year" type="radio" value="1"name="contract_year" >
               <label style="margin-left: 10px; margin-right: 10px">One</label>
-              <input id="contract_year" type="radio" value="2" name="contract_year" />
+              <input id="contract_year" type="radio" value="2" name="contract_year" >
               <label style="margin-left: 10px; margin-right: 10px">Two</label>
-               <input id="contract_year" type="radio" value="3" name="contract_year" />
+              <input id="contract_year" type="radio" value="3" name="contract_year" >
               <label style="margin-left: 10px; margin-right: 10px">Three</label>
               <span class="errorMsg"></span>
               
@@ -789,7 +792,7 @@ function createContractPayment(){
  }));
  
  
- $('input[type=radio][name=contract_year]').change(function() {
+ $('input[type=radio][name=contract_year]').click(function() {
     //alert(this.value);
     var val = parseInt(this.value);
     var vat_perc = $('#vat_percentage').val();
@@ -1027,6 +1030,15 @@ payable_amount();
  });
  
 
+});
+
+$('input[type=radio][name=contract]').change(function() {
+    if (this.value == 'Yes') {
+       $('.contract').css('display','block');
+    }
+    else if (this.value == 'No') {
+        $('.contract').css('display','none');
+    }
 });
   
 </script>

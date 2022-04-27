@@ -860,6 +860,10 @@ function file_uploads($FILES,$filepath,$insert_id)
 	        $output .="<td>";
 	        $output .=$value['debit'];
 	        $output .="</td>";
+
+			$output .="<td>";
+	        $output .=$value['balance_credit'];
+	        $output .="</td>";
 	        
 	        
 	        $output .="</tr>";
