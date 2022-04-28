@@ -89,6 +89,7 @@ class Contract_customer_invoice extends CI_Controller
                     'slot_booking'=>'',
                     'student_id'=> $student_id,
                     'parent_id'=> $parent_id,
+					'balance_credit'=>$balance_credits,
                     'parent_name'=> $resultp['parent_name'],
                     'parent_mobile'=> $resultp['mobile_no'],
                     'parent_email_id'=> $resultp['email_id'],

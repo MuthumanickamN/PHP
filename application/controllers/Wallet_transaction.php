@@ -137,6 +137,10 @@ class Wallet_transaction extends CI_Controller {
 						'balance_credits' =>$wallet_Amount,
 						'total_credits' =>$wallet_Amount,
 					);
+						$data1 = array('balance_credit' => $wallet_Amount);
+
+						$this->db->where('id', $wallet_transaction_id);
+						$this->db->update('wallet_transactions', $data1);
 					$this->db->where('parent_id', $data['parent_id']); 
 					$this->db->update('prepaid_credits', $walletArray); 
 

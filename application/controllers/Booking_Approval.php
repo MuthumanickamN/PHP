@@ -460,6 +460,7 @@ class Booking_Approval extends CI_Controller{
 			'slot_booking'=>$booking_id,
 			'student_id'=> NULL,
 			'parent_id'=> $row['parent_id'],
+			'balance_credit'=>$balance_credits,
 			'parent_name'=> $row['parent_name'],
 			'parent_mobile'=> $row['mobile_no'],
 			'parent_email_id'=> $row['email_id'],

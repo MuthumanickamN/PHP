@@ -118,7 +118,7 @@ class Prepaid_credits extends CI_Controller {
     	            'bank'=> $bank,
     	            'cheque_number'=> $cheque_no,
     	            'cheque_date'=> $cheque_date,
-    
+					'balance_credit'=>$balanceamount,
     	            'description'=> 'Prepaid credits',
     	            'created_at' => date('Y-m-d H:i:s'),
     	        );

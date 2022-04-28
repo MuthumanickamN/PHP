@@ -83,6 +83,7 @@ class Registration_fees extends CI_Controller {
 		            'payfee_id' =>$insert_id,
 		            'student_id'=> $student_id,
 		            'parent_id'=> $parent_id,
+					'balance_credit'=>$balance_credits,
 		            'parent_name'=> $parent_name,
 		            'parent_mobile'=> $parent_contact_no,
 		            //'parent_email_id'=> $data['parent_email'],
