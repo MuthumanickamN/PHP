@@ -126,5 +126,10 @@ autoclose: true
 
 });
 </script>
+<style>
+th {
+	text-align:center;
+}
+</style>
 </body>
 </html>

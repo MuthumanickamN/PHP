@@ -104,13 +104,16 @@ $("form[name='recharge_history']").validate({
 			"columnDefs": [ {
           "targets": 'no-sort',
           "orderable": false,
-          } ],
+		  
+          },{ "width": "10px", "targets": 0 }],		 
+            "fixedColumns": true,
 			"paging": true,
 			"lengthChange": true,
 			"searching": true,
 			"ordering": true,
 			"info": true,
-			"autoWidth": true
+			    "autoWidth": false,
+
 			});
 			 
 			 
