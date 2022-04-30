@@ -723,6 +723,8 @@
 
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'AccountService/all_list' ?>"><span data-i18n="Reports">Accounts Services</span></a></li>
 
+        <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'AccountServiceType' ?>"><span data-i18n="Reports">Accounts Service Type</span></a></li>
+
 	</ul>
   </li>
 <?php }/**/ ?>
