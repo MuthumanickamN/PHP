@@ -35,6 +35,12 @@
 	.thead{
 		display:none;
 		}
+		.terms_conditions{
+			color:blue !important;
+		}
+		.form-check-label a {
+		color: blue;
+		}
 </style>
 <div id="dialog" style="display: none; left:40%; position: fixed; background-color:#f4f5fa;
             height: 50px;line-height: 45px; width: 300px;" class="row">
@@ -225,7 +231,7 @@
     	<div class="form-check tc_check" style="display:block;">
     		<input type="checkbox" name="tc_chkbox" id="tc_chkbox">
     		<label class="form-check-label">
-    		I have read and agreed to the <span><a href="#"> Terms & Conditions </a></span> as mentioned in the link
+    		I have read and agreed to the <a href="<?php echo FCPATH;?>assets/TERMS&Conditions-Prime_Star_Sports_Services.pdf" target="_blank"> Terms & Conditions </a> as mentioned in the link
     		</label>
 		</div>
 		<div>
