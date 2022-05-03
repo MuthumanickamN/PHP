@@ -26,7 +26,7 @@ class Reports_Model extends CI_Model{
 	
 	public function get_transaction_search_history($from_date,$to_date,$user){
 
-		$this->db->select('bs.fromdate, bs.todate, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bs.gross_amount as totamt, bs.amount as net_total, bs.amount as paidamt, bs.discount_amount, spo.sportsname, loc.location, cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
+		$this->db->select('bs.fromdate, bs.todate, bs.cancelled_on, bs.booking_fromtime, bs.booking_totime, dl.dayname, bok.id, bok.booking_no, bok.bookedon, bok.btype, bs.gross_amount as totamt, bs.amount as net_total, bs.amount as paidamt, bs.discount_amount, spo.sportsname, loc.location, cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
 		$this->db->from('booking as bok');
 		
 		$this->db->join('parent as cus','cus.parent_id = bok.customerid','left');
@@ -53,7 +53,7 @@ if($user != "" && $user != "All")
 	$this->db->where("cus.parent_id = $user");
 }	
 		$query = $this->db->get();
-		//echo $this->db->last_query();exit;
+		//echo $this->db->last_query();die;
 		
 		
 		if($query->num_rows() > 0)
@@ -100,6 +100,7 @@ if($user != "" && $user != "All")
 	$this->db->where("cus.parent_id = $user");
 }
 		$this->db->where("bok.bstatus = 1");
+		$this->db->where("bs.cancelled = 0");
 		
 		$query = $this->db->get();
 		

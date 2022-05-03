@@ -112,6 +112,7 @@ if(!$this->session->userdata('id')){
 						
 						$output .= "<td>". $booking_fromtime ."</td>";
 						$output .= "<td>". $booking_totime ."</td>";
+						$output .= "<td>". $get_list['cancelled_on'] ."</td>";
 						$output .= "<td>". $get_list['location'] ."</td>";
 						$output .= "<td>". $booking_status ."</td>";
 						$output .= "<td>". $get_list['booking_no'] ."</td>";
@@ -141,6 +142,7 @@ public function get_booking_search_history(){
 		$from_date1 = ($from_date != "") ? change_date_format($from_date): "";
 		$to_date1 = ($to_date != "") ? change_date_format($to_date): "";
 		$user = ($this->input->post('user'))?$this->input->post('user') : "";
+		
 		$booking_details = $this->reports_model->get_booking_search_history($from_date1,$to_date1,$user);
 		$output ='';
 		if($booking_details)

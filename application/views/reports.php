@@ -94,6 +94,7 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 						<th>Days</th>
 						<th>From Time</th>
 						<th>To Time</th>
+						<th>Cancellation_date</th> 
 						<th>Location</th>
 						<th>Type</th>
 						<th>Booking ID</th>
