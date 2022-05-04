@@ -51,17 +51,29 @@ h5
                     $('#dialog').fadeIn('slow').delay(1000).fadeOut('slow');
                 });
  </script>
+ 
     
       <div id="active_admin_content" class="without_sidebar">
         <div id="main_content_wrapper">
           <div id="main_content">
+            
 <div class="marquee-bg">
 <marquee behavior="scroll" direction="left">
-  <span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $scroll_Text['message']; ?>
-  </span>
+ <span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php// echo $scroll_Text['message']; ?>
+   
+<?php 
+  foreach($scroll_Text as $key => $row)
+    {
+     
+      echo $row['message'];
+      
+    }
+?>
+  </span> 
 </marquee>
 </div>
+
  <div class="app-content content">
       <div class="content-overlay"></div>
       <div class="content-wrapper">

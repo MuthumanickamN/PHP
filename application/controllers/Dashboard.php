@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller {
 	    
 		$data['title'] = 'Prime Star Sports Academy LLC';
 		$query = $this->db->query("select * from scroll_text_messages");
-		$data['scroll_Text'] = $query->row_array();
+		$data['scroll_Text'] = $query->result_array();
 		$event = $this->db->query("select * from events where event_date >= '".date('Y-m-d')."' order by event_date ASC ");
 		$data['eventList'] = $event->result_array();
 		$holidays = $this->db->query("select * from set_academy_holidays order by select_date ASC ");
