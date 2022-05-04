@@ -165,7 +165,7 @@
 
         <td style="text-align: center"></td>
         <td style="text-align: center"><?php echo $coach['code']; ?></td>
-        <td style="text-align: center"><?php echo $coach['user_name']; ?></td>
+        <td style="text-align: center"><?php echo $coach['coach_name']; ?></td>
         <td style="text-align: center"><?php echo $coach['email']; ?></td>
         <td style="text-align: center"><?php echo Ucfirst($coach['role']); ?></td>
         <td style="text-align: center"><?php echo $coach['mobile']; ?></td>

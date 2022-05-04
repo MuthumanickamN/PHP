@@ -31,7 +31,7 @@ class Coach extends CI_Controller {
 	public function list_($coach='coach'){
     	$data['title'] ="Coach List";
     	$data['from'] =$coach;
-    	$query = $this->db->query("select u.*, c.coach_id,c.activity_id,c.location_id from users u 
+    	$query = $this->db->query("select c.coach_name,u.*, c.coach_id,c.activity_id,c.location_id from users u 
     	left join coach c on c.code = u.code
     	where u.role='$coach' and u.deleted !=1 ");
     	$data['coachList'] = $query->result_array();
