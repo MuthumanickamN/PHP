@@ -1,4 +1,4 @@
-<?php require_once 'config.php'; ?> <?php $this->load->view('includes/header3'); ?>
+ <?php $this->load->view('includes/header3'); ?>
  <html><body>
  <head>
   <title>Location</title>
@@ -128,7 +128,7 @@
             <div class="form-group lg">
                         <div class="col-md-3 control text-left"><strong>Location</strong>*</div>
                         <div class="col-md-3 control text-left">
-                        <input type="text" id="location" name="location" required="" oninput="allLetter(document.form.location); limit()" class="form-control" value="<?php echo $location; ?>">
+                        <input type="text" id="location" name="location" required=""  class="form-control" value="<?php echo $location; ?>">
                         </div>
                     </div>
                     <div class="form-group lg">

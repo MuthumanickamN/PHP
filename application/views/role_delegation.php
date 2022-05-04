@@ -193,7 +193,21 @@
                 }
             });
         });
-
+		$(document).on("click", ".checkall", function(){
+    $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+});
+$(document).on("click", ".check", function(){
+	var cnt1 = $(this).closest('table').find('td input:checkbox').length;
+	var cnt = $(this).closest('table').find('td input:checkbox:checked').length;
+if(cnt1==cnt) 
+{
+    $(this).closest('table').find('.checkall').prop('checked', this.checked);
+}
+else
+{
+    $(this).closest('table').find('.checkall').prop('checked', false);
+}
+});
     });
 </script>
 <?php

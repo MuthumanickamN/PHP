@@ -1526,7 +1526,7 @@ public function add_slot_booking(){
   }
   
   
-   public function swap_slot_list($activity_id='', $stud_id='', $activity_selection_id){
+   public function swap_slot_list($activity_id='', $stud_id='', $activity_selection_id=''){
     $data['title'] = 'Upcoming Slots to Swap/Refund';
     $from_date = date('Y-m-d');
     $activity = $activity_id;

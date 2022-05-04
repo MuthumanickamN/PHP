@@ -30,6 +30,7 @@ class MPermissions_Model extends CI_Model {
         $role = (!empty($role)) ? $role : strtolower($this->session->userdata['role']); 
         $this->db->where($role, 1);  
         $query = $this->db->get('module_permission');  
+		//echo $this->db->last_query();die;
         //SELECT * FROM users WHERE username = '$username' AND password = '$password'  
         if($query->num_rows() > 0)  
         {  
