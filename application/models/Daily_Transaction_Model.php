@@ -66,6 +66,7 @@ class Daily_Transaction_Model extends CI_Model {
         $query = $this->db->get();
        return $query->row()->game;
     } 
+
     public function getLocationDetail($id){
         $this->db->select(array('*'));
         $this->db->from('locations ');          
@@ -73,6 +74,7 @@ class Daily_Transaction_Model extends CI_Model {
         $query = $this->db->get();
        return $query->row()->location;
     } 
+
     public function getCoachDetail($id){
         $this->db->select(array('*'));
         $this->db->from('coach ');  
@@ -81,6 +83,7 @@ class Daily_Transaction_Model extends CI_Model {
         $query = $this->db->get();
        return $query->row()->coach_name;
     } 
+    
     public function getAlltransactionList(){
         $this->db->select('*');
         $this->db->from('daily_transactions');  

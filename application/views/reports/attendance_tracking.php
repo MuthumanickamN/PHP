@@ -149,7 +149,7 @@
 									
                                     <td><?php echo date('d-m-Y', strtotime($attendance['booked_date']));?></td>
                                     <td><?php echo $attendance['name'];?></td>
-                                    <td><?php echo 'PSA00'.$attendance['parent_id'];?></td>
+                                    <td><?php echo $attendance['parent_code'];?></td>
                                     <td><?php echo $attendance['activity_id'];?></td>
                                     <td><?php echo $attendance['location_id'];?></td>
                                     <td><?php echo $attendance['level_id'];?></td>

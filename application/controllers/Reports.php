@@ -305,7 +305,7 @@ class Reports extends CI_Controller
 									   book.activity_id,
 									   book.level_id,
 									   reg.name,
-									   reg.sid,
+									   pt.parent_code,
 									   slot.location_id,
 									   slot.coach_id,
 									   slot.lane_court_id
@@ -314,6 +314,8 @@ class Reports extends CI_Controller
 										ON book.id = bs.booking_id
 									LEFT JOIN registrations as reg
 										ON book.student_id = reg.id
+									LEFT JOIN parent as pt
+										ON book.parent_id = pt.parent_id
 									LEFT JOIN slot_selections as slot
 										ON book.activityselection_id = slot.id ".$where);
 										
@@ -637,8 +639,9 @@ class Reports extends CI_Controller
 			$arrayList[$key]['parent_code']=($value['parent_id'] != 0)?$this->transaction->getParentCode($value['parent_id']):'-';
 		}
 		$data['arrayList'] = $arrayList;
+	    $userid =  $this->session->userdata('userid');
 
-		$userWhere = "where u.status = 'Active' and u.role in ('superadmin','admin')";
+		$userWhere = "where u.status = 'Active' and u.user_id=$userid";
 		$userList = $this->db->query("select u.user_id, u.user_name, u.role, u.email from users as u  
  								  ".$userWhere." order by u.user_id");
 		$userListArr = $userList->result_array();
