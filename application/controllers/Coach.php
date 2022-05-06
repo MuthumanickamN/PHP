@@ -31,9 +31,9 @@ class Coach extends CI_Controller {
 	public function list_($coach='coach'){
     	$data['title'] ="Coach List";
     	$data['from'] =$coach;
-    	$query = $this->db->query("select c.coach_name,u.*, c.coach_id,c.activity_id,c.location_id from users u 
+    	$query = $this->db->query(" select c.coach_name, c.role, u.`user_id`, u.`code`, u.`user_name`, u.`email`, u.`encrypted_password`, u.`country_id`, u.`mobile`, u.`date_of_birth`, u.`gender`, u.`emirates_id`, u.`status`, u.`reset_password_token`, u.`reset_password_sent_at`, u.`remember_created_at`, u.`sign_in_count`, u.`current_sign_in_at`, u.`last_sign_in_at`, u.`current_sign_in_ip`, u.`last_sign_in_ip`, u.`confirmation_token`, u.`confirmed_at`, u.`confirmation_sent_at`, u.`unconfirmed_email`, u.`failed_attempts`, u.`unlock_token`, u.`locked_at`, u.`created_at`, u.`updated_at`, u.`user_image_file_name`, u.`user_image_content_type`, u.`user_image_file_size`, u.`user_image_updated_at`, u.`passport_image_file_name`, u.`passport_image_content_type`, u.`passport_image_file_size`, u.`passport_image_updated_at`, u.`emirates_image_file_name`, u.`emirates_image_content_type`, u.`emirates_image_file_size`, u.`emirates_image_updated_at`, u.`deleted`, c.coach_id, c.activity_id, c.location_id from users u 
     	left join coach c on c.code = u.code
-    	where u.role='$coach' and u.deleted !=1 ");
+    	where c.role='$coach' and u.deleted !=1 ");
     	$data['coachList'] = $query->result_array();
     	foreach ($data['coachList'] as $key => $value) {
     		$data['coachList'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
@@ -44,7 +44,6 @@ class Coach extends CI_Controller {
 	
 	public function coach_profile_view()
 	{
-		
 		$role = $_SESSION['role'];
 		$code = $_SESSION['code'];
 
