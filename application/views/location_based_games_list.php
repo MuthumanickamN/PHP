@@ -1,4 +1,4 @@
-<?php require_once 'config.php'; ?> <?php $this->load->view('includes/header3'); ?>
+ <?php $this->load->view('includes/header3'); ?>
  <html>
  <body>
  <head>

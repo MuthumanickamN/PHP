@@ -1602,15 +1602,20 @@ class Court_booking extends CI_Controller{
         $data['date'] = ($this->input->post('date') !='') ? change_date_format($this->input->post('date')) : '';
         $data['day'] = $this->get_dayid(date('l', strtotime($data['date'])));
         $data['date_info'] = ($this->input->post('date_info') !='') ? $this->input->post('date_info') : '';
-        $get_details = $this->court_booking_model->show_booking_timeslot($data);
-		//print_r($get_details);die;
-        $activity_id = $data['sid']; 
+		
+		$activity_id = $data['sid']; 
         $location_id = $data['lid']; 
         $day_value = $data['day'];
         $parent_id = $data['parent_id'];
 		$dates= $data['date'];
 		$date_info = $data['date_info'];
+		//print_r($data);die;
+		$btn = '<button class="btn btn-info refresh_btn" style="cursor:pointer;" onclick=set_form("'.$activity_id.'","'.$location_id.'","'.$parent_id.'","'.$day_value.'","'.$dates.'","'.$date_info.'")>Refresh</button>';
+		//echo "onclick=set_form($activity_id,$location_id,$parent_id,$day_value,$dates,$date_info)";die;
 		
+        $get_details = $this->court_booking_model->show_booking_timeslot($data);
+		//print_r($get_details);die;
+        
         $new_output = '';
         if($get_details)
         {
@@ -1644,7 +1649,7 @@ class Court_booking extends CI_Controller{
         //print_r($time_slot_set);die;
         $new_output .= '<thead>';
 		$new_output .= '<tr>';
-        $new_output .='<th><button class="btn btn-info refresh_btn" style=cursor:pointer onclick=set_form("'.$activity_id.'","'.$location_id.'","'.$parent_id.'","'.$day_value.'","'.$dates.'","'.$date_info.'")>Refresh</button></th>';
+        $new_output .='<th>'.$btn.'</th>';
        // $new_output .= '<th><button type="button" id="show_cart" class="btn btn-success" data-dismiss="modal"> <i class="fa fa-shopping-cart" aria-hidden="true">Gotocart</button></th>';
 		 $new_output .= '</tr>';
         $new_output .= '<tr>';

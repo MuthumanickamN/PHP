@@ -1415,7 +1415,12 @@ class Booking_court extends CI_Controller{
                     $output .= '</tr>';
             $output .= '</tbody>';
             $output .= '</table>';
-            $output .= '</div>';
+            $output .= '<div class="row">
+    <div class="col-md-12">
+       <p>Refund for any reason not possible as per agreed terms and conditions. Its solely management decision to approve and reject request</p>
+				</div>
+				</div></div>';
+			
             $output .= '<div class="col-sm-12 col-md-12 pad_lef_0 pad_rig_0">';
             $curdate=strtotime(date('Y-m-d'));
             //$mydate=strtotime($booking_details['fromdate']);

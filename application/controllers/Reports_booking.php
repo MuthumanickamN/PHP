@@ -6,7 +6,7 @@ class Reports_booking extends CI_Controller{
         parent::__construct();
         // Load form helper library
         $this->load->helper('form');
-if(!$this->session->userdata('id')){
+		if(!$this->session->userdata('id')){
             redirect('logout');
         }
 		
