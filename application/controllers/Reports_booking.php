@@ -112,7 +112,7 @@ class Reports_booking extends CI_Controller{
 						
 						$output .= "<td>". $booking_fromtime ."</td>";
 						$output .= "<td>". $booking_totime ."</td>";
-						$output .= "<td>". $get_list['cancelled_on'] ."</td>";
+
 						$output .= "<td>". $get_list['location'] ."</td>";
 						$output .= "<td>". $booking_status ."</td>";
 						$output .= "<td>". $get_list['booking_no'] ."</td>";
