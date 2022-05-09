@@ -261,108 +261,120 @@
                          </option><?php }  ?></select>
                         </div>
                     </div>
+					
+					<div class="form-group lg">
+                        <div class="col-md-3 control text-left"><strong>Hour</strong>*</div>
+                        <div class="col-md-3 control text-left"> 
+                          <input id="hour" type="radio" checked required="" data-id="1" value="One" name="hour" <?php if($hour=='One'){ echo 'checked';} ?>/>
+                          <label style="margin-left: 10px; margin-right: 10px" >One</label>
+                          <input id="hour" type="radio"  value="Two" data-id="2" name="hour" <?php if($hour=='Two'){ echo 'checked';} ?>/>
+                          <label style="margin-left: 10px; margin-right: 10px">Two</label>
+                           <input id="hour" type="radio" value="Three" data-id="3" name="hour"  <?php if($hour=='Three'){ echo 'checked';} ?>/>
+                          <label style="margin-left: 10px; margin-right: 10px">Three</label>
+                        </div>
+                      </div>
 
                      <div class="form-group lg">
                         <div class="col-md-3 control text-left"><strong>Slot Time From</strong>*</div>
                         <div class="col-md-3 control text-left">     
 
                          <select class="limitedNumbSelect2"  name="slot_time_from" id="slot_time_from" class="form-control" required=""  >
-                            <option value="12.00 AM" <?php if($slot_from_time=='12.00 AM'){ echo 'selected';} ?> >12:00 AM</option>
-                            <option value="12.15 AM" <?php if($slot_from_time=='12.15 AM'){ echo 'selected';} ?>>12:15 AM</option>
-                            <option value="12.30 AM" <?php if($slot_from_time=='12.30 AM'){ echo 'selected';} ?> >12:30 AM</option>
-                            <option value="12.45 AM" <?php if($slot_from_time=='12.45 AM'){ echo 'selected';} ?>>12:45 AM</option>
-                            <option value="01.00 AM" <?php if($slot_from_time=='01.00 AM'){ echo 'selected';} ?>>01:00 AM</option>
-                            <option value="01.15 AM" <?php if($slot_from_time=='01.15 AM'){ echo 'selected';} ?>>01:15 AM</option>
-                            <option value="01.30 AM" <?php if($slot_from_time=='01.30 AM'){ echo 'selected';} ?>>01:30 AM</option>
-                            <option value="01.45 AM" <?php if($slot_from_time=='01.45 AM'){ echo 'selected';} ?>>01:45 AM</option>
-                            <option value="02.00 AM" <?php if($slot_from_time=='02.00 AM'){ echo 'selected';} ?>>02:00 AM</option>
-                            <option value="02.15 AM" <?php if($slot_from_time=='02.15 AM'){ echo 'selected';} ?>>02:15 AM</option>
-                            <option value="02.30 AM" <?php if($slot_from_time=='02.30 AM'){ echo 'selected';} ?>>02:30 AM</option>
-                            <option value="02.45 AM" <?php if($slot_from_time=='02.45 AM'){ echo 'selected';} ?>>02:45 AM</option>
-                            <option value="03.00 AM" <?php if($slot_from_time=='03.00 AM'){ echo 'selected';} ?>>03:00 AM</option>
-                            <option value="03.15 AM" <?php if($slot_from_time=='03.15 AM'){ echo 'selected';} ?>>03:15 AM</option>
-                            <option value="03.30 AM" <?php if($slot_from_time=='03.30 AM'){ echo 'selected';} ?>>03:30 AM</option>
-                            <option value="03.45 AM" <?php if($slot_from_time=='03.45 AM'){ echo 'selected';} ?>>03:45 AM</option>
-                            <option value="04.00 AM" <?php if($slot_from_time=='04.00 AM'){ echo 'selected';} ?>>04:00 AM</option>
-                            <option value="04.15 AM" <?php if($slot_from_time=='04.15 AM'){ echo 'selected';} ?>>04:15 AM</option>
-                            <option value="04.30 AM" <?php if($slot_from_time=='04.30 AM'){ echo 'selected';} ?>>04:30 AM</option>
-                            <option value="04.45 AM" <?php if($slot_from_time=='04.45 AM'){ echo 'selected';} ?>>04:45 AM</option>
-                            <option value="05.00 AM" <?php if($slot_from_time=='05.00 AM'){ echo 'selected';} ?>>05:00 AM</option>
-                            <option value="05.15 AM" <?php if($slot_from_time=='05.15 AM'){ echo 'selected';} ?>>05:15 AM</option>
-                            <option value="05.30 AM" <?php if($slot_from_time=='05.30 AM'){ echo 'selected';} ?>>05:30 AM</option>
-                            <option value="05.45 AM" <?php if($slot_from_time=='05.45 AM'){ echo 'selected';} ?>>05:45 AM</option>
-                            <option value="06.00 AM" <?php if($slot_from_time=='06.00 AM'){ echo 'selected';} ?>>06:00 AM</option>
-                            <option value="06.15 AM" <?php if($slot_from_time=='06.15 AM'){ echo 'selected';} ?>>06:15 AM</option>
-                            <option value="06.30 AM" <?php if($slot_from_time=='06.30 AM'){ echo 'selected';} ?>>06:30 AM</option>
-                            <option value="06.45 AM" <?php if($slot_from_time=='06.45 AM'){ echo 'selected';} ?>>06:45 AM</option>
-                            <option value="07.00 AM" <?php if($slot_from_time=='07.00 AM'){ echo 'selected';} ?>>07:00 AM</option>
-                            <option value="07.15 AM" <?php if($slot_from_time=='07.15 AM'){ echo 'selected';} ?>>07:15 AM</option>
-                            <option value="07.30 AM" <?php if($slot_from_time=='07.30 AM'){ echo 'selected';} ?>>07:30 AM</option>
-                            <option value="07.45 AM" <?php if($slot_from_time=='07.45 AM'){ echo 'selected';} ?>>07:45 AM</option>
-                            <option value="08.00 AM" <?php if($slot_from_time=='08.00 AM'){ echo 'selected';} ?>>08:00 AM</option>
-                            <option value="08.15 AM" <?php if($slot_from_time=='08.15 AM'){ echo 'selected';} ?>>08:15 AM</option>
-                            <option value="08.30 AM" <?php if($slot_from_time=='08.30 AM'){ echo 'selected';} ?>>08:30 AM</option>
-                            <option value="08.45 AM" <?php if($slot_from_time=='08.45 AM'){ echo 'selected';} ?>>08:45 AM</option>
-                            <option value="09.00 AM" <?php if($slot_from_time=='09.00 AM'){ echo 'selected';} ?>>09:00 AM</option>
-                            <option value="09.15 AM" <?php if($slot_from_time=='09.15 AM'){ echo 'selected';} ?>>09:15 AM</option>
-                            <option value="09.30 AM" <?php if($slot_from_time=='09.30 AM'){ echo 'selected';} ?>>09:30 AM</option>
-                            <option value="09.45 AM" <?php if($slot_from_time=='09.45 AM'){ echo 'selected';} ?>>09:45 AM</option>
-                            <option value="10.00 AM" <?php if($slot_from_time=='10.00 AM'){ echo 'selected';} ?>>10.00 AM</option>
-                            <option value="10.15 AM" <?php if($slot_from_time=='10.15 AM'){ echo 'selected';} ?>>10:15 AM</option>
-                            <option value="10.30 AM" <?php if($slot_from_time=='10.30 AM'){ echo 'selected';} ?>>10:30 AM</option>
-                            <option value="10.45 AM" <?php if($slot_from_time=='10.45 AM'){ echo 'selected';} ?>>10:45 AM</option>
-                            <option value="11.00 AM" <?php if($slot_from_time=='11.00 AM'){ echo 'selected';} ?>>11:00 AM</option>
-                            <option value="11.15 AM" <?php if($slot_from_time=='11.15 AM'){ echo 'selected';} ?>>11:15 AM</option>
-                            <option value="11.30 AM" <?php if($slot_from_time=='11.30 AM'){ echo 'selected';} ?>>11:30 AM</option>
-                            <option value="11.45 AM" <?php if($slot_from_time=='11.45 AM'){ echo 'selected';} ?>>11:45 AM</option>
-                            <option value="12.00 PM" <?php if($slot_from_time=='12.00 PM'){ echo 'selected';} ?>>12:00 PM</option>
-                            <option value="12.15 PM" <?php if($slot_from_time=='12.15 PM'){ echo 'selected';} ?>>12:15 PM</option>
-                            <option value="12.30 PM" <?php if($slot_from_time=='12.30 PM'){ echo 'selected';} ?>>12:30 PM</option>
-                            <option value="12.45 PM" <?php if($slot_from_time=='12.45 PM'){ echo 'selected';} ?>>12:45 PM</option>
-                            <option value="01.00 PM" <?php if($slot_from_time=='01.00 PM'){ echo 'selected';} ?>>01:00 PM</option>
-                            <option value="01.15 PM" <?php if($slot_from_time=='01.15 PM'){ echo 'selected';} ?>>01:15 PM</option>
-                            <option value="01.30 PM" <?php if($slot_from_time=='01.30 PM'){ echo 'selected';} ?>>01:30 PM</option>
-                            <option value="01.45 PM" <?php if($slot_from_time=='01.45 PM'){ echo 'selected';} ?>>01:45 PM</option>
-                            <option value="02.00 PM" <?php if($slot_from_time=='02.00 PM'){ echo 'selected';} ?>>02:00 PM</option>
-                            <option value="02.15 PM" <?php if($slot_from_time=='02.15 PM'){ echo 'selected';} ?>>02:15 PM</option>
-                            <option value="02.30 PM" <?php if($slot_from_time=='02.30 PM'){ echo 'selected';} ?>>02:30 PM</option>
-                            <option value="02.45 PM" <?php if($slot_from_time=='02.45 PM'){ echo 'selected';} ?>>02:45 PM</option>
-                            <option value="03.00 PM" <?php if($slot_from_time=='03.00 PM'){ echo 'selected';} ?>>03:00 PM</option>
-                            <option value="03.15 PM" <?php if($slot_from_time=='03.15 PM'){ echo 'selected';} ?>>03:15 PM</option>
-                            <option value="03.30 PM" <?php if($slot_from_time=='03.30 PM'){ echo 'selected';} ?>>03:30 PM</option>
-                            <option value="03.45 PM" <?php if($slot_from_time=='03.45 PM'){ echo 'selected';} ?>>03:45 PM</option>
-                            <option value="04.00 PM" <?php if($slot_from_time=='04.00 PM'){ echo 'selected';} ?>>04:00 PM</option>
-                            <option value="04.15 PM" <?php if($slot_from_time=='04.15 PM'){ echo 'selected';} ?>>04:15 PM</option>
-                            <option value="04.30 PM" <?php if($slot_from_time=='04.30 PM'){ echo 'selected';} ?>>04:30 PM</option>
-                            <option value="04.45 PM" <?php if($slot_from_time=='04.45 PM'){ echo 'selected';} ?>>04:45 PM</option>
-                            <option value="05.00 PM" <?php if($slot_from_time=='05.00 PM'){ echo 'selected';} ?>>05:00 PM</option>
-                            <option value="05.15 PM" <?php if($slot_from_time=='05.15 PM'){ echo 'selected';} ?>>05:15 PM</option>
-                            <option value="05.30 PM" <?php if($slot_from_time=='05.30 PM'){ echo 'selected';} ?>>05:30 PM</option>
-                            <option value="05.45 PM" <?php if($slot_from_time=='05.45 PM'){ echo 'selected';} ?>>05:45 PM</option>
-                            <option value="06.00 PM" <?php if($slot_from_time=='06.00 PM'){ echo 'selected';} ?>>06:00 PM</option>
-                            <option value="06.15 PM" <?php if($slot_from_time=='06.15 PM'){ echo 'selected';} ?>>06:15 PM</option>
-                            <option value="06.30 PM" <?php if($slot_from_time=='06.30 PM'){ echo 'selected';} ?>>06:30 PM</option>
-                            <option value="06.45 PM" <?php if($slot_from_time=='06.45 PM'){ echo 'selected';} ?>>06:45 PM</option>
-                            <option value="07.00 PM" <?php if($slot_from_time=='07.00 PM'){ echo 'selected';} ?>>07:00 PM</option>
-                            <option value="07.15 PM" <?php if($slot_from_time=='07.15 PM'){ echo 'selected';} ?>>07:15 PM</option>
-                            <option value="07.30 PM" <?php if($slot_from_time=='07.30 PM'){ echo 'selected';} ?>>07:30 PM</option>
-                            <option value="07.45 PM" <?php if($slot_from_time=='07.45 PM'){ echo 'selected';} ?>>07:45 PM</option>
-                            <option value="08.00 PM" <?php if($slot_from_time=='08.00 PM'){ echo 'selected';} ?>>08:00 PM</option>
-                            <option value="08.15 PM" <?php if($slot_from_time=='08.15 PM'){ echo 'selected';} ?>>08:15 PM</option>
-                            <option value="08.30 PM" <?php if($slot_from_time=='08.30 PM'){ echo 'selected';} ?>>08:30 PM</option>
-                            <option value="08.45 PM" <?php if($slot_from_time=='08.45 PM'){ echo 'selected';} ?>>08:45 PM</option>
-                            <option value="09.00 PM" <?php if($slot_from_time=='09.00 PM'){ echo 'selected';} ?>>09:00 PM</option>
-                            <option value="09.15 PM" <?php if($slot_from_time=='09.15 PM'){ echo 'selected';} ?>>09:15 PM</option>
-                            <option value="09.30 PM" <?php if($slot_from_time=='09.30 PM'){ echo 'selected';} ?>>09:30 PM</option>
-                            <option value="09.45 PM" <?php if($slot_from_time=='09.45 PM'){ echo 'selected';} ?>>09:45 PM</option>
-                            <option value="10.00 PM" <?php if($slot_from_time=='10.00 PM'){ echo 'selected';} ?>>10:00 PM</option>
-                            <option value="10.15 PM" <?php if($slot_from_time=='10.15 PM'){ echo 'selected';} ?>>10:15 PM</option>
-                            <option value="10.30 PM" <?php if($slot_from_time=='10.30 PM'){ echo 'selected';} ?>>10:30 PM</option>
-                            <option value="10.45 PM" <?php if($slot_from_time=='10.45 PM'){ echo 'selected';} ?>>10:45 PM</option>
-                            <option value="11.00 PM" <?php if($slot_from_time=='11.00 PM'){ echo 'selected';} ?>>11:00 PM</option>
-                            <option value="11.15 PM" <?php if($slot_from_time=='11.15 PM'){ echo 'selected';} ?>>11:15 PM</option>
-                            <option value="11.30 PM" <?php if($slot_from_time=='11.30 PM'){ echo 'selected';} ?>>11:30 PM</option>
-                            <option value="11.45 PM" <?php if($slot_from_time=='11.45 PM'){ echo 'selected';} ?>>11:45 PM</option>
+<option value="12:00 AM" <?php if($slot_from_time=='12:00 AM'){ echo 'selected';} ?> >12:00 AM</option>
+                            <option value="12:15 AM" <?php if($slot_from_time=='12:15 AM'){ echo 'selected';} ?>>12:15 AM</option>
+                            <option value="12:30 AM" <?php if($slot_from_time=='12:30 AM'){ echo 'selected';} ?> >12:30 AM</option>
+                            <option value="12:45 AM" <?php if($slot_from_time=='12:45 AM'){ echo 'selected';} ?>>12:45 AM</option>
+                            <option value="01:00 AM" <?php if($slot_from_time=='01:00 AM'){ echo 'selected';} ?>>01:00 AM</option>
+                            <option value="01:15 AM" <?php if($slot_from_time=='01:15 AM'){ echo 'selected';} ?>>01:15 AM</option>
+                            <option value="01:30 AM" <?php if($slot_from_time=='01:30 AM'){ echo 'selected';} ?>>01:30 AM</option>
+                            <option value="01:45 AM" <?php if($slot_from_time=='01:45 AM'){ echo 'selected';} ?>>01:45 AM</option>
+                            <option value="02:00 AM" <?php if($slot_from_time=='02:00 AM'){ echo 'selected';} ?>>02:00 AM</option>
+                            <option value="02:15 AM" <?php if($slot_from_time=='02:15 AM'){ echo 'selected';} ?>>02:15 AM</option>
+                            <option value="02:30 AM" <?php if($slot_from_time=='02:30 AM'){ echo 'selected';} ?>>02:30 AM</option>
+                            <option value="02:45 AM" <?php if($slot_from_time=='02:45 AM'){ echo 'selected';} ?>>02:45 AM</option>
+                            <option value="03:00 AM" <?php if($slot_from_time=='03:00 AM'){ echo 'selected';} ?>>03:00 AM</option>
+                            <option value="03:15 AM" <?php if($slot_from_time=='03:15 AM'){ echo 'selected';} ?>>03:15 AM</option>
+                            <option value="03:30 AM" <?php if($slot_from_time=='03:30 AM'){ echo 'selected';} ?>>03:30 AM</option>
+                            <option value="03:45 AM" <?php if($slot_from_time=='03:45 AM'){ echo 'selected';} ?>>03:45 AM</option>
+                            <option value="04:00 AM" <?php if($slot_from_time=='04:00 AM'){ echo 'selected';} ?>>04:00 AM</option>
+                            <option value="04:15 AM" <?php if($slot_from_time=='04:15 AM'){ echo 'selected';} ?>>04:15 AM</option>
+                            <option value="04:30 AM" <?php if($slot_from_time=='04:30 AM'){ echo 'selected';} ?>>04:30 AM</option>
+                            <option value="04:45 AM" <?php if($slot_from_time=='04:45 AM'){ echo 'selected';} ?>>04:45 AM</option>
+                            <option value="05:00 AM" <?php if($slot_from_time=='05:00 AM'){ echo 'selected';} ?>>05:00 AM</option>
+                            <option value="05:15 AM" <?php if($slot_from_time=='05:15 AM'){ echo 'selected';} ?>>05:15 AM</option>
+                            <option value="05:30 AM" <?php if($slot_from_time=='05:30 AM'){ echo 'selected';} ?>>05:30 AM</option>
+                            <option value="05:45 AM" <?php if($slot_from_time=='05:45 AM'){ echo 'selected';} ?>>05:45 AM</option>
+                            <option value="06:00 AM" <?php if($slot_from_time=='06:00 AM'){ echo 'selected';} ?>>06:00 AM</option>
+                            <option value="06:15 AM" <?php if($slot_from_time=='06:15 AM'){ echo 'selected';} ?>>06:15 AM</option>
+                            <option value="06:30 AM" <?php if($slot_from_time=='06:30 AM'){ echo 'selected';} ?>>06:30 AM</option>
+                            <option value="06:45 AM" <?php if($slot_from_time=='06:45 AM'){ echo 'selected';} ?>>06:45 AM</option>
+                            <option value="07:00 AM" <?php if($slot_from_time=='07:00 AM'){ echo 'selected';} ?>>07:00 AM</option>
+                            <option value="07:15 AM" <?php if($slot_from_time=='07:15 AM'){ echo 'selected';} ?>>07:15 AM</option>
+                            <option value="07:30 AM" <?php if($slot_from_time=='07:30 AM'){ echo 'selected';} ?>>07:30 AM</option>
+                            <option value="07:45 AM" <?php if($slot_from_time=='07:45 AM'){ echo 'selected';} ?>>07:45 AM</option>
+                            <option value="08:00 AM" <?php if($slot_from_time=='08:00 AM'){ echo 'selected';} ?>>08:00 AM</option>
+                            <option value="08:15 AM" <?php if($slot_from_time=='08:15 AM'){ echo 'selected';} ?>>08:15 AM</option>
+                            <option value="08:30 AM" <?php if($slot_from_time=='08:30 AM'){ echo 'selected';} ?>>08:30 AM</option>
+                            <option value="08:45 AM" <?php if($slot_from_time=='08:45 AM'){ echo 'selected';} ?>>08:45 AM</option>
+                            <option value="09:00 AM" <?php if($slot_from_time=='09:00 AM'){ echo 'selected';} ?>>09:00 AM</option>
+                            <option value="09:15 AM" <?php if($slot_from_time=='09:15 AM'){ echo 'selected';} ?>>09:15 AM</option>
+                            <option value="09:30 AM" <?php if($slot_from_time=='09:30 AM'){ echo 'selected';} ?>>09:30 AM</option>
+                            <option value="09:45 AM" <?php if($slot_from_time=='09:45 AM'){ echo 'selected';} ?>>09:45 AM</option>
+                            <option value="10:00 AM" <?php if($slot_from_time=='10:00 AM'){ echo 'selected';} ?>>10:00 AM</option>
+                            <option value="10:15 AM" <?php if($slot_from_time=='10:15 AM'){ echo 'selected';} ?>>10:15 AM</option>
+                            <option value="10:30 AM" <?php if($slot_from_time=='10:30 AM'){ echo 'selected';} ?>>10:30 AM</option>
+                            <option value="10:45 AM" <?php if($slot_from_time=='10:45 AM'){ echo 'selected';} ?>>10:45 AM</option>
+                            <option value="11:00 AM" <?php if($slot_from_time=='11:00 AM'){ echo 'selected';} ?>>11:00 AM</option>
+                            <option value="11:15 AM" <?php if($slot_from_time=='11:15 AM'){ echo 'selected';} ?>>11:15 AM</option>
+                            <option value="11:30 AM" <?php if($slot_from_time=='11:30 AM'){ echo 'selected';} ?>>11:30 AM</option>
+                            <option value="11:45 AM" <?php if($slot_from_time=='11:45 AM'){ echo 'selected';} ?>>11:45 AM</option>
+                            <option value="12:00 PM" <?php if($slot_from_time=='12:00 PM'){ echo 'selected';} ?>>12:00 PM</option>
+                            <option value="12:15 PM" <?php if($slot_from_time=='12:15 PM'){ echo 'selected';} ?>>12:15 PM</option>
+                            <option value="12:30 PM" <?php if($slot_from_time=='12:30 PM'){ echo 'selected';} ?>>12:30 PM</option>
+                            <option value="12:45 PM" <?php if($slot_from_time=='12:45 PM'){ echo 'selected';} ?>>12:45 PM</option>
+                            <option value="01:00 PM" <?php if($slot_from_time=='01:00 PM'){ echo 'selected';} ?>>01:00 PM</option>
+                            <option value="01:15 PM" <?php if($slot_from_time=='01:15 PM'){ echo 'selected';} ?>>01:15 PM</option>
+                            <option value="01:30 PM" <?php if($slot_from_time=='01:30 PM'){ echo 'selected';} ?>>01:30 PM</option>
+                            <option value="01:45 PM" <?php if($slot_from_time=='01:45 PM'){ echo 'selected';} ?>>01:45 PM</option>
+                            <option value="02:00 PM" <?php if($slot_from_time=='02:00 PM'){ echo 'selected';} ?>>02:00 PM</option>
+                            <option value="02:15 PM" <?php if($slot_from_time=='02:15 PM'){ echo 'selected';} ?>>02:15 PM</option>
+                            <option value="02:30 PM" <?php if($slot_from_time=='02:30 PM'){ echo 'selected';} ?>>02:30 PM</option>
+                            <option value="02:45 PM" <?php if($slot_from_time=='02:45 PM'){ echo 'selected';} ?>>02:45 PM</option>
+                            <option value="03:00 PM" <?php if($slot_from_time=='03:00 PM'){ echo 'selected';} ?>>03:00 PM</option>
+                            <option value="03:15 PM" <?php if($slot_from_time=='03:15 PM'){ echo 'selected';} ?>>03:15 PM</option>
+                            <option value="03:30 PM" <?php if($slot_from_time=='03:30 PM'){ echo 'selected';} ?>>03:30 PM</option>
+                            <option value="03:45 PM" <?php if($slot_from_time=='03:45 PM'){ echo 'selected';} ?>>03:45 PM</option>
+                            <option value="04:00 PM" <?php if($slot_from_time=='04:00 PM'){ echo 'selected';} ?>>04:00 PM</option>
+                            <option value="04:15 PM" <?php if($slot_from_time=='04:15 PM'){ echo 'selected';} ?>>04:15 PM</option>
+                            <option value="04:30 PM" <?php if($slot_from_time=='04:30 PM'){ echo 'selected';} ?>>04:30 PM</option>
+                            <option value="04:45 PM" <?php if($slot_from_time=='04:45 PM'){ echo 'selected';} ?>>04:45 PM</option>
+                            <option value="05:00 PM" <?php if($slot_from_time=='05:00 PM'){ echo 'selected';} ?>>05:00 PM</option>
+                            <option value="05:15 PM" <?php if($slot_from_time=='05:15 PM'){ echo 'selected';} ?>>05:15 PM</option>
+                            <option value="05:30 PM" <?php if($slot_from_time=='05:30 PM'){ echo 'selected';} ?>>05:30 PM</option>
+                            <option value="05:45 PM" <?php if($slot_from_time=='05:45 PM'){ echo 'selected';} ?>>05:45 PM</option>
+                            <option value="06:00 PM" <?php if($slot_from_time=='06:00 PM'){ echo 'selected';} ?>>06:00 PM</option>
+                            <option value="06:15 PM" <?php if($slot_from_time=='06:15 PM'){ echo 'selected';} ?>>06:15 PM</option>
+                            <option value="06:30 PM" <?php if($slot_from_time=='06:30 PM'){ echo 'selected';} ?>>06:30 PM</option>
+                            <option value="06:45 PM" <?php if($slot_from_time=='06:45 PM'){ echo 'selected';} ?>>06:45 PM</option>
+                            <option value="07:00 PM" <?php if($slot_from_time=='07:00 PM'){ echo 'selected';} ?>>07:00 PM</option>
+                            <option value="07:15 PM" <?php if($slot_from_time=='07:15 PM'){ echo 'selected';} ?>>07:15 PM</option>
+                            <option value="07:30 PM" <?php if($slot_from_time=='07:30 PM'){ echo 'selected';} ?>>07:30 PM</option>
+                            <option value="07:45 PM" <?php if($slot_from_time=='07:45 PM'){ echo 'selected';} ?>>07:45 PM</option>
+                            <option value="08:00 PM" <?php if($slot_from_time=='08:00 PM'){ echo 'selected';} ?>>08:00 PM</option>
+                            <option value="08:15 PM" <?php if($slot_from_time=='08:15 PM'){ echo 'selected';} ?>>08:15 PM</option>
+                            <option value="08:30 PM" <?php if($slot_from_time=='08:30 PM'){ echo 'selected';} ?>>08:30 PM</option>
+                            <option value="08:45 PM" <?php if($slot_from_time=='08:45 PM'){ echo 'selected';} ?>>08:45 PM</option>
+                            <option value="09:00 PM" <?php if($slot_from_time=='09:00 PM'){ echo 'selected';} ?>>09:00 PM</option>
+                            <option value="09:15 PM" <?php if($slot_from_time=='09:15 PM'){ echo 'selected';} ?>>09:15 PM</option>
+                            <option value="09:30 PM" <?php if($slot_from_time=='09:30 PM'){ echo 'selected';} ?>>09:30 PM</option>
+                            <option value="09:45 PM" <?php if($slot_from_time=='09:45 PM'){ echo 'selected';} ?>>09:45 PM</option>
+                            <option value="10:00 PM" <?php if($slot_from_time=='10:00 PM'){ echo 'selected';} ?>>10:00 PM</option>
+                            <option value="10:15 PM" <?php if($slot_from_time=='10:15 PM'){ echo 'selected';} ?>>10:15 PM</option>
+                            <option value="10:30 PM" <?php if($slot_from_time=='10:30 PM'){ echo 'selected';} ?>>10:30 PM</option>
+                            <option value="10:45 PM" <?php if($slot_from_time=='10:45 PM'){ echo 'selected';} ?>>10:45 PM</option>
+                            <option value="11:00 PM" <?php if($slot_from_time=='11:00 PM'){ echo 'selected';} ?>>11:00 PM</option>
+                            <option value="11:15 PM" <?php if($slot_from_time=='11:15 PM'){ echo 'selected';} ?>>11:15 PM</option>
+                            <option value="11:30 PM" <?php if($slot_from_time=='11:30 PM'){ echo 'selected';} ?>>11:30 PM</option>
+                            <option value="11:45 PM" <?php if($slot_from_time=='11:45 PM'){ echo 'selected';} ?>>11:45 PM</option>
                            </select>
                         </div>
                     </div>
@@ -373,102 +385,8 @@
 
 
                   <select class="limitedNumbSelect2" name="slot_time_to" id="slot_time_to" class="form-control" required="" >
-                            <option value="12.00 AM" <?php if($slot_to_time=='12.00 AM'){ echo 'selected';} ?>>12:00 AM</option>
-                            <option value="12.15 AM" <?php if($slot_to_time=='12.15 AM'){ echo 'selected';} ?>>12:15 AM</option>
-                            <option value="12.30 AM" <?php if($slot_to_time=='12.30 AM'){ echo 'selected';} ?> >12:30 AM</option>
-                            <option value="12.45 AM" <?php if($slot_to_time=='12.45 AM'){ echo 'selected';} ?>>12:45 AM</option>
-                            <option value="01.00 AM" <?php if($slot_to_time=='01.00 AM'){ echo 'selected';} ?>>01:00 AM</option>
-                            <option value="01.15 AM" <?php if($slot_to_time=='01.15 AM'){ echo 'selected';} ?>>01:15 AM</option>
-                            <option value="01.30 AM" <?php if($slot_to_time=='01.30 AM'){ echo 'selected';} ?>>01:30 AM</option>
-                            <option value="01.45 AM" <?php if($slot_to_time=='01.45 AM'){ echo 'selected';} ?> >01:45 AM</option>
-                            <option value="02.00 AM" <?php if($slot_to_time=='02.00 AM'){ echo 'selected';} ?>>02:00 AM</option>
-                            <option value="02.15 AM" <?php if($slot_to_time=='02.15 AM'){ echo 'selected';} ?>>02:15 AM</option>
-                            <option value="02.30 AM" <?php if($slot_to_time=='02.30 AM'){ echo 'selected';} ?>>02:30 AM</option>
-                            <option value="02.45 AM" <?php if($slot_to_time=='02.45 AM'){ echo 'selected';} ?>>02:45 AM</option>
-                            <option value="03.00 AM" <?php if($slot_to_time=='03.00 AM'){ echo 'selected';} ?>>03:00 AM</option>
-                            <option value="03.15 AM" <?php if($slot_to_time=='03.15 AM'){ echo 'selected';} ?>>03:15 AM</option>
-                            <option value="03.30 AM" <?php if($slot_to_time=='03.30 AM'){ echo 'selected';} ?>>03:30 AM</option>
-                            <option value="03.45 AM" <?php if($slot_to_time=='03.45 AM'){ echo 'selected';} ?>>03:45 AM</option>
-                            <option value="04.00 AM" <?php if($slot_to_time=='04.00 AM'){ echo 'selected';} ?>>04:00 AM</option>
-                            <option value="04.15 AM" <?php if($slot_to_time=='04.15 AM'){ echo 'selected';} ?>>04:15 AM</option>
-                            <option value="04.30 AM" <?php if($slot_to_time=='04.30 AM'){ echo 'selected';} ?>>04:30 AM</option>
-                            <option value="04.45 AM" <?php if($slot_to_time=='04.45 AM'){ echo 'selected';} ?>>04:45 AM</option>
-                            <option value="05.00 AM" <?php if($slot_to_time=='05.00 AM'){ echo 'selected';} ?>>05:00 AM</option>
-                            <option value="05.15 AM" <?php if($slot_to_time=='05.15 AM'){ echo 'selected';} ?>>05:15 AM</option>
-                            <option value="05.30 AM" <?php if($slot_to_time=='05.30 AM'){ echo 'selected';} ?>>05:30 AM</option>
-                            <option value="05.45 AM" <?php if($slot_to_time=='05.45 AM'){ echo 'selected';} ?>>05:45 AM</option>
-                            <option value="06.00 AM" <?php if($slot_to_time=='06.00 AM'){ echo 'selected';} ?>>06:00 AM</option>
-                            <option value="06.15 AM" <?php if($slot_to_time=='06.15 AM'){ echo 'selected';} ?>>06:15 AM</option>
-                            <option value="06.30 AM" <?php if($slot_to_time=='06.30 AM'){ echo 'selected';} ?>>06:30 AM</option>
-                            <option value="06.45 AM" <?php if($slot_to_time=='06.45 AM'){ echo 'selected';} ?>>06:45 AM</option>
-                            <option value="07.00 AM" <?php if($slot_to_time=='07.00 AM'){ echo 'selected';} ?>>07:00 AM</option>
-                            <option value="07.15 AM" <?php if($slot_to_time=='07.15 AM'){ echo 'selected';} ?>>07:15 AM</option>
-                            <option value="07.30 AM" <?php if($slot_to_time=='07.30 AM'){ echo 'selected';} ?>>07:30 AM</option>
-                            <option value="07.45 AM" <?php if($slot_to_time=='07.45 AM'){ echo 'selected';} ?>>07:45 AM</option>
-                            <option value="08.00 AM" <?php if($slot_to_time=='08.00 AM'){ echo 'selected';} ?>>08:00 AM</option>
-                            <option value="08.15 AM" <?php if($slot_to_time=='08.15 AM'){ echo 'selected';} ?>>08:15 AM</option>
-                            <option value="08.30 AM" <?php if($slot_to_time=='08.30 AM'){ echo 'selected';} ?>>08:30 AM</option>
-                            <option value="08.45 AM" <?php if($slot_to_time=='08.45 AM'){ echo 'selected';} ?>>08:45 AM</option>
-                            <option value="09.00 AM" <?php if($slot_to_time=='09.00 AM'){ echo 'selected';} ?>>09:00 AM</option>
-                            <option value="09.15 AM" <?php if($slot_to_time=='09.15 AM'){ echo 'selected';} ?>>09:15 AM</option>
-                            <option value="09.30 AM" <?php if($slot_to_time=='09.30 AM'){ echo 'selected';} ?>>09:30 AM</option>
-                            <option value="09.45 AM" <?php if($slot_to_time=='09.45 AM'){ echo 'selected';} ?>>09:45 AM</option>
-                            <option value="10.00 AM" <?php if($slot_to_time=='10.00 AM'){ echo 'selected';} ?>>10:00 AM</option>
-                            <option value="10.15 AM" <?php if($slot_to_time=='10.15 AM'){ echo 'selected';} ?>>10:15 AM</option>
-                            <option value="10.30 AM" <?php if($slot_to_time=='10.30 AM'){ echo 'selected';} ?>>10:30 AM</option>
-                            <option value="10.45 AM" <?php if($slot_to_time=='10.45 AM'){ echo 'selected';} ?>>10:45 AM</option>
-                            <option value="11.00 AM" <?php if($slot_to_time=='11.00 AM'){ echo 'selected';} ?>>11:00 AM</option>
-                            <option value="11.15 AM" <?php if($slot_to_time=='11.15 AM'){ echo 'selected';} ?>>11:15 AM</option>
-                            <option value="11.30 AM" <?php if($slot_to_time=='11.30 AM'){ echo 'selected';} ?>>11:30 AM</option>
-                            <option value="11.45 AM" <?php if($slot_to_time=='11.45 AM'){ echo 'selected';} ?>>11:45 AM</option>
-                            <option value="12.00 PM" <?php if($slot_to_time=='12.00 PM'){ echo 'selected';} ?>>12:00 PM</option>
-                            <option value="12.15 PM" <?php if($slot_to_time=='12.15 PM'){ echo 'selected';} ?>>12:15 PM</option>
-                            <option value="12.30 PM" <?php if($slot_to_time=='12.30 PM'){ echo 'selected';} ?>>12:30 PM</option>
-                            <option value="12.45 PM" <?php if($slot_to_time=='12.45 PM'){ echo 'selected';} ?>>12:45 PM</option>
-                            <option value="01.00 PM" <?php if($slot_to_time=='01.00 PM'){ echo 'selected';} ?>>01:00 PM</option>
-                            <option value="01.15 PM" <?php if($slot_to_time=='01.15 PM'){ echo 'selected';} ?>>01:15 PM</option>
-                            <option value="01.30 PM" <?php if($slot_to_time=='01.30 PM'){ echo 'selected';} ?>>01:30 PM</option>
-                            <option value="01.45 PM" <?php if($slot_to_time=='01.45 PM'){ echo 'selected';} ?>>01:45 PM</option>
-                            <option value="02.00 PM" <?php if($slot_to_time=='02.00 PM'){ echo 'selected';} ?>>02:00 PM</option>
-                            <option value="02.15 PM" <?php if($slot_to_time=='02.15 PM'){ echo 'selected';} ?>>02:15 PM</option>
-                            <option value="02.30 PM" <?php if($slot_to_time=='02.30 PM'){ echo 'selected';} ?>>02:30 PM</option>
-                            <option value="02.45 PM" <?php if($slot_to_time=='02.45 PM'){ echo 'selected';} ?>>02:45 PM</option>
-                            <option value="03.00 PM" <?php if($slot_to_time=='03.00 PM'){ echo 'selected';} ?>>03:00 PM</option>
-                            <option value="03.15 PM" <?php if($slot_to_time=='03.15 PM'){ echo 'selected';} ?>>03:15 PM</option>
-                            <option value="03.30 PM" <?php if($slot_to_time=='03.30 PM'){ echo 'selected';} ?>>03:30 PM</option>
-                            <option value="03.45 PM" <?php if($slot_to_time=='03.45 PM'){ echo 'selected';} ?>>03:45 PM</option>
-                            <option value="04.00 PM" <?php if($slot_to_time=='04.00 PM'){ echo 'selected';} ?>>04:00 PM</option>
-                            <option value="04.15 PM" <?php if($slot_to_time=='04.15 PM'){ echo 'selected';} ?>>04:15 PM</option>
-                            <option value="04.30 PM" <?php if($slot_to_time=='04.30 PM'){ echo 'selected';} ?>>04:30 PM</option>
-                            <option value="04.45 PM" <?php if($slot_to_time=='04.45 PM'){ echo 'selected';} ?>>04:45 PM</option>
-                            <option value="05.00 PM" <?php if($slot_to_time=='05.00 PM'){ echo 'selected';} ?>>05:00 PM</option>
-                            <option value="05.15 PM" <?php if($slot_to_time=='05.15 PM'){ echo 'selected';} ?>>05:15 PM</option>
-                            <option value="05.30 PM" <?php if($slot_to_time=='05.30 PM'){ echo 'selected';} ?>>05:30 PM</option>
-                            <option value="05.45 PM" <?php if($slot_to_time=='05.45 PM'){ echo 'selected';} ?>>05:45 PM</option>
-                            <option value="06.00 PM" <?php if($slot_to_time=='06.00 PM'){ echo 'selected';} ?>>06:00 PM</option>
-                            <option value="06.15 PM" <?php if($slot_to_time=='06.15 PM'){ echo 'selected';} ?>>06:15 PM</option>
-                            <option value="06.30 PM" <?php if($slot_to_time=='06.30 PM'){ echo 'selected';} ?>>06:30 PM</option>
-                            <option value="06.45 PM" <?php if($slot_to_time=='06.45 PM'){ echo 'selected';} ?>>06:45 PM</option>
-                            <option value="07.00 PM" <?php if($slot_to_time=='07.00 PM'){ echo 'selected';} ?>>07:00 PM</option>
-                            <option value="07.15 PM" <?php if($slot_to_time=='07.15 PM'){ echo 'selected';} ?>>07:15 PM</option>
-                            <option value="07.30 PM" <?php if($slot_to_time=='07.30 PM'){ echo 'selected';} ?> >07:30 PM</option>
-                            <option value="07.45 PM" <?php if($slot_to_time=='07.45 PM'){ echo 'selected';} ?>>07:45 PM</option>
-                            <option value="08.00 PM" <?php if($slot_to_time=='08.00 PM'){ echo 'selected';} ?>>08:00 PM</option>
-                            <option value="08.15 PM" <?php if($slot_to_time=='08.15 PM'){ echo 'selected';} ?>>08:15 PM</option>
-                            <option value="08.30 PM" <?php if($slot_to_time=='08.30 PM'){ echo 'selected';} ?>>08:30 PM</option>
-                            <option value="08.45 PM" <?php if($slot_to_time=='08.45 PM'){ echo 'selected';} ?>>08:45 PM</option>
-                            <option value="09.00 PM" <?php if($slot_to_time=='09.00 PM'){ echo 'selected';} ?>>09:00 PM</option>
-                            <option value="09.15 PM" <?php if($slot_to_time=='09.15 PM'){ echo 'selected';} ?>>09:15 PM</option>
-                            <option value="09.30 PM" <?php if($slot_to_time=='09.30 PM'){ echo 'selected';} ?>>09:30 PM</option>
-                            <option value="09.45 PM" <?php if($slot_to_time=='09.45 PM'){ echo 'selected';} ?>>09:45 PM</option>
-                            <option value="10.00 PM" <?php if($slot_to_time=='10.00 PM'){ echo 'selected';} ?>>10:00 PM</option>
-                            <option value="10.15 PM" <?php if($slot_to_time=='10.15 PM'){ echo 'selected';} ?>>10:15 PM</option>
-                            <option value="10.30 PM" <?php if($slot_to_time=='10.30 PM'){ echo 'selected';} ?>>10:30 PM</option>
-                            <option value="10.45 PM" <?php if($slot_to_time=='10.45 PM'){ echo 'selected';} ?>>10:45 PM</option>
-                            <option value="11.00 PM" <?php if($slot_to_time=='11.00 PM'){ echo 'selected';} ?>>11:00 PM</option>
-                            <option value="11.15 PM" <?php if($slot_to_time=='11.15 PM'){ echo 'selected';} ?>>11:15 PM</option>
-                            <option value="11.30 PM" <?php if($slot_to_time=='11.30 PM'){ echo 'selected';} ?>>11:30 PM</option>
-                            <option value="11.45 PM" <?php if($slot_to_time=='11.45 PM'){ echo 'selected';} ?>>11:45 PM</option>
+                            <option value="<?php echo $slot_to_time; ?>" ><?php echo $slot_to_time; ?></option>
+                            
                            </select>
                         </div>
                     </div>
@@ -488,17 +406,7 @@
                         </div></div>
 
                         
-                      <div class="form-group lg">
-                        <div class="col-md-3 control text-left"><strong>Hour</strong>*</div>
-                        <div class="col-md-3 control text-left"> 
-                          <input id="hour" type="radio" required="" value="One" name="hour" <?php if($hour=='One'){ echo 'checked';} ?>/>
-                          <label style="margin-left: 10px; margin-right: 10px" >One</label>
-                          <input id="hour" type="radio" value="Two" name="hour" <?php if($hour=='Two'){ echo 'checked';} ?>/>
-                          <label style="margin-left: 10px; margin-right: 10px">Two</label>
-                           <input id="hour" type="radio" value="Three" name="hour"  <?php if($hour=='Three'){ echo 'checked';} ?>/>
-                          <label style="margin-left: 10px; margin-right: 10px">Three</label>
-                        </div>
-                      </div>
+                      
 
                         <div class="form-group lg">
                         <div class="col-md-3 control text-left"><strong>Days</strong>*</div>
@@ -560,5 +468,113 @@
 </div>
 </div>
 </body>
+<script type="text/javascript">
+$(document).ready( function(){
+function getFormattedTime(time) {
+ var postfix = "AM";
+ var hour = time.getHours();
+ console.log(hour);
+ var min = time.getMinutes();
 
+ //format hours
+ if (hour > 12) {
+   hour = hour - 12;
+   postfix = "PM";
+ }
+ 
+
+ //format minutes
+ min = (''+min).length > 1 ? min : '0' + min;
+ return hour + ':' + min + ' ' + postfix;
+}
+
+var from = $('#slot_time_from').val();
+var hr = $('input[name="hour"]:checked').attr("data-id");
+var str = from;
+var str1 = str.replaceAll('.', ':');
+var time = new Date();
+var startTime = str1;
+if(hr==1) {
+var timeChange = 60; //50 minutes
+}
+else if(hr==2) {
+var timeChange = 120; //110 minutes
+}
+else
+	{
+	var timeChange = 180; //170 minutes	
+	}
+var startHour = startTime.split(':')[0];
+var startMin = startTime.split(':')[1].replace(/AM|PM/gi, '');
+time.setHours(parseInt(startHour));
+time.setMinutes(parseInt(startMin));
+
+//adjusted time
+time.setMinutes(time.getMinutes() + timeChange);
+var new_to = getFormattedTime(time);
+$('#slot_time_to').empty();
+$('#slot_time_to').append('<option value="'+new_to+'" selected="selected">'+new_to+'</option>');
+$('#slot_time_to').trigger('change'); 
+
+$('#slot_time_from').change(function(){
+var from = $(this).val();
+var hr = $('input[name="hour"]:checked').attr("data-id");
+var str = from;
+var str1 = str.replaceAll('.', ':');
+var time = new Date();
+var startTime = str1;
+if(hr==1) {
+var timeChange = 60; //50 minutes
+}
+else if(hr==2) {
+var timeChange = 120; //110 minutes
+}
+else
+	{
+	var timeChange = 180; //170 minutes	
+	}
+var startHour = startTime.split(':')[0];
+var startMin = startTime.split(':')[1].replace(/AM|PM/gi, '');
+time.setHours(parseInt(startHour));
+time.setMinutes(parseInt(startMin));
+
+//adjusted time
+time.setMinutes(time.getMinutes() + timeChange);
+var new_to = getFormattedTime(time);
+$('#slot_time_to').empty();
+$('#slot_time_to').append('<option value="'+new_to+'" selected="selected">'+new_to+'</option>');
+$('#slot_time_to').trigger('change'); 
+});
+
+$('input[type=radio]input[name="hour"]').change(function() {
+var from = $('#slot_time_from').val();
+var hr = $(this).attr("data-id");
+var str = from;
+var str1 = str.replaceAll('.', ':');
+var time = new Date();
+var startTime = str1;
+if(hr==1) {
+var timeChange = 60; //50 minutes
+}
+else if(hr==2) {
+var timeChange = 120; //110 minutes
+}
+else
+	{
+	var timeChange = 180; //170 minutes	
+	}
+var startHour = startTime.split(':')[0];
+var startMin = startTime.split(':')[1].replace(/AM|PM/gi, '');
+time.setHours(parseInt(startHour));
+time.setMinutes(parseInt(startMin));
+
+//adjusted time
+time.setMinutes(time.getMinutes() + timeChange);
+var new_to = getFormattedTime(time);
+$('#slot_time_to').empty();
+$('#slot_time_to').append('<option value="'+new_to+'" selected="selected">'+new_to+'</option>');
+$('#slot_time_to').trigger('change'); 	
+});
+});
+</script>
 </html>  

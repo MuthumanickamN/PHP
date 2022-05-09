@@ -181,6 +181,17 @@ public function add(){
 		$category=$this->input->post('category');
 		$status=$this->input->post('status');
 		$created_at=currentDateTime();
+		$ds = "'" . implode("','", $days) . "'";
+		
+		$query1 = $this->db->query("SELECT * FROM slot_selections LEFT JOIN slot_selections_days ON slot_selections.id = slot_selections_days.slot_selections_id WHERE slot_selections.slot_from_time LIKE '".$slot_time_from."' and slot_selections.slot_to_time LIKE '".$slot_time_to."' and slot_selections.lane_court_id='".$lane_court_id."' and slot_selections_days.days IN(".$ds.")");
+	
+		if($query1->num_rows() >0)
+		{
+		setMessage('Activity Slot Already Exist');
+		redirect(base_url().'activity_slot/add');
+		}
+		else
+		{
 
 		$this->db->where('game_id', $game_id); 
 		$this->db->where('level_id', $level_id); 
@@ -291,7 +302,7 @@ public function add(){
 			}
 
 
-			
+		}	
 		}
 	}
 
@@ -324,6 +335,9 @@ public function edit($id)
 	$data['slot_code']=$postData['slot_class'];
 	
 	if($this->input->post('submit')){
+		
+		
+		
     	$game_id=$this->input->post('game_id');
     	$coach_id=$this->input->post('coach_id');
     	$level_id=$this->input->post('level_id');
@@ -338,7 +352,17 @@ public function edit($id)
     	$category=$this->input->post('category');
     	$status=$this->input->post('status');
     	$updated_at=currentDateTime();
+		$ds = "'" . implode("','", $days) . "'";
 		
+		$query1 = $this->db->query("SELECT * FROM slot_selections LEFT JOIN slot_selections_days ON slot_selections.id = slot_selections_days.slot_selections_id WHERE slot_selections.slot_from_time LIKE '".$slot_from_time."' and slot_selections.slot_to_time LIKE '".$slot_to_time."' and slot_selections.lane_court_id='".$lane_court_id."' and slot_selections_days.days IN(".$ds.")");
+	
+		if($query1->num_rows() >0)
+		{
+		setMessage('Activity Slot Already Exist');
+		redirect(base_url().'activity_slot/edit/'.$id);	
+		}
+		else
+		{
 		$this->db->where('game_id', $game_id); 
 		$this->db->where('level_id', $level_id); 
 		$this->db->where('lane_court_id', $lane_court_id); 
@@ -437,7 +461,7 @@ public function edit($id)
 			
 		}
 		
-		
+		}	
 	}
 	$this->load->view('activity_slot', $data);
 		
