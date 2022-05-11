@@ -41,7 +41,10 @@ class Daily_Transaction_Model extends CI_Model {
         $this->db->where('a.status', 'Active'); 
         $this->db->where('a.user_id', $userid);     
         $query = $this->db->get();
-       return $query->row()->user_name;
+		if ($query->num_rows() > 0) {
+		$username = $query->row()->user_name;
+		return $username;
+		}
     } 
      public function getParentCode($id){
         $this->db->select(array('*'));

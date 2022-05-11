@@ -524,10 +524,13 @@ function set_form( activity_id, location_id, parent_id, clickDay, date, date_inf
         
         $('.view-booked-timeslot').click(function(e){
             //alert(1);  
-            var booked_slotid = $(this).attr('data-id');
-            view_modal_popup(booked_slotid);
+    var booked_slotid = $(this).attr('data-id');
+		
+    view_modal_popup(booked_slotid);
         });
-
+var FunctionName ='set_form("'+activity_id+'","'+location_id+'","'+parent_id+'","'+clickDay+'","'+date+'","'+date_info+'")';
+	$('.new_refresh_btn').attr('onClick', FunctionName);
+	console.log('Coming here');
         }
     });
 

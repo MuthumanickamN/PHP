@@ -390,8 +390,8 @@ function fileValidation(fileInput) {
               </div> <div class="col-md-3">
                <select name="status" id="status" class="form-control" >
                   <option value="">Select</option>
-                  <option value="1" <?php if(isset($status) && $status=='Active' ){ echo 'selected';} ?>>Active</option>
-                  <option value="2" <?php if(isset($status) && ($status=='Inactive' || $status == "") ){ echo 'selected';} ?>>Inactive</option>
+                  <option value="Active" <?php if(isset($status) && $status=='Active' ){ echo 'selected';} ?>>Active</option>
+                  <option value="Inactive" <?php if(isset($status) && ($status=='Inactive' || $status == "") ){ echo 'selected';} ?>>Inactive</option>
                   </select>
                   <span class="errorMsg"></span>
               </div>

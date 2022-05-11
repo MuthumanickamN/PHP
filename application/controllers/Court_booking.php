@@ -1609,8 +1609,8 @@ class Court_booking extends CI_Controller{
         $parent_id = $data['parent_id'];
 		$dates= $data['date'];
 		$date_info = $data['date_info'];
-		//print_r($data);die;
-		$btn = '<button class="btn btn-info refresh_btn" style="cursor:pointer;" onclick=set_form("'.$activity_id.'","'.$location_id.'","'.$parent_id.'","'.$day_value.'","'.$dates.'","'.$date_info.'")>Refresh</button>';
+		print_r($data);
+		$btn = '<button class="btn btn-info refresh_btn new_refresh_btn" style="cursor:pointer;">Refresh</button>';
 		//echo "onclick=set_form($activity_id,$location_id,$parent_id,$day_value,$dates,$date_info)";die;
 		
         $get_details = $this->court_booking_model->show_booking_timeslot($data);
