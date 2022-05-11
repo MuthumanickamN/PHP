@@ -86,22 +86,22 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 //Functions Updated By N Vijay Muthumanickam
-define('FROM_ADDRESS','primestarsportsservice@gmail.com');
+define('FROM_ADDRESS','primestarsportsservices@gmail.com');
 
 
 
 define('EMAIL_HOST','smtp.gmail.com');
 define('SMTPAUTH','true');
-define('SMTP_USERNAME','primestarsportsservice@gmail.com');
+define('SMTP_USERNAME','primestarsportsservices@gmail.com');
 define('SMTP_PASSWORD','@prime123');
 define('SMTPSECURE','tls');
 define('SMTP_PORT','465');
 //define('FROM_EMAIL','rrameshkannan8@gmail.com');
-define('FROM_EMAIL','primestarsportsservice@gmail.com');
+define('FROM_EMAIL','primestarsportsservices@gmail.com');
 define('FROM_NAME','Primestar Sports Services');
 #define('CC_ADDRESS','rajeswariravikumar@hotmail.com');
-define('CC_ADDRESS','primestarsportsservice@gmail.com');
-define('DEFAULT_MAIL','primestarsportsservice@gmail.com');
+define('CC_ADDRESS','primestarsportsservices@gmail.com');
+define('DEFAULT_MAIL','primestarsportsservices@gmail.com');
 define('SEND_TO_PARENT','NO');
 define('TERMS_CONDITION_ATTACHMENT',FCPATH.'/assets/TERMS & Conditions - Prime Star Sports Services.pdf');
 //define('CC_ADDRESS','');
