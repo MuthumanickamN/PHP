@@ -86,6 +86,23 @@
                                                         <td><?php echo $stud['parent_mobile'];?></td>
                                                         <td><?php echo $stud['parent_email_id'];?></td>
                                                         <td><a data-toggle="modal" data-target=""><?php echo $stud['fees_paid'];?></a></td>
+
+                                                        <!--
+                                                        <td><?php
+                                                        /* if($stud['fees_paid']){
+                                                            $tag ='danger';
+                                                            $setval = 'Due 0 month ';
+                                                        }elseif($stud['fees_paid']){
+                                                            $tag ='success';
+                                                            $setval = 'Paid above 1 month';
+                                                        }else{
+                                                            $tag ='warning';
+                                                            $setval = 'Paid below 1 month';
+                                                        }; */
+                                                        ?>
+                                                            <a class='badge badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $stud['id'];?>','fees_paid','<?php echo $setval;?>')"><?php echo $stud['fees_paid'];?></a>
+                                                        </td> -->
+
                                                         <td><?php if($stud['status'] == 'Active'){
                                                             $tag ='success';
                                                             $setval = 'Inactive';
@@ -185,6 +202,10 @@
                             <td><b>Next Payable on</b></td>
                             <td><p class="fees-next_payable"></p></td>
                         </tr>
+                        <!--  <div>
+                        <button type="button" class="btn btn-success" id="payregistrationfees">Pay Registration Fees</button>
+                        <button type="button" class="btn btn-warning" id="extendvalidity">Extend Validity</button>
+                        </div> -->
                        
                     </table>
                 

@@ -11,7 +11,7 @@ class Role_delegation extends CI_Controller
     }
     public function index()
     {
-      $data['user_id'] = $_GET['id'];
+      //$data['user_id'] = $_GET['id'];
      
       $data['main_menus']=$this->Roledelegation_model->get_main_menus();
       $data['title'] = 'Role Delegation';
