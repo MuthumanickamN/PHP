@@ -213,11 +213,6 @@
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Role</th>
                                                         <th scope="col">Email Id</th>
-                                                        <th scope="col">Cash</th>
-                                                        <th scope="col">Card</th>
-                                                        <th scope="col">Online</th>
-                                                        <th scope="col">Cheque</th>
-                                                        <th scope="col">Wallet</th>
                                                         <th scope="col">Total</th>
                                                     </tr>
                                                 </thead>
@@ -229,11 +224,6 @@
                                                         <td><?php echo $user['user_name'];?></td>
                                                         <td><?php echo $user['role'];?></td>
                                                         <td><?php echo $user['email'];?></td>
-                                                        <td><?php echo $user['Cash'];?></td>
-                                                        <td><?php echo $user['Card'];?></td>
-                                                        <td><?php echo $user['Online'];?></td>
-                                                        <td><?php echo $user['Cheque'];?></td>
-                                                        <td><?php echo $user['Wallet'];?></td>
                                                         <td><?php echo $user['total'];?></td>
                                                         
 
@@ -242,11 +232,7 @@
                                                         }
                                                         ?>
                                                 </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                       <th colspan="4" class="text-right">Total</th><th></th><th></th><th></th><th></th><th></th><th></th>
-                                                    </tr>
-                                                </tfoot>
+                                               
 
                                             </table>
 
@@ -476,7 +462,7 @@ jQuery(document).ready(function() {
             footer: true, 
             title: 'Wallet summary', 
             exportOptions: {
-                    columns: [ 1, 2, 3, 4,5,6,7,8,9 ]
+                    columns: [ 1, 2, 3, 9 ]
                 },
             }
         ],
@@ -497,7 +483,7 @@ jQuery(document).ready(function() {
                         i : 0;
             };
             // Total over this page
-            cash = api
+        /*    cash = api
                 .column( 4, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
@@ -535,7 +521,7 @@ jQuery(document).ready(function() {
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
-                }, 0 );
+                }, 0 ); */
                 // Total over this page
             total = api
                 .column( 9, { page: 'current'} )
@@ -543,11 +529,11 @@ jQuery(document).ready(function() {
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
-            jQuery( api.column( 4 ).footer() ).html(cash);
+        /*    jQuery( api.column( 4 ).footer() ).html(cash);
             jQuery( api.column( 5 ).footer() ).html(card);
             jQuery( api.column( 6 ).footer() ).html(online);
             jQuery( api.column( 7 ).footer() ).html(cheque);
-            jQuery( api.column( 8 ).footer() ).html(wallet);
+            jQuery( api.column( 8 ).footer() ).html(wallet);*/
             jQuery( api.column( 9 ).footer() ).html(total);
         }
     } );

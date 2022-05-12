@@ -651,11 +651,11 @@ class Reports extends CI_Controller
 			$userListArray[$user['user_id']]['role'] = $user['role'];
 			$userListArray[$user['user_id']]['email'] = $user['email'];
 			$userListArray[$user['user_id']]['total'] = isset($userArray[$user['user_id']]['total'])?$userArray[$user['user_id']]['total']:0;
-			$userListArray[$user['user_id']]['Cash'] = isset($userArray[$user['user_id']]['Cash'])?$userArray[$user['user_id']]['Cash']:0;
+			/*$userListArray[$user['user_id']]['Cash'] = isset($userArray[$user['user_id']]['Cash'])?$userArray[$user['user_id']]['Cash']:0;
 			$userListArray[$user['user_id']]['Online'] = isset($userArray[$user['user_id']]['Online'])?$userArray[$user['user_id']]['Online']:0;
 			$userListArray[$user['user_id']]['Cheque'] = isset($userArray[$user['user_id']]['Cheque'])?$userArray[$user['user_id']]['Cheque']:0;
 			$userListArray[$user['user_id']]['Card'] = isset($userArray[$user['user_id']]['Card'])?$userArray[$user['user_id']]['Card']:0;
-			$userListArray[$user['user_id']]['Wallet'] = isset($userArray[$user['user_id']]['Wallet'])?$userArray[$user['user_id']]['Wallet']:0;
+			$userListArray[$user['user_id']]['Wallet'] = isset($userArray[$user['user_id']]['Wallet'])?$userArray[$user['user_id']]['Wallet']:0; */
 		}
 		$data['userListArray'] = $userListArray;
 		$this->load->view('reports/wallet_transaction', $data);
