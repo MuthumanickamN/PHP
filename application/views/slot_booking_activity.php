@@ -1,6 +1,7 @@
 <?php 
  
  $this->load->view('includes/header3'); ?>
+
  <html>
  <body>
  <head>
@@ -64,10 +65,10 @@ th
             <select name="coach_id" id="coach_id"  class="form-control choiceChosen"  required="" >
                 <option value="">Select</option>
                 <?php   
-                if(isset($coachList)){                         
+                /*if(isset($coachList)){                         
               foreach ($coachList as $coachVal){ ?>
             <option value="<?php echo $coachVal['coach_id'] ?>" <?php if($coachVal['coach_id']==$coach_id){ echo 'selected';} ?>><?php echo $coachVal['coach_name'] ?>
-             </option><?php } } ?></select>
+             </option><?php } } */?></select>
             </div>
             <div class="col-md-2 control text-left"><strong>Hour</strong>   
             
@@ -149,3 +150,43 @@ th
    </body>
    </html>
 
+<script type="text/javascript">
+  var slot_id = "<?php echo $slot_id;?>";
+  if(slot_id != 0)
+  {
+    var activity_id = "<?php echo $activity_id;?>";
+    var location_id = "<?php echo $location_id;?>";
+
+    jQuery.ajax({
+      type:'POST',
+      url:baseurl+'Student_profile_slot_booking/filter_coach',
+      data:{
+          location_id:location_id,
+          activity_id:activity_id,
+      },
+      dataType:'html',                       
+      success: function (result) {
+        $('#coach_id').html(result);
+      }, 
+              
+  });
+    //$('#hour').attr('readonly', true);
+  }
+$('#location_id').on('change',function(){
+  var location_id = $(this).val();
+  var activity_id = $('#activity_id').val();
+  jQuery.ajax({
+      type:'POST',
+      url:baseurl+'Student_profile_slot_booking/filter_coach',
+      data:{
+          location_id:location_id,
+          activity_id:activity_id,
+      },
+      dataType:'html',                       
+      success: function (result) {
+        $('#coach_id').html(result);
+      }, 
+              
+  });
+});
+</script>

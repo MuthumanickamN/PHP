@@ -473,7 +473,7 @@ public function add_slot_booking(){
           $sql1="INSERT into tmp_booking(ticket_no,parent_id,parent_name,parent_mobile,parent_email,activityselection_id,student_id,activity_id,level_id,checkout_date,status,amount,created_at,user_id,from_time,to_time,discount,discount_percentage, location_id,coach_id,hours,lane_court_id) values('".$ticket_no."','".$parent_id."','".$parentDetails['parent_name']."','".$parentDetails['mobile_no']."','".$parentDetails['email_id']."','".$activityselection_id."','".$sid."','".$activity_id."','".$level_id."','".$dates."','".$status."','".$fees."','".$created_at."','".$user_id."','".$from."','".$to."','".$discount_val."','".$discount_percentage."','".$location_id."','".$coach_id."','".$hour."','".$lane_id."')";
           $insert=$this->db->query($sql1);
           
-          $sql2="UPDATE tmp_booking set amount='".$fees."' where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates')";
+          $sql2="UPDATE tmp_booking set amount='".$fees."' where student_id='$sid' and activity_id='$activity_id' and hours='".$hour."' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates')";
           $update=$this->db->query($sql2);
           
           if(isset($insert)){
@@ -2057,5 +2057,26 @@ public function add_slot_booking(){
     public function test_invoice()
     {
         $this->invoice_model->send_email_invoice(44, "SlotBookingFees");
+    }
+
+    public function filter_coach()
+    {
+        $location_id = $this->input->post('location_id');
+        $activity_id = $this->input->post('activity_id');
+        $coachList = $this->db->query('select DISTINCT coach.coach_id,coach.coach_name from coach
+                            INNER JOIN slot_selections ON coach.coach_id=slot_selections.coach_id  
+                            where slot_selections.game_id = "'.$activity_id.'" and slot_selections.status="Active" and coach.location_id = "'.$location_id.'" order by coach.coach_id ');
+        $coachList = $coachList->result_array();
+
+        $output = '';
+        foreach($coachList as $key => $coachVal)
+        {
+            $coach_id = $coachVal['coach_id'];
+            $coach_name = $coachVal['coach_name'];
+           //if($coachVal['coach_id']==$coach_id){ echo 'selected';}
+           $output .= '<option value="'.$coach_id.'" >'.$coach_name.'</option>';
+        }
+
+        echo $output;
     }
 }

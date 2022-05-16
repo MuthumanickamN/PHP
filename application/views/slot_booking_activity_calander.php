@@ -977,6 +977,8 @@ $(document).ready(function() {
                
     });
     
+    
+
     $('.proceed_btn').on('click',function(){
         var wallet_balance_after = parseFloat($('#wallet_balance_after').text());
         

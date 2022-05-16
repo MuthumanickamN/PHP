@@ -500,16 +500,16 @@ function set_form( activity_id, location_id, parent_id, clickDay, date, date_inf
             buttons: [
             {
                 extend: 'print',
-                title: "Transaction History",
+                title: "Transaction History : " + date,
                 
             },
             { 
                 extend: 'pdf', 
-                title: 'Transaction History', 
+                title: "Transaction History : " + date,
             },
             { 
                 extend: 'excel', 
-                title: 'Transaction History', 
+                title: "Transaction History : " + date,
             
             }],
             //"order":[1, 'asc'],

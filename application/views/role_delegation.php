@@ -83,6 +83,7 @@
                                                          LEFT JOIN main_menu_modules on main_menu_modules.id = main_menu_sub_modules.main_menu_id
                                                          LEFT JOIN role_permission on role_permission.sub_module_id = main_menu_sub_modules.id and role_permission.user_id = $user_id
                                                          WHERE main_menu_sub_modules.main_menu_id = $main_menu_id order by main_menu_sub_modules.position";
+                                                         
                                                          $query = $this->db->query($sql2);
                                                          $submenus = $query->result();
                                                          $j = 0; 
