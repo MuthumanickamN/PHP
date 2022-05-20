@@ -378,7 +378,8 @@ function parent_details(){
                          <label><strong>Passport-ID</strong></label>
                         </div>
                         <div class="col-md-3">
-                         <input type="text" id="passport_id" name="passport_id"  class="form-control" value="<?php if(isset($passport_id)) { echo $passport_id; } ?>">
+                         <input type="text" id="passport_id" name="passport_id"  class="form-control" value="<?php if(isset($passport_id)) { echo $passport_id; } 
+                          ?>">
                         </div>
 						<div class="col-md-3">
                          <label><strong>Student's Passport Image</strong></label>

@@ -30,6 +30,10 @@ class Admin extends CI_Controller {
 		{
 		    echo 'Sorry, only SuperAdmin can add Superadmin user.';die;
 		}
+		
+	/*	$email_data = $this->db->query("SELECT * FROM users where user_id = '$user_id'");
+		$email_data_array = $email_data->row_array();
+		$this->send_email($email_data_array); */
 		$this->load->view('admin_registration', $data);
 	}
 	
@@ -60,6 +64,7 @@ class Admin extends CI_Controller {
 		$data['title'] = 'Admin Registration';
 		$admin_id = $this->input->post('admin_id');
 		$admin_name=$this->input->post('admin_name');
+		$encrypted_password=$this->input->post('encrypted_password');
 		$location_id=$this->input->post('location_id');
 		$role=$this->input->post('role');
 		$dob=$this->input->post('dob');
@@ -88,6 +93,10 @@ class Admin extends CI_Controller {
             $json['error']['admin_name'] = 'Please enter name';
         }
         
+		//if (empty($encrypted_password)) {
+        //   $json['error']['encrypted_password'] = 'Please enter password';
+        //}
+
         if ($location_id == '') {
             $json['error']['location_id'] = 'Please select location';
         }
@@ -191,8 +200,9 @@ class Admin extends CI_Controller {
 				$insert=$this->db->query($sql);
 				
 				
-				$adduser=$this->db->query("INSERT into users(user_name,code,email,mobile,gender,date_of_birth,role,status) values('".$admin_name."','".$code."','".$email_id."','".$phone1."','".$gender."','".$dob."','".strtolower($role)."','$status')");
+				$adduser=$this->db->query("INSERT into users(user_name,code,email,encrypted_password,mobile,gender,date_of_birth,role,status) values('".$admin_name."','".$code."','".$email_id."','123456','".$phone1."','".$gender."','".$dob."','".strtolower($role)."','$status')");
 				//setMessage('New Coach Added Successfully.');
+
 				//redirect(base_url().'Coach',$data);
 				$this->session->set_flashdata('success_msg', 'Admin details added successfully.');
 				$json['status'] = "success";
@@ -381,4 +391,86 @@ function file_uploads($FILES,$filepath,$insert_id)
 			//exit();
 	}
 }
+
+public function send_email($email_data_array)
+	{
+		$login_url = base_url() .'login';
+		//return true;
+		//die;
+		$this->load->helper('string');
+		$this->load->library('Phpmailer');
+		require_once(APPPATH.'libraries/class.smtp.php');
+            
+		$mail =  $this->phpmailer;
+		//$mail->SMTPDebug = 0;  
+		//smtp
+		//$mail->isSMTP();
+		$mail->SMTPDebug = false;                        
+	    $mail->Host = EMAIL_HOST;
+		$mail->SMTPAuth = SMTPAUTH;                              
+		$mail->Username = SMTP_USERNAME;                 
+		$mail->Password = SMTP_PASSWORD;                           
+		$mail->SMTPSecure = SMTPSECURE;                    
+		$mail->Port = SMTP_PORT;
+		$mail->From = FROM_EMAIL;
+		$mail->FromName = FROM_NAME;
+		if(SEND_TO_PARENT != 'NO'){
+		    $mail->addAddress($email_data_array['email_id']);
+		}
+		else
+		{
+		    $mail->addAddress(DEFAULT_MAIL);
+		}
+        
+		$mail->isHTML(true);
+		
+		$mail->Body = "<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <style>
+        table, th, td{ border: 1px solid black;
+  border-collapse: collapse;
+  height: 41px;
+    width: -webkit-fill-available;
+        }
+        th{
+            background-color: #f5efef;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo' style='float: left;
+    width: 100%;
+    text-align: center;
+    background: #ba272d;
+    height: 100px; 
+    margin-bottom: 20px;'>
+        <img src='http://sports.primestaruae.com/images/main_logo.jpg' alt='main_logo' style='height: 100px;'></img>
+    </div>
+    <div class='header' style='float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;'>
+        <h2>Welcome to <span style='color:#ba272d'>Prime Star Sports Services</span></h2>
+    </div>
+    <div class='main' style='font-family: sans-serif;'>
+        <p>Dear <b>".$email_data_array['admin_name'].",</b></p>
+        <p>Your password is ".$email_data_array['encrypting_password']." </p>
+        
+    </div>";
+		
+		if(!$mail->send()) 
+		{
+			return false;
+		   //echo "Mailer Error: " . $mail->ErrorInfo;
+		}
+		else{
+			return true;
+		}
+		
+	}
+
 }
