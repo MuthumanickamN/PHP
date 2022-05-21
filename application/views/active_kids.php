@@ -271,8 +271,8 @@ th, td {
 		
 		if(!empty($get_coach_id))
 		{	
-		 $rating_reviews = $this->db->query("SELECT * FROM rating_reviews where coach_id=".$get_coach_id." and parent_id =".$row1['parent_user_id']." and activity_selection_id =".$row1['activity_id']."");
-		 
+		 $rating_reviews = $this->db->query("SELECT * FROM rating_reviews where coach_id=".$get_coach_id." and parent_id =".$row1['parent_user_id']." and activity_selection_id =".$row1['id']."");
+		
 		 $rating_num_row = $rating_reviews->num_rows();
 		 
 	

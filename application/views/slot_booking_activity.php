@@ -81,11 +81,9 @@ th
             </select>
             <?php } else { ?>
             
-            <select name="hour" id="hour"  class="form-control choiceChosen"  required="" readonly>
-           
-            <option value="One"  <?php if($hours==One){ echo 'selected';} ?>>One Hour Session</option>
-                  <option value="Two"  <?php if($hours==Two){ echo 'selected';} ?>>Two Hour Session</option>
-                  <option value="Three"  <?php if($hour==Three){ echo 'selected';} ?>>Three Hour Session</option>
+            <select name="hour" id="hour"  class="form-control choiceChosen"  required="">
+          
+            <option value="<?php echo $hours;?>" selected><?php echo $hours;?> Hour Session</option>
             </select>
             
             <?php } ?>

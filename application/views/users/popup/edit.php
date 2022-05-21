@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-sm-12">                            
                             <button type="button" class="btn rkmd-btn btn-success" data-addempid="" id="update-user">Update</button> 
-                            <button type="button" class="btn rkmd-btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn rkmd-btn btn-danger" data-dismiss="modal" onclick="close_model()">Close</button>
                         </div>                    
                     </div>
                 </div>
@@ -22,3 +22,9 @@
         </form>      
     </div>
 </div>
+<script>
+    function close_model(){
+        $(".modal-fade").modal("hide");
+        $(".modal-backdrop").remove();
+    }
+</script>

@@ -16,6 +16,11 @@
 
 } );
 
+function ChangePassword(id){
+        //alert(id);
+        jQuery('#id_value').val(id);
+    }
+
  function view_coach(id)
 {
     
@@ -181,6 +186,7 @@
         
         <a type="button" style="color:white;text-decoration:none;" class="btn btn-warning fa fa-edit" data-id="4" data-toggle="tooltip" title="Edit" href="<?php echo base_url('coach/edit/'.$coach['coach_id']); ?>">
         </a>
+        <a data-toggle="modal" data-target="#update-password" href="javascript:void(0);" title="Change Password" class="change-password-details ml-1 btn btn-warning fa fa-lock" onclick="ChangePassword(<?php echo $coach['user_id'];?>)"  data-userid="<?php echo $coach['user_id'];?>"></a>
          
         <!--<a type="button" onClick="return confirm('Are you sure you want to delete?')" style="color:white;text-decoration:none;" class="btn btn-danger fa fa-trash" data-id="4" data-toggle="tooltip" title="Delete"  href="<?php echo base_url('coach/delete/'.$coach['coach_id']); ?>">
         </a>-->
@@ -203,4 +209,8 @@
 </div>
 </body>
 </html>
-
+<?php 
+$this->load->view('users/popup/password');
+  
+?>
+<script src="<?php echo site_url(); ?>/assets/js/users.js"></script>
