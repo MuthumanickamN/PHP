@@ -64,11 +64,11 @@ h5
    
 <?php 
   foreach($scroll_Text as $key => $row)
-    {
-     
-      echo $row['message'];
+    { ?>
       
-    }
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <?php echo $row['message']; ?>
+      </span>
+  <?php  }
 ?>
   </span> 
 </marquee>

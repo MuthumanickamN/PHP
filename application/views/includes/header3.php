@@ -680,10 +680,10 @@
           </ul>
                 </li>
           <?php } ?>
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
-                  <li data-menu="Recharge History"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Recharge_history' ?>"><span data-i18n="Recharge History">Recharge History</span></a></li>
+          <?php // if($role == 'superadmin'|| $role == 'admin') {?>
+               <!--   <li data-menu="Recharge History"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Recharge_history' ?>"><span data-i18n="Recharge History">Recharge History</span></a></li> -->
 
-          <?php } ?>
+          <?php // } ?>
 
           </ul>
   </li>
