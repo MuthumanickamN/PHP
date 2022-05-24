@@ -1,16 +1,22 @@
 <?php 
 
-defined('BASEPATH') OR exit('No direct script access allowed'); 
-
+if (!defined('BASEPATH'))
+exit('No direct script access allowed');
   
-class Activity_Selections extends CI_Controller {  
+class Activity_selections extends CI_Controller {  
       
     
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 		//$this->load->model('Default_Model', 'default');
 		$this->load->model('School_profile_report_Model', 'schools');
 		//$this->load->model('Daily_Transaction_Model', 'transaction');
+	}
+	public function index()
+	{
+		$this->load->view('activity_selections_view');
+
 	}
 	public function edit($id, $eid, $from=0)
 	{
