@@ -166,7 +166,7 @@
                 </div><br>
                 <div class="row">
 				<div class="col-md-12">
-				<p>"Refund for any reason not possible as per agreed terms and conditions agreed" Its solely management decision to approve and reject request.</p>
+				<p>"Refund for any reason not possible as per agreed terms and conditions" Its solely management decision to approve and reject request.</p>
 				</div>
 				</div>
               
