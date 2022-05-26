@@ -708,7 +708,13 @@ class Reports extends CI_Controller
 		$arrayList = $query->result_array();
 		foreach($arrayList as $key=>$value){
 			$student_details = $this->default->getStudentDetails($value['student_id']);
+			if(empty($student_details)) {
+			$arrayList[$key]['student_id']='';	
+			}
+			else
+			{
 			$arrayList[$key]['student_id']=$student_details['sid'];
+			}
 		}
 		$data['arrayList'] = $arrayList;
 

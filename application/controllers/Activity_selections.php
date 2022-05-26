@@ -12,6 +12,11 @@ class Activity_Selections extends CI_Controller {
 		$this->load->model('School_profile_report_Model', 'schools');
 		//$this->load->model('Daily_Transaction_Model', 'transaction');
 	}
+	public function index()
+	{
+	echo 'hello';	
+	}
+	
 	public function edit($id, $eid, $from=0)
 	{
 	     
@@ -42,11 +47,21 @@ class Activity_Selections extends CI_Controller {
     	$data['banks']=$query4->result_array();
         
         $query5 = $this->db->query("SELECT * FROM fees_yearly_contract");
+		if($query5->num_rows() > 0) {
     	$data['contract_fee']=$query5->row()->fees_amount;
-    	
+    	}
+		else
+		{
+		$data['contract_fee']=0;	
+		}
     	$query6 = $this->db->query("SELECT * FROM vat_setups where id=1");
+		if($query6->num_rows() > 0) {
     	$data['vat_perc']=$query6->row()->percentage;
-    	
+    	}
+		else
+		{
+		$data['vat_perc']=0;	
+		}
     	$data['vat_val']=  sprintf("%.2f",($data['contract_fee'] * $data['vat_perc'])/100);
     	$data['total_amount'] = sprintf("%.2f", round($data['contract_fee'] + $data['vat_val'],2));
     	

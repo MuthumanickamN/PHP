@@ -379,6 +379,7 @@ function parent_details(){
                         </div>
                         <div class="col-md-3">
                          <input type="text" id="passport_id" name="passport_id"  class="form-control" value="<?php if(isset($passport_id)) { echo $passport_id; } ?>">
+						 <span class="passport_id_errorMsg"></span>
                         </div>
 						<div class="col-md-3">
                          <label><strong>Student's Passport Image</strong></label>
@@ -979,6 +980,7 @@ $('.tshirt_size').select2();
    success: function(json){
     var firstId = '';
     $(".errorMsg").html('');
+	$('.passport_id_errorMsg').html('');
     $('.text-danger').remove();
           if (json['error']) {             
               for (i in json['error']) {
@@ -1013,7 +1015,10 @@ $('.tshirt_size').select2();
                     window.location.href = baseurl+'Students/list_';
 				}
           }
-              
+             if(json['status'] == '1')
+			 {
+			$('.passport_id_errorMsg').html('Passport id already exists.');
+			 }				 
           }
       },
      error: function (xhr, ajaxOptions, thrownError) {
