@@ -41,9 +41,9 @@ class Activity_selections extends CI_Controller {
     	
     	$query4 = $this->db->query("select * from bank_details");
     	$data['banks']=$query4->result_array();
-        
+       
         $query5 = $this->db->query("SELECT * FROM fees_yearly_contract");
-    	$data['contract_fee']=$query5->row()->fees_amount;
+		$data['contract_fee']=$query5->row()->fees_amount;
     	
     	$query6 = $this->db->query("SELECT * FROM vat_setups where id=1");
     	$data['vat_perc']=$query6->row()->percentage;
