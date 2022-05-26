@@ -364,7 +364,7 @@ jQuery(document).ready(function() {
     var t = jQuery('#transactionListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'pdf', 
             footer: true, 
             messageTop: titlename+' for '+fromdateval+' - '+todateval, 
             title: titlename, 
@@ -458,7 +458,8 @@ jQuery(document).ready(function() {
    var summary = jQuery('#summary').DataTable( {
     dom: 'Bfrtip',
     buttons: [
-            { extend: 'print', 
+            { extend: 'pdf', 
+            //orientation: 'portrait',
             footer: true, 
             title: 'Wallet summary', 
             exportOptions: {

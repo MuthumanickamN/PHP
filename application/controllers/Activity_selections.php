@@ -1,22 +1,26 @@
 <?php 
 
-defined('BASEPATH') OR exit('No direct script access allowed'); 
-
+if (!defined('BASEPATH'))
+exit('No direct script access allowed');
   
-class Activity_Selections extends CI_Controller {  
+class Activity_selections extends CI_Controller {  
       
-    
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 		//$this->load->model('Default_Model', 'default');
 		$this->load->model('School_profile_report_Model', 'schools');
 		//$this->load->model('Daily_Transaction_Model', 'transaction');
 	}
+<<<<<<< HEAD
 	public function index()
 	{
 	echo 'hello';	
 	}
 	
+=======
+
+>>>>>>> 5c535485bf956d55cc56e6ab7a39825911f65d92
 	public function edit($id, $eid, $from=0)
 	{
 	     
@@ -45,8 +49,9 @@ class Activity_Selections extends CI_Controller {
     	
     	$query4 = $this->db->query("select * from bank_details");
     	$data['banks']=$query4->result_array();
-        
+       
         $query5 = $this->db->query("SELECT * FROM fees_yearly_contract");
+<<<<<<< HEAD
 		if($query5->num_rows() > 0) {
     	$data['contract_fee']=$query5->row()->fees_amount;
     	}
@@ -54,6 +59,10 @@ class Activity_Selections extends CI_Controller {
 		{
 		$data['contract_fee']=0;	
 		}
+=======
+		$data['contract_fee']=$query5->row()->fees_amount;
+    	
+>>>>>>> 5c535485bf956d55cc56e6ab7a39825911f65d92
     	$query6 = $this->db->query("SELECT * FROM vat_setups where id=1");
 		if($query6->num_rows() > 0) {
     	$data['vat_perc']=$query6->row()->percentage;

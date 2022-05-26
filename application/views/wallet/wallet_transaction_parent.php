@@ -129,7 +129,7 @@ h5
 <script>
 $(document).ready(function (e) {
 $('#listTable').dataTable({
-				    dom: 'Bfrtip',
+				    /*dom: 'Bfrtip',
                     buttons: [
                     {
                         extend: 'print',
@@ -149,7 +149,7 @@ $('#listTable').dataTable({
                         extend: 'excel', 
                         title: 'Transaction History', 
                     
-                    }],
+                    }],*/
 				    "order":[1, 'asc'],
 				    "ordering": false,
 				    "lengthMenu": [[20, 50, 100, 200, 500, -1], [20, 50, 100, 200, 500, "All"]]

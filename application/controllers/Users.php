@@ -449,6 +449,10 @@ class Users extends CI_Controller {
 	        $output .="<td>";
 	        $output .=$value['discount_percentage'];
 	        $output .="</td>";
+
+            $output .="<td>";
+	        $output .=$value['discount_value'];
+	        $output .="</td>";
 	        
 	        $output .="<td>";
 	        $output .=$value['vat_percentage'];

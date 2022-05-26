@@ -1622,7 +1622,7 @@ public function add_slot_booking(){
     $this->load->view('slot/viewBooking',$data);
   }
 
-  public function get_events($stud_id, $parent_id, $activity_id, $slot_id=0){
+  public function get_events($stud_id, $parent_id, $activity_id, $location_id, $slot_id=0){
     $data_events = array();
     $start =date('Y-m-d', strtotime($this->input->get("start")));
     $end =date('Y-m-d', strtotime($this->input->get("end")));
@@ -1633,18 +1633,18 @@ public function add_slot_booking(){
     {
     $events = $this->db->query("select *,bs.booked_date as checkout_date,bs.from_time, bs.to_time from booking_approvals ba 
     left join booked_slots as bs on bs.booking_id = ba.id
-    where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status ='1' ");
+    where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and ba.location_id='".$location_id."' and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status ='1' ");
     }
     else
     {
         $events = $this->db->query("select *,bs.booked_date as checkout_date,bs.from_time, bs.to_time from booking_approvals ba 
             left join booked_slots as bs on bs.booking_id = ba.id
-        where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status='1' and bs.id != $slot_id");
+        where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and ba.location_id='".$location_id."'  and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status='1' and bs.id != $slot_id");
     }
     $eventList=$events->result_array();
     //echo $this->db->last_query();die;
 
-    $cartList = $this->db->query("select * from tmp_booking where `parent_id` ='".$parent_id."' and `activity_id` ='".$activity_id."' and `checkout_date` BETWEEN '".$start."' AND '".$end."' ");
+    $cartList = $this->db->query("select * from tmp_booking where `parent_id` ='".$parent_id."' and `activity_id` ='".$activity_id."' and location_id='".$location_id."' and `checkout_date` BETWEEN '".$start."' AND '".$end."' ");
     $cartEvent=$cartList->result_array();
 
     $colorArray = ['#FF0000', '#006400','#00008B','#800080','#8B0000','#556B2F'];

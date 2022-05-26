@@ -201,6 +201,14 @@ function fileValidation(fileInput) {
                 <span class="errorMsg"></span>
                 </div>
               </div>
+
+           <!--   <div class="row">
+              <div class="col-md-3 control text-left"> <strong>Password</strong>*</div>
+                <div class="col-md-3">
+                <input type="password" id="encrypted_password" name="encrypted_password"   class="form-control" autocomplete="off" value="<?php if(isset($encrypted_password)){ echo $encrypted_password; } ?>">
+                <span class="errorMsg"></span>
+                </div>
+              </div>  -->
             
             
               <?php if($coach_id){ ?>

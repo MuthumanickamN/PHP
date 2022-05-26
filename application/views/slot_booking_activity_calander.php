@@ -665,6 +665,7 @@ function confirmDialog(message, onConfirm){
 $(document).ready(function() {
   var parent_id = $('#parent_id').val();
   var activity_id = $('#activity_id').val();
+  var location_id = $('#location_id').val();
   var slot_id = $('#slot_id').val();
   var date_last_clicked = null;
   var stud_id = $('#sid').val();
@@ -688,7 +689,7 @@ $(document).ready(function() {
       return moment().diff(select.start) <= 0
    },
    
-   events : '<?php echo base_url() ?>Student_profile_slot_booking/get_events/'+stud_id+'/'+parent_id+'/'+activity_id+'/'+slot_id,
+   events : '<?php echo base_url() ?>Student_profile_slot_booking/get_events/'+stud_id+'/'+parent_id+'/'+activity_id+'/'+location_id+'/'+slot_id,
  /* eventTimeFormat: { // like '14:30:00'
     hour: '2-digit',
     minute: false,
