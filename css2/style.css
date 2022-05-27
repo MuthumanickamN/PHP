@@ -3044,7 +3044,7 @@ table.dataTable thead th, table.dataTable thead td {
     padding: 10px 12px !important;
 }
 .small, small {
-    font-size: 100% !important;
+    font-size: 92% !important;
 }
 body:not(.modal-open){
   padding-right: 0px !important;
