@@ -3113,3 +3113,15 @@ form#add-school-credit-form {
     color: black !important;
     font-weight: 500 !important;
 }
+.content admin_table.dt-buttons {
+    position: relative !important;
+    float: left !important;
+    left: 50% !important;
+    bottom: 113px !important;
+}
+#days_chosen {
+    display: none;
+}
+span.select2-search.select2-search--inline {
+    display: none;
+}
