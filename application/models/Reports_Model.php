@@ -121,7 +121,7 @@ if($user != "" && $user != "All")
 	
 	public function get_cancellation_search_history($from_date,$to_date,$user){
 
-		$this->db->select('bok.booking_no,bs.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.paidamt,bok.discount_amount,spo.sportsname,loc.location,cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email', false);
+		$this->db->select('bok.booking_no,bs.cancelled_on,bok.btype,bok.totamt,bok.net_total,bok.discount_amount,spo.sportsname,loc.location,cus.parent_name as name, cus.mobile_no as mobile, cus.email_id as email, bs.amount as paidamt', false);
 		$this->db->from('booking as bok');
 		$this->db->join('bookingslot as bs','bs.bid=bok.id','left');
 		$this->db->join('sports as spo','spo.id = bs.sid','left');
@@ -140,9 +140,9 @@ if($user != "" && $user != "All")
 		}
 		
 		if($user != "" && $user != "All")
-{
-	$this->db->where("cus.parent_id = $user");
-}
+		{
+			$this->db->where("cus.parent_id = $user");
+		}
 
 		$this->db->where("bs.cancelled = 1");
 		

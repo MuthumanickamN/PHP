@@ -201,154 +201,6 @@ function parent_details(){
     document.getElementById(inputtxt.id).value="";
   } 
 }
-
-
-
-function student_details(){	
-  var student_id=document.getElementById('student_id').value;
-  if(student_id !== '0' && student_id != '')
-  {
-      $.ajax({
-        url:"<?php echo base_url().'registration_fees/student_details/'; ?>",
-        type:"POST",
-        data:{student_id:student_id},
-        async:false,
-        success:function(data){		
-          document.getElementById('result').innerHTML=data;
-          
-          if($('#payment_type').is(":checked"))
-          {
-            wallet_details();
-          }
-          else
-          {
-            document.getElementById('result1').innerHTML="";  
-          }
-          
-        }
-      });
-     
-      $.ajax({
-        url:"<?php echo base_url().'registration_fees/get_category_fees'; ?>",
-        type:"POST",
-        async:false,
-        data:{student_id:student_id},
-        success:function(data){		
-          var obj = JSON.parse(data);
-          $('#catagory').val(obj['category']);
-          $('#reg_fee_amount').val(obj['reg_fee']);
-          
-          var vat_perc = $('#vat_percentage').val();
-          //console.log(vat_perc);
-          var vat_value = parseFloat((parseFloat(obj['reg_fee'])*parseFloat(vat_perc))/100).toFixed(2);
-          //console.log(vat_value);
-          var total_value = (parseFloat(obj['reg_fee'])+parseFloat(vat_value)).toFixed(2);
-          //console.log(total_value);
-          //console.log(obj['reg_fee']);
-          
-          $('#reg_fee_amount').val(obj['reg_fee']);
-          $('#vat_value').val(vat_value);
-          $('#payable_amount').val(total_value);
-          var wallet_amount =  $('#wallet_amount').val();
-          if (parseFloat(total_value) > parseFloat(wallet_amount))
-          {
-              
-            $('#wallet_amount').css('border-color','red');  
-            $('#wallet_amount').css('border-width','2px'); 
-            $('#save').attr('disabled', true);
-            $('.errorWalletMsg').text('Insufficient amount in Wallet.');
-          }
-          else
-          {
-              
-            $('#wallet_amount').css('border-color','green');  
-            $('#wallet_amount').css('border-width','2px'); 
-            $('#save').attr('disabled', false);
-            $('.errorWalletMsg').text('');
-          }
-        }
-      });
-  }
-  else
-  {
-    document.getElementById('result').innerHTML="";   
-    document.getElementById('result1').innerHTML="";  
-  }
-  
-  
-
-}
-function wallet_details(){
-    
-    if(document.getElementById('parent_id'))
-    {
-    var parent_id=document.getElementById('parent_id').value;
-    if(parent_id !=''){
-      $.ajax({
-      url:"<?php echo base_url().'registration_fees/wallet_details/'; ?>",
-      async:false,
-      type:"POST",
-      data:{parent_id:parent_id},
-      success:function(data)
-      {		
-      document.getElementById('result1').innerHTML=data;
-    
-      }
-      });
-    }
-    else
-    {
-        document.getElementById('result1').innerHTML="";
-    }
-    }
-    else
-    {
-        document.getElementById('result1').innerHTML="";
-    }
-
-
-}
-function calculate(){
-
-  var amount = jQuery('#reg_fee_amount').val();
-
-    var vatpercent = jQuery('#vat_percentage').val();
-    var percentvalue = (amount*vatpercent /100);
-    var netamount = parseFloat(amount) + parseFloat(percentvalue);
-    jQuery('#vat_value').val(percentvalue);
-    jQuery('#payable_amount').val(netamount);
-
-
-}
-
-function allnumeric(inputtxt){
-  var numbers = /^[0-9]+$/;
-  var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  if(inputtxt.value.match(numbers)){  
-  if(inputtxt.id == 'postal_code'){
-    var filePath = document.getElementById('postal_code').value;
-    if(filePath.length>10){          
-      jQuery('#'+inputtxt.id).parent().find(".errorMsg").html('Postal Code Must be Less Than Ten Digits Only');
-      jQuery('#'+inputtxt.id).focus();
-      document.getElementById(inputtxt.id).value="";
-    }else{
-        jQuery('#'+inputtxt.id).parent().find(".errorMsg").html('');
-        return true; 
-    }
-  }else{
-     jQuery('#'+inputtxt.id).parent().find(".errorMsg").html('');
-     return true;      
-   }
-   }
-  else{
-  jQuery('#'+inputtxt.id).parent().find(".errorMsg").html('Please enter numbers only');
-  jQuery('#'+inputtxt.id).focus();
-  document.getElementById(inputtxt.id).value="";
-  return false;      }
-}
-
-
-
   </script>
 <style>
 #loading_image {
@@ -526,13 +378,8 @@ function allnumeric(inputtxt){
                          <label><strong>Passport-ID</strong></label>
                         </div>
                         <div class="col-md-3">
-<<<<<<< HEAD
                          <input type="text" id="passport_id" name="passport_id"  class="form-control" value="<?php if(isset($passport_id)) { echo $passport_id; } ?>">
 						 <span class="passport_id_errorMsg"></span>
-=======
-                         <input type="text" id="passport_id" name="passport_id"  class="form-control" value="<?php if(isset($passport_id)) { echo $passport_id; } 
-                          ?>">
->>>>>>> 5c535485bf956d55cc56e6ab7a39825911f65d92
                         </div>
 						<div class="col-md-3">
                          <label><strong>Student's Passport Image</strong></label>
@@ -925,15 +772,14 @@ function allnumeric(inputtxt){
                         
                     </td>
                     <td style="text-align: center;" >
-                      
-                      
                       <a type="button" style="color:white;text-decoration:none;" class="btn btn-warning fa fa-edit"  href="<?php echo base_url('activity_selections/edit/'.$row1['id'].'/'.$id )?>">
-                        </a>
-            
+                      </a>
                     </td>
                     
-                    <td style="text-align: center"><a type="button" style="color:white;text-decoration:none;" class="btn btn-success fa fa-calendar-check-o"  href="<?php echo base_url('Student_profile_slot_booking/book/'.$row1['activity_id'].'/'.$id )?>"></a> <button type="button" id="prepaid_creditsyBtn" class="btn btn-info prepaid_credits_btn" data-role="<?php echo $role;?>" data-userid="' + row[10] + '" onclick="show_prepaidcredits(this);">Prepaid credits</button>
-                        </td>
+                    <!--<td style="text-align: center"><a type="button" style="color:white;text-decoration:none;" class="btn btn-success fa fa-calendar-check-o"  href="<?php echo base_url('Student_profile_slot_booking/book/'.$row1['activity_id'].'/'.$id )?>"></a>
+                    </td>-->
+                    <td style="text-align: center"><button style="color:white;text-decoration:none;" class="btn btn-success fa fa-calendar-check-o  student_book"  data-activity_id="<?php echo $row1['activity_id'];?>" data-id="<?php echo $id;?>"></button>
+                    </td>
                     
                     <td style="text-align: center;" >
                       <a id="myBtn" class="btn btn-info fa fa-eye"  href="<?php echo base_url('student_profile_slot_booking/viewbooking/'.$row1['activity_id'].'/'.$row1['student_id']); ?>"></a>
@@ -1242,6 +1088,8 @@ function allnumeric(inputtxt){
     }
 }
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" ></script>
 
 <script type="text/javascript">
 
@@ -1251,6 +1099,34 @@ function allnumeric(inputtxt){
 
 $('.parent_mobile').select2();
 $('.tshirt_size').select2();
+
+$(".student_book").on('click',function(e) {
+  
+  var activity_id = $(this).attr('data-activity_id');
+  var id = $(this).attr('data-id');
+  $.ajax({
+		type: "POST",
+		url: base_url+"Student_profile_slot_booking/check_student_to_book_by_admin",
+		data: {id:id, activity_id:activity_id},
+		async: true,
+		datatype: "text",
+		success : function(data)
+		{
+		    //$('#contract_form_data').html(data);
+		    //var obj = JSON.parse(data);
+		    if(data==0)
+		    {
+		        swal('Registration Fees Due!..','Please pay registration fees and proceed for slot booking','warning');
+		        
+		    }
+		    else
+		    {
+		        window.location=base_url+'Student_profile_slot_booking/book/'+activity_id+'/'+id;
+		    }
+		    
+		}
+    });
+});
 
  $("#registrationForm").on('submit',(function(e) {
      var role = "<?php echo $role;?>";
@@ -1376,37 +1252,6 @@ function show_transaction(role)
      
  }
 
- function show_prepaidcredits(id)
- {
-     $('#prepaidcreditsModal').show();
-     var id = $('#id').val();
-     var pid = $('#parent_id').val();
-     
-     $.ajax({ 	
-            type: "POST",   
-            url: base_url+"Students/prepaid_credits",
-            data:{ id: id, parent_id:pid},		
-            async: false,
-            datatype: "html",
-            success : function(data)
-            {
-                  
-				$('#listTable').dataTable().fnDestroy();
-				$('#listTable tbody').html(data);
-				
-            }
-    });
-     
- }
-
- $(document).ready(function (e) {
-	$('.student_id').select2();
-});
-
-if(edit == 1)
-{
-  student_details();
-  calculate();
-}
+ 
   
 </script>
