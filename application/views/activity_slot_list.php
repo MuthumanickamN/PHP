@@ -5,9 +5,9 @@
   <title>Activity Slot</title>
 </head>
 <script type="text/javascript">
-    $(document).ready(function() {
-    $('#example').DataTable();
-} );
+    $(document).ready(function(){
+    	$('#example').DataTable();
+	});
 
  function view_activity_slot(id)
 {
@@ -79,7 +79,7 @@ $(function () {
                     <div class="card-body card-dashboard">
                        
                         <div class="table-responsive">
-							<table id="example" class="table table-striped table-bordered  " border="0" cellpadding="0" cellspacing="0" style="width:200%">
+							<table id="example" class="table table-striped table-bordered " border="0" cellpadding="0" cellspacing="0" style="width:100%">
 								<thead>
 									<tr>
 										<th style="text-align: center">Activity</th>
@@ -215,7 +215,8 @@ $(function () {
 													<?php if($date_time1=='0000-00-00 00:00:00') { echo '-'; } else  { echo date("d/m/Y h-i-s", strtotime("$date_time1")); } ?>
 												</td>-->
 												<td style="text-align: center">
-													<a type="button" style="color:white;text-decoration:none; line-height: 15px" class="btn btn-warning fa fa-edit" data-id="4" data-toggle="tooltip" title="Edit" href="<?php echo base_url('Activity_slot/edit/'.$row1['id']); ?>"> </a>
+													<!--<a type="button" style="color:white;text-decoration:none; line-height: 15px" class="btn btn-warning fa fa-edit" data-id="4" data-toggle="tooltip" title="Edit" href="<?php echo base_url('Activity_slot/edit/'.$row1['id']); ?>"> </a>-->
+													<a type="button" style="color:white;text-decoration:none; line-height: 15px" class="btn btn-warning fa fa-edit" href="<?php echo base_url('Activity_slot/edit/'.$row1['id']); ?>"> </a>
 												</td>
 												<td style="text-align: center">
 													<a type="button" onClick="return confirm('Are you sure you want to delete?')" style="color:white;text-decoration:none; line-height: 15px;" class="btn btn-danger fa fa-trash" data-id="4" data-toggle="tooltip" href="<?php echo base_url('Activity_slot/delete/'.$row1['id']); ?>"> </a>

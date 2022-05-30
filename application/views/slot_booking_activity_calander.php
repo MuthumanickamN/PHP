@@ -231,8 +231,9 @@
     	<div class="form-check tc_check" style="display:block;">
     		<input type="checkbox" name="tc_chkbox" id="tc_chkbox">
     		<label class="form-check-label">
-    		I have read and agreed to the <a href="<?php echo FCPATH;?>assets/TERMS&Conditions-Prime_Star_Sports_Services.pdf" target="_blank"> Terms & Conditions </a> as mentioned in the link
+    		I have read and agreed to the <a href="http://sports.primestaruae.com/assets/TERMS%20&%20Conditions%20-%20Prime%20Star%20Sports%20Services.pdf" target="_blank"><span style="font-size:20px;"> Terms & Conditions </span></a> as mentioned in the link
     		</label>
+        
 		</div>
 		<div>
 		    <button type="button" style="display:none;margin-top:20px;" class=" btn btn-success proceed_btn"  > <i class="fa fa-check"></i> Proceed</button></div></td>

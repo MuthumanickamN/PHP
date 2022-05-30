@@ -121,6 +121,12 @@
                                                       ?>
                                                          
                                                    </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td><button class='btn btn-info assign_all_btn' name='assign_all_btn' data-user_id="<?php echo $user_id;?>">Assign</button></td>
+                                                        <td colspan=4></td>
+                                                    </tr>
+                                                </tfoot>
                                                 </table>
                                              </div>
                                           </div>
@@ -166,6 +172,31 @@
             });
         });
 
+        $(document).on("click", ".assign_all_btn", function(){
+            var this_ = this;
+            var hid_user_id = $('#hid_user_id').val();
+            var myarray = []; 
+            $(this_).closest('table').find('td input:checkbox:checked').each(function () {
+                myarray.push($(this).val());
+            });
+            $.ajax({    
+                type: "POST",   
+                url: base_url+"Role_delegation/assign_multiple",
+                data: {
+                    user_id:hid_user_id,
+                    list:myarray
+                },             
+                async: true,
+                datatype: "text",
+                success : function(data)
+                {
+                    window.location.reload();
+                    
+                }
+            });
+        });
+
+
         $(document).on("click", ".remove_btn", function(){
             var this_ = this;
             var hid_user_id = $('#hid_user_id').val();
@@ -200,14 +231,14 @@
 $(document).on("click", ".check", function(){
 	var cnt1 = $(this).closest('table').find('td input:checkbox').length;
 	var cnt = $(this).closest('table').find('td input:checkbox:checked').length;
-if(cnt1==cnt) 
-{
-    $(this).closest('table').find('.checkall').prop('checked', this.checked);
-}
-else
-{
-    $(this).closest('table').find('.checkall').prop('checked', false);
-}
+    if(cnt1==cnt) 
+    {
+        $(this).closest('table').find('.checkall').prop('checked', this.checked);
+    }
+    else
+    {
+        $(this).closest('table').find('.checkall').prop('checked', false);
+    }
 });
     });
 </script>

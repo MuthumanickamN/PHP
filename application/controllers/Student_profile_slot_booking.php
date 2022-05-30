@@ -405,11 +405,11 @@ public function add_slot_booking(){
     
    $c_count =  "select count(0) as cnt from booked_slots bs 
     left join booking_approvals as ba on ba.id=bs.booking_id
-    where ba.student_id='$sid' and ba.activity_id='$activity_id' and MONTH(bs.booked_date)=MONTH('$dates') and YEAR(bs.booked_date)=YEAR('$dates') and bs.status=1" ;
+    where ba.student_id='$sid' and ba.activity_id='$activity_id' and MONTH(bs.booked_date)=MONTH('$dates') and YEAR(bs.booked_date)=YEAR('$dates') and bs.hours='$hour' and bs.status=1" ;
    $cnt = $this->db->query($c_count)->row()->cnt;
    
    $c_count2 =  "select count(0) as cnt from tmp_booking  
-    where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates') " ;
+    where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates') and hours='$hour' " ;
    $cnt2 = $this->db->query($c_count2)->row()->cnt;
   
    $tot_cnt = $cnt + $cnt2 + 1;
@@ -459,7 +459,7 @@ public function add_slot_booking(){
             }
         }
         
-    //echo $fees_price.' '.$fees;die;
+    //echo $fees;die;
     $status='Pending';
     $checkexists = $this->db->query('select * from tmp_booking where parent_id ="'.$parent_id.'" and  student_id ="'.$sid.'" and activity_id ="'.$activity_id.'" and level_id ="'.$level_id.'" and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and to_time="'.$to.'"');
     if (empty($checkexists->result_array())){
@@ -551,11 +551,11 @@ public function add_slot_booking(){
           
             $c_count =  "select count(0) as cnt from booked_slots bs 
                 left join booking_approvals as ba on ba.id=bs.booking_id
-                where ba.student_id='$sid' and ba.activity_id='$activity_id' and MONTH(bs.booked_date)=MONTH('$dates') and YEAR(bs.booked_date)=YEAR('$dates') and bs.status=1" ;
+                where ba.student_id='$sid' and ba.activity_id='$activity_id' and MONTH(bs.booked_date)=MONTH('$dates') and bs.hours='$hour' and YEAR(bs.booked_date)=YEAR('$dates') and bs.status=1" ;
            $cnt = $this->db->query($c_count)->row()->cnt;
            
            $c_count2 =  "select count(0) as cnt from tmp_booking  
-            where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates') " ;
+            where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates')  and hours='$hour'" ;
            $cnt2 = $this->db->query($c_count2)->row()->cnt;
           
            $tot_cnt = $cnt + $cnt2;
@@ -606,7 +606,7 @@ public function add_slot_booking(){
                 }
             }
             
-            $sql2="UPDATE tmp_booking set amount='".$fees."' where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates')";
+            $sql2="UPDATE tmp_booking set amount='".$fees."' where student_id='$sid' and activity_id='$activity_id' and MONTH(checkout_date)=MONTH('$dates') and YEAR(checkout_date)=YEAR('$dates')  and hours='$hour' ";
             $update=$this->db->query($sql2);
             
           $json['status'] = 'success';  

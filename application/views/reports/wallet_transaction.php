@@ -458,14 +458,42 @@ jQuery(document).ready(function() {
    var summary = jQuery('#summary').DataTable( {
     dom: 'Bfrtip',
     buttons: [
-            { extend: 'pdf', 
+            /*{ extend: 'pdf', 
             //orientation: 'portrait',
             footer: true, 
             title: 'Wallet summary', 
             exportOptions: {
                     columns: [ 1, 2, 3, 9 ]
                 },
-            }
+            }*/
+
+            { extend: "print",
+            customize: function(win)
+            {
+ 
+                var last = null;
+                var current = null;
+                var bod = [];
+ 
+                var css = '@page { size: landscape; }',
+                    head = win.document.head || win.document.getElementsByTagName('head')[0],
+                    style = win.document.createElement('style');
+ 
+                style.type = 'text/css';
+                style.media = 'print';
+ 
+                if (style.styleSheet)
+                {
+                  style.styleSheet.cssText = css;
+                }
+                else
+                {
+                  style.appendChild(win.document.createTextNode(css));
+                }
+ 
+                head.appendChild(style);
+         }
+      },
         ],
     "paging":   false,
         "fnRowCallback" : function(nRow, aData, iDisplayIndex ){

@@ -204,11 +204,27 @@ document.getElementById('total_credits').value=parseFloat(a).toFixed(2);
 </div>
 </div>
 <script>
+  $(document).ready(function (ev) {
     parent_details();
     $('.parent_id_select2').select2();
-    jQuery(document).on('click', 'button.add-prepaid-credit', function(e){
-
-      jQuery.ajax({
+    jQuery(document).on('click', '#add-prepaid-credit', function(e){
+      //alert(2);
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      if(!$('#add-prepaid-credit').hasClass('locked'))
+      {
+        $('#add-prepaid-credit').addClass('locked');
+        $('#add-prepaid-credit').prop('disabled', true);
+        
+        add();
+        $('#add-prepaid-credit').prop('disabled', false);
+      }
+    
+});
+});
+function add()
+{
+  jQuery.ajax({
         type:'POST',
         url:baseurl+'Prepaid_credits/save',
         data:jQuery("form#prepaidCreditForm").serialize(),
@@ -233,9 +249,9 @@ document.getElementById('total_credits').value=parseFloat(a).toFixed(2);
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
+          $(this_).prop('disabled', false);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }        
     });
-});
-
+}
 </script>

@@ -522,6 +522,10 @@ function set_form( activity_id, location_id, parent_id, clickDay, date, date_inf
         });
         //document.getElementById('slotSelection tbody').innerHTML=data;
         
+        $('.dt-buttons').css('position', 'relative !important');
+        $('.dt-buttons').css('float', 'left !important');
+        $('.dt-buttons').css('left', '50% !important');
+        $('.content admin_table.dt-buttons').css('bottom', '113px !important');
         $('.view-booked-timeslot').click(function(e){
             //alert(1);  
     var booked_slotid = $(this).attr('data-id');
