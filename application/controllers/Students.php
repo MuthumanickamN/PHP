@@ -913,6 +913,189 @@ function file_uploads($FILES,$filepath,$insert_id)
 	    echo $output;
 	    
 	}
+
+	public function prepaid_credits($id)
+{
+
+	
+	/*$query = $this->db->query('select * from registration_fees where id='.$id);
+	$postData=$query->row_array();
+	$data['studentList'] = $this->default->getStudentList();
+	$data['title'] = 'Registration Fees';
+	$data['student_id']=$postData['student_id'];
+	$data['pay_type']=$postData['pay_type'];
+	$data['reg_fee_category']=$postData['reg_fee_category'];
+	$data['reg_fee']=$postData['reg_fee'];
+    $data['wallet_balance']=$postData['wallet_balance'];
+		$data['wallet']=$postData['wallet'];
+		$data['edit']=1;
+		if($this->input->post('submit'))
+		{
+	    $student_id=$this->input->post('student_id');
+		$student_name=$this->input->post('student_name');
+		$parent_id=$this->input->post('parent_id');
+		$parent_name=$this->input->post('parent_name');
+		$parent_contact_no=$this->input->post('parent_contact_no');
+		$category=$this->input->post('catagory');
+		$reg_fee_amount=$this->input->post('reg_fee_amount');
+		$payment_type=$this->input->post('payment_type');
+		$wallet_amount=$this->input->post('wallet_amount');
+		$payable_amount=$this->input->post('payable_amount');
+		$updated_at=currentDateTime();
+
+		 $sql="Update  registration_fees set student_id='$student_id',parent_id='$parent_id',parent_name='$parent_name',parent_contact='$parent_contact_no',reg_fee_category='$category',pay_type='$payment_type',reg_fee='$reg_fee_amount',wallet_balance='$payable_amount',wallet='$wallet_amount',updated_at='$updated_at' where id='$id'";
+		$insert=$this->db->query($sql);
+
+
+	
+				setMessage('Registration Fees Updated Successfully.');
+				redirect(base_url().'Students');
+			}
+
+	$this->load->view('student_registration',$data);*/
+
+	$data['title'] = 'Registration Fees';
+		$data['studentList'] = $this->default->getStudentList();
+		$data['vat_perc'] = $this->default->getVatPercentage();
+		$data['edit']=0;
+		$data['role']=strtolower($this->session->userdata('role'));
+		//$regCharge=$this->db->query("select * from reg_charge_setups where note='Registration fees for Kid'")->row_array();
+		//$data['category']=$regCharge['category'];
+		//$data['reg_fee']=$regCharge['reg_fee'];
+		if($this->input->post('submit')){
+			$student_id=$this->input->post('student_id');
+			$student_name=$this->input->post('student_name');
+			$parent_id=$this->input->post('parent_id');
+			$parent_name=$this->input->post('parent_name');
+			$parent_contact_no=$this->input->post('parent_contact_no');
+			$category=$this->input->post('catagory');
+			$vat_percent=$this->input->post('vat_percentage');
+			$vat_value=$this->input->post('vat_value');
+			$reg_fee_amount=$this->input->post('reg_fee_amount');
+			$payment_type=$this->input->post('payment_type');
+			$wallet_amount=$this->input->post('wallet_amount');
+			$payable_amount=$this->input->post('payable_amount');
+			$bank_name=$this->input->post('bank_name');
+			$check_date=$this->input->post('check_date');
+			$check_number=$this->input->post('check_number');
+			$user_id = $this->session->userid;
+			
+			$created_at=date('Y-m-d H:i:s');
+			$creditsDetails = $this->db->query('select * from prepaid_credits where parent_id='.$parent_id)->row_array();
+			$balance_credits=$creditsDetails['balance_credits']-$payable_amount;
+			
+			
+			if( $creditsDetails['balance_credits'] >= $payable_amount){
+			    $sql="INSERT into registration_fees(student_id,student_name,parent_id,parent_name,parent_contact,reg_fee_category,reg_fee,pay_type,wallet_balance,wallet,created_at,status,vat_percent, vat_value,pay_date, net_amount,fee_pay_type ) values('".$student_id."','".$student_name."','".$parent_id."','".$parent_name."','".$parent_contact_no."','".$category."','".$reg_fee_amount."','".$payment_type."','".$balance_credits."','".$balance_credits."','".$created_at."','Active','".$vat_percent."','".$vat_value."','".date('Y-m-d')."','".$payable_amount."','Registration Fees')";
+				$insert=$this->db->query($sql);
+				$insert_id = $this->db->insert_id();
+
+				
+        
+		        $updateCredit=$this->db->query("Update prepaid_credits set balance_credits='".$balance_credits."',total_credits='".$balance_credits."' where parent_id='".$parent_id."' ");
+				//wallet transaction
+				$txn_id = $this->schools->getLastEntry('wallet_transactions');
+		          $wallet_transaction_id = 'WTXNO-'.$txn_id;
+		          
+		          $inv_id = $this->default->getInvoiceId('wallet_transactions');
+              $invoice_id = 'PS'.date('Y').'-'.$inv_id;
+              
+		          $walletArray = array(
+		            'wallet_transaction_id' =>$wallet_transaction_id,
+		            'ac_code' => 'RFWTR',
+		            'wallet_transaction_date' =>date('Y-m-d'),
+		            'wallet_transaction_type' =>'Debit',
+		            'wallet_transaction_detail' => 'Registration Fees',
+		            'updated_admin_id' => $user_id,
+		            'reg_id' => $parent_id,
+		            'wallet_transaction_amount' => $reg_fee_amount,
+		            'gross_amount' => $reg_fee_amount,
+		            'vat_percentage' => $vat_percent,
+		            'vat_value' => $vat_value,
+		            'net_amount' => $payable_amount,
+		            'debit' => $payable_amount,
+		            'invoice' => 'yes',
+                    'invoice_id' =>$invoice_id,
+		            'payfee_id' =>$insert_id,
+		            'student_id'=> $student_id,
+		            'parent_id'=> $parent_id,
+					'balance_credit'=>$balance_credits,
+		            'parent_name'=> $parent_name,
+		            'parent_mobile'=> $parent_contact_no,
+		            //'parent_email_id'=> $data['parent_email'],
+		            'description'=> ' Registration Fees',
+		            'created_at'=> date('Y-m-d H:i:s'),
+		        );
+		        
+		          $this->db->insert('wallet_transactions', $walletArray); 
+		          $wallet_transaction_id = $this->db->insert_id();
+		          
+			    $this->invoice_model->send_email_invoice($wallet_transaction_id, "RegistrationFees");
+					
+		        
+				
+				
+				
+				$email_data = $this->db->query("SELECT rf.*,
+											   r.sid,
+											   wt.*,
+											   p.parent_code,
+											   p.email_id
+										FROM   registration_fees AS rf
+											   LEFT JOIN registrations AS r
+													  ON r.id = rf.student_id
+											   LEFT JOIN wallet_transactions AS wt
+													  ON wt.student_id = rf.student_id
+											   LEFT JOIN parent AS p
+													  ON p.parent_id = wt.parent_id
+													  where rf.id = ".$insert_id."
+													  and wt.payfee_id =".$insert_id."");
+
+																				  
+				$email_data_array = $email_data->row_array();					
+				
+				$this->send_email($email_data_array);
+
+				$this->session->set_flashdata('success_msg', 'Registration fees paid Successfully.');
+				redirect(base_url().'registration_fees');
+			}else{
+				$this->session->set_flashdata('error', 'Prepaid credit value is insufficent.');
+				redirect(base_url().'registration_fees');
+			}
+		}
+		else{
+			$this->load->view('student_registration', $data);
+		}
+
+
+}
+
+/*public function get_category_fees()
+{
+    $data = array();
+    $student_id=$this->input->post('student_id');
+    $sql="select DATE_FORMAT(FROM_DAYS(DATEDIFF(CURDATE(),dob)), '%Y')+0 AS age from registrations where id='$student_id'";
+    $age = $this->db->query($sql)->row()->age;
+    if($age<19)
+    {
+        $sql2="select reg_fee from reg_charge_setups where category='Kid'";
+        $reg_fee = $this->db->query($sql2)->row()->reg_fee;
+        $category = 'Kid';
+    }
+    else
+    {
+        $sql2="select reg_fee from reg_charge_setups where category='Adult'";
+        $reg_fee = $this->db->query($sql2)->row()->reg_fee;
+        $category = 'Adult';
+    }
+    
+    $data['reg_fee'] = $reg_fee;
+    $data['category'] = $category;
+    echo json_encode($data);
+    
+    
+    
+}*/
 	
 
 }
