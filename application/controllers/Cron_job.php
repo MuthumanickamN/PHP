@@ -16,20 +16,55 @@ class Cron_job extends CI_Controller{
 		$current_time = time();
 		$date = new DateTime(date('Y-m-d'));
 		$sql="select * from tmp_booking_court";
-		foreach($this->db->query($sql)->result_array() as $key => $value)
+		
+
+		$sql="select * from tmp_booking group by parent_id";
+		foreach($this->db->query($sql)->result_array() as $key => $value2)
 		{
-			$id = $value['id'];
-			$created_at = $value['created_at'];
-			if(strtotime($created_at)+300 < $current_time)
+			
+			$parent_id = $value2['parent_id'];
+			$sql2="select * from tmp_booking where parent_id=$parent_id order by created_at desc limit 1";
+			foreach($this->db->query($sql2)->result_array() as $key => $value)
 			{
-				$sql2="Delete from tmp_booking_court where id='$id'";
-				$this->db->query($sql2);
+				
+				$id = $value['id'];
+				$created_at = $value['created_at'];
+				if(strtotime($created_at)+300 < $current_time)
+				{
+					$sql2="Delete from tmp_booking where id='$id'";
+					$this->db->query($sql2);
+				}
+				$checkout_date = $value['checkout_date'];
+				if($checkout_date < $date)
+				{
+					$sql1="Delete from tmp_booking where id='$id'";
+					$this->db->query($sql1);	
+				}
 			}
-			$checkout_date = $value['checkout_date'];
-			if($checkout_date > $date)
+		}
+
+		$sql="select * from tmp_booking_court group by parent_id";
+		foreach($this->db->query($sql)->result_array() as $key => $value2)
+		{
+			
+			$parent_id = $value2['parent_id'];
+			$sql2="select * from tmp_booking_court where parent_id=$parent_id order by created_at desc limit 1";
+			foreach($this->db->query($sql2)->result_array() as $key => $value)
 			{
-				$sql1="Delete from tmp_booking_court where id='$id'";
-				$this->db->query($sql1);	
+				
+				$id = $value['id'];
+				$created_at = $value['created_at'];
+				if(strtotime($created_at)+300 < $current_time)
+				{
+					$sql2="Delete from tmp_booking_court where id='$id'";
+					$this->db->query($sql2);
+				}
+				$checkout_date = $value['checkout_date'];
+				if($checkout_date < $date)
+				{
+					$sql1="Delete from tmp_booking_court where id='$id'";
+					$this->db->query($sql1);	
+				}
 			}
 		}
 		

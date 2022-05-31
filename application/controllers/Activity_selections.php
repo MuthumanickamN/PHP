@@ -12,11 +12,11 @@ class Activity_selections extends CI_Controller {
 		$this->load->model('School_profile_report_Model', 'schools');
 		//$this->load->model('Daily_Transaction_Model', 'transaction');
 	}
+
 	public function index()
 	{
 	echo 'hello';	
 	}
-	
 
 	public function edit($id, $eid, $from=0)
 	{
@@ -55,9 +55,8 @@ class Activity_selections extends CI_Controller {
 		{
 		$data['contract_fee']=0;	
 		}
-
 		//$data['contract_fee']=$query5->row()->fees_amount;
-    	
+    
     	$query6 = $this->db->query("SELECT * FROM vat_setups where id=1");
 		if($query6->num_rows() > 0) {
     	$data['vat_perc']=$query6->row()->percentage;

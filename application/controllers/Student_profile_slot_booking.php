@@ -2022,7 +2022,6 @@ public function add_slot_booking(){
             $data['status'] = 0;
             $data['msg'] = 'Student is not in Active Status';
             echo $data['msg'];die;
-            
         }
         
         if($row->approval_status !='Approved')
@@ -2050,6 +2049,24 @@ public function add_slot_booking(){
             echo $data['msg'];die;
         }
         
+        
+        
+    }
+
+    public function check_student_to_book_by_admin()
+    {
+        $id= $this->input->post('id');
+        $activity_id =  $this->input->post('activity_id');
+        $sql="select * from registration_fees where student_id='$id' order by pay_date desc limit 1";
+        $row = $this->db->query($sql)->row();
+        $date_now = date("Y-m-d"); // this format is string comparable
+        $oneYearOn = date('Y-m-d',strtotime($date_now . " + 365 day"));
+        if ($date_now < $oneYearOn) {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
         
         
     }
