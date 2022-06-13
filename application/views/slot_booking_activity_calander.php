@@ -109,13 +109,21 @@
             <option value="<?php echo $coachVal['coach_id'] ?>" <?php if($coachVal['coach_id']==$coach_id){ echo 'selected';} ?>><?php echo $coachVal['coach_name'] ?>
              </option><?php } } ?></select>
             </div>
-            <div class="col-md-2 control text-left"><strong>Hour</strong>             
+            <div class="col-md-2 control text-left"><strong>Hour</strong>         
+            <?php if($slot_id == 0){?>   
              <select name="hour" id="hour"  class="form-control choiceChosen"  required="" >
-                <option value="">Select</option>
-                 <option value="One"  <?php if($hour==One){ echo 'selected';} ?>>One Hour Session</option>
-                  <option value="Two"  <?php if($hour==Two){ echo 'selected';} ?>>Two Hour Session</option>
-                  <option value="Three"  <?php if($hour==Three){ echo 'selected';} ?>>Three Hour Session</option>
+               
+                 <option value="One"  <?php if($hour=="One"){ echo 'selected';} ?>>One Hour Session</option>
+                  <option value="Two"  <?php if($hour=="Two"){ echo 'selected';} ?>>Two Hour Session</option>
+                  <option value="Three"  <?php if($hour=="Three"){ echo 'selected';} ?>>Three Hour Session</option>
                 </select>
+              <?php }else{ ?>
+                <select name="hour" id="hour"  class="form-control choiceChosen"  required="" >
+                
+                 <option value="<?php echo $hour;?>"  selected><?php echo $hour;?> Hour Session</option>
+                 
+                </select>
+                <?php } ?>
             </div>
 
            <div class="col-md-2  control text-left">
@@ -446,7 +454,7 @@ function addSlot(this_){
                });
                
                 $('#calendar').fullCalendar('refetchEvents');
-                //location.reload();
+                
               }else{
                 location.reload();
                 

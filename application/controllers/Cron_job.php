@@ -31,18 +31,45 @@ class Cron_job extends CI_Controller{
 				$created_at = $value['created_at'];
 				if(strtotime($created_at)+300 < $current_time)
 				{
-					$sql2="Delete from tmp_booking where id='$id'";
+					$sql2="Delete from tmp_booking where parent_id='$parent_id'";
 					$this->db->query($sql2);
 				}
 				$checkout_date = $value['checkout_date'];
-				if($checkout_date < $date)
-				{
-					$sql1="Delete from tmp_booking where id='$id'";
-					$this->db->query($sql1);	
-				}
+				
 			}
 		}
-
+        
+        
+        /*$sql2="select * from tmp_booking";
+		foreach($this->db->query($sql2)->result_array() as $key => $value)
+		{
+			
+			$id = $value['id'];
+			$created_at = $value['created_at'];
+			
+			$checkout_date = $value['checkout_date'];
+			if($checkout_date < $date)
+			{
+				$sql1="Delete from tmp_booking where id='$id'";
+				$this->db->query($sql1);	
+			}
+		}*/
+		
+		$sql2="select * from tmp_booking_court";
+		foreach($this->db->query($sql2)->result_array() as $key => $value)
+		{
+			
+			$id = $value['id'];
+			$created_at = $value['created_at'];
+			
+			$checkout_date = $value['checkout_date'];
+			if($checkout_date < $date)
+			{
+				$sql1="Delete from tmp_booking_court where id='$id'";
+				$this->db->query($sql1);	
+			}
+		}
+			
 		$sql="select * from tmp_booking_court group by parent_id";
 		foreach($this->db->query($sql)->result_array() as $key => $value2)
 		{
@@ -59,12 +86,7 @@ class Cron_job extends CI_Controller{
 					$sql2="Delete from tmp_booking_court where id='$id'";
 					$this->db->query($sql2);
 				}
-				$checkout_date = $value['checkout_date'];
-				if($checkout_date < $date)
-				{
-					$sql1="Delete from tmp_booking_court where id='$id'";
-					$this->db->query($sql1);	
-				}
+				
 			}
 		}
 		

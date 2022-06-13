@@ -486,7 +486,7 @@ function show_booking_timeslot(){
 
 function set_form( activity_id, location_id, parent_id, clickDay, date, date_info)
 {
-    
+    //var new_date = date.split('-').reverse().join('/'); 
     $.ajax({
         url:base_url+'Court_booking/set_form/',
         data:{activity_id:activity_id,location_id:location_id,clickDay:clickDay,date:date, parent_id:parent_id, date_info:date_info},
@@ -500,16 +500,16 @@ function set_form( activity_id, location_id, parent_id, clickDay, date, date_inf
             buttons: [
             {
                 extend: 'print',
-                title: "Transaction History : " + date,
+                title: "Booing History : " + date,
                 
             },
             { 
                 extend: 'pdf', 
-                title: "Transaction History : " + date,
+                title: "Booking History : " + date,
             },
             { 
                 extend: 'excel', 
-                title: "Transaction History : " + date,
+                title: "Booking History : " + date,
             
             }],
             //"order":[1, 'asc'],

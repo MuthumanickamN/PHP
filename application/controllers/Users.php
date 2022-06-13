@@ -447,7 +447,8 @@ class Users extends CI_Controller {
 	        $output .="</td>";
 	        
 	        $output .="<td>";
-	        $output .=$value['discount_percentage'];
+	        //$output .=$value['discount_percentage'];
+	        $output .=round(($value['discount_value']/$value['gross_value'])*100, 2);
 	        $output .="</td>";
 
             $output .="<td>";

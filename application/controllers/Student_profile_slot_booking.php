@@ -378,6 +378,26 @@ public function add_slot_booking(){
    
    $studentDetails = $this->default->getStudentDetails($sid);
    
+   $from_arr_1 = explode(" ", $from);
+    if(strpos($from_arr_1[0], ':') !== false)
+    {
+        $from_arr_2 = explode(":", $from_arr_1[0]);
+    }
+    else if(strpos($from_arr_1[0], '.') !== false)
+    {
+        $from_arr_2 = explode(".", $from_arr_1[0]);
+    }
+    if (strpos($from_chk, 'PM') !== false) {
+        $from_1 = (int)$from_arr_2[0] + 12;
+    }
+    else{
+        $from_1 = (int)$from_arr_2[0];
+    }
+    $from_m = $from_1.$from_arr_2[1];
+
+   
+
+
    $query4 = $this->db->query('select a_s.*,ds.discount_name, COALESCE(ds.discount_percentage,0.00) from activity_selections a_s 
    left join discount_setups ds on ds.id= a_s.discount_type
    where a_s.sid="'.$studentDetails['sid'].'" and a_s.`activity_id` = "'.$activity_id.'" 
@@ -463,6 +483,67 @@ public function add_slot_booking(){
     $status='Pending';
     $checkexists = $this->db->query('select * from tmp_booking where parent_id ="'.$parent_id.'" and  student_id ="'.$sid.'" and activity_id ="'.$activity_id.'" and level_id ="'.$level_id.'" and checkout_date ="'.$dates.'"  and from_time="'.$from.'" and to_time="'.$to.'"');
     if (empty($checkexists->result_array())){
+
+        $sql_chk= "(select bs.from_time, bs.to_time from booking_approvals ba 
+    left join booked_slots as bs on bs.booking_id = ba.id
+    where ba.student_id='$sid' and ba.is_refunded = 0 and bs.booked_date = '".$dates."'  and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status ='1')
+
+    UNION 
+
+    (select from_time, to_time from tmp_booking where `student_id` ='".$sid."' and `checkout_date` = '".$dates."' )
+    ";
+    //echo $sql_chk;die;
+    $query_chk = $this->db->query($sql_chk)->result_array();	
+    foreach($query_chk as $key_chk => $val_chk)
+    {
+        $from_chk = $val_chk['from_time'];
+        $to_chk = $val_chk['to_time'];
+
+        $from_arr_1 = explode(" ", $from_chk);
+        if(strpos($from_arr_1[0], ':') !== false)
+        {
+            $from_arr_2 = explode(":", $from_arr_1[0]);
+        }
+        else if(strpos($from_arr_1[0], '.') !== false)
+        {
+            $from_arr_2 = explode(".", $from_arr_1[0]);
+        }
+        if (strpos($from_chk, 'PM') !== false) {
+            $from_1 = (int)$from_arr_2[0] + 12;
+        }
+        else{
+            $from_1 = (int)$from_arr_2[0];
+        }
+        $from_c = $from_1.$from_arr_2[1];
+
+
+        $to_arr_1 = explode(" ", $to_chk);
+        if(strpos($to_arr_1[0], ':') !== false)
+        {
+            $to_arr_2 = explode(":", $to_arr_1[0]);
+            
+        }
+        else if(strpos($to_arr_1[0], '.') !== false)
+        {
+            $to_arr_2 = explode(".", $to_arr_1[0]);
+        }
+        
+        if (strpos($to_chk, 'PM') !== false) {
+            $to_1 = (int)$to_arr_2[0] + 12;
+        }
+        else{
+            $to_1 = (int)$to_arr_2[0];
+        }
+        $to_c = $to_1.$to_arr_2[1];
+       
+        if($from_m >= $from_c && $from_m <= $to_c)
+        {
+            $json['status'] = 'error';  
+            $this->session->set_flashdata('error', 'You have already booked a slot on selected date and time.');
+            echo json_encode($json);die;
+        }
+    }
+    
           $getRowsCount = $this->db->query('SELECT * FROM `tmp_booking`');
           $count =  $getRowsCount->num_rows();
           $ticket = $this->school->getLastEntry('booking_approvals');

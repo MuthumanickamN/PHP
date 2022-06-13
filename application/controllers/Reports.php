@@ -641,7 +641,13 @@ class Reports extends CI_Controller
 		$data['arrayList'] = $arrayList;
 	    $userid =  $this->session->userdata('userid');
 
-		$userWhere = "where u.status = 'Active' and u.user_id=$userid";
+		if($type == ''){
+			$userWhere = "where u.status = 'Active' and u.user_id=$userid and (u.role='superadmin' or u.role='admin')";
+		}
+		else
+		{
+			$userWhere = "where u.status = 'Active' and (u.role='superadmin' or u.role='admin')";
+		}
 		$userList = $this->db->query("select u.user_id, u.user_name, u.role, u.email from users as u  
  								  ".$userWhere." order by u.user_id");
 		$userListArr = $userList->result_array();
