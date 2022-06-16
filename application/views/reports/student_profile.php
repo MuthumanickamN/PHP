@@ -85,11 +85,23 @@
                                                         <td><?php echo $stud['parent_name'];?></td>
                                                         <td><?php echo $stud['parent_mobile'];?></td>
                                                         <td><?php echo $stud['parent_email_id'];?></td>
-                                                        <td><a data-toggle="modal" data-target=""><?php echo $stud['fees_paid'];?></a></td>
+                                                   <!--  <td><a data-toggle="modal" data-target=""><?php //echo $stud['fees_paid'];?></a></td> --> 
 
-                                                        <!--
-                                                        <td><?php
-                                                        /* if($stud['fees_paid']){
+                                                      <td><?php if($stud['fees_paid']=='Due 0 month')
+                                                      {
+                                                        $tag ='danger';
+                                                        $setval = 'Due 0 month ';
+                                                    }else{
+                                                        $tag ='success';
+                                                        $setval = 'Paid above 1 month';
+                                                    
+                                                      }; 
+                                                       ?>
+                                                      <a class='badge badge-<?php echo $tag;?>' onclick="changeregistration('<?php echo $stud['id'];?>','fees_paid','<?php echo $setval;?>')"><?php echo $stud['fees_paid']; ?></a></td>  
+
+
+                                                     <!--   <td> --><?php
+                                                      /*  if($stud['fees_paid']){
                                                             $tag ='danger';
                                                             $setval = 'Due 0 month ';
                                                         }elseif($stud['fees_paid']){
@@ -98,11 +110,9 @@
                                                         }else{
                                                             $tag ='warning';
                                                             $setval = 'Paid below 1 month';
-                                                        }; */
-                                                        ?>
-                                                            <a class='badge badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $stud['id'];?>','fees_paid','<?php echo $setval;?>')"><?php echo $stud['fees_paid'];?></a>
-                                                        </td> -->
-
+                                                        }; 
+                                                       */ ?> 
+                                                        
                                                         <td><?php if($stud['status'] == 'Active'){
                                                             $tag ='success';
                                                             $setval = 'Inactive';
@@ -156,8 +166,26 @@
             <div class="modal-body" id="confirmMessage">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="confirmOk">Ok</button>
+                <button type="button" class="btn btn-success" id="confirmOk" onclick=>Ok</button>
                 <button type="button" class="btn btn-danger" id="confirmCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Extend Validity -->
+<div class="modal" id="extendvalidity" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content panel panel-primary">
+            <div class="modal-header panel-heading">
+                    <h4 class="modal-title -remove-title">Extend Validity</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            <div class="modal-body" id="confirmMessage">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="extendOk">Yes, Extend Now</button>
+                <button type="button" class="btn btn-danger" id="extendCancel">No</button>
             </div>
         </div>
     </div>
@@ -202,10 +230,10 @@
                             <td><b>Next Payable on</b></td>
                             <td><p class="fees-next_payable"></p></td>
                         </tr>
-                        <!--  <div>
+                        <div>
                         <button type="button" class="btn btn-success" id="payregistrationfees">Pay Registration Fees</button>
-                        <button type="button" class="btn btn-warning" id="extendvalidity">Extend Validity</button>
-                        </div> -->
+                        <button type="button" class="btn btn-warning" id="extendvalidity" onclick=extend_validity()>Extend Validity</button>
+                        </div> 
                        
                     </table>
                 
@@ -296,4 +324,79 @@ function confirmDialog(message, onConfirm){
     $("#confirmOk").unbind().one('click', onConfirm).one('click', fClose);
     $("#confirmCancel").unbind().one("click", fClose);
 }
+
+function changeregistration(id,field,value)
+{    confirmDialog1('', function(){
+
+        jQuery.ajax({
+            type:'POST',
+            url:baseurl+'Reports/studentprofile/changeregistration/'+id+'/'+field+'/'+value,
+            dataType:'json',    
+                   
+            success: function (json) {
+                $('.text-danger').remove();
+                if(json['fees_paid']){
+                    if(json['fees_paid']=='success'){
+                        location.reload();
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.fees_paidText + "\r\n" + xhr.responseText);
+            }          
+        });
+    });
+}
+
+
+function confirmDialog1(message, onConfirm){
+    var fClose = function(){
+        modal.modal("hide");
+    };
+    var modal = $("#feesDetails");
+    modal.modal("show");
+    $('.modal-backdrop').addClass('show');
+    $('.modal-backdrop').addClass('in');
+    //$("#confirmMessage").empty().append(message);
+    $("#payregistrationfees").unbind().one('click', onConfirm).one('click', fClose);
+    $("#extendvalidity").unbind().one("click", "extendvalidity");
+}
+function extend_validity()
+{
+    confirmDialog2('Extend Registration Validity ', function(){
+
+jQuery.ajax({
+    type:'POST',
+    url:baseurl+'Reports/studentprofile/',
+    dataType:'json',    
+           
+    success: function (json) {
+        $('.text-danger').remove();
+        if(json['fees_paid']){
+            if(json['fees_paid']=='success'){
+                location.reload();
+            }
+        }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.fees_paidText + "\r\n" + xhr.responseText);
+    }          
+});
+});  
+}
+function confirmDialog2(onConfirm){
+    var fClose = function(){
+        modal.modal("hide");
+    };
+    var modal = $("#feesDetails");
+    modal.modal("show");
+    $('.modal-backdrop').addClass('show');
+    $('.modal-backdrop').addClass('in');
+    //$("#payregistrationfees").empty().append(message);
+    $("#extendOk").unbind().one('click', onConfirm).one('click', fClose);
+    $("#extendCancel").unbind().one("click", fclose);
+}
+
+
+
 </script>
