@@ -244,6 +244,82 @@
    
     </div>
 </div>
+
+<!-- pay fees -->
+<div class="modal fade rotate" id="payregistrationfees" style="display:none;">
+    <div class="modal-dialog modal-lg"> 
+        <form id="voucher_reverse-form" method="post">   
+            <div class="modal-content panel panel-success">
+                <div class="modal-header panel-heading">
+                    <h4 class="modal-title -remove-title">REGISTRATION FEES </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body panel-body">
+                    <p><span class="alertMsg"></span></p>
+                    <table class="table table-striped table-bordered" >
+                        <tr>
+                            <td><b>Student ID</b></td>
+                            <td><p class="student_id"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Student Name</b></td>
+                            <td><p class="student_name"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Parent ID</b></td>
+                            <td><p class="parent_id"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>parent Name</b></td>
+                            <td><p class="parent_name"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Mobile No</b></td>
+                            <td><p class="mobile_no"></p></td>
+                        </tr>
+                    
+                        <tr>
+                            <td><b>Student Category</b></td>
+                            <td><p class="student_category"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Registration Fees Amount</b></td>
+                            <td><p class="registration_fees"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Mode</b></td>
+                            <td><p class="mode"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Wallet Balance</b></td>
+                            <td><p class="wallet_balance"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>VAT</b></td>
+                            <td><p class="vat"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>VAT Amount</b></td>
+                            <td><p class="vat_amount"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Payable Amount(Inclusive of 5.0% VAT)</b></td>
+                            <td><p class="payable_amount"></p></td>
+                        </tr>
+                        <div>
+                        <button type="button" class="btn btn-success" id="paynow">Pay Now</button>
+                        <button type="button" class="btn btn-danger" id="cancel">cancel</button>
+                        </div> 
+                       
+                    </table>
+                
+                </div>
+                
+            </div>
+        </form>      
+   
+    </div>
+</div>
 <?php
 $this->load->view('users/popup/display');
 $this->load->view('users/popup/edit');
@@ -358,8 +434,8 @@ function confirmDialog1(message, onConfirm){
     $('.modal-backdrop').addClass('show');
     $('.modal-backdrop').addClass('in');
     //$("#confirmMessage").empty().append(message);
-    $("#payregistrationfees").unbind().one('click', onConfirm).one('click', fClose);
-    $("#extendvalidity").unbind().one("click", "extendvalidity");
+    $("#payregistrationfees").unbind().one('click', onConfirm).one('click', "#payregistrationfees");
+    $("#extendvalidity").unbind().one("click", "#extendvalidity");
 }
 function extend_validity()
 {
