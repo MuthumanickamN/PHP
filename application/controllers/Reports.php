@@ -922,7 +922,15 @@ class Reports extends CI_Controller
 		$result = $this->db->query($sql)->row();
 		echo json_encode($result);
 	}
+	public function getDialog2()
+	{
+		$id = $this->input->post('id');
+		$sql="SELECT * FROM `registration_fees` WHERE id='$id'";
+		$result = $this->db->query($sql)->row();
+		echo json_encode($result);
+	}
 
+	
 
 }
 ?>

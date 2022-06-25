@@ -378,9 +378,20 @@ jQuery(document).ready(function() {
             //  var obj = JSON.parse(result);
             var obj = result;
             
-                $('.fees-student_id').html(obj.sid);
-               
+                $('.student_id').html(obj.student_id);
+                $('.student_name').html(obj.student_name);
+                $('.parent_id').html(obj.parent_id);
+                $('.parent_name').html(obj.parent_name);
+                $('.mobile_no').html(obj.parent_contact);
+                $('.student_category').html(obj.reg_fee_category);
+                $('.registration_fees').html(obj.reg_fee);
+                $('.mode').html(obj.pay_type);
+                $('.wallet_balance').html(obj.wallet_balance);
+                $('.vat').html(obj.vat_percent);
+                $('.vat_amount').html(obj.vat_value); 
+                $('.payable_amount').html(obj.net_amount);         
 
+               
                 modal.modal("show");
                 
             },
