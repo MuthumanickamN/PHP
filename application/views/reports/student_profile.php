@@ -402,40 +402,35 @@ function confirmDialog(message, onConfirm){
 }
 
 function changeregistration(id,field,value)
-{    confirmDialog1('', function(){
-
-        jQuery.ajax({
-            type:'POST',
-            url:baseurl+'Reports/studentprofile/changeregistration/'+id+'/'+field+'/'+value,
-            dataType:'json',    
-                   
-            success: function (json) {
-                $('.text-danger').remove();
-                if(json['fees_paid']){
-                    if(json['fees_paid']=='success'){
-                        location.reload();
-                    }
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.fees_paidText + "\r\n" + xhr.responseText);
-            }          
-        });
+{    
+    var modal = $("#feesDetails");
+    jQuery.ajax({
+        type:'POST',
+        url:baseurl+'Reports/getDialog1/',
+        data:{id:id},
+        dataType:'json',    
+        success: function (result) {
+            var obj = JSON.parse(result);
+            $('#fees-student_id').val(obj.student_id);
+            modal.modal("show");
+            $('.modal-backdrop').addClass('show');
+            $('.modal-backdrop').addClass('in');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.fees_paidText + "\r\n" + xhr.responseText);
+        }          
     });
+    
 }
 
 
-function confirmDialog1(message, onConfirm){
-    var fClose = function(){
-        modal.modal("hide");
-    };
-    var modal = $("#feesDetails");
-    modal.modal("show");
-    $('.modal-backdrop').addClass('show');
-    $('.modal-backdrop').addClass('in');
-    //$("#confirmMessage").empty().append(message);
-    $("#payregistrationfees").unbind().one('click', onConfirm).one('click', "#payregistrationfees");
-    $("#extendvalidity").unbind().one("click", "#extendvalidity");
+function confirmDialog1(){
+
+    
+    
+
+    //$("#payregistrationfees").unbind().one('click', onConfirm).one('click', "#payregistrationfees");
+    //$("#extendvalidity").unbind().one("click", "#extendvalidity");
 }
 function extend_validity()
 {
