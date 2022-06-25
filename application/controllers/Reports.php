@@ -918,7 +918,7 @@ class Reports extends CI_Controller
 	public function getDialog1()
 	{
 		$id = $this->input->post('id');
-		$sql='';
+		$sql="SELECT sid,name,dob,age FROM `registrations` WHERE id='$id'";
 		$result = $this->db->query($sql)->row();
 		echo json_encode($result);
 	}

@@ -410,8 +410,13 @@ function changeregistration(id,field,value)
         data:{id:id},
         dataType:'json',    
         success: function (result) {
-            var obj = JSON.parse(result);
-            $('#fees-student_id').val(obj.student_id);
+          //  var obj = JSON.parse(result);
+          var obj = result;
+            $('.fees-student_id').html(obj.sid);
+            $('.fees-name').html(obj.name);
+            $('.fees-dob').html(obj.dob);
+            $('.fees-age').html(obj.age);
+
             modal.modal("show");
             $('.modal-backdrop').addClass('show');
             $('.modal-backdrop').addClass('in');
