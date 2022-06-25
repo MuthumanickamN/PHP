@@ -204,7 +204,7 @@
                     <table class="table table-striped table-bordered" >
                         <tr>
                             <td><b>PSA ID</b></td>
-                            <td><p class="fees-student_id"></p></td>
+                            <td><input type="hidden" name="hidden_student_id" id="hidden_student_id" value=""><p class="fees-student_id"></p></td>
                         </tr>
                         <tr>
                             <td><b>Name</b></td>
@@ -231,8 +231,8 @@
                             <td><p class="fees-next_payable"></p></td>
                         </tr>
                         <div>
-                        <button type="button" class="btn btn-success" id="payregistrationfees">Pay Registration Fees</button>
-                        <button type="button" class="btn btn-warning" id="extendvalidity" onclick=extend_validity()>Extend Validity</button>
+                        <button type="button" class="btn btn-success" id="payregistrationfees" >Pay Registration Fees</button>
+                        <button type="button" class="btn btn-warning" class="extendvalidity" onclick="extend_validity()">Extend Validity</button>
                         </div> 
                        
                     </table>
@@ -246,7 +246,7 @@
 </div>
 
 <!-- pay fees -->
-<div class="modal fade rotate" id="payregistrationfees" style="display:none;">
+<div class="modal fade rotate" id="payregistrationfeesModel" style="display:none;">
     <div class="modal-dialog modal-lg"> 
         <form id="voucher_reverse-form" method="post">   
             <div class="modal-content panel panel-success">
@@ -364,6 +364,32 @@ jQuery(document).ready(function() {
             },
      
     } );
+
+    $('#payregistrationfees').click(function(){
+        var student_id = $('#hidden_student_id').val();
+        $("#feesDetails .close").click()
+        var modal = $("#payregistrationfeesModel");
+        jQuery.ajax({
+            type:'POST',
+            url:baseurl+'Reports/getDialog2/',
+            data:{id:student_id},
+            dataType:'json',    
+            success: function (result) {
+            //  var obj = JSON.parse(result);
+            var obj = result;
+            
+                $('.fees-student_id').html(obj.sid);
+               
+
+                modal.modal("show");
+                
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.fees_paidText + "\r\n" + xhr.responseText);
+            }          
+        });
+        
+    });
 } );
 
 function changestatus(id,field,value){
@@ -412,6 +438,7 @@ function changeregistration(id,field,value)
         success: function (result) {
           //  var obj = JSON.parse(result);
           var obj = result;
+          $('#hidden_student_id').val(id);
             $('.fees-student_id').html(obj.sid);
             $('.fees-name').html(obj.name);
             $('.fees-dob').html(obj.dob);
