@@ -381,9 +381,9 @@ jQuery(document).ready(function() {
             //  var obj = JSON.parse(result);
             var obj = result;
             
-                $('.student_id').html(obj.student_id);
+                $('.student_id').html(obj.sid);
                 $('.student_name').html(obj.student_name);
-                $('.parent_id').html(obj.parent_id);
+                $('.parent_id').html(obj.code);
                 $('.parent_name').html(obj.parent_name);
                 $('.mobile_no').html(obj.parent_contact);
                 $('.student_category').html(obj.reg_fee_category);

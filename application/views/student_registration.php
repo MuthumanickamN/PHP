@@ -1024,10 +1024,85 @@ function parent_details(){
 </div>
 </div>
 </div>
+
+
+
+<!-- pay fees -->
+<div class="modal fade rotate" id="payregistrationfeesModel" style="display:none;">
+    <div class="modal-dialog modal-lg"> 
+        <form id="voucher_reverse-form" method="post">   
+            <div class="modal-content panel panel-success">
+                <div class="modal-header panel-heading">
+                    <h4 class="modal-title -remove-title">REGISTRATION FEES </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body panel-body">
+                    <p><span class="alertMsg"></span></p>
+                    <table class="table table-striped table-bordered" >
+                        <tr>
+                            <td><b>Student ID</b></td>
+                            <td><p class="student_id"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Student Name</b></td>
+                            <td><p class="student_name"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Parent ID</b></td>
+                            <td><p class="parent_id"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>parent Name</b></td>
+                            <td><p class="parent_name"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Mobile No</b></td>
+                            <td><p class="mobile_no"></p></td>
+                        </tr>
+                    
+                        <tr>
+                            <td><b>Student Category</b></td>
+                            <td><p class="student_category"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Registration Fees Amount</b></td>
+                            <td><p class="registration_fees"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Mode</b></td>
+                            <td><p class="mode"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Wallet Balance</b></td>
+                            <td><p class="wallet_balance"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>VAT</b></td>
+                            <td><p class="vat"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>VAT Amount</b></td>
+                            <td><p class="vat_amount"></p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Payable Amount(Inclusive of 5.0% VAT)</b></td>
+                            <td><p class="payable_amount"></p></td>
+                        </tr>
+                        <div>
+                        <button type="button" class="btn btn-success" id="paynow">Pay Now</button>
+                        <button type="button" class="btn btn-danger" id="cancel">cancel</button>
+                        </div> 
+                       
+                    </table>
+                
+                </div>
+                
+            </div>
+        </form>      
+   
+    </div>
+</div> 
 </section>
-
-     
-
 </body>
 
 </html>  
@@ -1116,8 +1191,6 @@ $(".student_book").on('click',function(e) {
 		    //var obj = JSON.parse(data);
 		    if(data==0)
 		    {
-          
-
 		        //swal('Registration Fees Due!..','Please pay registration fees and proceed for slot booking','warning');
 		        swal({
                 title: "Registration Fees Due!..",
@@ -1128,10 +1201,37 @@ $(".student_book").on('click',function(e) {
               }).then((Button) => {
                 if (!Button) {
                   alert('Yes');
-                  
-                  
 
+                 // var student_id = $('#hidden_student_id').val();
+                  jQuery.ajax({
+                        type:'POST',
+                        url:baseurl+'Reports/getDialog2/',
+                        data:{id:id},
+                        dataType:'json',    
+                        success: function (result) {
+                        //  var obj = JSON.parse(result);
+                        var obj = result;
+                        
+                            $('.student_id').html(obj.sid);
+                            $('.student_name').html(obj.student_name);
+                            $('.parent_id').html(obj.code);
+                            $('.parent_name').html(obj.parent_name);
+                            $('.mobile_no').html(obj.parent_mobile);
+                            $('.student_category').html(obj.reg_fee_category);
+                            $('.registration_fees').html(obj.reg_fee);
+                            $('.mode').html(obj.payment_type);
+                            $('.wallet_balance').html(obj.wallet_balance);
+                            $('.vat').html(obj.vat_percent);
+                            $('.vat_amount').html(obj.vat_value); 
+                            $('.payable_amount').html(obj.net_amount);         
 
+                            $('#payregistrationfeesModel').modal('show');
+                            
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(thrownError + "\r\n" + xhr.fees_paidText + "\r\n" + xhr.responseText);
+                        }         
+                });
 
                   /*swal("Poof! Your imaginary file has been deleted!", {
                     icon: "success",

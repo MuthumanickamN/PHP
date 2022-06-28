@@ -925,10 +925,27 @@ class Reports extends CI_Controller
 	public function getDialog2()
 	{
 		$id = $this->input->post('id');
-		$sql="SELECT * FROM `registration_fees` WHERE student_id='$id'";
+		$sql="SELECT reg.*,u.code,r.sid FROM `registration_fees` reg 
+			  left join registrations as r on r.id=reg.id 
+			  left join users as u on u.user_name= reg.parent_name WHERE reg.student_id='$id'";
+	//	$result = $this->db->query($sql)->row();
+	//	$result = $sql->row_array();
 		//echo $sql;die;
-		$result = $this->db->query($sql)->row();
-		echo json_encode($result);
+		if($this->db->query($sql)->num_rows() > 0) 
+		{
+			$result =query($sql)->row_array();
+			echo json_encode($result);
+		}
+		else{
+			//$sid = $this->input->post('sid');
+			$sql1="SELECT pc.*,r.* from registrations r 
+				   left join prepaid_credits as pc on pc.parent_id=r.parent_user_id where r.id ='$id'";
+			$result1 = $this->db->query($sql1)->row();
+			//echo $sql1;die;
+			echo json_encode($result1);
+
+		}
+		
 	}
 
 	
