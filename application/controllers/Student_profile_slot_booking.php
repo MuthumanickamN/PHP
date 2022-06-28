@@ -2140,16 +2140,20 @@ public function add_slot_booking(){
         $activity_id =  $this->input->post('activity_id');
         $sql="select * from registration_fees where student_id='$id' order by pay_date desc limit 1";
         $row = $this->db->query($sql)->row();
-        $date_now = date("Y-m-d"); // this format is string comparable
-        $oneYearOn = date('Y-m-d',strtotime($date_now . " + 365 day"));
-        if ($date_now < $oneYearOn) {
-            echo 1;
+        if($this->db->query($sql)->num_rows() > 0)
+        {
+            $date_now = date("Y-m-d"); // this format is string comparable
+            $oneYearOn = date('Y-m-d',strtotime($date_now . " + 365 day"));
+            if ($date_now < $oneYearOn) {
+                echo 1;
+            }
+            else{
+                echo 0;
+            }
         }
         else{
             echo 0;
         }
-        
-        
     }
     
     public function test_invoice()

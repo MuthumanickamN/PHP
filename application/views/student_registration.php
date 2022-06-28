@@ -1088,8 +1088,8 @@ function parent_details(){
     }
 }
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"  />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" ></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" ></script>
 
 <script type="text/javascript">
 
@@ -1116,8 +1116,30 @@ $(".student_book").on('click',function(e) {
 		    //var obj = JSON.parse(data);
 		    if(data==0)
 		    {
-		        swal('Registration Fees Due!..','Please pay registration fees and proceed for slot booking','warning');
-		        
+          
+
+		        //swal('Registration Fees Due!..','Please pay registration fees and proceed for slot booking','warning');
+		        swal({
+                title: "Registration Fees Due!..",
+                text: "Please pay registration fees and proceed for slot booking",
+                icon: "warning",
+                buttons: ["Pay now", "Cancel"],
+                
+              }).then((Button) => {
+                if (!Button) {
+                  alert('Yes');
+                  
+                  
+
+
+
+                  /*swal("Poof! Your imaginary file has been deleted!", {
+                    icon: "success",
+                  });*/
+                }else {
+                  
+                }
+              });
 		    }
 		    else
 		    {
