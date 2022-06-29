@@ -933,17 +933,18 @@ class Reports extends CI_Controller
 		//echo $sql;die;
 		if($this->db->query($sql)->num_rows() > 0) 
 		{
-			$result =query($sql)->row_array();
+			$result = query($sql)->row_array();
 			echo json_encode($result);
 		}
-		else{
+		else
+		{
 			//$sid = $this->input->post('sid');
-			$sql1="SELECT pc.*,r.* from registrations r 
-				   left join prepaid_credits as pc on pc.parent_id=r.parent_user_id where r.id ='$id'";
+			$sql1="SELECT pc.*,r.*,u.code from registrations r 
+				   left join prepaid_credits as pc on pc.parent_id=r.parent_user_id 
+				   left join users as u on u.user_name = r.parent_name where r.id ='$id'";
 			$result1 = $this->db->query($sql1)->row();
 			//echo $sql1;die;
 			echo json_encode($result1);
-
 		}
 		
 	}

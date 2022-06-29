@@ -166,7 +166,7 @@
             <div class="modal-body" id="confirmMessage">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="confirmOk" onclick=>Ok</button>
+                <button type="button" class="btn btn-success" id="confirmOk">Ok</button>
                 <button type="button" class="btn btn-danger" id="confirmCancel">Cancel</button>
             </div>
         </div>
@@ -382,7 +382,7 @@ jQuery(document).ready(function() {
             var obj = result;
             
                 $('.student_id').html(obj.sid);
-                $('.student_name').html(obj.student_name);
+                $('.student_name').html(obj.name);
                 $('.parent_id').html(obj.code);
                 $('.parent_name').html(obj.parent_name);
                 $('.mobile_no').html(obj.parent_contact);
@@ -408,21 +408,26 @@ jQuery(document).ready(function() {
 
 
     $('#extendvalidity').click(function(){
-        var student_id = $('#hidden_student_id').val();
+       // var student_id = $('#hidden_student_id').val();
         $("#feesDetails .close").click()
-        var modal = $("#extendvaliditymodel");
+        var student_id = $('#hidden_student_id').val();
+        //var modal = $("#extendvaliditymodel");
         //alert(1);
-        jQuery.ajax({
-            type:'POST',
-            url:baseurl+'student_profile/.extendvalidity/',
-            data:{id:student_id},
-            dataType:'html', 
-            success: function(output) {
-           $('.extendvalidity').html(output);
-          }       
-        });
+        $('#extendvaliditymodel').modal('show');
+      
         
     }); 
+
+    $('#extendOk').click(function(){
+        $("#extendvaliditymodel .close").click()
+        var student_id = $('#hidden_student_id').val();
+        swal({
+            icon: 'success',
+            title: 'Extend Validity',
+            text: "Registration Validity Extended for 1 year Successfully!",
+            
+        })     
+    });
 
     $('#cancel').click(function(){
         var student_id = $('#hidden_student_id').val();
@@ -446,30 +451,6 @@ jQuery(document).ready(function() {
         });
     });
 
-    /*$('#extendvalidity').click(function(){
-        var student_id = $('#hidden_student_id').val();
-        $("#feesDetails .close").click()
-        var modal = $("#extendvaliditymodel");
-        //alert(1);
-        jQuery.ajax({
-            url: "<?=base_url();?>student_profile/",
-    type: 'get',
-    dataType: 'html',
-    success: function(output) {
-      $('.extendvalidity').html(output);
-    }    
-        });
-        
-    });
-*/
-   
-
-  /*  $('#extendvalidity').on('click','.btn btn-warning',function(){
-        var student_id = $('#hidden_student_id').val();
-        $("#feesDetails .close").click()
-        $('#extendvaliditymodel').modal('show');
-
-    });*/
 } );
 
 function changestatus(id,field,value){
@@ -544,28 +525,7 @@ function confirmDialog1(){
     //$("#payregistrationfees").unbind().one('click', onConfirm).one('click', "#payregistrationfees");
     //$("#extendvalidity").unbind().one("click", "#extendvalidity");
 }
-/*function extend_validity(id)
-{
-    confirmDialog2('Extend Registration Validity ', function(){
-        ajax({
-        type:'POST',
-            url:baseurl+'index.php/students/changestatus/'+id,
-            dataType:'json',    
-                   
-            success: function (json) {
-                $('.text-danger').remove();
-                if(json['status']){
-                    if(json['status']=='success'){
-                        location.reload();
-                    }
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            } 
-        });         
-});  
-}*/
+
 function confirmDialog2(onConfirm){
     var fClose = function(){
         modal.modal("hide");
