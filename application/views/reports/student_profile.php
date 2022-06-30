@@ -330,7 +330,11 @@ $this->load->view('users/popup/add');
 $this->load->view('users/popup/delete');
 $this->load->view('templates/footer');
 ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" ></script>
+
 <script type="text/javascript">
+
 jQuery(document).ready(function() {
     var t = jQuery('#studentListing').DataTable( {
         dom: 'Bfrtip',
@@ -426,7 +430,8 @@ jQuery(document).ready(function() {
             title: 'Extend Validity',
             text: "Registration Validity Extended for 1 year Successfully!",
             
-        })     
+        })   
+        console.log('test'); 
     });
 
     $('#cancel').click(function(){
