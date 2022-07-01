@@ -1250,6 +1250,31 @@ $(".student_book").on('click',function(e) {
    });
 });
 
+$('#cancel').click(function(){
+        var student_id = $('#hidden_student_id').val();
+        $("#payregistrationfeesModel .close").click()
+    
+    }); 
+
+    $('#paynow').click(function(){
+        var student_id = $('#hidden_student_id').val();
+        //$("#payregistrationfeesModel .close").click();
+        //var modal = $("#payregistrationfeesModel");
+        //alert('Payment completed Successfully!');   
+        jQuery.ajax({
+            type:'POST',
+            url:baseurl+'Registration_fees/payRegistration',
+            data:{id:student_id},
+            dataType:'html', 
+            success: function(output) {
+                alert('success');
+          }       
+        });
+    });
+
+
+
+
 $("#registrationForm").on('submit',(function(e) {
     var role = "<?php echo $role;?>";
  e.preventDefault();
