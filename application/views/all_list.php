@@ -85,11 +85,43 @@
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                    
                 </div>
-                <div class="card-content collapse show">
-                    <div class="card-body card-dashboard">
-                       
+                
+
+        <div class="card-content collapse show">
+                                <div class="card-body card-dashboard">
+                                    <div class="mainbox col-sm-12">
+                                        <div class="panel panel-info">
+                                            <form action ="<?php echo base_url() . 'index.php/AccountService/all_list' ?>" id="searchForm" method="POST">
+                                            <div class="row" style="margin-bottom: 20px">
+                                                <div class="col-lg-3">
+                                                    <b>From date</b>
+                                                    <input type="date" id="from_date" name="from_date" class="form-control" value="<?php echo $fromDateVal;?>" placeholder="From date">
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <b>To date</b>
+                                                    <input type="date" id="to_date" name="to_date" class="form-control" value="<?php echo $toDateVal;?>" placeholder="To date">
+                                                </div>
+
+                                                <div class="col-lg-2">
+                                                    <b>Account Service</b>
+                                                    <select class="form-control Name" id="Name" name="Name">
+                                                        <option value="">Select</option>
+                                                        <?php if(isset($serviceList)){
+                                                            foreach ($serviceList as $service) { ?>
+                                                                <option value="<?php echo $service['Name'] ?>" <?php if(isset($Name) && $service['Name']==$Name ){ echo 'selected';} ?>><?php echo $service['Name']; ?></option>
+                                                            <?php }
+                                                        }?>
+                                                    </select>
+                                                </div>
+                                                                                        
+                                                
+                                                <div class="col-lg-2">
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
+                                                </div>
+                                           
                         <div class="table-responsive">
-                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                        <form id="servicelist" method="POST">
+                        <table id="servicelist" class="table table-bordered table-hover small">
                                 <thead>
                                     <tr>
 											<th style="text-align:center">No</th>
@@ -127,6 +159,7 @@
 		} ?>
         </tbody>
     </table>
+  </form>
 </div>
 </div>
 </div>
@@ -135,8 +168,60 @@
 </div>
 </section>
 </div>
-</div>
-</div>
+
 </body>
 </html>
 
+<?php
+$this->load->view('templates/footer');
+?>
+<script type="text/javascript">
+
+jQuery(document).ready(function() {
+    var fromdateval = jQuery('#from_date').val();
+    var todateval = jQuery('#to_date').val();
+    var t = jQuery('#servicelist').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            { extend: 'print',
+            className: 'btn btn-secondary', 
+            footer: true, 
+            messageTop: 'AccountService List for '+fromdateval+' - '+todateval, 
+            title: 'AccountService List', 
+            exportOptions: {
+                    columns: [ 0,1, 2, 3, 4,5,6,7]
+                },
+            },
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
+            footer: true, 
+            messageTop: 'AccountService List for '+fromdateval+' - '+todateval, 
+            title: 'AccountService List', 
+            exportOptions: {
+                    columns: [ 0,1, 2, 3, 4,5,6,7]
+                },
+            },
+            { extend: 'excel', 
+            className: 'btn btn-secondary',
+            footer: true, 
+            messageTop: 'AccountService List for '+fromdateval+' - '+todateval, 
+            title: 'AccountService List', 
+            exportOptions: {
+                    columns: [ 0,1, 2, 3, 4,5,6,7]
+                },
+            }
+        ],
+        "fnRowCallback" : function(nRow, aData, iDisplayIndex ){
+                var info = $(this).DataTable().page.info();
+                $("td:first", nRow).html(info.start + iDisplayIndex +1);
+               return nRow;
+            },
+    } );
+} );
+
+
+$('.Name').select2();
+
+
+   
+</script>

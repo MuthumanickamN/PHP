@@ -37,7 +37,7 @@
 	</div>
 	<div class="col-sm-12 col-md-4">
 		<p class="form_text1">&nbsp;</p>
-		<input type="submit" id="fetch1" class="btn btn-primary" value="Fetch">
+		<input type="submit" id="fetch1" class="btn btn-secondary" value="Fetch">
 	</div>
 </form>
 
@@ -70,7 +70,7 @@
 		<div class="clearfix"></div>
 	</div>
 <div class="mar_top_20 text-right">
-		<button type="button" id="export_excel_button1" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
+		<button type="button" id="export_excel_button1" class="btn btn-secondary"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
 	</div>
 	
 	<div class="clearfix"></div>

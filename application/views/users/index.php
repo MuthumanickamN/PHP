@@ -158,7 +158,7 @@ $role = strtolower($this->session->userdata['role']);
           <br>
           <br>
           
-          <a onClick="$('#transactionHistoryModal').hide();"    class="btn btn-danger" >Cancel</a>
+          <a onClick="$('#transactionHistoryModal').hide();"    class="btn btn-secondary" >Cancel</a>
         
       </div>
       </div>
@@ -304,14 +304,16 @@ $this->load->view('templates/footer');
 				$('#listTable').dataTable({
 				    dom: 'Bfrtip',
                     buttons: [
-                    {
+                    /*{
                         extend: 'print',
                         title: "Transaction History",
+                        orientation: 'landscape',
                         
-                    },
-                    { 
-                        extend: 'pdf', 
-                        title: 'Transaction History', 
+                    },*/
+                    
+                    { extend: 'pdf', 
+                        orientation: 'landscape',
+                        title: "Transaction History",
                     },
                     { 
                         extend: 'excel', 

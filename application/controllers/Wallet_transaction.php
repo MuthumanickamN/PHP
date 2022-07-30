@@ -15,7 +15,8 @@ class Wallet_transaction extends CI_Controller {
 		$data['account_code_data'] = $this->schools->getAccountCodeList();
 		$data['parentList'] = $this->default->getParentList();
 		$data['vatPercent'] = $this->schools->getVatDetails();
-		$data['refundPercent'] = $this->default->getRefundDetails();
+		//['refundPercent'] = $this->default->getRefundDetails();
+		$data['refundPercent'] = 100.00;
 		$data['credit'] = 0;
 		$this->load->view('wallet/wallet_transaction',$data);
 	}
@@ -254,12 +255,22 @@ class Wallet_transaction extends CI_Controller {
     	$students=$this->db->query("select id, sid,name from registrations where parent_user_id='".$parent_id."' and status='Active'");
     	$data['studentList']=$students->result_array();
     	if($parent_id != 0){
-    		$data['walletAmount'] = $this->default->getWalletAmount($parent_id);
+    		$walletamount = $this->default->getWalletAmount($parent_id);
+    		if($walletamount)
+    		{
+    		    $data['walletAmount'] = $walletamount;
+    		}
+    		else
+    		{
+    		    $data['walletAmount']['id'] = '';
+	    	    $data['walletAmount']['total_credits'] = 0;
+    		}
+    		
 	    }else{
 	    	$data['walletAmount']['id'] = '';
 	    	$data['walletAmount']['total_credits'] = 0;
 	    }
-
+        //print_r($data);die;
 		$this->load->view('wallet/wallet_transaction_ajax', $data);	
 	}
 }  

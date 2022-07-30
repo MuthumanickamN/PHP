@@ -105,7 +105,14 @@ class Default_Model extends CI_Model {
         $this->db->from('refund_discount_percentages');  
         $this->db->where('id', 1);     
         $query = $this->db->get();
-        return $query->row()->percentage;
+        if($query->num_rows() > 0)
+        {
+            return $query->row()->percentage;
+        }
+        else
+        {
+            return '0.00';
+        }
     }
 
     public function getWalletAmount($parent_id){

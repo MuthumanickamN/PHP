@@ -125,8 +125,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12 centerAlign">                            
-                            <button type="button" class="btn rkmd-btn btn-success" id="add-booking-create">Add</button> 
-                            <a href="<?php echo base_url().'School_attendance' ?>"     class="btn btn-danger" >Cancel</a></div></div>
+                            <button type="button" class="btn rkmd-btn btn-secondary" id="add-booking-create">Add</button> 
+                            <a href="<?php echo base_url().'School_attendance' ?>"     class="btn btn-secondary" >Cancel</a></div></div>
                         </div>                    
                     </div>
 

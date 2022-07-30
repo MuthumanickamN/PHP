@@ -53,7 +53,7 @@
                                             ?>
                                             <div class="col-lg-2">
                                                     <b>Payment Type</b>
-                                                    <select class="form-control" id="paymentTypeVal" name="paymentTypeVal">
+                                                    <select class="form-control payment_type" id="paymentTypeVal" name="paymentTypeVal">
                                                         <option value="">Select</option>
                                                         <?php if(isset($paymentArray)){
                                                             foreach ($paymentArray as $payment) { ?>
@@ -63,7 +63,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                             </div>
                                               </form>
@@ -124,6 +124,10 @@
 $this->load->view('templates/footer');
 ?>
 <script type="text/javascript">
+$(document).ready(function(){
+$('.payment_type').select2();
+});
+
 jQuery(document).ready(function() {
     var titlename = '<?php echo $title;?>';
     var fromdateval = jQuery('#from_date').val();
@@ -131,7 +135,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#contractListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: titlename+' for '+fromdateval+' - '+todateval, 
             title: titlename, 

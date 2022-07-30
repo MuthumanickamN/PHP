@@ -325,6 +325,22 @@ $.ajax({
         </div>
     </div>
      </div>
+
+     <div class="form-group lg-btm">
+        <div class="row">
+              <div class="col-md-3 control">
+                <b>Description</b>*
+              </div>                            
+          <div class="col-md-3 control text-right">
+            <textarea  id="description_detail" name="description_detail" required="" class="form-control input-description-description_detail" ></textarea>
+            <span class="errorMsg"></span>
+          </div>
+        </div>
+        </div>
+
+   
+
+
 	 
 	 
 	    <div class="form-group lg-btm">
@@ -362,12 +378,73 @@ $.ajax({
                <?php } ?>
         </div> 
 	 
-	 
+      
+    <div class="form-group lg-btm">
+        <div class="row">
+              <div class="col-md-3 control">
+                      <strong>Payment Type</strong>*
+              </div>                            
+            <div class="col-md-6 control ">
+                    <span class="input-transaction-payment_type">
+                            <input id="payment_type" class="payment_cash" type="radio" value="Cash" name="payment_type" onclick="cashPayment()" <?php if(isset($payment_type) && $payment_type== 'Cash'){ echo 'checked';} ?>    />
+                                        <label style="margin-left: 10px; margin-right: 10px">Cash</label>
+                                        <input id="payment_type" type="radio" value="Card" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Card'){ echo 'checked';} ?> />
+                                        <label style="margin-left: 10px; margin-right: 10px">Card</label>
+                                        <input id="payment_type" type="radio" value="Online" name="payment_type" onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Online'){ echo 'checked';} ?> />
+                                        <label style="margin-left: 10px; margin-right: 10px">Online</label>
+                                        <input id="payment_type" type="radio" value="Cheque" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Cheque'){ echo 'checked';} ?> />
+                                        <label style="margin-left: 10px; margin-right: 10px">Cheque</label>
+                    </span>
+            </div>
+        </div>
+   </div>
 
-<div class="form-group lg-btm">
+                  <?php if(isset($payment_type) && $payment_type != '' && $payment_type != 'Cash') {
+                      if($payment_type=="Cheque") { ?>
+                      <div class="row edit_payment_hideDiv" >
+                              <div class="col-md-6 control ">
+                                <p><b>Cheque No</b>*</p>
+                                <input type="text"  id="cheque_number" name="cheque_number" required="" class="form-control input-transaction-cheque_number" value="<?php echo isset($cheque_number)?$cheque_number:''; ?>">
+                              </div>
+                              <div class="col-md-6 control ">
+                                <p><b>Cheque Date</b>*</p>
+                                  <input type="date"  name="cheque_date" id="cheque_date" class="form-control input-transaction-cheque_date" value="<?php echo isset($cheque_date)?$cheque_date:''; ?>">
+                              </div>
+                        <div class="col-md-6 control ">
+                          <p><strong>Bank Name</strong>*</p>
+                         <select name="bank" id="bank" class="form-control input-transaction-bank bank_name"  required="">
+                            <option value="">Select</option>
+                            <?php if(isset($bankdetails)){
+                              foreach($bankdetails as $row){?>
+                                <option value="<?php echo $row['bank_name'] ?>" <?php if($row['bank_name']==$bank ){ echo 'selected';} ?>><?php echo $row['bank_name']; ?></option><?php
+                            
+                             } } ?></select>
+                        </div>
+                    </div>
+                    <?php }else{?>
+                      <div class="row edit_payment_hideDiv">
+                       <div class="col-md-6 control ">
+                          <p><strong>Bank Name</strong>*</p>
+                         <select name="bank" id="bank" class="form-control input-transaction-bank bank_name"  required="">
+                            <option value="">Select</option>
+                            <?php if(isset($bankdetails)){
+                              foreach($bankdetails as $row){?>
+                                <option value="<?php echo $row['bank_name'] ?>" <?php if($row['bank_name']==$bank ){ echo 'selected';} ?>><?php echo $row['bank_name']; ?></option><?php
+                            
+                             } } ?>
+                         </select>
+                        </div>
+                      </div>
+                   <?php }
+
+                  }?>
+
+
+     
+           <div class="form-group lg-btm">
               <div class="col-md-6 control text-center">
-                <input id="save" type="submit" name="submit" value="Submit" class="btn btn-success" />      
-                <a href="" onClick="window.location.reload();" class="btn btn-danger" >Cancel</a>
+                <input id="save" type="submit" name="submit" value="Submit" class="btn btn-secondary" />      
+                <a href="" onClick="window.location.reload();" class="btn btn-secondary" >Cancel</a>
               </div>
             </div>
 
@@ -388,7 +465,40 @@ $.ajax({
 </div>
 </div>
 </html>
+<?php $this->load->view('popup/voucher'); ?>
 
+<script>var baseurl = "<?php echo site_url(); ?>";</script>
+<script src="<?php echo site_url();?>/assets/js/academy_activities.js"></script>
+<script type="text/javascript">
 
+function payment_details(payment_type){
+  console.log(payment_type);
+$.ajax({
+    url:"<?php echo base_url().'index.php/AccountService/payment_type/'; ?>?payment_type=payment_type",
+    type:"POST",
+    data:{payment_type:payment_type},
+    success:function(data)
+    {       
+    document.getElementById('result').innerHTML=data;
+    jQuery('.edit_payment_hideDiv').css('display','none'); //edit form
+    if (jQuery('.input-transaction-payment_type').parent().hasClass('edit_view')) {
+      document.getElementById('result1').innerHTML=data;
+      //jQuery('.edit_view_payment').css('display','block');
+      jQuery('.hideDiv').css('display','none');
+      jQuery('.edit_view_payment').html('');
+      jQuery('.edit_paymentDiv').css('display','block');
+    }
+    }
+});
+}
+function cashPayment(){
+jQuery('#result').hide();
+jQuery('.edit_payment_hideDiv').css('display','none'); // edit form
+jQuery('.edit_view_payment').html('');
+jQuery('#result').html('');
+jQuery('#result1').html('');
+jQuery('.result input').val('');
+jQuery('.result select').val('');
+}
 
-
+</script>

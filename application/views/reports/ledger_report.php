@@ -61,7 +61,7 @@
                                             <div class="row" style="margin-bottom: 20px">
                                                 <div class="col-lg-3">
                                                     <b>Account code</b>
-                                                    <select class="form-control" id="acc_code" name="acc_code">
+                                                    <select class="form-control account_code" id="acc_code" name="acc_code">
                                                         <option value="">Select</option>
                                                         <?php if(isset($account_code_data)){
                                                             foreach ($account_code_data as $code) { ?>
@@ -81,7 +81,7 @@
                                                 
                                                 
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -155,6 +155,10 @@ $this->load->view('templates/footer');
 ?>
 <script type="text/javascript">
 
+$(document).ready(function(){
+$('.account_code').select2();
+});
+
 
 jQuery(document).ready(function() {
     var fromdateval = jQuery('#from_date').val();
@@ -162,7 +166,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#transactionListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Ledger report for '+fromdateval+' - '+todateval, 
             title: 'Ledger report', 

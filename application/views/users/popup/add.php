@@ -5,7 +5,7 @@
             <div class="modal-content panel panel-primary">
                 <div class="modal-header panel-heading">
                     <h4 class="modal-title -remove-title">Add user</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;<span class="close-x">Close</span></button>
+                    <button type="button" class="close"  data-dismiss="modal">&times;<span class="close-x">Close</span></button>
                 </div>
                 <div class="modal-body panel-body">
                     <div class="error_msg"></div>
@@ -99,8 +99,8 @@
                 <div class="modal-footer panel-footer">
                     <div class="row">
                         <div class="col-sm-12">                            
-                            <button type="button" class="btn rkmd-btn btn-success" data-addempid="" id="add-user">Add</button> 
-                            <button type="button" class="btn rkmd-btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn rkmd-btn btn-secondary" data-addempid="" id="add-user">Add</button> 
+                            <button type="button" class="btn rkmd-btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>                    
                     </div>
                 </div>

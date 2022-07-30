@@ -108,21 +108,23 @@
                   <?php } else{ echo "--"; } ?>
                     </td>
                   <td style="text-align:center">
-                    <?php if($value['refund_approval_status'] == 'Approved'){
+                    <?php 
+                        if($value['refund_approval_status'] == 'Approved'){
                           $approvaltag ='success';
+                         
                       }else if($value['refund_approval_status'] == 'Rejected'){
                           $approvaltag ='danger';
                       }else{
                           $approvaltag ='info';
                       };?>
-                    <a class='badge badge-<?php echo $approvaltag;?>' ><?php echo ucfirst($value['refund_approval_status']);?></a>
+                    <a class='badge badge-<?php echo $approvaltag;?>'><?php echo ucfirst($value['refund_approval_status']);?></a>
                   </td>
                   <td style="text-align:center">
                     <?php if($value['refund_approval_status'] != 'Approved'){ ?>
                       <button  data-toggle="modal" data-target="#confirmModal" data-value="<?php echo $value['id'];?>" class="btn btn-warning" onclick="changestatus(<?php echo $value['id'];?>)" title="Update Status"><i class="fa fa-edit"></i>  </button>
                     <?php } else{ ?>
                     <!--<a  href="<?php echo base_url('Slot_refund_request/view/'.$value['id']); ?>" title="View" class="edit-transaction ml-1 btn-ext-small btn btn-sm btn-info" ><i class="fa fa-eye"></i></a>-->
-                    <button  data-toggle="modal" data-target="#confirmModal" data-value="<?php echo $value['id'];?>" class="btn btn-warning" onclick="changestatus(<?php echo $value['id'];?>)" title="Update Status"><i class="fa fa-edit"></i>  </button>
+                    <button  data-toggle="modal" data-target="#confirmModal" data-value="<?php echo $value['id'];?>" class="btn btn-warning" onclick="changestatus(<?php echo $value['id'];?>)" title="Update Status" disabled><i class="fa fa-edit"></i>  </button>
                   <?php } ?>
                   </td>
               </tr>

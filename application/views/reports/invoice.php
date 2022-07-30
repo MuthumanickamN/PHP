@@ -70,7 +70,7 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <b>Student ID / Name</b>
-                                                    <select class="form-control" id="stud_name" name="stud_name">
+                                                    <select class="form-control student_id" id="stud_name" name="stud_name">
                                                         <option value="">Select</option>
                                                         <?php if(isset($studentList)){
                                                             foreach ($studentList as $student) { ?>
@@ -81,7 +81,7 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <b>Parent ID / Email / Mobile</b>
-                                                    <select class="form-control" id="parent_idval" name="parent_idval">
+                                                    <select class="form-control parent_id" id="parent_idval" name="parent_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($parentList)){
                                                             foreach ($parentList as $parent) { ?>
@@ -91,7 +91,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -164,6 +164,10 @@
 $this->load->view('templates/footer');
 ?>
 <script type="text/javascript">
+$(document).ready(function(){
+$('.student_id').select2();
+$('.parent_id').select2();
+});
 
 
 jQuery(document).ready(function() {
@@ -172,7 +176,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#transactionListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Daily transaction report for '+fromdateval+' - '+todateval, 
             title: 'Daily transaction report', 

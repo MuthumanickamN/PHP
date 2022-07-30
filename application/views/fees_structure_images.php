@@ -116,15 +116,15 @@
                      <div class="form-group lg-btm">
                       <div class="col-md-6 control text-center">
                             <?php if($activity_id=="") { ?>
-                         <input id="save" type="submit" name="submit" value="Submit" onclick="<?php echo base_url('fees_structure_images/add/'); ?>"       class="btn btn-success" /> 
+                         <input id="save" type="submit" name="submit" value="Submit" class="btn btn-secondary" onclick="<?php echo base_url('fees_structure_images/add/'); ?>"       class="btn btn-success" /> 
                        <?php } else { ?>
                           
-                                     <input id="save" type="submit" name="submit" value="Update" onclick="<?php echo base_url('fees_structure_images/add/'); ?>"       class="btn btn-success" /><?php } ?>
+                                     <input id="save" type="submit" name="submit" value="Update" class="btn btn-secondary" onclick="<?php echo base_url('fees_structure_images/add/'); ?>"       class="btn btn-success" /><?php } ?>
 
                                  
 
                         
-                         <a href="<?php echo base_url().'fees_structure_images' ?>"     class="btn btn-danger" >Cancel</a></div></div>
+                         <a href="<?php echo base_url().'fees_structure_images' ?>"     class="btn btn-secondary" >Cancel</a></div></div>
                     
                 </form>
             </div>

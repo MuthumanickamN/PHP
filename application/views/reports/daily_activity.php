@@ -57,7 +57,7 @@
                                                 <?php }?>
                                                 <div class="col-lg-2">
                                                     <b>Student</b>
-                                                    <select class="form-control" id="stud_name" name="stud_name">
+                                                    <select class="form-control student" id="stud_name" name="stud_name">
                                                         <option value="">Select</option>
                                                         <?php if(isset($studentList)){
                                                             foreach ($studentList as $student) { ?>
@@ -68,7 +68,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Activity</b>
-                                                    <select class="form-control" id="activity_code" name="activity_code">
+                                                    <select class="form-control activity" id="activity_code" name="activity_code">
                                                         <option value="">Select</option>
                                                         <?php if(isset($activityList)){
                                                             foreach ($activityList as $activity) { ?>
@@ -79,7 +79,7 @@
                                                 </div>
                                                  
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -87,7 +87,7 @@
                                             <div class="row" style="margin-bottom: 20px">
                                                 <div class="col-lg-2">
                                                     <b>Location</b>
-                                                    <select class="form-control" id="location_idval" name="location_idval">
+                                                    <select class="form-control location" id="location_idval" name="location_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($locationList)){
                                                             foreach ($locationList as $location) { ?>
@@ -98,7 +98,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Level</b>
-                                                    <select class="form-control" id="gameLevelId" name="gameLevelId">
+                                                    <select class="form-control level" id="gameLevelId" name="gameLevelId">
                                                         <option value="">Select</option>
                                                         <?php if(isset($levelList)){
                                                             foreach ($levelList as $level) { ?>
@@ -109,7 +109,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Coach</b>
-                                                    <select class="form-control" id="coach_idval" name="coach_idval">
+                                                    <select class="form-control coach" id="coach_idval" name="coach_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($coachList)){
                                                             foreach ($coachList as $coach) { ?>
@@ -200,6 +200,7 @@ jQuery(document).ready(function() {
         dom: 'Bfrtip',
         buttons: [
             { extend: 'print', 
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Daily Activity Report - '+dateVal, 
             title: 'Daily Activity Report', 
@@ -207,7 +208,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10,11,12 ]
                 },
             },
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Daily Activity Report - '+dateVal, 
             title: 'Daily Activity Report', 
@@ -215,7 +217,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10,11,12 ]
                 },
             },
-            { extend: 'excel', 
+            { extend: 'excel',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Daily Activity Report - '+dateVal, 
             title: 'Daily Activity Report', 
@@ -233,5 +236,14 @@ jQuery(document).ready(function() {
     } );
 } );
 
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('.student').select2();
+$('.activity').select2();
+$('.level').select2();
+$('.location').select2();
+$('.coach').select2();
+});
 </script>
 

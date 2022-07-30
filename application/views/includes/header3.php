@@ -206,11 +206,14 @@
 			$user_menu_arr = [];
 			$user_menu_perm = 0;
 
-      $court_booking_menu_arr = [];
+            $court_booking_menu_arr = [];
 			$court_booking_menu_perm = 0;
 
-      $parent_court_booking_menu_arr = [];
+            $parent_court_booking_menu_arr = [];
 			$parent_court_booking_menu_perm = 0;
+			
+		    $accounts_menu_arr = [];
+			$accounts_menu_perm = 0;
 			
 			foreach($result_rp as $key => $value)
 			{
@@ -275,6 +278,15 @@
 					{
 						//show parent menu, if atlease one submenu having view_permission = 1
 						$parent_court_booking_menu_perm = 1;
+					}
+				}
+		 else if($value['main_menu_name'] == 'Accounts')
+				{
+					$accounts_menu_arr[$value['controller_name']] = $value['view_permission'];
+					if($value['view_permission'] == 1)
+					{
+						//show parent menu, if atlease one submenu having view_permission = 1
+						$accounts_menu_perm = 1;
 					}
 				}
 			}
@@ -472,70 +484,70 @@
           </li>
         <?php } ?>
 
-        <?php if($role == 'superadmin' || $report_menu_perm == 1) { ?>
+        <?php if($role == 'superadmin' || $reports_menu_perm == 1) { ?>
           <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fa fa-list"></i><span data-i18n="Pages">Reports</span></a>
             <ul class="dropdown-menu">
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/activity/daily_activity'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/activity/daily_activity'] == 1) : ?>
                 <li data-menu="daily_activity_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/activity/daily_activity' ?>"><span data-il8n="Daily Activity Report">Daily Activity Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/coach_roaster'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/coach_roaster'] == 1) : ?>
                 <li data-menu="Coach_roaster"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/coach_roaster' ?>"><span data-il8n="Coach roaster">Coach roaster</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/student_profile'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/student_profile'] == 1) : ?>
                 <li data-menu="student_profile_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/student_profile' ?>"><span data-il8n="Student Profile Report">Student Profile Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/coach_profile'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/coach_profile'] == 1) : ?>
                 <li data-menu="student_profile_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/coach_profile' ?>"><span data-il8n="Coach Profile Report">Coach Profile Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['daily_transaction/report'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['daily_transaction/report'] == 1) : ?>
                 <li data-menu="daily_transaction_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'daily_transaction/report' ?>"><span data-il8n="Daily Transaction Report">Daily Transaction Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/ledger_report'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/ledger_report'] == 1) : ?>
                 <li data-menu="Ledger_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/ledger_report' ?>"><span data-il8n="Ledger Report">Ledger Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Reports/attendance_tracking'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Reports/attendance_tracking'] == 1) : ?>
                 <li data-menu="attendance_tracking_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports/attendance_tracking' ?>"><span data-il8n="Attendance Tracking Report">Attendance Tracking Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Reports/Request_approve_reject'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Reports/Request_approve_reject'] == 1) : ?>
                 <li data-menu="Request_approve_reject_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports/Request_approve_reject' ?>"><span data-il8n="Request Approve Reject Report">Request Approve Reject Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Reports/wallet_transaction/master'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Reports/wallet_transaction/master'] == 1) : ?>
                 <li data-menu="Master_wallet_transaction_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports/wallet_transaction/master' ?>"><span data-il8n="Master Wallet Transaction Report">Master Wallet Transaction Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Reports/wallet_transaction'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Reports/wallet_transaction'] == 1) : ?>
                 <li data-menu="Wallet_transaction_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports/wallet_transaction' ?>"><span data-il8n="Wallet Transaction Report">Wallet Transaction Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Reports/activity_list'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Reports/activity_list'] == 1) : ?>
                 <li data-menu="Activity_list_Report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports/activity_list' ?>"><span data-il8n="Activity List Report">Activity List Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Reports/activity/slot_schedule'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Reports/activity/slot_schedule'] == 1) : ?>
                 <li data-menu="Slot_schedule_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Reports/activity/slot_schedule' ?>"><span data-il8n="Slot Schedule Report">Slot Schedule Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/activity_slot'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/activity_slot'] == 1) : ?>
                 <li data-menu="daily_transaction_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/activity_slot' ?>"><span data-il8n="Activity Slot Report">Activity Slot Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/invoice_report'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/invoice_report'] == 1) : ?>
                 <li data-menu="Invoice_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/invoice_report' ?>"><span data-il8n="Invoice Report">Invoice Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/vat_report'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/vat_report'] == 1) : ?>
                 <li data-menu="vat_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/vat_report' ?>"><span data-il8n="VAT Report">VAT Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/contract_payment'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/contract_payment'] == 1) : ?>
                 <li data-menu="Contract_payment_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/contract_payment' ?>"><span data-il8n="Contract Payment Report">Contract Payment Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/slot_swap'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/slot_swap'] == 1) : ?>
                 <li data-menu="Slot_swap_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/slot_swap' ?>"><span data-il8n="Slot Swap Report">Slot Swap Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/rating_review'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/rating_review'] == 1) : ?>
                 <li data-menu="Rating_review_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/rating_review' ?>"><span data-il8n="Rating Review Report">Rating Review Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/class_report/booked'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/class_report/booked'] == 1) : ?>
                 <li data-menu="Class_booked_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/class_report/booked' ?>"><span data-il8n="Class Booked Report">Class Booked Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['reports/class_report/attended'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['reports/class_report/attended'] == 1) : ?>
                 <li data-menu="Class_attended_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/class_report/attended' ?>"><span data-il8n="Class Attended Report">Class Attended Report</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $report_menu_arr['Contract_customer_invoice'] == 1) : ?>
+              <?php if ($role == 'superadmin' || $reports_menu_arr['Contract_customer_invoice'] == 1) : ?>
                 <li data-menu="Class_missed_report"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports/class_report/missed' ?>"><span data-il8n="Class Missed Report">Class Missed Report</span></a></li>
               <?php endif; ?>
 
@@ -603,7 +615,7 @@
 
         <?php //echo "<pre>"; print_r($menu_model); die; ?>
 
-<?php if($role == 'superadmin' || $role == 'admin' ) { ?>
+<?php if($role == 'superadmin'  || $court_booking_menu_perm == 1) { ?>
   <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fas fa-running"></i><span data-i18n="UI">Court Booking</span></a>
     <ul class="dropdown-menu">
       
@@ -625,11 +637,11 @@
 
           <?php }*/ ?>
           
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['Court_booking'] == 1) {?>
                   <li data-menu="Booking"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Court_booking' ?>"><span data-i18n="Booking">Book Court</span></a></li>
 
           <?php } ?>
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['Booking_Approval'] == 1) {?>
                   <li data-menu="Customer Booking Approval"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Booking_Approval' ?>"><span data-i18n="Customer Booking Approval">Customer Booking Approval</span></a></li>
 
           <?php } ?>
@@ -649,26 +661,26 @@
                 </li>-->
           <?php //} ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['reports_booking'] == 1) {?>
                   <li data-menu="Reports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'reports_booking' ?>"><span data-i18n="Reports">Reports</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['sports'] == 1 || $court_booking_menu_arr['location_booking'] == 1 || $court_booking_menu_arr['court'] == 1 || $court_booking_menu_arr['pricing'] == 1 ) {?>
                   <li data-menu="Settings"><a class="dropdown-item" data-toggle="" href="#"><span data-i18n="Settings">Settings &raquo;</span></a>
                   <ul class="dropdown-submenu">
                     
-					<?php if($role == 'superadmin'|| $role == 'admin') {?>
+					<?php if($role == 'superadmin'|| $court_booking_menu_arr['sports'] == 1) {?>
                   <li data-menu="Manage Sports"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'sports' ?>"><span data-i18n="Manage Sports">Manage Sports</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['location_booking'] == 1) {?>
                   <li data-menu="Manage Location"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'location_booking' ?>"><span data-i18n="Manage Location">Manage Location</span></a></li>
           <?php } ?>
 
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['court'] == 1) {?>
                   <li data-menu="Manage Court"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'court' ?>"><span data-i18n="Manage Court">Manage Court</span></a></li>
           <?php } ?>
-          <?php if($role == 'superadmin'|| $role == 'admin') {?>
+          <?php if($role == 'superadmin'|| $court_booking_menu_arr['pricing'] == 1) {?>
                     <li>
                       <a class="dropdown-item" href="<?php echo base_url() . 'pricing' ?>">Pricing</a>
                     </li>
@@ -713,18 +725,21 @@
   </li>
 <?php }/**/ ?>
 
-<?php if($role == 'superadmin' || $role == 'admin') { ?>
+<?php if($role == 'superadmin' || $accounts_menu_perm == 1) { ?>
   <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fas fa-donate"></i><span data-i18n="UI">Accounts</span></a>
     <ul class="dropdown-menu">
       
-        
+         <?php if($role == 'superadmin'|| $accounts_menu_arr['Accountsreport/coach_activity_wise_revenue'] == 1) {?>
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Accountsreport/coach_activity_wise_revenue' ?>"><span data-i18n="Booking">Revenue Report</span></a></li> 
-
-
+    <?php } ?>
+        
+        <?php if($role == 'superadmin'|| $accounts_menu_arr['AccountService/all_list'] == 1) {?>
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'AccountService/all_list' ?>"><span data-i18n="Reports">Accounts Services</span></a></li>
-
+        <?php } ?>
+        
+        <?php if($role == 'superadmin'|| $accounts_menu_arr['AccountServiceType'] == 1) {?>
         <li data-menu="games"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'AccountServiceType' ?>"><span data-i18n="Reports">Manage Accounts Services</span></a></li>
-
+        <?php } ?>
 	</ul>
   </li>
 <?php }/**/ ?>
@@ -786,7 +801,8 @@
 <script>
 var base_url = "<?php echo base_url();?>";
 </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" ></script>
 <script>
   /*
 $(document).ready(function(){
@@ -797,6 +813,25 @@ $(document).ready(function(){
   });
 });
 */
+$(document).ready(function(){
+    var role = "<?php echo $role;?>";
+    var userid = "<?php echo $userid;?>"; 
+    //if(role == 'parent'){
+        jQuery.ajax({
+                type:'POST',
+                url:base_url+'cron_job/clear_cart_all',
+                data:{id:userid},
+                dataType:'html', 
+                success: function(output) {
+                    if(output==1)
+                    {
+                        swal('Your Cart Cleared','Booking Timeout','warning');
+                    }
+                }       
+            });
+    //}
+        });   
+    
 </script>
 </html>
 

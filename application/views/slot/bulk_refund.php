@@ -104,7 +104,7 @@
                                 </select>
                             </div>
                             <div class="col-lg-2">
-                                <button class="btn btn-success margin-top-20">Search</button>
+                                <button class="btn btn-secondary margin-top-20">Search</button>
                             </div>
                             
                         </div>
@@ -113,7 +113,7 @@
                         <input type="hidden" name="bulk_id" id="bulk_id" >
 
                         <div class="row changeStatusDiv">
-                            <button  data-toggle="modal" data-target="#confirmModal" data-val="all" class="btn btn-info changeStatus"  title="Update Status">Refund  </button>
+                            <button  data-toggle="modal" data-target="#confirmModal" data-val="all" class="btn btn-secondary changeStatus"  title="Update Status">Refund  </button>
                         </div>
                         <table id="refundList" class="table table-bordered table-hover small">
                             <thead>
@@ -153,7 +153,7 @@
                                     <td style="text-align: center"><?php echo $refund['lane_court_id'];?></td>
                                     <td style="text-align: center"><?php echo $refund['coach_id'];?></td>
                                     <td style="text-align: center">
-                                        <button  data-toggle="modal" data-target="#confirmModal" data-val="<?php echo $refund['id'];?>" class="btn btn-warning changeStatus"  title="Refund">Refund  </button>
+                                        <button  data-toggle="modal" data-target="#confirmModal" data-val="<?php echo $refund['id'];?>" class="btn btn-secondary changeStatus"  title="Refund">Refund  </button>
                                     </td>
                                 </tr>
                                 <?php }
@@ -187,10 +187,10 @@
               <input type="hidden" name="refund_id[]" id="id_val">
               <div class="modal-body row" id="confirmMessage">     
                   <div class="col-lg-6 alignCenter">
-                    <button type="button" class="btn btn-success" onclick="updateRequest()">Submit</button>  
+                    <button type="button" class="btn btn-secondary" onclick="updateRequest()">Submit</button>  
                   </div>
                   <div class="col-lg-6 alignCenter">
-                    <button type="button" class="btn btn-danger"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
                   </div>
               </div>
           </form>

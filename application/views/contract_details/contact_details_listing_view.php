@@ -43,8 +43,8 @@
 			<input type="text" name="end_date" id="end_date" class="form-control end_date" autocomplete="off" required />
 		</div>
 		<div class="col-md-3">
-		<input type="button" name="select_listing" id="select_listing" value="Search" class="btn btn-info" />
-		<input type="button" name="reset_listing" id="reset_listing" value="Reset" class="btn btn-warning" />
+		<input type="button" name="select_listing" id="select_listing" value="Search" class="btn btn-secondary" />
+		<input type="button" name="reset_listing" id="reset_listing" value="Reset" class="btn btn-secondary" />
 	</div>
 	</div>
 	

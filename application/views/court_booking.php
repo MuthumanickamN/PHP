@@ -308,5 +308,11 @@ $(function () { $("[data-toggle = 'tooltip']").tooltip({html: true}); });
 });
 
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#location').select2();
+$('#sports').select2();
+})
+</script>
 
 <!-- View Modal HTML -->

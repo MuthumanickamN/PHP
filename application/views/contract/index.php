@@ -42,7 +42,7 @@
                         <input type="hidden" name="bulk_id" id="bulk_id" >
 
                         <div class="row changeStatusDiv">
-                            <button  data-toggle="modal" data-target="#confirmModal" data-val="all" class="btn btn-info changeStatus"  title="Update Status">Invoice All  </button>
+                            <button  data-toggle="modal" data-target="#confirmModal" data-val="all" class="btn btn-secondary changeStatus"  title="Update Status">Invoice All  </button>
                         </div>
                         <table id="contractList" class="table table-bordered table-hover small">
                             <thead>
@@ -86,11 +86,11 @@
                                         <?php }else{ 
                                             if(date('M Y')==$contract['last_contract_amount_paid_month_year']){
                                             ?>
-                                        <button  class="btn btn-success "  title="Invoice" disabled>Invoice  </button>
+                                        <button  class="btn btn-secondary "  title="Invoice" disabled>Invoice  </button>
                                         <?php }
                                     else{
                                         ?>
-                                        <button  data-toggle="modal" data-target="#confirmModal" data-val="<?php echo $contract['id'];?>" class="btn btn-warning changeStatus"  title="Invoice">Invoice  </button>
+                                        <button  data-toggle="modal" data-target="#confirmModal" data-val="<?php echo $contract['id'];?>" class="btn btn-secondary changeStatus"  title="Invoice">Invoice  </button>
                                    <?php }
                                     } ?>
                                     </td>
@@ -126,10 +126,10 @@
               <input type="hidden" name="contract_id[]" id="id_val">
               <div class="modal-body row" id="confirmMessage">     
                   <div class="col-lg-6 alignCenter">
-                    <button type="button" class="btn btn-success" onclick="updateRequest()">Invoice Now</button>  
+                    <button type="button" class="btn btn-secondary" onclick="updateRequest()">Invoice Now</button>  
                   </div>
                   <div class="col-lg-6 alignCenter">
-                    <button type="button" class="btn btn-danger"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
                   </div>
               </div>
           </form>

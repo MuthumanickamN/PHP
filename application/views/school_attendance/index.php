@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>School name</b>
-                                                    <select class="form-control" id="schoolId" name="schoolId">
+                                                    <select class="form-control school_name" id="schoolId" name="schoolId">
                                                         <option value="">Select</option>
                                                         <?php if(isset($schoolList)){
                                                             foreach ($schoolList as $school) { ?>
@@ -95,7 +95,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Coach</b>
-                                                    <select class="form-control" id="coachId" name="coachId">
+                                                    <select class="form-control coach" id="coachId" name="coachId">
                                                         <option value="">Select</option>
                                                         <?php if(isset($coachList)){
                                                             foreach ($coachList as $coach) { ?>
@@ -105,7 +105,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -176,6 +176,10 @@ $this->load->view('school_attendance/popup/view_booking');
 $this->load->view('templates/footer');
 ?>
 <script type="text/javascript">
+$(document).ready(function(){
+$('.school_name').select2();
+$('.coach').select2();
+});
 jQuery(document).ready(function() {
     var t = jQuery('#transactionListing').DataTable( {
         

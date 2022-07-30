@@ -47,7 +47,7 @@
                             
                             <div class="col-lg-2">
                                 <b>Activity</b>
-                                <select class="form-control" id="activity_code" name="activity_code">
+                                <select class="form-control activity" id="activity_code" name="activity_code">
                                     <option value="">Select</option>
                                     <?php if(isset($activityList)){
                                         foreach ($activityList as $activity) { ?>
@@ -58,7 +58,7 @@
                             </div>
                              <div class="col-lg-2">
                                 <b>Location</b>
-                                <select class="form-control" id="location_idval" name="location_idval">
+                                <select class="form-control location" id="location_idval" name="location_idval">
                                     <option value="">Select</option>
                                     <?php if(isset($locationList)){
                                         foreach ($locationList as $location) { ?>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <b>Level</b>
-                                <select class="form-control" id="gameLevelId" name="gameLevelId">
+                                <select class="form-control level" id="gameLevelId" name="gameLevelId">
                                     <option value="">Select</option>
                                     <?php if(isset($levelList)){
                                         foreach ($levelList as $level) { ?>
@@ -85,7 +85,7 @@
                         <div class="row" style="margin-bottom: 20px">
                             <div class="col-lg-2">
                                 <b>PSA ID</b>
-                                <select class="form-control" id="parent_idval" name="parent_idval">
+                                <select class="form-control psa" id="parent_idval" name="parent_idval">
                                     <option value="">Select</option>
                                     <?php if(isset($parentList)){
                                         foreach ($parentList as $parent) { ?>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <b>Coach</b>
-                                <select class="form-control" id="coach_idval" name="coach_idval">
+                                <select class="form-control coach" id="coach_idval" name="coach_idval">
                                     <option value="">Select</option>
                                     <?php if(isset($coachList)){
                                         foreach ($coachList as $coach) { ?>
@@ -108,7 +108,7 @@
                             <?php $statusArr = array('Pending','Present','Absent'); ?>
                             <div class="col-lg-2">
                                 <b>Status</b>
-                                <select class="form-control" id="status" name="status">
+                                <select class="form-control status" id="status" name="status">
                                     <option value="">Select</option>
                                     <?php foreach ($statusArr as $val) { ?>
                                     <option value="<?php echo $val;?>" <?php if( $val==$status ){ echo 'selected';} ?> ><?php echo $val;?></option>
@@ -117,7 +117,7 @@
                             </div>
                             
                              <div class="col-lg-2">
-                                <button class="btn btn-success margin-top-20">Search</button>
+                                <button class="btn btn-secondary margin-top-20">Search</button>
                             </div>
                             
                         </div>
@@ -126,7 +126,7 @@
                         <input type="hidden" name="bulk_id" id="bulk_id" >
 
                         <div class="row changeStatusDiv">
-                            <button  data-toggle="modal" data-target="#confirmModal" data-val="all" class="btn btn-info changeStatus"  title="Update Status">Change Status  </button>
+                            <button  data-toggle="modal" data-target="#confirmModal" data-val="all" class="btn btn-secondary changeStatus"  title="Update Status">Change Status  </button>
                         </div>
                         <table id="attendanceList" class="table table-bordered table-hover small">
                             <thead>
@@ -237,8 +237,8 @@
               </div>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-success" onclick="updateRequest()">Submit</button>
-                  <button type="button" class="btn btn-danger"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-secondary" onclick="updateRequest()">Submit</button>
+                  <button type="button" class="btn btn-secondary"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
               </div>
           </form>
         </div>
@@ -251,6 +251,7 @@ $this->load->view('templates/footer');
 <script type="text/javascript">
 
 jQuery(document).ready(function() {
+    
     
     var dateVal = $('#date').val();
   var locationVal=$("#location_idval option:selected").text();
@@ -277,7 +278,8 @@ jQuery(document).ready(function() {
             },
         buttons: [
            
-            { extend: 'print', 
+            { extend: 'print',
+            className :"btn btn-secondary", 
             footer: true, 
             //messageTop: 'Attendance Book  '+dateVal+' '+locationVal+' '+activityVal,
             title: 'Attendance Report </br><p style="font-size:25px;"><strong>'+dateVal+'&nbsp;&nbsp;&nbsp;&nbsp;'+locationVal+'&nbsp;&nbsp;&nbsp;&nbsp;'+activityVal+'</strong></p>',
@@ -395,6 +397,17 @@ function updateRequest(){
     }
     
    
+</script>
+<script type = 'text/javascript'>
+$(document).ready(function(){
+$('.activity').select2();
+$('.location').select2();
+$('.level').select2();
+$('.psa').select2();
+$('.coach').select2();
+$('.status').select2();
+});
+
 </script>
 
 

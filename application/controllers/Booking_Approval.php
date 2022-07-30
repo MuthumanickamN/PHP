@@ -425,7 +425,10 @@ class Booking_Approval extends CI_Controller{
 		$parent_id = $row['parent_id'];
 		$amount = $row['amount'];
 		
-		$vat_val = round((($amount*5)/100),2);
+		$sql_vat="select coalesce(v.percentage,5.00) as vat_perc from vat_setups where id='1'";
+		$vat_perc = $this->db->query($sql_vat)->row()->vat_perc;
+		
+		$vat_val = round((($amount*$vat_perc)/100),2);
 		$gross_amount = $amount-$vat_val;
 		$credit = $this->db->query('select * from prepaid_credits where parent_id='.$parent_id);
 		$creditVal=$credit->row_array();
@@ -451,7 +454,7 @@ class Booking_Approval extends CI_Controller{
 			'reg_id' => NULL,
 			'wallet_transaction_amount' => $row['amount'],
 			'gross_amount' => $gross_amount,
-			'vat_percentage' => 5.00,
+			'vat_percentage' => $vat_perc,
 			'vat_value' => $vat_val,
 			'net_amount' => $row['amount'],
 			'credit' => $row['amount'],

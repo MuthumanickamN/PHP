@@ -354,8 +354,8 @@ public function edit($id)
     	$updated_at=currentDateTime();
 		$ds = "'" . implode("','", $days) . "'";
 		
-		$query1 = $this->db->query("SELECT * FROM slot_selections LEFT JOIN slot_selections_days ON slot_selections.id = slot_selections_days.slot_selections_id WHERE slot_selections.slot_from_time LIKE '".$slot_from_time."' and slot_selections.slot_to_time LIKE '".$slot_to_time."' and slot_selections.lane_court_id='".$lane_court_id."' and slot_selections_days.days IN(".$ds.")");
-	
+		$query1 = $this->db->query("SELECT * FROM slot_selections LEFT JOIN slot_selections_days ON slot_selections.id = slot_selections_days.slot_selections_id WHERE id !='".$id."' and slot_selections.slot_from_time LIKE '".$slot_from_time."' and slot_selections.slot_to_time LIKE '".$slot_to_time."' and slot_selections.lane_court_id='".$lane_court_id."' and slot_selections_days.days IN(".$ds.")");
+	    
 		if($query1->num_rows() >0)
 		{
 		setMessage('Activity Slot Already Exist');

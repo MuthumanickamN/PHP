@@ -98,13 +98,91 @@ class Reports extends CI_Controller
 		$data['activityListing'] = $activitylist;
 		$this->load->view('reports/daily_activity', $data);
 	}
-	public function student_profile(){
+	
+	public function student_profile_tried(){
 	$data['title'] = 'Student Profile Report';
-	$this->db->select('reg.id,reg.sid, reg.name, reg.role, reg.parent_user_id, reg.parent_name, reg.parent_mobile, reg.parent_email_id,reg.status, fees.pay_date, reg.created_at, reg.approval_status');
+	$this->db->select('fees.id as fees_id,reg.id,reg.sid, reg.name, reg.role, reg.parent_user_id, reg.parent_name, reg.parent_mobile, reg.parent_email_id,reg.status, fees.pay_date, fees.expiry_on, reg.created_at, reg.approval_status');
     $this->db->from('registrations reg');
     $this->db->join('registration_fees fees', 'reg.id = fees.student_id','left'); 
     $this->db->order_by('reg.id','ASC');
     $query = $this->db->get();
+    //echo $this->db->last_query();die;
+    $studentList =  $query->result_array();
+    foreach ($studentList as $key => $value) {
+    	if($value['expiry_on'] != ''){
+	    	$endDate = $value['expiry_on'];
+	    	$startDate = date('Y-m-d');
+	    }else{
+	    	$endDate = date('Y-m-d');
+	    	$startDate = $value['created_at'];
+	    }
+        
+        $date1=date_create($startDate);
+        $date2=date_create($endDate);
+        $diff2=date_diff($date2,$date1);
+        echo $plus_m = $diff2->format("%R");
+        echo ' '.$days = (int)$diff2->format("%a");
+        echo ' '.$months = (int)$diff2->format("%m");
+        echo ' '.$years = (int)$diff2->format("%y");
+        
+    	//$diff = abs(strtotime($endDate) - strtotime($startDate));
+    	//echo $years = floor($diff / (365*60*60*24));
+		//echo ' '.$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+		//echo ' '.$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));die;
+
+    	if($value['expiry_on'] != ''){
+    	    if($plus_m == '+')
+    	    {
+        	    if($years <= 0)
+        	    {
+            		if($months == 0){
+            			if($days == 0){
+            				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid Today</label>";
+            				$studentList[$key]['fees_paid_key'] = "Paid";
+            			}else{
+            				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$days." days ago</label>";
+            				$studentList[$key]['fees_paid_key'] = "Paid";
+            			}
+            		}else{
+        	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$months." months ago</label>";
+        	    		$studentList[$key]['fees_paid_key'] = "Paid";
+        	    	}
+        	    }
+        	    else
+        	    {
+        	        if($months == 0){
+            			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+            			$studentList[$key]['fees_paid_key'] = "Due";
+            		}else{
+        	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+        	    		$studentList[$key]['fees_paid_key'] = "Due";
+        	    	}
+        	    }
+    	    }
+	    }else{
+	    	if($months == 0){
+    			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+    			$studentList[$key]['fees_paid_key'] = "Due";
+    		}else{
+	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+	    		$studentList[$key]['fees_paid_key'] = "Due";
+	    	}
+	    }
+    }
+    
+    $data['studentList'] = $studentList;
+    $data['role'] = strtolower($this->session->userdata('role'));
+    $this->load->view('reports/student_profile', $data);
+	}
+	
+	public function student_profile(){
+	$data['title'] = 'Student Profile Report';
+	$this->db->select('fees.id as fees_id,reg.id,reg.sid, reg.name, reg.role, reg.parent_user_id, reg.parent_name, reg.parent_mobile, reg.parent_email_id,reg.status, fees.pay_date, fees.expiry_on, reg.created_at, reg.approval_status');
+    $this->db->from('registrations reg');
+    $this->db->join('registration_fees fees', 'reg.id = fees.student_id','left'); 
+    $this->db->order_by('reg.id','ASC');
+    $query = $this->db->get();
+    //echo $this->db->last_query();die;
     $studentList =  $query->result_array();
     foreach ($studentList as $key => $value) {
     	if($value['pay_date'] != ''){
@@ -121,20 +199,38 @@ class Reports extends CI_Controller
 		$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
 
     	if($value['pay_date'] != ''){
-    		if($months == 0){
-    			if($days == 0){
-    				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid Today</label>";
-    			}else{
-    				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$days." days ago</label>";
-    			}
-    		}else{
-	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$months." months ago</label>";
-	    	}
+    	    if($years <= 0)
+    	    {
+        		if($months == 0){
+        			if($days == 0){
+        				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid Today</label>";
+        				$studentList[$key]['fees_paid_key'] = "Paid";
+        			}else{
+        				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$days." days ago</label>";
+        				$studentList[$key]['fees_paid_key'] = "Paid";
+        			}
+        		}else{
+    	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$months." months ago</label>";
+    	    		$studentList[$key]['fees_paid_key'] = "Paid";
+    	    	}
+    	    }
+    	    else
+    	    {
+    	        if($months == 0){
+        			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+        			$studentList[$key]['fees_paid_key'] = "Due";
+        		}else{
+    	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+    	    		$studentList[$key]['fees_paid_key'] = "Due";
+    	    	}
+    	    }
 	    }else{
 	    	if($months == 0){
     			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+    			$studentList[$key]['fees_paid_key'] = "Due";
     		}else{
 	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+	    		$studentList[$key]['fees_paid_key'] = "Due";
 	    	}
 	    }
     }
@@ -191,7 +287,7 @@ class Reports extends CI_Controller
 
 		$data['activitySlotListing'] = $activitySlotListing;
 
-		$this->load->view('reports/activity_slot', $data);
+		$this->load->view('reports/activity_slot_new', $data);
 	}
 	public function selectbyActivity(){
 		$activity_id = $this->input->post('activity_id');
@@ -562,7 +658,7 @@ class Reports extends CI_Controller
 
 		$this->load->view('reports/vat', $data);
 	}
-	public function wallet_transaction($type=''){
+	public function wallet_transaction_old($type=''){
 		$data['title'] = ($type == 'master')?'Master Wallet Transaction Report':'Wallet Transaction Report';
 		
 		$postdate = $this->input->post('from_date');
@@ -667,7 +763,113 @@ class Reports extends CI_Controller
 		$this->load->view('reports/wallet_transaction', $data);
 
 	}
+    
+    public function wallet_transaction($type=''){
+		$data['title'] = ($type == 'master')?'Master Wallet Transaction Report':'Wallet Transaction Report';
+		
+		$postdate = $this->input->post('from_date');
+		$data['parent_idval'] = $this->input->post('parent_idval');
+		$data['parent_emailval'] = $this->input->post('parent_emailval');
+		$data['acc_code'] = $this->input->post('acc_code');
+		$data['transDetailVal'] = $this->input->post('transDetailVal');
+		$data['paymentTypeVal'] = $this->input->post('paymentTypeVal');
+		$data['type'] = $type;
+		$data['id_val'] = $this->input->post('id_val');
+		
 
+		$from_date = date('Y-m-01');
+		$to_date = date('Y-m-t');
+		if(isset($postdate)){
+			$from_date = date('Y-m-d',strtotime($this->input->post('from_date')));
+			$to_date = date('Y-m-d',strtotime($this->input->post('to_date')));
+		}
+		
+		$data['fromDateVal'] = date('Y-m-d',strtotime($from_date));
+		$data['toDateVal'] = date('Y-m-d',strtotime($to_date));
+		$data['parentList'] = $this->default->getParentList();
+		$data['account_code_data'] = $this->schools->getAccountCodeList();
+		$data['transactionList'] = $this->transactionDetails();
+		$data['userList'] = $this->transaction->getAllUserList();
+
+		$where = "where `wallet_transaction_date` BETWEEN '".$from_date."' AND '".$to_date."'";
+		//$userWhere = "where w.`wallet_transaction_date` BETWEEN '".$from_date."' AND '".$to_date."'";
+		if(isset($data['acc_code']) && $data['acc_code'] != ''){
+			$where .= " AND `account_code` = '".$data['acc_code']."' ";
+			//$userWhere .= " AND w.`account_code` = '".$data['acc_code']."' ";
+		}
+		if(isset($data['parent_idval']) && $data['parent_idval'] != ''){
+			$where .= " AND `parent_id` = '".$data['parent_idval']."' ";
+			//$userWhere .= " AND w.`parent_id` = '".$data['parent_idval']."' ";
+		}
+		if(isset($data['parent_emailval']) && $data['parent_emailval'] != ''){
+			$where .= " AND `parent_id` = '".$data['parent_emailval']."' ";
+			//$userWhere .= " AND w.`parent_id` = '".$data['parent_emailval']."' ";
+		}
+		if(isset($data['transDetailVal']) && $data['transDetailVal'] != ''){
+			$where .= " AND `wallet_transaction_detail` = '".$data['transDetailVal']."' ";
+			//$userWhere .= " AND w.`wallet_transaction_detail` = '".$data['transDetailVal']."' ";
+		}
+		if(isset($data['paymentTypeVal']) && $data['paymentTypeVal'] != ''){
+			$where .= " AND `payment_type` = '".$data['paymentTypeVal']."' ";
+			//$userWhere .= " AND w.`payment_type` = '".$data['paymentTypeVal']."' ";
+		}
+		if(isset($data['id_val']) && $data['id_val'] != ''){
+			$where .= " AND `updated_admin_id` = '".$data['id_val']."' ";
+			//$userWhere .= " AND w.`updated_admin_id` = '".$data['id_val']."' ";
+		}
+		if($type == ''){
+			$user_id = $this->session->userid;
+			$where .= " AND `updated_admin_id` = '".$user_id."' ";
+			//$userWhere .= " AND w.`updated_admin_id` = '".$user_id."' ";
+		}
+
+		$query = $this->db->query("select wallet_transaction_id, wallet_transaction_date, ac_code, wallet_transaction_detail,wallet_transaction_amount, net_amount, vat_value, updated_admin_id, reg_id, gross_amount, credit,debit, discount_percentage, discount_value,payment_type,parent_id
+								from wallet_transactions 
+ 								 ".$where. " order by `id` DESC");
+		$arrayList = $query->result_array();
+		//echo $this->db->last_query();die;
+		foreach($arrayList as $key=> $value){
+			if(!isset($userArray[$value['updated_admin_id']][$value['payment_type']])){
+				$userArray[$value['updated_admin_id']][$value['payment_type']] = 0;
+			}
+			if(!isset($userArray[$value['updated_admin_id']]['total'])){
+				$userArray[$value['updated_admin_id']]['total'] = 0;
+			}
+			$userArray[$value['updated_admin_id']][$value['payment_type']] += $value['net_amount'];
+			$userArray[$value['updated_admin_id']]['total'] += $value['net_amount'];
+			$arrayList[$key]['updated_admin_id']=($value['updated_admin_id'] != 0)?$this->transaction->getUserDetail($value['updated_admin_id']):'-';
+			$arrayList[$key]['parent_code']=($value['parent_id'] != 0)?$this->transaction->getParentCode($value['parent_id']):'-';
+		}
+		$data['arrayList'] = $arrayList;
+	    $userid =  $this->session->userdata('userid');
+
+		if($type == ''){
+			$userWhere = "where u.status = 'Active' and u.user_id=$userid and (u.role='superadmin' or u.role='admin')";
+		}
+		else
+		{
+			$userWhere = "where u.status = 'Active' and (u.role='superadmin' or u.role='admin')";
+		}
+		$userList = $this->db->query("select u.user_id, u.user_name, u.role, u.email from users as u  
+ 								  ".$userWhere." order by u.user_id");
+		$userListArr = $userList->result_array();
+		$i =1;
+		foreach($userListArr as $k=>$user){
+			$userListArray[$user['user_id']]['user_name'] = $user['user_name'];
+			$userListArray[$user['user_id']]['role'] = $user['role'];
+			$userListArray[$user['user_id']]['email'] = $user['email'];
+			$userListArray[$user['user_id']]['total'] = isset($userArray[$user['user_id']]['total'])?$userArray[$user['user_id']]['total']:0;
+			$userListArray[$user['user_id']]['Cash'] = isset($userArray[$user['user_id']]['Cash'])?$userArray[$user['user_id']]['Cash']:0;
+			$userListArray[$user['user_id']]['Online'] = isset($userArray[$user['user_id']]['Online'])?$userArray[$user['user_id']]['Online']:0;
+			$userListArray[$user['user_id']]['Cheque'] = isset($userArray[$user['user_id']]['Cheque'])?$userArray[$user['user_id']]['Cheque']:0;
+			$userListArray[$user['user_id']]['Card'] = isset($userArray[$user['user_id']]['Card'])?$userArray[$user['user_id']]['Card']:0;
+			//$userListArray[$user['user_id']]['Wallet'] = isset($userArray[$user['user_id']]['Wallet'])?$userArray[$user['user_id']]['Wallet']:0; 
+		}
+		$data['userListArray'] = $userListArray;
+		$this->load->view('reports/wallet_transaction', $data);
+
+	}
+	
 	public function transactionDetails(){
 		$transactionDetails = array(
 			'Prepaid Credits',
@@ -918,15 +1120,18 @@ class Reports extends CI_Controller
 	public function getDialog1()
 	{
 		$id = $this->input->post('id');
-		$sql="SELECT sid,name,dob,age FROM `registrations` WHERE id='$id'";
+		$sql="SELECT * FROM `registrations` WHERE id='$id'";
 		$result = $this->db->query($sql)->row();
 		echo json_encode($result);
 	}
 	public function getDialog2()
 	{
 		$id = $this->input->post('id');
-		$sql="SELECT reg.*,u.code,r.sid FROM `registration_fees` reg 
+		$sql="SELECT reg.*,u.code,r.sid,pc.balance_credits, rc.reg_fee, coalesce(v.percentage,5.00) as vat_perc FROM `registration_fees` reg 
 			  left join registrations as r on r.id=reg.id 
+			  left join reg_charge_setups rc on rc.category = r.reg_fee_category
+			  left join vat_setups as v on v.id=1
+			  left join prepaid_credits as pc on pc.parent_id=r.parent_user_id 
 			  left join users as u on u.user_name= reg.parent_name WHERE reg.student_id='$id'";
 	//	$result = $this->db->query($sql)->row();
 	//	$result = $sql->row_array();
@@ -939,7 +1144,9 @@ class Reports extends CI_Controller
 		else
 		{
 			//$sid = $this->input->post('sid');
-			$sql1="SELECT pc.*,r.*,u.code from registrations r 
+			$sql1="SELECT pc.*,r.*,u.code, rc.reg_fee, coalesce(v.percentage,5.00) as vat_perc from registrations r
+			left join reg_charge_setups rc on rc.category = r.reg_fee_category
+			left join vat_setups as v on v.id=1
 				   left join prepaid_credits as pc on pc.parent_id=r.parent_user_id 
 				   left join users as u on u.user_name = r.parent_name where r.id ='$id'";
 			$result1 = $this->db->query($sql1)->row();

@@ -77,7 +77,7 @@ h5
                     <div class="row">
         <div class="col-12">
             
-                    <h4 class="">Your Wallet Balance : ADE <strong><?php echo number_format($walletbalance,2);?> </strong></h4>
+                    <h4 class="">Your Wallet Balance : AED <strong><?php echo number_format($walletbalance,2);?> </strong></h4>
                    
 
 <div class="row">

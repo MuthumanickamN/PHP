@@ -84,7 +84,14 @@ class Daily_Transaction_Model extends CI_Model {
         $this->db->where('status', 'Active');   
         $this->db->where('coach_id', $id);  
         $query = $this->db->get();
-       return $query->row()->coach_name;
+        if($query->num_rows() > 0)
+        {
+            return $query->row()->coach_name;
+        }
+        else
+        {
+            return '';
+        }
     } 
     
     public function getAlltransactionList(){

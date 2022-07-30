@@ -463,6 +463,7 @@ public function add_slot_booking(){
     {
        $fees=100.00;  
     }
+    //echo $discount_percentage.' '.$discount_val;die;
         $sql_as = "select * from activity_selections where student_id=$sid and activity_id=$activity_id";
         $query_as = $this->db->query($sql_as);
         if($query_as->num_rows() > 0)
@@ -703,6 +704,7 @@ public function add_slot_booking(){
       $vat_percentage=$this->input->post('vat_percentage');
       $payable_amount_chk=$this->input->post('payable_amount_chk');
       $payable_amount=$this->input->post('payable_amount');
+      $payable_description = $this->input->post('payable_description');
       $cartList = $this->db->query('SELECT * FROM `tmp_booking` where `student_id` ="'.$sid.'" and `activity_id` ="'.$activity_id.'" ');
       $cartListArray =  $cartList->result_array();
       
@@ -786,7 +788,8 @@ public function add_slot_booking(){
                 'coach_id' => $value['coach_id'],
                 'lane_court_id' => $value['lane_court_id'],
                 'discount_perc' => $value['discount_percentage'],
-                'discount_val' => $value['discount']
+                'discount_val' => $value['discount'],
+                
                 );
             array_push($list_arr, $data2);
             $this->db->insert('booked_slots',$data2);
@@ -811,7 +814,8 @@ public function add_slot_booking(){
                 'net_payable_amount_approval'=>  $approval_status,
                 'payable_status'=>  $payable_amount_chk,
                 'wallet_balance'=>  $balance_credits,
-                'status' => $status
+                'status' => $status,
+                'payable_description'=> $payable_description
                
             );
             $this->db->where('id',$booking_id);
@@ -850,7 +854,7 @@ public function add_slot_booking(){
                 'wallet_transaction_date' =>date('Y-m-d'),
                 'wallet_transaction_type' =>'Debit',
                 'wallet_transaction_detail' => 'Slot Booking Fees Discount',
-                'updated_admin_id' => $parent_id,
+                'updated_admin_id' => $this->session->userid,
                 'reg_id' => $sid,
                 'wallet_transaction_amount' => $tot_ded_amount,
                 'gross_amount' => $tot_amount_wov+$discount_value,
@@ -879,7 +883,7 @@ public function add_slot_booking(){
                 'wallet_transaction_date' =>date('Y-m-d'),
                 'wallet_transaction_type' =>'Debit',
                 'wallet_transaction_detail' => 'Slot Booking Fees',
-                'updated_admin_id' => $parent_id,
+                'updated_admin_id' => $this->session->userid,
                 'reg_id' => $sid,
                 'wallet_transaction_amount' => $tot_ded_amount,
                 'gross_amount' => $tot_amount_wov,
@@ -1665,7 +1669,7 @@ public function add_slot_booking(){
       $sid = $stud_id;
     }
     
-    $this->db->select('bs.booking_no as ticket_no, bs.booked_date as checkout_date, bk.student_id, reg.name, p.parent_code, reg.sid as student_code, bk.parent_id, bk.activity_id, bk.level_id, bs.from_time, bs.to_time, slot.coach_id, slot.lane_court_id, slot.location_id, bk.attendance');
+    $this->db->select('bs.booking_no as ticket_no, bs.booked_date as checkout_date, bk.student_id, reg.name, p.parent_code, reg.sid as student_code, bk.parent_id, bk.activity_id, bk.level_id, bs.from_time, bs.to_time, slot.coach_id, slot.lane_court_id, slot.location_id, bs.attendance');
     $this->db->from('booking_approvals bk');
     $this->db->join('booked_slots bs', 'bs.booking_id = bk.id','left');
     $this->db->join('parent p', 'p.parent_id = bk.parent_id','left');
@@ -1685,7 +1689,7 @@ public function add_slot_booking(){
     $this->db->order_by('bs.booked_date','ASC');
     
     $query = $this->db->get();
-   // echo $this->db->last_query();die;
+   //echo $this->db->last_query();die;
     $data['bookingList']=  $query->result_array();
     foreach($data['bookingList'] as $key => $value){
         $data['bookingList'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
@@ -1714,13 +1718,13 @@ public function add_slot_booking(){
     {
     $events = $this->db->query("select *,bs.booked_date as checkout_date,bs.from_time, bs.to_time from booking_approvals ba 
     left join booked_slots as bs on bs.booking_id = ba.id
-    where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and ba.location_id='".$location_id."' and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status ='1' ");
+    where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and bs.location_id='".$location_id."' and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status ='1' ");
     }
     else
     {
         $events = $this->db->query("select *,bs.booked_date as checkout_date,bs.from_time, bs.to_time from booking_approvals ba 
             left join booked_slots as bs on bs.booking_id = ba.id
-        where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and ba.location_id='".$location_id."'  and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status='1' and bs.id != $slot_id");
+        where ba.student_id='$stud_id' and ba.`parent_id` ='".$parent_id."' and ba.`activity_id` ='".$activity_id."' and bs.location_id='".$location_id."'  and ba.is_refunded = 0 and bs.booked_date BETWEEN '".$start."' AND '".$end."' and (ba.`status` = 'Approved' or ba.status = 'Pending') and bs.status='1' and bs.id != $slot_id");
     }
     $eventList=$events->result_array();
     //echo $this->db->last_query();die;
@@ -1780,15 +1784,19 @@ public function add_slot_booking(){
 
   public function approval(){
     $data['title'] = 'Booking Approval';
-    $this->db->select('bk.*, reg.name,p.parent_name, p.parent_code,p.email_id as parent_email, p.mobile_no as parent_mobile, 
+    $this->db->select('sum(bs.payable_amount) as sum_paid,sum(bs.amount) as sum_net,sum(bs.discount_val) as sum_discount,
+    bk.*, reg.name,p.parent_name, p.parent_code,p.email_id as parent_email, p.mobile_no as parent_mobile, 
     u.user_name, u.role');
     $this->db->from('booking_approvals bk');
+    $this->db->join('booked_slots bs', 'bs.booking_id = bk.id','left'); 
     $this->db->join('registrations reg', 'reg.id = bk.student_id','left'); 
     $this->db->join('parent p', 'p.parent_id = bk.parent_id','left'); 
     $this->db->join('users u', 'u.user_id = bk.created_by','left'); 
     $this->db->where('bk.status !=','Approved');
+    $this->db->group_by('bk.id');
     $this->db->order_by('bk.id','ASC');
     $query = $this->db->get();
+    //echo $this->db->last_query();die;
     $data['bookingList']=  $query->result_array();
     foreach($data['bookingList'] as $key => $value){
         $data['bookingList'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
@@ -1866,7 +1874,9 @@ public function add_slot_booking(){
           $balance_credits = $total_credits;
         }
 */
-
+        
+        
+        
         $userData = array(
           //'wallet_balance' => $balance_credits,
           'reason' => $reason,
@@ -1886,6 +1896,22 @@ public function add_slot_booking(){
         }
         else if($status == 'Rejected'){
             //
+            //$booking = $this->db->query('select * from booking_approvals where id='.$booking_id);
+            
+            $refundData = array(
+			'is_refunded' => '1',
+			'refund_date' => date('Y-m-d H:i:s'),
+			'info'=>'Rejected',
+			'status'=>0
+		    );
+            $this->db->where('booking_id', $booking_id);
+    		$this->db->update('booked_slots', $refundData);
+            $sql2="select ba.*, p.parent_name, p.email_id as parent_email from booking_approvals ba 
+            left join parent p on p.parent_id = ba.parent_id
+            where ba.id= '$booking_id'";
+            $booking = $this->db->query($sql2);
+            $data=$booking->row_array();
+        
             $credit = $this->db->query('select * from prepaid_credits where parent_id='.$data['parent_id']);
             $creditVal=$credit->row_array();
             $total_credits=$creditVal['balance_credits'];
@@ -1898,23 +1924,24 @@ public function add_slot_booking(){
 
           //$inv_id = $this->default->getInvoiceId('wallet_transactions');
           //$invoice_id = 'PS'.date('Y').'-'.$inv_id;
-            $booking = $this->db->query('select * from booking_approvals where id='.$booking_id);
-        $data=$booking->row_array();
+            
         
           $walletArray = array(
                 'wallet_transaction_id' =>$wallet_transaction_id,
                 'ac_code' => 'REFWTR',
-                'wallet_transaction_date' =>$data['checkout_date'],
+                'wallet_transaction_date' =>date('Y-m-d H:i:s'),
                 'wallet_transaction_type' =>'Credit',
                 'wallet_transaction_detail' => 'Slot Booking Fees - Refund',
                 'updated_admin_id' => $user_id,
                 'reg_id' => $data['student_id'],
                 'wallet_transaction_amount' => $data['amount'],
                 'gross_amount' => $data['amount'],
-                'vat_percentage' => $data['vat_percent'],
+                'vat_percentage' => $data['vat_perc'],
                 'vat_value' => $data['vat_amount'],
-                'net_amount' => $data['net_amount'],
-                'credit' => $data['net_amount'],
+                'refund_percentage' => 100.00,
+                'refund_value' => $data['payable_amount'],
+                'net_amount' => $data['payable_amount'],
+                'credit' => $data['payable_amount'],
                 'invoice' => '',
                 'invoice_id' =>'',
                 'slot_booking'=>$booking_id,
@@ -1925,6 +1952,7 @@ public function add_slot_booking(){
                 'parent_email_id'=> $data['parent_email'],
                 'description'=> 'Slot Booking Fees - Refund',
                 'balance_credit'=>$balance_credits,
+                'created_at' => date('Y-m-d H:i:s')
             );
             $this->db->insert('wallet_transactions', $walletArray); 
             $this->send_email_rejected($booking_id, $email_details);
@@ -2057,7 +2085,7 @@ public function add_slot_booking(){
             //    $extensions= array("pdf","doc",'docx','xlsx');
     
     		if(in_array($file_ext,$extensions)=== false){
-    			$errors[]="extension not allowed, please choose a pdf or doc file.";
+    			$errors[]="extension not allowed, please choose a image, pdf or doc file.";
     		}
     
             //if($file_size > 2097152){

@@ -82,7 +82,7 @@
                           <td><?php echo $value['parent_name'];  ?></td>
                           <td> <?php echo $value['parent_mobile']; ?></td>
                           <td><?php echo $value['ac_code'] ?></td>
-                          <td ><?php echo date('d-m-Y', strtotime($value['wallet_transaction_date'])); ?></td>
+                          <td ><?php echo date('d-m-Y H:i:s', strtotime($value['created_at'])); ?></td>
                           <td><?php echo $value['wallet_transaction_type']; ?></td>
                           <td ><?php echo $value['wallet_transaction_amount']; ?></td>
                           <td><?php echo $value['wallet_transaction_detail']; ?></td>

@@ -187,9 +187,9 @@ class Slot_refund_request extends CI_Controller {
 		if (!is_dir($makefilepath)) {
 			mkdir('./'. $makefilepath, 0777, TRUE);
 		}
-		$extensions= array("jpeg","jpg","png");
+		$extensions= array("jpeg","jpg","png","pdf","doc","docx");
 		if(in_array($file_ext,$extensions)=== false){
-			$errors[]="extension not allowed, please choose a pdf or doc file.";
+			$errors[]="extension not allowed, please choose a image,pdf or doc file.";
 		}
 		if(empty($errors)==true){
 			move_uploaded_file($file_tmp,$upload_filename);
@@ -299,7 +299,7 @@ class Slot_refund_request extends CI_Controller {
     	   		    $pay_type='Credit';
     	   		    $refund_amount = $slotArray['deducted_amount'];
                 }
-                else if($prev_status =="Approved" && $status=="Rejected")
+                else if($prev_status =="Approved" && $status=="Rejected") /* Disabled for now */
                 {
                     $balance_credits = $creditArr['balance_credits'] - $slotArray['deducted_amount'];
                     $pay_type='Debit';

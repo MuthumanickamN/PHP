@@ -50,7 +50,7 @@
                             </div>
                              
                             <div class="col-lg-2">
-                                <button class="btn btn-success margin-top-20">Search</button>
+                                <button class="btn btn-secondary margin-top-20">Search</button>
                             </div>
                       
 
@@ -128,7 +128,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#attendanceList').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Slot Swap report for '+fromdateval+' - '+todateval, 
             title: 'Slot Swap report ', 
@@ -136,7 +137,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10,11 ]
                 },
             },
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Slot Swap report for '+fromdateval+' - '+todateval, 
             title: 'Slot Swap report', 
@@ -144,7 +146,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10,11 ]
                 },
             },
-            { extend: 'excel', 
+            { extend: 'excel',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Slot Swap report for '+fromdateval+' - '+todateval, 
             title: 'Slot Swap report', 

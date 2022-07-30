@@ -13,7 +13,7 @@
                 <div class="modal-footer panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn rkmd-btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn rkmd-btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>                    
                     </div>
                 </div>

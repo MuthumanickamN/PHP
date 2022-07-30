@@ -388,7 +388,7 @@ function fileValidation(fileInput) {
               <div class="row">
               <div class="col-md-3 control text-left"><strong>Status</strong>
               </div> <div class="col-md-3">
-               <select name="status" id="status" class="form-control" >
+               <select name="status" id="status" class="form-control js-example-basic-single status_select2" >
                   <option value="">Select</option>
                   <option value="Active" <?php if(isset($status) && $status=='Active' ){ echo 'selected';} ?>>Active</option>
                   <option value="Inactive" <?php if(isset($status) && ($status=='Inactive' || $status == "") ){ echo 'selected';} ?>>Inactive</option>
@@ -500,11 +500,11 @@ function fileValidation(fileInput) {
             <div class="row">
               <div class="col-md-6 control text-center">
                 <?php if(isset($coach_id) && $coach_id!="") { ?>
-                <button type="submit" name="submit" class="btn btn-warning" >Update</button>   
+                <button type="submit" name="submit" class="btn btn-secondary" >Update</button>   
                 <?php } else { ?>
-                <button type="submit" id="save" class="btn btn-success" ><b> Submit</b></button>
+                <button type="submit" id="save" class="btn btn-secondary" ><b> Submit</b></button>
                 <?php } ?>        
-                <a href="<?php echo base_url().'index.php/dashboard' ?>"     class="btn btn-danger" >Cancel</a>
+                <a href="<?php echo base_url().'index.php/dashboard' ?>"     class="btn btn-secondary" >Cancel</a>
               </div>
             </div>
           </form>
@@ -531,6 +531,7 @@ function fileValidation(fileInput) {
 $(document).ready(function() {
     $('.activity_select2').select2();
 	$('.location_select2').select2();
+  $('.status_select2').select2();
 });
 
 $(document).ready(function (e) {

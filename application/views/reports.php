@@ -25,7 +25,7 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		
 		<?php if($from=="Admin") { ?>
 		<h4>Login</h4>
-		<select class="form-control" id="adminSelect">
+		<select class="form-control login" id="adminSelect">
 		 <option value="All" selected>All</option>
 	<?php
 	if($user_name)
@@ -111,7 +111,7 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		<div class="clearfix"></div>
 	</div>
 	<div class="col-sm-12 col-md-12 pad_top_20">
-		<button type="button" id="transaction_search_excel" name="transaction_search_excel" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
+		<button type="button" id="transaction_search_excel" name="transaction_search_excel" class="btn btn-secondary"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
 	</div>
 	<div class="clearfix"></div>
 </div>
@@ -200,7 +200,7 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		<div class="clearfix"></div>
 	</div>
 	<div class="col-sm-12 col-md-12 pad_top_20">
-		<button type="button" id="booking_search_excel" name="booking_search_excel" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
+		<button type="button" id="booking_search_excel" name="booking_search_excel" class="btn btn-secondary"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
 	</div>
 	<div class="clearfix"></div>
 </div>
@@ -273,7 +273,7 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 		<div class="clearfix"></div>
 	</div>
 	<div class="col-sm-12 col-md-12 pad_top_20">
-		<button type="button" id="cancellation_search_excel" name="cancellation_search_excel" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
+		<button type="button" id="cancellation_search_excel" name="cancellation_search_excel" class="btn btn-secondary"><i class="fa fa-file-excel-o" aria-hidden="true"></i> &nbsp; Export to Excel</button>
 	</div>
 	<div class="clearfix"></div>
 </div>
@@ -287,6 +287,11 @@ ini_set("display_errors", 1); ?><script type="text/javascript" src="<?php echo b
 
 
 <script type="text/javascript">
+$(document).ready(function(){
+$('.login').select2();
+});
+
+
 $(function () {
 /* $('#example1').DataTable({
 			"paging": true,

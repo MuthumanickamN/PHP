@@ -56,7 +56,7 @@
 							<legend class="label"><label>Account code</label></legend>
 						</div>
 						<div class="col-lg-4">
-							<select name="account_code" id="account_code" class="input-credit-account_code form-control">
+							<select name="account_code" id="account_code" class="input-credit-account_code form-control account_code">
 								<option value="">Select account code</option>
 								<?php
 								if(isset($account_code_data)){
@@ -71,7 +71,7 @@
 							<legend class="label"><label>School Name / Contact</label></legend>
 						</div>
 						<div class="col-lg-4">
-							<select name="school_id" id="school_id" class="input-credit-school_id form-control">
+							<select name="school_id" id="school_id" class="input-credit-school_id form-control contact">
 								<option value="">Select School</option>
 								<?php
 								if(isset($schoolList)){
@@ -134,7 +134,7 @@
 							<legend class="label"><label>Activity</label></legend>
 						</div>
 						<div class="col-lg-4">
-							<select name="activity_id" id="activity_id" class="input-credit-activity_id form-control">
+							<select name="activity_id" id="activity_id" class="input-credit-activity_id form-control activity">
 								<option value="">Select Activity</option>
 								<?php
 								if(isset($activityList)){
@@ -194,8 +194,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12 centerAlign">                            
-                            <button type="button" class="btn rkmd-btn btn-success" id="add-school-credit">Submit</button> 
-                            <button type="button" class="btn rkmd-btn btn-danger">Cancel</button>
+                            <button type="button" class="btn rkmd-btn btn-secondary" id="add-school-credit">Submit</button> 
+                            <button type="button" class="btn rkmd-btn btn-secondary">Cancel</button>
                       <!--  </div>                    
                     </div>-->
 					
@@ -221,3 +221,11 @@ $this->load->view('templates/footer');
 		border-bottom:none !important;
 	}
 	</style>
+<script type="text/javascript">
+$(document).ready(function(){
+$('.activity').select2();
+$('.account_code').select2();
+$('.contact').select2();
+});
+
+</script>

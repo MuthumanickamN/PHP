@@ -119,6 +119,7 @@ th
                                     <tr>
 
                                             <th style="text-align: center">Tax</th>
+                                            <th style="text-align: center">Vat No</th>
                                             <th>Description</th>
                                              <th style="text-align: center">Percentage</th>
                                             <th style="text-align: center">Created At</th>
@@ -142,6 +143,7 @@ th
 								?>
 								<tr>
 									<td style="text-align: center"><?php echo $row1['tax']; ?></td>
+                  <td style="text-align: center"><?php echo $row1['vat_no']; ?></td>
 									<td><?php echo $row1['description']; ?></td>
 									<td style="text-align: center"><?php echo $row1['percentage']; ?>%</td>
 									<td style="text-align: center"><?php echo date("d-m-Y h-i-s", strtotime("$date_time")); ?></td>

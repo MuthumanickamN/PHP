@@ -149,7 +149,7 @@
 
                           <div class="form-group row">
                             <div class="col-md-8 col-md-offset-2 pull-right">
-                              <input type="submit" name="Save" class="btn">
+                              <input type="submit" class="btn btn-secondary" name="Save" class="btn">
                             </div>
                           </div>
                         </div>

@@ -56,7 +56,7 @@
                           </div>
                           <div class="col-md-3 control ">
                             <span><strong>Account Code</strong>*</span>
-                            <select name="account_code" id="account_code" class="form-control input-transaction-account_code account_code"  required="" > 
+                            <select name="account_code" id="account_code" class="form-control js-example-basic-single accountcode_select2"  required="" > 
                             <option value="">Select</option>
                             <?php if(isset($account_code_data)){ 
                               foreach ($account_code_data as $account) { ?>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-3 control ">
                               <span><strong>Transaction Type</strong>*</span>
-                              <select name="transaction_type" id="transaction_type" class="form-control input-transaction-transaction_type"  required="" > 
+                              <select name="transaction_type" id="transaction_type" class="form-control js-example-basic-single transactiontype_select2"  required="" > 
                                   <option value="">Select</option>    
                                   <option value="Debit" <?php if(isset($transaction_type) && $transaction_type=='Debit' ){ echo 'selected';} ?>>Debit</option>
                                   <option value="Credit" <?php if(isset($transaction_type) && $transaction_type=='Credit' ){ echo 'selected';} ?>>Credit</option>
@@ -77,7 +77,7 @@
                     <div class="row">
                         <div class="col-md-3 control ">
                           <span><strong>Activity</strong></span>
-                          <select name="activity_id" id="activity_id" class="form-control input-transaction-activity_id activity_id"  > 
+                          <select name="activity_id" id="activity_id" class="form-control js-example-basic-single activity_select2"  > 
                             <option value="">Select</option>
                             <?php 
                             if(isset($activityList)){ 
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-3 control ">
                           <span><strong>Location</strong></span>
-                         <select name="location_id" id="location_id" class="form-control input-transaction-location_id location_id"  > 
+                         <select name="location_id" id="location_id" class="form-control js-example-basic-single location_select2"  > 
                             <option value="">Select</option>
                             <?php foreach ($locationList as $location) { ?>
                             <option value="<?php echo $location['location_id'] ?>" <?php if(isset($location_id) && $location['location_id']==$location_id ){ echo 'selected';} ?>><?php echo $location['location']; ?></option>
@@ -98,7 +98,7 @@
 					
                         <div class="col-md-3 control ">
                           <span><strong>Coach</strong></span>
-                         <select name="coach_id" id="coach_id" class="form-control input-transaction-coach_id coach_id"  > 
+                         <select name="coach_id" id="coach_id" class="form-control js-example-basic-single coach_select2"  > 
                             <option value="">Select</option>
                             <?php foreach ($coachList as $coach) { ?>
                             <option value="<?php echo $coach['coach_id'] ?>" <?php if(isset($coach_id) && $coach['coach_id']==$coach_id ){ echo 'selected';} ?>><?php echo $coach['coach_name']; ?></option>
@@ -110,7 +110,7 @@
                     <div class="row">
                         <div class="col-md-3 control ">
                           <span><strong>Approved by</strong>*</span>
-                         <select name="approved_by" id="approved_by" class="form-control input-transaction-approved_by approved_by" required="" > 
+                         <select name="approved_by" id="approved_by" class="form-control js-example-basic-single approved_select2" required="" > 
                             <option value="">Select</option>
                             <?php foreach ($userList as $approvedbyList) { ?>
                             <option value="<?php echo $approvedbyList['user_id'] ?>" <?php if(isset($approved_by) && $approvedbyList['user_id']==$approved_by ){ echo 'selected';} ?>><?php echo $approvedbyList['user_name']; ?></option>
@@ -120,7 +120,7 @@
 
                         <div class="col-md-3 control ">
                           <span><strong>Settled by</strong>*</span>
-                         <select name="settled_by" id="settled_by" class="form-control input-transaction-settled_by settled_by" required=""  > 
+                         <select name="settled_by" id="settled_by" class="form-control js-example-basic-single settled_select2" required=""  > 
                             <option value="">Select</option>
                             <?php foreach ($userList as $settledbyList) { ?>
                             <option value="<?php echo $settledbyList['user_id'] ?>" <?php if(isset($settled_by) && $settledbyList['user_id']==$settled_by ){ echo 'selected';} ?>><?php echo $settledbyList['user_name']; ?></option>
@@ -149,7 +149,7 @@
                           </div>
                           <div class="col-md-3 control ">
                             <span><strong>Paid to</strong>*</span>
-                           <select name="paid_to" id="paid_to" class="form-control input-transaction-paid_to paid_to"  > 
+                           <select name="paid_to" id="paid_to" class="form-control js-example-basic-single paid_select2"  > 
                               <option value="">Select</option>
                               <?php foreach ($userList as $paidtoList) { ?>
                               <option value="<?php echo $paidtoList['user_id'] ?>" <?php if(isset($paid_to) && $paidtoList['user_id']==$paid_to ){ echo 'selected';} ?>><?php echo $paidtoList['user_name']; ?></option>
@@ -242,12 +242,12 @@
                      <div class="row">
                       <div class="col-md-6 control text-center">
                          <?php if(isset($payment_type) && $payment_type!="") { ?>
-                           <button type="button" class="btn rkmd-btn btn-success add-daily-transaction" id="add-daily-transaction">Update</button>
+                           <button type="button" class="btn rkmd-btn btn-secondary add-daily-transaction" id="add-daily-transaction">Update</button>
                          <?php } else { ?>
-                          <button type="button" id="preview_transaction_popup"  class="btn btn-success" ><b> Submit</b></button>
+                          <button type="button" id="preview_transaction_popup"  class="btn btn-secondary" ><b> Submit</b></button>
                           <!--<button type="button" class="btn rkmd-btn btn-success" id="add-daily-transaction">Submit</button>      -->
                           <?php } ?>
-                         <a href="<?php echo base_url().'index.php/Daily_transaction/list_/' ?>" class="btn btn-danger" >Cancel</a></div></div>
+                         <a href="<?php echo base_url().'index.php/Daily_transaction/list_/' ?>" class="btn btn-secondary" >Cancel</a></div></div>
                   </form>
                   
               </div>
@@ -321,6 +321,18 @@ jQuery('.result input').val('');
 jQuery('.result select').val('');
 }
 
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.accountcode_select2').select2();
+	  $('.transactiontype_select2').select2();
+    $('.activity_select2').select2();
+    $('.location_select2').select2();
+    $('.coach_select2').select2();
+    $('.approved_select2').select2();
+    $('.settled_select2').select2();
+    $('.paid_select2').select2();
+});
 </script>
 
 

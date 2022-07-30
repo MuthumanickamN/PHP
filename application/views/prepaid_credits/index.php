@@ -186,11 +186,11 @@ document.getElementById('total_credits').value=parseFloat(a).toFixed(2);
         <div class="row">
           <div class="col-md-6 control text-center">
              <?php if(isset($payment_type) && $payment_type!="") { ?>
-               <button type="button" class="btn rkmd-btn btn-success add-prepaid-credit" id="add-prepaid-credit">Update</button>          
+               <button type="button" class="btn rkmd-btn btn-secondary add-prepaid-credit" id="add-prepaid-credit">Update</button>          
              <?php } else { ?>
-              <button type="button" class="btn rkmd-btn btn-success add-prepaid-credit" id="add-prepaid-credit">Submit</button>          
+              <button type="button" class="btn rkmd-btn btn-secondary add-prepaid-credit" id="add-prepaid-credit">Submit</button>          
               <?php } ?>
-             <a href="<?php echo base_url().'prepaid_credits/list_' ?>"     class="btn btn-danger" >Cancel</a>
+             <a href="<?php echo base_url().'prepaid_credits/list_' ?>"     class="btn btn-secondary" >Cancel</a>
            </div>
          </div>
       </form>

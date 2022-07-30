@@ -122,6 +122,7 @@ class Bulk_refund extends CI_Controller {
 	            'total_credit' =>$total_credits,
 	            'updated_by' =>$user_id,
 	            'updated_by_name' =>$user_name,
+	            'created_at' => date('Y-m-d H:i:s')
 	        );
 	        $checkexists = $this->db->query('select id from wallet_transactions where slot_booking ="'.$bookingList['id'].'" and  ac_code ="REFWTR" and wallet_transaction_type = "Credit"  ');
 	        $checkexistsArr = $checkexists->row_array();

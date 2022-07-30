@@ -44,10 +44,11 @@
                                                     <th scope="col" width="5%">Mobile</th>
                                                     <th scope="col" width="12%">Email</th>
                                                     <th scope="col" width="7%">Date</th>
-                                                   <!-- <th scope="col" width="5%">Net <br> Amount<br></th>
-                                                    <th scope="col" width="5%">Discount</th>-->
-                                                    <th scope="col" width="5%">Paid <br>Amount</th>
+                                                    <th scope="col" width="5%">Net <br> Amount(AED)<br></th>
+                                                    <th scope="col" width="5%">Discount(AED)</th>
+                                                    <th scope="col" width="5%">Paid <br>Amount(AED)</th>
                                                     <th scope="col" width="5%">Created<br> By</th>
+                                                    <th scope="col" width="5%">Role</th>
                                                     <th scope="col" width="10%">Reason</th>
                                                     <th scope="col" width="5%">Status</th>
                                                     <th scope="col" width="5%">View</th>
@@ -65,12 +66,13 @@
                                                     <td><?php echo $book['parent_mobile'];?></td>
                                                     <td><?php echo $book['parent_email'];?></td>
                                                     <td><span style="display:none;"><?php echo strtotime($book['created_at']);?></span><?php echo date('d/m/Y', strtotime($book['created_at']));?></td>
-                                                    <!--<td><?php echo $book['payable_amount'];?></td>
-                                                    <td><?php echo $book['discount'];?></td>-->
+                                                    <td><?php echo $book['sum_net'];?></td>
+                                                    <td><?php echo $book['sum_discount'];?></td>
                                                     
-                                                    <td><?php echo $book['payable_amount'];?></td>
+                                                    <td><?php echo $book['sum_paid'];?></td>
                                                     <td><?php echo $book['user_name'];?></td>
-                                                    <td><?php echo $book['reason'];?></td>
+                                                    <td><?php echo $book['role'];?></td>
+                                                    <td><?php echo /*$book['reason'];*/ $book['payable_description'];?></td>
                                                     <td>
                                                         <?php if($book['status'] == 'Pending'){
                                                             $tag ='info';
@@ -88,8 +90,14 @@
                                                     <td>
                                                         <a  href="<?php echo base_url('Student_profile_slot_booking/viewBookingDetails/'.$book['id']); ?>" title="View" class="view-booking ml-1 btn-ext-small btn btn-sm btn-info" ><i class="fa fa-eye"></i></a>
                                                     </td>
-                                                    <td>
+                                                     <td>
+                                                    <?php if($setval == 'PENDING') { ?>
+                                                   
                                                         <button  data-toggle="modal" data-target="#confirmModal" data-val="<?php echo $book['id'];?>" class="btn btn-warning changeStatus"  title="Update Status">Status  </button>
+                                                    
+                                                    <?php }else{ ?>
+                                                        <button  data-toggle="modal" data-target="" data-val="<?php echo $book['id'];?>" class="btn btn-warning"  title="Update Status" disabled>Status  </button>
+                                                    <?php } ?>
                                                     </td>
 
 
@@ -146,7 +154,7 @@
 
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-success" onclick="updateRequest()">Submit</button>
+                  <button type="button" class="btn btn-success" id="update_request" >Submit</button>
                   <button type="button" class="btn btn-danger"onclick="clearForm()"  data-dismiss="modal">Cancel</button>
               </div>
           </form>
@@ -176,6 +184,22 @@ function clearForm(){
         jQuery(this).val('');
     });
 }
+
+jQuery(document).on('click', '#update_request', function(e){
+      //alert(2);
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      if(!$('#update_request').hasClass('locked'))
+      {
+        $('#update_request').addClass('locked');
+        $('#update_request').prop('disabled', true);
+        
+        updateRequest();
+        $('#update_request').prop('disabled', false);
+      }
+    
+});
+
 function updateRequest(){
     var formData = jQuery("form#updateStatus").serialize();
     jQuery.ajax({

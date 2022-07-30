@@ -1,6 +1,6 @@
 <?php
 //ss============Student Details disply============ss//
-require_once 'config.php';
+
 if($opcode==1) { ?>
 <div class="row">
     <div class="col-md-3 control ">
@@ -32,7 +32,7 @@ if($opcode==2)
         <option value="">Select</option>
         <?php if(isset($bankdetails)){
           foreach($bankdetails as $row){?>
-            <option value="<?php echo $row['bank_name'] ?>" <?php if($row['id']==$id ){ echo 'selected';} ?>><?php echo $row['bank_name']; ?></option><?php
+            <option value="<?php echo $row['bank_name'] ?>" <?php //if($row['id']==$id ){ echo 'selected';} ?>><?php echo $row['bank_name']; ?></option><?php
         
          } } ?></select>
     </div>

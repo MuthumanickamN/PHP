@@ -205,7 +205,7 @@ $.ajax({
 						</div>
 										
                  <div class="col-md-3 control text-left">
-                     <a onclick="view_student()"  id="submit_btn"   class="btn btn-primary" style="color: white" >Submit</a>
+                     <a onclick="view_student()"  id="submit_btn"   class="btn btn-secondary" style="color: white" >Submit</a>
             </div></div>
           </div>
         </div>

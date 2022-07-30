@@ -41,5 +41,15 @@ class Accountservice_model extends CI_Model {
         $row = $query->result_array();
         return $row;	
 	 }
+   public function getname()
+	 {
+      $query = $this->db->query('select Name from accounts_service ');
+	   	$row = $query->result_array();
+	  	return $row;
+		
+	 }
+
+
+   
 }
 ?>

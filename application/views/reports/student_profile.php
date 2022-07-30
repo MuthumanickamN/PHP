@@ -96,8 +96,12 @@
                                                         $setval = 'Paid above 1 month';
                                                     
                                                       }; 
+                                                      
+                                                      
                                                        ?>
-                                                      <a class='badge badge-<?php echo $tag;?>' onclick="changeregistration('<?php echo $stud['id'];?>','fees_paid','<?php echo $setval;?>')"><?php echo $stud['fees_paid']; ?></a></td>  
+                                                      <?php $fees_paid = $stud['fees_paid_key'];?>
+                                                      <a class='badge badge-<?php echo $tag;?>' onclick="changeregistration('<?php echo $stud['id'];?>','fees_paid','<?php echo $fees_paid;?>', '<?php echo $stud['fees_id'];?>' );"><?php echo $stud['fees_paid']; ?></a>
+                                                      </td>  
 
 
                                                      <!--   <td> --><?php
@@ -173,7 +177,7 @@
     </div>
 </div>
 
-<!-- Extend Validity -->
+<!-- Extend Validity  -->
 <div class="extendvalidity">
 <div class="modal" id="extendvaliditymodel" style="display: none;">
     <div class="modal-dialog">
@@ -193,6 +197,30 @@
     </div>
 </div>
 </div>
+<!--<div class="extendvalidity">
+<div class="modal" id="extendvaliditymodel" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content panel panel-primary">
+            <div class="modal-header panel-heading">
+                    <h4 class="modal-title -remove-title">Extend Validity</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            <div class="modal-body" id="confirmMessage">
+                <h4>Extend Registration Validity</h4></br>
+                <div class="col-md-3 control text-left"><strong>Extend Validity</strong>*</div>
+                <div class="col-md-5">
+                <input type="date" id="extend" name="extend" class="form-control" >
+                <span class="errorMsg"></span>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="extendOk">Yes, Extend Now</button>
+                <button type="button" class="btn btn-danger" id="extendCancel">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->
 <!-- fees details -->
 <div class="modal fade rotate" id="feesDetails" style="display:none;">
     <div class="modal-dialog modal-lg"> 
@@ -311,7 +339,7 @@
                         </tr>
                         <div>
                         <button type="button" class="btn btn-success" id="paynow">Pay Now</button>
-                        <button type="button" class="btn btn-danger" id="cancel">cancel</button>
+                        <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
                         </div> 
                        
                     </table>
@@ -339,7 +367,18 @@ jQuery(document).ready(function() {
     var t = jQuery('#studentListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            /*{ extend: 'print', 
+            orientation: 'landscape',
+            footer: true, 
+            messageTop: 'Student Profile Report ', 
+            title: 'Student Profile Report', 
+            exportOptions: {
+                    columns: [ 1, 2, 3, 4,5,6,7,8,9,10 ]
+                },
+            },*/
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
+            orientation: 'landscape',
             footer: true, 
             messageTop: 'Student Profile Report ', 
             title: 'Student Profile Report', 
@@ -347,15 +386,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10 ]
                 },
             },
-            { extend: 'pdf', 
-            footer: true, 
-            messageTop: 'Student Profile Report ', 
-            title: 'Student Profile Report', 
-            exportOptions: {
-                    columns: [ 1, 2, 3, 4,5,6,7,8,9,10 ]
-                },
-            },
-            { extend: 'excel', 
+            { extend: 'excel',
+            className: 'btn btn-secondary',  
             footer: true, 
             messageTop: 'Student Profile Report ', 
             title: 'Student Profile Report', 
@@ -385,18 +417,20 @@ jQuery(document).ready(function() {
             //  var obj = JSON.parse(result);
             var obj = result;
             
-                $('.student_id').html(obj.sid);
-                $('.student_name').html(obj.name);
-                $('.parent_id').html(obj.code);
-                $('.parent_name').html(obj.parent_name);
-                $('.mobile_no').html(obj.parent_contact);
-                $('.student_category').html(obj.reg_fee_category);
-                $('.registration_fees').html(obj.reg_fee);
-                $('.mode').html(obj.pay_type);
-                $('.wallet_balance').html(obj.wallet_balance);
-                $('.vat').html(obj.vat_percent);
-                $('.vat_amount').html(obj.vat_value); 
-                $('.payable_amount').html(obj.net_amount);         
+            $('.student_id').html(obj.sid);
+            $('.student_name').html(obj.name);
+            $('.parent_id').html(obj.code);
+            $('.parent_name').html(obj.parent_name);
+            $('.mobile_no').html(obj.parent_mobile);
+            $('.student_category').html(obj.reg_fee_category);
+            $('.registration_fees').html(obj.reg_fee);
+            $('.mode').html('Wallet');
+            $('.wallet_balance').html(obj.balance_credits);
+            $('.vat').html(obj.vat_perc);
+            var vat_amount = (parseFloat(obj.reg_fee)*parseFloat(obj.vat_perc)/100);
+            var net_amount = parseFloat(obj.reg_fee)+parseFloat(vat_amount);
+            $('.vat_amount').html(vat_amount.toFixed(2)); 
+            $('.payable_amount').html(net_amount.toFixed(2));    
 
                
                 modal.modal("show");
@@ -422,9 +456,10 @@ jQuery(document).ready(function() {
         
     }); 
 
-    $('#extendOk').click(function(){
+    $('#extendOk22').click(function(){
         $("#extendvaliditymodel .close").click()
         var student_id = $('#hidden_student_id').val();
+        
         swal({
             icon: 'success',
             title: 'Extend Validity',
@@ -432,6 +467,30 @@ jQuery(document).ready(function() {
             
         })   
         console.log('test'); 
+    });
+    $('#extendOk').click(function(){
+        $("#extendvaliditymodel .close").click()
+        var student_id = $('#hidden_student_id').val();
+       // $("#extend").datepicker();
+      // $("#extend").datepicker( 'getDate' );
+      //var extend = $('#extend').val();
+       //console.log(student_id);
+       //console.log(extend);
+            jQuery.ajax({
+            type:'POST',
+            url:baseurl+'Registration_fees/extendvalidity',
+            data:{id:student_id,extend:''},
+            dataType:'html', 
+            success: function(output) {
+                if(output)
+                {
+                  swal('Registration Validity Extended Successfully!');
+                  window.location.reload();
+                }
+          }       
+        });
+            
+            
     });
 
     $('#cancel').click(function(){
@@ -451,7 +510,16 @@ jQuery(document).ready(function() {
             data:{id:student_id},
             dataType:'html', 
             success: function(output) {
-                alert('success');
+                if(!output)
+                {
+                  swal('Insufficient Balance','Please recharge your wallet and proceed for slot booking','warning');
+                }
+                else
+                {
+                    $("#payregistrationfeesModel .close").click();
+                    var modal = $("#payregistrationfeesModel");
+                    swal('Payment completed Successfully!', 'success');   
+                }
           }       
         });
     });
@@ -493,9 +561,22 @@ function confirmDialog(message, onConfirm){
     $("#confirmCancel").unbind().one("click", fClose);
 }
 
-function changeregistration(id,field,value)
+function changeregistration(id,field,value, fees_id)
 {    
+    $('#extendvalidity').css('display', 'none');
     var modal = $("#feesDetails");
+    if(value.indexOf('Paid') != -1){
+        $('#payregistrationfees').css('display', 'none');
+        $('#extendvalidity').css('display', 'none');
+    }
+    else
+    {
+        $('#payregistrationfees').css('display', 'inline-block');
+        if(fees_id)
+        {
+            $('#extendvalidity').css('display', 'inline-block');
+        }
+    }
     jQuery.ajax({
         type:'POST',
         url:baseurl+'Reports/getDialog1/',
@@ -509,6 +590,8 @@ function changeregistration(id,field,value)
             $('.fees-name').html(obj.name);
             $('.fees-dob').html(obj.dob);
             $('.fees-age').html(obj.age);
+            $('.fees-category').html(obj.reg_fee_category);
+            $('.fees-category').html(obj.reg_fee_category);
 
             modal.modal("show");
             $('.modal-backdrop').addClass('show');

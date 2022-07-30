@@ -400,9 +400,11 @@ class Court_booking extends CI_Controller{
             'amount' => $amount
         );
         $this->court_booking_model->update_wallet_amount($update_data,$id);*/
-
+        $sql_vat="select coalesce(v.percentage,5.00) as vat_perc from vat_setups where id='1'";
+		$vat_perc = $this->db->query($sql_vat)->row()->vat_perc;
+		
         if ($from=="court_booking_regular"){
-            $vat_val1 =  sprintf("%2f",(($amount-$discount)*5)/100);
+            $vat_val1 =  sprintf("%2f",(($amount-$discount)*$vat_perc)/100);
             $tot_amount = ($amount-$discount) + $vat_val1;
 
             $creditsDetails1 = $this->db->query('select * from prepaid_credits where parent_id='.$id);
@@ -437,11 +439,11 @@ class Court_booking extends CI_Controller{
                 'wallet_transaction_date' =>date('Y-m-d'),
                 'wallet_transaction_type' =>'Debit',
                 'wallet_transaction_detail' => 'Court Booking Fees',
-                'updated_admin_id' => $id,
+                'updated_admin_id' => $this->session->userid,
                 'reg_id' => NULL,
                 'wallet_transaction_amount' => $tot_amount,
                 'gross_amount' => $amount,
-                'vat_percentage' => 5,
+                'vat_percentage' => $vat_perc,
                 'vat_value' => $vat_val1,
                 'net_amount' => $tot_amount,
                 'debit' => $tot_amount,
@@ -476,7 +478,7 @@ class Court_booking extends CI_Controller{
             $this->invoice_model->send_email_invoice($wallet_transaction_id, "CourtBooking");
         }
         elseif ($from=="court_booking_regular_cancellation"){
-            $vat_val1 =  sprintf("%2f",(($amount-$discount)*5)/100);
+            $vat_val1 =  sprintf("%2f",(($amount-$discount)*$vat_perc)/100);
             $tot_amount = ($amount-$discount) + $vat_val1;
 
 
@@ -511,11 +513,11 @@ class Court_booking extends CI_Controller{
                 'wallet_transaction_date' =>date('Y-m-d'),
                 'wallet_transaction_type' =>'Credit',
                 'wallet_transaction_detail' => 'Court Booking Fees - Cancellation',
-                'updated_admin_id' => $id,
+                'updated_admin_id' => $this->session->userid,
                 'reg_id' => NULL,
                 'wallet_transaction_amount' => $tot_amount,
                 'gross_amount' => $amount,
-                'vat_percentage' => 5,
+                'vat_percentage' => $vat_perc,
                 'vat_value' => $vat_val1,
                 'net_amount' => $tot_amount,
                 'credit' => $tot_amount,
@@ -552,7 +554,7 @@ class Court_booking extends CI_Controller{
         }
         elseif ($from=="court_booking_regular_cancellation_bulk"){
             //echo 'inside';die;
-            $vat_val1 =  sprintf("%2f",($amount*5)/100);
+            $vat_val1 =  sprintf("%2f",($amount*$vat_perc)/100);
             $vat_val1 = 0.00;
             $tot_amount = $amount + $vat_val1-$discount;
 
@@ -587,11 +589,11 @@ class Court_booking extends CI_Controller{
                 'wallet_transaction_date' =>date('Y-m-d'),
                 'wallet_transaction_type' =>'Credit',
                 'wallet_transaction_detail' => 'Court Booking Fees - Cancellation Bulk',
-                'updated_admin_id' => $id,
+                'updated_admin_id' => $this->session->userid,
                 'reg_id' => NULL,
                 'wallet_transaction_amount' => $tot_amount,
                 'gross_amount' => $amount,
-                'vat_percentage' => 5,
+                'vat_percentage' => $vat_perc,
                 'vat_value' => $vat_val1,
                 'net_amount' => $tot_amount,
                 'credit' => $tot_amount,

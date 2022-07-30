@@ -386,9 +386,28 @@ body {font-family: Arial, Helvetica, sans-serif;}
       var activity_id = "<?php echo $activity_id; ?>";
       var slot_id = "<?php echo $slot_id; ?>";
       var role = "<?php echo strtolower($this->session->userdata('role')); ?>";
-      
+      var userid = "<?php echo $this->session->userdata('userid'); ?>";
       </script>
 <script type="text/javascript">
+/*window.onbeforeunload = function() {
+    return 'Are you sure you want to navigate away from this page? leaving this page will clear your cart';
+    /*jQuery.ajax({
+        type:'POST',
+        url:base_url+'cron_job/check_cart',
+        data:{id:$('#parent_id').val()},
+        dataType:'html', 
+        success: function(output) {
+            alert(output);
+            if(output==0)
+            {
+                return false;
+                return 'Are you sure you want to navigate away from this page? leaving this page will clear your cart';
+            }
+            
+        }       
+    });
+    return false;/
+};*/
 function addSlot(this_){
     
  /* jQuery.ajax({
@@ -598,6 +617,7 @@ function checkout(parent_id, total){
 function checkout_confirm()
 {
     var role = "<?php echo $role;?>";
+    
     var sid = $('#sid').val();
     var payable_amount_chk = 0;
     var payable_amount = '';
@@ -608,25 +628,45 @@ function checkout_confirm()
        payable_description = $('#pa_description').val();
     }
     var vat_percentage = $('#vat_percentage').html();
+   
+    jQuery.ajax({
+            type:'POST',
+            url:base_url+'cron_job/check_cart',
+            data:{id:$('#parent_id').val()},
+            async:false,
+            dataType:'html', 
+            success: function(output) {
+                
+                if(output==0)
+                {
+                    $('.my_cart_button').trigger("onclick");
+                    $('.cart_slot').html(0);
+                    swal('Your Cart Cleared','Booking Timeout','warning');
+                }
+                else
+                {
+                    $.ajax({
+                          url:"<?php echo base_url().'Student_profile_slot_booking/checkout/'; ?>",
+                          type:"POST",
+                          data:jQuery("form#myCartForm").serialize() + '&payable_amount_chk=' + payable_amount_chk+ '&payable_amount=' + payable_amount+ '&payable_description=' + payable_description+ '&vat_percentage=' + vat_percentage,
+                          success:function(data){   
+                            
+                               // location.reload();
+                               //alert(role);
+                               if(role == "parent")
+                               {
+                                    window.location.href = base_url+'Active_kids/';
+                               }
+                               else
+                               {
+                               window.location.href = base_url+'Students/edit/'+sid;
+                               }
+                          }
+                      });
+                }
+        }       
+    });
     
-    $.ajax({
-          url:"<?php echo base_url().'Student_profile_slot_booking/checkout/'; ?>",
-          type:"POST",
-          data:jQuery("form#myCartForm").serialize() + '&payable_amount_chk=' + payable_amount_chk+ '&payable_amount=' + payable_amount+ '&payable_description=' + payable_description+ '&vat_percentage=' + vat_percentage,
-          success:function(data){   
-            
-               // location.reload();
-               //alert(role);
-               if(role == "parent")
-               {
-                    window.location.href = base_url+'Active_kids/';
-               }
-               else
-               {
-               window.location.href = base_url+'Students/edit/'+sid;
-               }
-          }
-      });
 }
 function deletetmp(idval){
     confirmDialog('Are you sure want to the delete?', function(){

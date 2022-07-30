@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Account code</b>
-                                                    <select class="form-control" id="acc_code" name="acc_code">
+                                                    <select class="form-control account_code" id="acc_code" name="acc_code">
                                                         <option value="">Select</option>
                                                         <?php if(isset($account_code_data)){
                                                             foreach ($account_code_data as $code) { ?>
@@ -95,7 +95,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Updated email id</b>
-                                                    <select class="form-control" id="id_val" name="id_val">
+                                                    <select class="form-control email_id" id="id_val" name="id_val">
                                                         <option value="">Select</option>
                                                         <?php if(isset($userList)){
                                                             foreach ($userList as $user) { ?>
@@ -105,7 +105,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -183,7 +183,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#transactionListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Daily transaction report for '+fromdateval+' - '+todateval, 
             title: 'Daily transaction report', 
@@ -267,4 +268,8 @@ jQuery(document).ready(function() {
     } );
 } );
 
+</script>
+<script type="text/javascript">
+$('.account_code').select2();
+$('.email_id').select2();
 </script>

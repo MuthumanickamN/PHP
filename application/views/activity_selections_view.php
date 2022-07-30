@@ -377,11 +377,11 @@
                      <div class="row">
                       <div class="col-md-12 control text-center">
                         <?php if(isset($id) && $id!="") { ?>
-                        <button type="submit" name="submit" class="btn btn-warning" >Update</button>   
+                        <button type="submit" name="submit" class="btn btn-secondary" >Update</button>   
                         <?php } else { ?>
-                          <button type="submit" id="save" class="btn btn-success" ><b> Submit</b></button>
+                          <button type="submit" id="save" class="btn btn-secondary" ><b> Submit</b></button>
                           <?php } ?> 
-                         <a href="<?php echo base_url().'Students/edit/'.$back_url; ?>"     class="btn btn-danger" >Cancel</a>
+                         <a href="<?php echo base_url().'Students/edit/'.$back_url; ?>"     class="btn btn-secondary" >Cancel</a>
                        </div>
                      </div>
                     

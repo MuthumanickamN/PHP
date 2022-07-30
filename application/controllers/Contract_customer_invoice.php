@@ -30,6 +30,9 @@ class Contract_customer_invoice extends CI_Controller
     public function invoice()
     {
         //print_r($_POST);die;
+        $sql_vat="select coalesce(v.percentage,5.00) as vat_perc from vat_setups where id='1'";
+		$vat_perc = $this->db->query($sql_vat)->row()->vat_perc;
+		
         $contract_id_arr = $this->input->post('contract_id');
         if(count($contract_id_arr) > 0)
         {
@@ -50,7 +53,7 @@ class Contract_customer_invoice extends CI_Controller
                 $creditsDetailsData1 = $creditsDetails1->row_array();
                 $wallet_amount = $creditsDetailsData1['balance_credits'];
                 $gross = $row['monthly_amount'];
-                $vat_amount = (sprintf("%2f", ($row['monthly_amount']*5)/100)); 
+                $vat_amount = (sprintf("%2f", ($row['monthly_amount']*$vat_perc)/100)); 
                 $net_amount = sprintf("%2f", $gross+$vat_amount);
                 $balance_credits = sprintf("%2f",$wallet_amount - $net_amount);
                 
@@ -80,7 +83,7 @@ class Contract_customer_invoice extends CI_Controller
                     'reg_id' => $student_id,
                     'wallet_transaction_amount' => $net_amount,
                     'gross_amount' => $gross,
-                    'vat_percentage' => 5.00,
+                    'vat_percentage' => $vat_perc,
                     'vat_value' => $vat_amount,
                     'net_amount' => $net_amount,
                     'debit' => $net_amount,

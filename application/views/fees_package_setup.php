@@ -327,7 +327,7 @@ $.ajax({
 						  <input type="text" id="slot_classes_fees" oninput="fees_limit();"  name="slot_classes_fees" value="" placeholder="Fees" class="form-control" >
 					   </div>
 					   <div class="col-md-1 control text-left">&nbsp;
-						  <input type="button" style="color:white" value="+Add" class="form-control btn btn-info btn-flat class_framehtml">
+						  <input type="button" style="color:white" value="+Add" class="form-control btn btn-secondary btn-flat class_framehtml">
 					   </div>
 					</div>
 					
@@ -433,10 +433,10 @@ $.ajax({
 						<div class="row">
 						<div class="col-md-4 control text-right"> 
 						<!-- onclick="<?php echo base_url('fees_package_setup/add/'); ?>" -->
-						<input id="save" type="submit" name="submit" value="Submit"  class="btn btn-success" /> 
+						<input id="save" type="submit" name="submit" value="Submit"  class="btn btn-secondary" /> 
 						</div>
 						<div class="col-md-3 control text-left">
-						<a href="<?php echo base_url().'fees_package_setup'?>" class="btn btn-danger" >Cancel</a>
+						<a href="<?php echo base_url().'fees_package_setup'?>" class="btn btn-secondary" >Cancel</a>
 						</div>
 						</div>
 						 <?php 
@@ -449,10 +449,10 @@ $.ajax({
 						<div class="row">
 						<div class="col-md-4 control text-right">
 						<input type="hidden" id="h_package_setups_id" name="h_package_setups_id" value="<?php echo $fee_package_setups_id;  ?>"/>
-						<input id="save" type="submit" name="submit" value="Update"  class="btn btn-success" /> 
+						<input id="save" type="submit" name="submit" value="Update"  class="btn btn-secondary" /> 
 						</div>
 						<div class="col-md-3 control text-left">
-							<a href="<?php echo base_url().'fees_package_setup'?>" class="btn btn-danger" >Cancel</a>
+							<a href="<?php echo base_url().'fees_package_setup'?>" class="btn btn-secondary" >Cancel</a>
 						</div>
 						</div>
 

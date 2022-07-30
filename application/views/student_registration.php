@@ -34,6 +34,8 @@ $(document).ready(function(){
        "order": [],
    });*/
    var role = "<?php echo $role;?>";
+   var student_id = "<?php echo $id;?>";
+   
    
 });
 </script>
@@ -670,11 +672,11 @@ function contact_check(inputtxt){
                       
                        <?php
                        $role = strtolower($this->session->userdata['role']);
-                       if($role=='superadmin'):
+                       if($role=='superadmin' || $role=='admin'):
                        ?>
                           <div class="row">
                         <div class="col-md-3 control text-left"><strong>Status*</strong> 
-                        <select name="status" id="status" class="form-control"  >
+                        <select name="status" id="status" class="form-control status"  >
                            <option value="">Select</option>
                           <option value="Active" <?php if($status=="Active"){ echo 'selected';} ?>>Active</option>
                          <option value="Inactive" <?php if($status=="Inactive"){ echo 'selected';} ?>>Inactive</option>
@@ -683,7 +685,7 @@ function contact_check(inputtxt){
                        </div>
                      
                         <div class="col-md-3 control text-left"><strong>Approval Status*</strong>  
-                        <select name="approval_status" id="approval_status" class="form-control"  >
+                        <select name="approval_status" id="approval_status" class="form-control approval"  >
                            <option value="">Select</option>
                           <option value="Pending" <?php if($approval_status=="Pending"){ echo 'selected';} ?>>Pending</option>
                          <option value="Approved" <?php if($approval_status=="Approved"){ echo 'selected';} ?>>Approved</option>
@@ -696,15 +698,15 @@ function contact_check(inputtxt){
                     <div class="row">
                      <div class="col-md-12 control text-center">
                        <?php if(isset($id) && $id!="") { ?>
-                       <button type="submit" name="submit" class="btn btn-warning" >Update</button>   
+                       <button type="submit" name="submit" class="btn btn-secondary" >Update</button>   
                        <?php } else { ?>
-                         <button type="submit" id="save" class="btn btn-success" ><b> Submit</b></button>
+                         <button type="submit" id="save" class="btn btn-secondary" ><b> Submit</b></button>
                          <?php } ?> 
                          
                          <?php if(isset($from) && $from ="approval") { ?>
-                        <a href="<?php echo base_url().'Students' ?>"     class="btn btn-danger" >Cancel</a>
+                        <a href="<?php echo base_url().'Students' ?>"     class="btn btn-secondary" >Cancel</a>
                          <?php } else { ?>
-                         <a href="<?php echo base_url().'Students' ?>"     class="btn btn-danger" >Cancel</a>
+                         <a href="<?php echo base_url().'Students' ?>"     class="btn btn-secondary" >Cancel</a>
                          <?php } ?> 
                       </div>
                     </div>
@@ -1091,7 +1093,7 @@ function contact_check(inputtxt){
                        </tr>
                        <div>
                        <button type="button" class="btn btn-success" id="paynow">Pay Now</button>
-                       <button type="button" class="btn btn-danger" id="cancel">cancel</button>
+                       <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
                        </div> 
                       
                    </table>
@@ -1174,6 +1176,8 @@ function contact_check(inputtxt){
 
 $('.parent_mobile').select2();
 $('.tshirt_size').select2();
+$('.status').select2();
+$('.approval').select2();
 
 $(".student_book").on('click',function(e) {
  
@@ -1200,7 +1204,7 @@ $(".student_book").on('click',function(e) {
                
              }).then((Button) => {
                if (!Button) {
-                 alert('Yes');
+                 
 
                 // var student_id = $('#hidden_student_id').val();
                  jQuery.ajax({
@@ -1212,18 +1216,22 @@ $(".student_book").on('click',function(e) {
                        //  var obj = JSON.parse(result);
                        var obj = result;
                        
-                           $('.student_id').html(obj.sid);
-                           $('.student_name').html(obj.name);
-                           $('.parent_id').html(obj.code);
-                           $('.parent_name').html(obj.parent_name);
-                           $('.mobile_no').html(obj.parent_mobile);
-                           $('.student_category').html(obj.reg_fee_category);
-                           $('.registration_fees').html(obj.reg_fee);
-                           $('.mode').html(obj.payment_type);
-                           $('.wallet_balance').html(obj.wallet_balance);
-                           $('.vat').html(obj.vat_percent);
-                           $('.vat_amount').html(obj.vat_value); 
-                           $('.payable_amount').html(obj.net_amount);         
+                            
+                          
+                          $('.student_id').html(obj.sid);
+                        $('.student_name').html(obj.name);
+                        $('.parent_id').html(obj.code);
+                        $('.parent_name').html(obj.parent_name);
+                        $('.mobile_no').html(obj.parent_mobile);
+                        $('.student_category').html(obj.reg_fee_category);
+                        $('.registration_fees').html(obj.reg_fee);
+                        $('.mode').html('Wallet');
+                        $('.wallet_balance').html(obj.balance_credits);
+                        $('.vat').html(obj.vat_perc);
+                        var vat_amount = (parseFloat(obj.reg_fee)*parseFloat(obj.vat_perc)/100);
+                        var net_amount = parseFloat(obj.reg_fee)+parseFloat(vat_amount);
+                        $('.vat_amount').html(vat_amount.toFixed(2)); 
+                        $('.payable_amount').html(net_amount.toFixed(2)); 
 
                            $('#payregistrationfeesModel').modal('show');
                            
@@ -1250,24 +1258,31 @@ $(".student_book").on('click',function(e) {
    });
 });
 
-$('#cancel').click(function(){
-        var student_id = $('#hidden_student_id').val();
-        $("#payregistrationfeesModel .close").click()
-    
+    $('#cancel').click(function(){
+      $("#payregistrationfeesModel .close").click();
     }); 
 
     $('#paynow').click(function(){
-        var student_id = $('#hidden_student_id').val();
+        
+        
         //$("#payregistrationfeesModel .close").click();
         //var modal = $("#payregistrationfeesModel");
         //alert('Payment completed Successfully!');   
         jQuery.ajax({
             type:'POST',
             url:baseurl+'Registration_fees/payRegistration',
-            data:{id:student_id},
+            data:{id:"<?php echo $id;?>"},
             dataType:'html', 
             success: function(output) {
-                alert('success');
+                if(!output)
+                {
+                  swal('Insufficient Balance','Please recharge your wallet and proceed for slot booking','warning');
+                }
+                else
+                {
+                    $("#payregistrationfeesModel .close").click();
+                    swal('Registration Fees Paid','','success');
+                }
           }       
         });
     });
@@ -1321,13 +1336,13 @@ $("#registrationForm").on('submit',(function(e) {
        }
        else
        {
-                   window.location.href = baseurl+'Students/list_';
+            window.location.href = baseurl+'Students/list_';
        }
          }
-            if(json['status'] == '1')
+          if(json['status'] == 'Passport Number Already Exists.')
       {
-     $('.passport_id_errorMsg').html('Passport id already exists.');
-      }				 
+     $('.passport_id_errorMsg').html('Passport number already exists.');
+      }		  		 
          }
      },
     error: function (xhr, ajaxOptions, thrownError) {

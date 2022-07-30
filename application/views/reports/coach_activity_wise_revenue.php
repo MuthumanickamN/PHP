@@ -72,7 +72,7 @@
                                                 <label for="Yearly">Yearly</label>
                                                 </div>                                           
                                                 <div class="col-lg-2">
-                                                <button id="fetch" class="btn btn-success margin-top-20 fetch">Search</button>
+                                                <button id="fetch" class="btn btn-secondary margin-top-20 fetch">Search</button>
 
 
                                                 

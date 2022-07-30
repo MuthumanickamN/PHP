@@ -74,7 +74,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Parent ID/ Mobile</b>
-                                                    <select class="form-control" id="parent_idval" name="parent_idval">
+                                                    <select class="form-control parent_id" id="parent_idval" name="parent_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($parentList)){
                                                             foreach ($parentList as $parent) { ?>
@@ -85,7 +85,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Parent email Id</b>
-                                                    <select class="form-control" id="parent_emailval" name="parent_emailval">
+                                                    <select class="form-control email_id" id="parent_emailval" name="parent_emailval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($parentList)){
                                                             foreach ($parentList as $parent) { ?>
@@ -96,7 +96,7 @@
                                                 </div>
                                                 
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -104,7 +104,7 @@
                                             <div class="row margin-top-20">
                                                 <div class="col-lg-2">
                                                     <b>Account code</b>
-                                                    <select class="form-control" id="acc_code" name="acc_code">
+                                                    <select class="form-control account_code" id="acc_code" name="acc_code">
                                                         <option value="">Select</option>
                                                         <?php if(isset($account_code_data)){
                                                             foreach ($account_code_data as $code) { ?>
@@ -115,7 +115,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <b>Transaction Details</b>
-                                                    <select class="form-control" id="transDetailVal" name="transDetailVal">
+                                                    <select class="form-control transaction" id="transDetailVal" name="transDetailVal">
                                                         <option value="">Select</option>
                                                         <?php if(isset($transactionList)){
                                                             foreach ($transactionList as $detail) { ?>
@@ -127,7 +127,7 @@
                                                 <?php if($type == 'master'){ ?>
                                                 <div class="col-lg-2">
                                                     <b>Updated email id</b>
-                                                    <select class="form-control" id="id_val" name="id_val">
+                                                    <select class="form-control updated_email_id" id="id_val" name="id_val">
                                                         <option value="">Select</option>
                                                         <?php if(isset($userList)){
                                                             foreach ($userList as $user) { ?>
@@ -141,7 +141,7 @@
                                             ?>
                                             <div class="col-lg-2">
                                                     <b>Payment Type</b>
-                                                    <select class="form-control" id="paymentTypeVal" name="paymentTypeVal">
+                                                    <select class="form-control payment_type" id="paymentTypeVal" name="paymentTypeVal">
                                                         <option value="">Select</option>
                                                         <?php if(isset($paymentArray)){
                                                             foreach ($paymentArray as $payment) { ?>
@@ -213,6 +213,11 @@
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Role</th>
                                                         <th scope="col">Email Id</th>
+                                                        <th scope="col">Cash</th>
+                                                        <th scope="col">Card</th>
+                                                        <th scope="col">Online</th>
+                                                        <th scope="col">Cheque</th>
+                                                      <!--  <th scope="col">Wallet</th> -->
                                                         <th scope="col">Total</th>
                                                     </tr>
                                                 </thead>
@@ -224,6 +229,11 @@
                                                         <td><?php echo $user['user_name'];?></td>
                                                         <td><?php echo $user['role'];?></td>
                                                         <td><?php echo $user['email'];?></td>
+                                                        <td><?php echo $user['Cash'];?></td>
+                                                        <td><?php echo $user['Card'];?></td>
+                                                        <td><?php echo $user['Online'];?></td>
+                                                        <td><?php echo $user['Cheque'];?></td>
+                                                     <!--<td><?php echo $user['Wallet'];?></td>-->
                                                         <td><?php echo $user['total'];?></td>
                                                         
 
@@ -356,6 +366,14 @@ $this->load->view('templates/footer');
 </div>
 
 <script type="text/javascript">
+$(document).ready(function(){
+$('.parent_id').select2();
+$('.email_id').select2();
+$('.account_code').select2();
+$('.transaction').select2();
+$('.updated_email_id').select2();
+$('.payment_type').select2();
+});
 
 jQuery(document).ready(function() {
     var titlename = '<?php echo $title;?>';
@@ -364,7 +382,9 @@ jQuery(document).ready(function() {
     var t = jQuery('#transactionListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
+            orientation: 'landscape',
             footer: true, 
             messageTop: titlename+' for '+fromdateval+' - '+todateval, 
             title: titlename, 
@@ -468,6 +488,7 @@ jQuery(document).ready(function() {
             }*/
 
             { extend: "print",
+            className: 'btn btn-secondary',
             customize: function(win)
             {
  

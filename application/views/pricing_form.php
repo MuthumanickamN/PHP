@@ -214,6 +214,14 @@ $count = ($id !='') ? count($pricing_slot_details) : '1';
 <!-- /.content -->
 
 <script type="text/javascript">
+$(document).ready(function(){
+$('#sports').select2();
+$('#location').select2();
+$('#court').select2();
+$('#from_day').select2();
+$('#to_day').select2();
+});
+
 $(function () {
 //Date picker
 $('#datepicker, #datepicker1').datepicker({

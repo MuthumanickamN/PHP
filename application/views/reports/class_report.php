@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <b>PSA ID</b>
-                                <select class="form-control" id="parent_idval" name="parent_idval">
+                                <select class="form-control psa_id" id="parent_idval" name="parent_idval">
                                     <option value="">Select</option>
                                     <?php if(isset($parentList)){
                                         foreach ($parentList as $parent) { ?>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <b>Activity</b>
-                                <select class="form-control" id="activity_code" name="activity_code">
+                                <select class="form-control activity" id="activity_code" name="activity_code">
                                     <option value="">Select</option>
                                     <?php if(isset($activityList)){
                                         foreach ($activityList as $activity) { ?>
@@ -72,7 +72,7 @@
                             </div>
                              
                             <div class="col-lg-2">
-                                <button class="btn btn-success margin-top-20">Search</button>
+                                <button class="btn btn-secondary margin-top-20">Search</button>
                             </div>
                       
 
@@ -80,7 +80,7 @@
                         <div class="row" style="margin-bottom: 20px">
                             <div class="col-lg-2">
                                 <b>Location</b>
-                                <select class="form-control" id="location_idval" name="location_idval">
+                                <select class="form-control location" id="location_idval" name="location_idval">
                                     <option value="">Select</option>
                                     <?php if(isset($locationList)){
                                         foreach ($locationList as $location) { ?>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <b>Level</b>
-                                <select class="form-control" id="gameLevelId" name="gameLevelId">
+                                <select class="form-control level" id="gameLevelId" name="gameLevelId">
                                     <option value="">Select</option>
                                     <?php if(isset($levelList)){
                                         foreach ($levelList as $level) { ?>
@@ -102,7 +102,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <b>Coach</b>
-                                <select class="form-control" id="coach_idval" name="coach_idval">
+                                <select class="form-control coach" id="coach_idval" name="coach_idval">
                                     <option value="">Select</option>
                                     <?php if(isset($coachList)){
                                         foreach ($coachList as $coach) { ?>
@@ -116,7 +116,7 @@
                             $statusArr = array('Pending','Present','Absent'); ?>
                             <div class="col-lg-2">
                                 <b>Status</b>
-                                <select class="form-control" id="status" name="status">
+                                <select class="form-control status" id="status" name="status">
                                     <option value="">Select</option>
                                     <?php foreach ($statusArr as $val) { ?>
                                     <option value="<?php echo $val;?>" <?php if( $val==$status ){ echo 'selected';} ?> ><?php echo $val;?></option>
@@ -201,6 +201,15 @@
 $this->load->view('templates/footer');
 ?>
 <script type="text/javascript">
+$(document).ready(function(){
+$('.psa_id').select2();
+$('.coach').select2();
+$('.activity').select2();
+$('.level').select2();
+$('.location').select2();
+$('.status').select2();
+});
+
 
 jQuery(document).ready(function() {
     var titlename = '<?php echo $title; ?>';
@@ -209,7 +218,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#attendanceList').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: titlename+' for '+fromdateval+' - '+todateval, 
             title: titlename, 
@@ -217,7 +227,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10 ]
                 },
             },
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: titlename+' for '+fromdateval+' - '+todateval, 
             title: titlename,  
@@ -225,7 +236,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10 ]
                 },
             },
-            { extend: 'excel', 
+            { extend: 'excel',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: titlename+' for '+fromdateval+' - '+todateval, 
             title: titlename, 

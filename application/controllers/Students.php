@@ -251,23 +251,26 @@ class Students extends CI_Controller {
 					
 			}*/
 			//$this->form_validation->set_rules('passport_id','passport_id','required|valid_passport_id|is_unique[registrations.passport_id]');
-
-			$sql1 = "select passport_id from registrations
-			where  passport_id = ".$passport_id."";
-			$query1 = $this->db->query($sql1);
-			if($query1->num_rows() > 0)
-			{
-			$json['status'] = "Already exists passport id";
-			$this->output->set_header('Content-Type: application/json');
-			echo json_encode($json);
-			$this->session->set_flashdata('success_msg', 'Passport id already exists.');
-			}
-			else{
-			    $sql="INSERT into registrations(name,dob,age,gender,father_name,father_contact,mother_name,emergency_contact,image_file_name,parent_mobile,parent_name,parent_email_id, parent_user_id, nationality,country,postal_code,state,district,city,school_name,sibling_name,sibling_reg_no,father_email,father_office_contact,mother_contact,mother_office_contact,mother_email,student_email,address_1,address_2,student_emid_file_name,emirates_id_issue,t_shirt_size,status,approval_status,student_passport_file_name,student_visapage_file_name,sponsor_passport_file_name,sponsor_visapage_file_name,sponsor_emid_file_name,emirates_id,passport_id,created_at, sid, role,updated_admin_id,updated_admin_email, updated_admin_name,country_id) values('".$student_name."','".$student_dob."','".$student_age."','".$student_gender."','".$father_name."','".$father_contact_no."','".$mother_name."','".$emergency_contact_no."','".$student_passport_image."','".$parent_mobile."','".$parent_name."','".$parent_email_id."','".$parent_id."','".$nationality."','".$country."','".$postal_code."','".$state."','".$district."','".$city."','".$school_name."','".$sibling_name."','".$sibling_reg_no."','".$father_email_id."','".$father_office_contact_no."','".$mother_contact_no."','".$mother_office_contact_no."','".$mother_email_id."','".$student_email_id."','".$address1."','".$address2."','".$student_emirates_id_image."','".$date_of_issue."','".$tshirt_size."','".$status."','".$approval_status."','".$student_passport_size_image."','".$student_visa_page."','".$sponsor_passport."','".$sponsor_visa_page."','".$sponsor_emirates_id."','".$student_emirates_id."','".$passport_id."','".$created_at."','".$code."','".$role."','".$user_id."','".$email."','".$admin_name."',1)";
-				$insert=$this->db->query($sql);
+            if($passport_id)
+            {
+    			$sql1 = "select passport_id from registrations
+    			where  passport_id = ".$passport_id."";
+    			$query1 = $this->db->query($sql1);
+    			if($query1->num_rows() > 0)
+    			{
+    			$json['status'] = "Passport Number Already Exists.";
+    			$this->output->set_header('Content-Type: application/json');
+    			echo json_encode($json);
+    			$this->session->set_flashdata('success_msg', 'Passport id already exists.');
+    			die;
+    			}
+            }
+    			
+		    $sql="INSERT into registrations(name,dob,age,gender,father_name,father_contact,mother_name,emergency_contact,image_file_name,parent_mobile,parent_name,parent_email_id, parent_user_id, nationality,country,postal_code,state,district,city,school_name,sibling_name,sibling_reg_no,father_email,father_office_contact,mother_contact,mother_office_contact,mother_email,student_email,address_1,address_2,student_emid_file_name,emirates_id_issue,t_shirt_size,status,approval_status,student_passport_file_name,student_visapage_file_name,sponsor_passport_file_name,sponsor_visapage_file_name,sponsor_emid_file_name,emirates_id,passport_id,created_at, sid, role,updated_admin_id,updated_admin_email, updated_admin_name,country_id) values('".$student_name."','".$student_dob."','".$student_age."','".$student_gender."','".$father_name."','".$father_contact_no."','".$mother_name."','".$emergency_contact_no."','".$student_passport_image."','".$parent_mobile."','".$parent_name."','".$parent_email_id."','".$parent_id."','".$nationality."','".$country."','".$postal_code."','".$state."','".$district."','".$city."','".$school_name."','".$sibling_name."','".$sibling_reg_no."','".$father_email_id."','".$father_office_contact_no."','".$mother_contact_no."','".$mother_office_contact_no."','".$mother_email_id."','".$student_email_id."','".$address1."','".$address2."','".$student_emirates_id_image."','".$date_of_issue."','".$tshirt_size."','".$status."','".$approval_status."','".$student_passport_size_image."','".$student_visa_page."','".$sponsor_passport."','".$sponsor_visa_page."','".$sponsor_emirates_id."','".$student_emirates_id."','".$passport_id."','".$created_at."','".$code."','".$role."','".$user_id."','".$email."','".$admin_name."',1)";
+			$insert=$this->db->query($sql);
+    				
+    			
 				
-			}
-					
 				
 				if(isset($insert)){
 					
@@ -347,6 +350,7 @@ class Students extends CI_Controller {
     	$query3 = $this->db->query('select game_id,game from games where active=1');
     	$data['games']=$query3->result_array();
     	$data['role'] = $role;
+		$data['id'] = $id;
     	
 		$this->load->view('student_registration',$data);
 	}

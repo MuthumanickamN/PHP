@@ -201,12 +201,12 @@ function allnumeric(inputtxt){
 
      <?php if(isset($wallet_transaction_amount) && $wallet_transaction_amount!="") { ?>
         <input value = "<?php echo $id; ?>" name="id" id="id" type="hidden">
-       <button type="button" class="btn rkmd-btn btn-success add-wallet-transaction" id="add-wallet-transaction">Update</button> 
+       <button type="button" class="btn rkmd-btn btn-secondary add-wallet-transaction" id="add-wallet-transaction">Update</button> 
      <?php } else { ?>
-      <button type="button" class="btn rkmd-btn btn-success add-wallet-transaction" id="add-wallet-transaction">Submit</button>         
+      <button type="button" class="btn rkmd-btn btn-secondary add-wallet-transaction" id="add-wallet-transaction">Submit</button>         
     <?php } ?>
 
-     <a href="<?php echo base_url().'index.php/Wallet_transaction/list_' ?>"     class="btn btn-danger" >Cancel</a></div></div>
+     <a href="<?php echo base_url().'index.php/Wallet_transaction/list_' ?>"     class="btn btn-secondary" >Cancel</a></div></div>
 </form>
 
 </div>
@@ -250,7 +250,7 @@ jQuery(document).on('keyup', '#wallet_transaction_amount', function(){
     var netamount = (parseFloat(amount) + parseFloat(percentvalue)).toFixed(2);
     jQuery('#vat_value').val(percentvalue);
     
-    
+    //alert(type);
     // refund amount
     if(type == 'Credit'){
         var refundpercent = jQuery('#refund_percentage').val();

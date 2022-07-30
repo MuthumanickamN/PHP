@@ -4,11 +4,7 @@ class Cron_job extends CI_Controller{
     
     function __construct(){
         parent::__construct();
-        // Load form helper library
-        $this->load->helper('form');
-        if(!$this->session->userdata('id')){
-            redirect('logout');
-        }
+        
 	}
     
     public function clear_cart(){
@@ -91,6 +87,51 @@ class Cron_job extends CI_Controller{
 		}
 		
 	}
+	
+	public function clear_cart_all(){
+		$id= $this->input->post('id');
+		$sql="select * from  tmp_booking where parent_id= $id";
+		 $n1 = $this->db->query($sql)->num_rows();
+		
+		$sql2="select * from tmp_booking_court where parent_id= $id";
+		 $n2 = $this->db->query($sql2)->num_rows();
+		
+		
+		$sqld="delete from tmp_booking where parent_id= $id";
+		$this->db->query($sqld);
+		
+        $sqld2="delete from tmp_booking_court where parent_id= $id";
+		$this->db->query($sqld2);
+		
+		if($n1 > 0 || $n2 > 0)
+		{
+		    echo 1;
+		}
+		else
+		{
+		    echo 0;
+		}
+	}
+	
+	public function check_cart(){
+		$id= $this->input->post('id');
+		$sql="select * from  tmp_booking where parent_id= $id";
+		$n1 = $this->db->query($sql)->num_rows();
+		
+		//$sql2="select * from tmp_booking_court where parent_id= $id";
+		// $n2 = $this->db->query($sql2)->num_rows();
+		
+		if($n1 == 0)
+		{
+		    echo 0;
+		}
+		else
+		{
+		    echo 1;
+		}
+	}
+	
+	
 	public function check_contract()
 	{
 		$month = date('M Y');
@@ -140,6 +181,30 @@ class Cron_job extends CI_Controller{
 			}
 		}
 	}
+	
+	public function update_student_category()
+	{
+	    $sql = "select * from registrations";
+	    foreach($this->db->query($sql)->result_array() as $key => $value)
+	    {
+	        $from = new DateTime($value['dob']);
+            $to   = new DateTime('today');
+            $age = $from->diff($to)->y;
+            $id = $value['id'];
+            if($age > 19)
+            {
+                $this->db->query("UPDATE registrations set reg_fee_category='Adult' where id=$id");
+                
+            }
+            else
+            {
+                $this->db->query("UPDATE registrations set reg_fee_category='Kid' where id=$id");
+            }
+	    }
+	    
+	}
+	
+	
 
 	
 }

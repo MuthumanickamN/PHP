@@ -42,7 +42,7 @@
                                             <div class="row" style="margin-bottom: 20px">
                                                 <div class="col-lg-2">
                                                     <b>Coach</b>
-                                                    <select class="form-control" id="coach_idval" name="coach_idval">
+                                                    <select class="form-control coach" id="coach_idval" name="coach_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($coachList)){
                                                             foreach ($coachList as $coach) { ?>
@@ -54,7 +54,7 @@
                                                 
                                                 <div class="col-lg-2">
                                                     <b>Activity</b>
-                                                    <select class="form-control" id="activity_code" name="activity_code">
+                                                    <select class="form-control activity" id="activity_code" name="activity_code">
                                                         <option value="">Select</option>
                                                         <?php if(isset($activityList)){
                                                             foreach ($activityList as $activity) { ?>
@@ -65,7 +65,7 @@
                                                 </div>
                                                  <div class="col-lg-2">
                                                     <b>Location</b>
-                                                    <select class="form-control" id="location_idval" name="location_idval">
+                                                    <select class="form-control location" id="location_idval" name="location_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($locationList)){
                                                             foreach ($locationList as $location) { ?>
@@ -75,7 +75,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                           
 
@@ -169,6 +169,7 @@ jQuery(document).ready(function() {
         dom: 'Bfrtip',
         buttons: [
             { extend: 'print', 
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Coach Profile Report', 
             title: 'Coach Profile Report', 
@@ -176,7 +177,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7 ]
                 },
             },
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Coach Profile Report', 
             title: 'Coach Profile Report', 
@@ -184,7 +186,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7 ]
                 },
             },
-            { extend: 'excel', 
+            { extend: 'excel',
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Coach Profile Report', 
             title: 'Coach Profile Report', 
@@ -235,5 +238,12 @@ function confirmDialog(message, onConfirm){
     $("#confirmOk").unbind().one('click', onConfirm).one('click', fClose);
     $("#confirmCancel").unbind().one("click", fClose);
 }
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('.coach').select2();
+$('.activity').select2();
+$('.location').select2();
+    });
 </script>
 

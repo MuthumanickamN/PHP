@@ -143,6 +143,7 @@ jQuery(document).ready(function() {
         dom: 'Bfrtip',
         buttons: [
             { extend: 'print', 
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: titlename, 
             title: titlename, 
@@ -150,7 +151,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9 ]
                 },
             },
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: titlename, 
             title: titlename,  
@@ -158,7 +160,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9 ]
                 },
             },
-            { extend: 'excel', 
+            { extend: 'excel',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: titlename, 
             title: titlename, 

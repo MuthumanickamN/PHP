@@ -42,7 +42,7 @@
                                             <div class="row" style="margin-bottom: 20px">    
                                                 <div class="col-lg-2">
                                                     <b>Coach</b>
-                                                    <select class="form-control" id="coach_idval" name="coach_idval">
+                                                    <select class="form-control coach" id="coach_idval" name="coach_idval">
                                                         <option value="">Select</option>
                                                         <?php if(isset($coachList)){
                                                             foreach ($coachList as $coach) { ?>
@@ -56,7 +56,7 @@
                                                     <input type="date" id="date" name="date" class="form-control" value="<?php echo $date;?>" placeholder="From date">
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button class="btn btn-success margin-top-20">Search</button>
+                                                    <button class="btn btn-secondary margin-top-20">Search</button>
                                                 </div>
                                             </div>
                                               </form>
@@ -124,7 +124,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#activityListing').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Coach Roaster Report - '+dateVal, 
             title: 'Coach Roaster Report', 
@@ -133,6 +134,7 @@ jQuery(document).ready(function() {
                 },
             },
             { extend: 'pdf', 
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Coach Roaster Report - '+dateVal, 
             title: 'Coach Roaster Report', 
@@ -141,6 +143,7 @@ jQuery(document).ready(function() {
                 },
             },
             { extend: 'excel', 
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Coach Roaster Report - '+dateVal, 
             title: 'Coach Roaster Report', 
@@ -158,5 +161,11 @@ jQuery(document).ready(function() {
     } );
 } );
 
+</script>
+<script type = "text/javascript">
+$(document).ready(function(){
+$('.coach').select2();
+
+});
 </script>
 

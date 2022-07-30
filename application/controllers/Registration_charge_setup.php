@@ -29,8 +29,8 @@ class Registration_charge_setup extends CI_Controller {
 			$created_at=currentDateTime();
 
 	 $this->db->where('category', $category); 
-	  $this->db->where('reg_fee', $registration_fees);  
-	   $this->db->where('note', $note);  
+	  //$this->db->where('reg_fee', $registration_fees);  
+	   //$this->db->where('note', $note);  
              
            $query = $this->db->get('reg_charge_setups');  
        if($query->num_rows() ==0)  
@@ -43,12 +43,12 @@ class Registration_charge_setup extends CI_Controller {
 
 	
 				setMessage('New Registration Charge Setup Added Successfully.');
-				redirect(base_url().'index.php/registration_charge_setup');
+				redirect(base_url().'Registration_charge_setup');
 		}
 			else
 			{
-				setMessage('Registration Charge Already Exist');
-			redirect(base_url().'index.php/registration_charge_setup');
+				setMessage('Registration Category Already Exist');
+			redirect(base_url().'Registration_charge_setup');
 			}
 	}
 	$this->load->view('registration_charge_setup');

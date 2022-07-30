@@ -17,8 +17,8 @@
                     <div class="row">
                         <div class="col-sm-12">
 							<input type="hidden" name="user_id" id="user_id">						
-                            <button type="button" class="btn rkmd-btn btn-success" id="delete-user">Yes</button> 
-                            <button type="button" class="btn rkmd-btn btn-danger" data-dismiss="modal">No</button>
+                            <button type="button" class="btn rkmd-btn btn-secondary" id="delete-user">Yes</button> 
+                            <button type="button" class="btn rkmd-btn btn-secondary" data-dismiss="modal">No</button>
                         </div>                    
                     </div>
                 </div>

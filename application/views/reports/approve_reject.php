@@ -50,7 +50,7 @@
                             </div>
                              
                             <div class="col-lg-2">
-                                <button class="btn btn-success margin-top-20">Search</button>
+                                <button class="btn btn-secondary margin-top-20">Search</button>
                             </div>
                         </div>
                     </form>
@@ -140,7 +140,8 @@ jQuery(document).ready(function() {
     var t = jQuery('#tableList').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            { extend: 'print', 
+            { extend: 'print',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Request approve/reject report for '+fromdateval+' - '+todateval, 
             title: 'Request approve/reject report ', 
@@ -148,7 +149,8 @@ jQuery(document).ready(function() {
                     columns: [ 1, 2, 3, 4,5,6,7,8,9,10,11 ]
                 },
             },
-            { extend: 'pdf', 
+            { extend: 'pdf',
+            className: 'btn btn-secondary', 
             footer: true, 
             messageTop: 'Request approve/reject report for '+fromdateval+' - '+todateval, 
             title: 'Request approve/reject report', 
@@ -157,6 +159,7 @@ jQuery(document).ready(function() {
                 },
             },
             { extend: 'excel', 
+            className: 'btn btn-secondary',
             footer: true, 
             messageTop: 'Request approve/reject report for '+fromdateval+' - '+todateval, 
             title: 'Request approve/reject report', 
