@@ -117,7 +117,7 @@
                       }else{
                           $approvaltag ='info';
                       };?>
-                    <a class='badge badge-<?php echo $approvaltag;?>'><?php echo ucfirst($value['refund_approval_status']);?></a>
+                    <a class='badge2 badge-<?php echo $approvaltag;?>'><?php echo ucfirst($value['refund_approval_status']);?></a>
                   </td>
                   <td style="text-align:center">
                     <?php if($value['refund_approval_status'] != 'Approved'){ ?>

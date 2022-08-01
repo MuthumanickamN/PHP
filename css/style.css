@@ -2798,4 +2798,7 @@ h3.dd_title_medium{
 .dataTable.sorting_desc:after {
     content: "" !important;
 }
+a.badge-success:hover{background-color: transparent;}
+.badge {background-color: #469738;}
+
 

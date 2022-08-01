@@ -3125,3 +3125,5 @@ form#add-school-credit-form {
 span.select2-search.select2-search--inline {
     display: none;
 }
+a.badge-success:hover{background-color: transparent;}
+.badge {background-color: #469738;}

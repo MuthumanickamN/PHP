@@ -137,34 +137,34 @@ class Reports extends CI_Controller
         	    {
             		if($months == 0){
             			if($days == 0){
-            				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid Today</label>";
+            				$studentList[$key]['fees_paid'] = "<label class='badge2 badge-success'>Paid Today</label>";
             				$studentList[$key]['fees_paid_key'] = "Paid";
             			}else{
-            				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$days." days ago</label>";
+            				$studentList[$key]['fees_paid'] = "<label class='badge2 badge-success'>Paid ".$days." days ago</label>";
             				$studentList[$key]['fees_paid_key'] = "Paid";
             			}
             		}else{
-        	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$months." months ago</label>";
+        	    		$studentList[$key]['fees_paid'] = "<label class='badge2 badge-success'>Paid ".$months." months ago</label>";
         	    		$studentList[$key]['fees_paid_key'] = "Paid";
         	    	}
         	    }
         	    else
         	    {
         	        if($months == 0){
-            			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+            			$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$days." days</label>";
             			$studentList[$key]['fees_paid_key'] = "Due";
             		}else{
-        	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+        	    		$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$months." months</label>";
         	    		$studentList[$key]['fees_paid_key'] = "Due";
         	    	}
         	    }
     	    }
 	    }else{
 	    	if($months == 0){
-    			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+    			$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$days." days</label>";
     			$studentList[$key]['fees_paid_key'] = "Due";
     		}else{
-	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+	    		$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$months." months</label>";
 	    		$studentList[$key]['fees_paid_key'] = "Due";
 	    	}
 	    }
@@ -203,33 +203,33 @@ class Reports extends CI_Controller
     	    {
         		if($months == 0){
         			if($days == 0){
-        				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid Today</label>";
+        				$studentList[$key]['fees_paid'] = "<label class='badge2 badge-success'>Paid Today</label>";
         				$studentList[$key]['fees_paid_key'] = "Paid";
         			}else{
-        				$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$days." days ago</label>";
+        				$studentList[$key]['fees_paid'] = "<label class='badge2 badge-success'>Paid ".$days." days ago</label>";
         				$studentList[$key]['fees_paid_key'] = "Paid";
         			}
         		}else{
-    	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-success'>Paid ".$months." months ago</label>";
+    	    		$studentList[$key]['fees_paid'] = "<label class='badge2 badge-success'>Paid ".$months." months ago</label>";
     	    		$studentList[$key]['fees_paid_key'] = "Paid";
     	    	}
     	    }
     	    else
     	    {
     	        if($months == 0){
-        			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+        			$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$days." days</label>";
         			$studentList[$key]['fees_paid_key'] = "Due";
         		}else{
-    	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+    	    		$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$months." months</label>";
     	    		$studentList[$key]['fees_paid_key'] = "Due";
     	    	}
     	    }
 	    }else{
 	    	if($months == 0){
-    			$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$days." days</label>";
+    			$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$days." days</label>";
     			$studentList[$key]['fees_paid_key'] = "Due";
     		}else{
-	    		$studentList[$key]['fees_paid'] = "<label class='badge badge-danger'>Due ".$months." months</label>";
+	    		$studentList[$key]['fees_paid'] = "<label class='badge2 badge-danger'>Due ".$months." months</label>";
 	    		$studentList[$key]['fees_paid_key'] = "Due";
 	    	}
 	    }
@@ -449,7 +449,8 @@ class Reports extends CI_Controller
 		
 		$data['fromDateVal'] = date('Y-m-d',strtotime($from_date));
 		$data['toDateVal'] = date('Y-m-d',strtotime($to_date));
-		$data['levelList'] = $this->default->getLevelList();
+		$where = "  bs.`booked_date` BETWEEN '".$from_date."' AND '".$to_date."' and ";
+		/*$data['levelList'] = $this->default->getLevelList();
 		$data['activityList'] = $this->schools->getAllActivityList();
 		$data['locationList'] = $this->schools->getAllLocationList();
 		$data['coachList'] = $this->transaction->getAllCoachList();
@@ -472,7 +473,30 @@ class Reports extends CI_Controller
 			
 		}
 		$data['arrayList'] = $arrayList;
-		$this->load->view('reports/approve_reject', $data);
+		$this->load->view('reports/approve_reject', $data);*/
+
+		$data['title'] = 'Request Approve/ Reject';
+		$role=$this->session->userdata('role');
+		
+		$slot = $this->db->query( "select bs.*,ba.activity_id,r.name as student_name,r.sid,p.parent_code,
+                                        CASE 
+                                        WHEN bs.refund_approval_status = 'Approved' THEN 3
+                                        WHEN bs.refund_approval_status = 'Rejected' THEN 2
+                                        ELSE 1 
+                                        END as order_position
+                                        from booked_slots bs 
+                            			left join booking_approvals ba on ba.id=bs.booking_id
+                            			left join registrations r on r.id=ba.student_id
+                            			left join parent p on p.parent_id=ba.parent_id
+                            			where $where bs.refund_requested=1 order by order_position ASC ,refund_requested_on DESC");
+	   		$data['list'] = $slot->result_array();
+	   		foreach ($data['list'] as $key => $value) {
+	   			$data['list'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
+	    		$data['list'][$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
+				$data['list'][$key]['coach_id'] = $this->transaction->getCoachDetail($value['coach_id']);
+	   		}
+			$this->load->view('reports/approve_reject', $data);
+
 	}
 	public function class_report($type){
 		$data['title'] ='Class '.ucfirst($type).' Report';
@@ -585,18 +609,36 @@ class Reports extends CI_Controller
 			$to_date = date('Y-m-d',strtotime($this->input->post('to_date')));
 		}
 		
-		$data['fromDateVal'] = date('Y-m-d',strtotime($from_date));
-		$data['toDateVal'] = date('Y-m-d',strtotime($to_date));
-
-		$query = $this->db->query("select slot.*, p.parent_name, p.mobile_no
+		$data['fromDateVal'] = date('Y-m-d 00:00:00',strtotime($from_date));
+		$data['toDateVal'] = date('Y-m-d 23:59:59',strtotime($to_date));
+		$where = " and ((bs.`booked_date` BETWEEN '".$data['fromDateVal']."' AND '".$data['toDateVal']."') or (bs2.booked_date BETWEEN '".$data['fromDateVal']."' AND '".$data['toDateVal']."') or (bs2.created_at BETWEEN '".$data['fromDateVal']."' AND '".$data['toDateVal']."'))  ";
+		/*$query = $this->db->query("select slot.*, p.parent_name, p.mobile_no
 								from change_slot_reqs as slot 
 								LEFT JOIN parent as p ON slot.parent_id = p.parent_id ");
 		$arrayList = $query->result_array();
 		foreach($arrayList as $key=>$value){
 			$arrayList[$key]['activity']=$this->transaction->getActivityDetail($value['activity_id']);
 			$arrayList[$key]['updated_admin_id']=($value['updated_admin_id'] != 0)?$this->transaction->getUserDetail($value['updated_admin_id']):'-';
+		}*/
+
+		$slot = $this->db->query( "select bs.*,ba.activity_id,p.parent_name,p.mobile_no,r.name as student_name,r.sid,p.parent_code,
+		bs2.booked_date as old_booked_date, bs2.from_time as old_from_time, bs2.to_time as old_to_time,bs.created_at as swapped_at
+                                        from booked_slots bs 
+                            			left join booking_approvals ba on ba.id=bs.booking_id
+                            			left join registrations r on r.id=ba.student_id
+                            			left join parent p on p.parent_id=ba.parent_id
+										left join booked_slots bs2 on bs2.id = bs.swapped_slot_id 
+                            			where  bs.status=0 and  bs.info = 'Swapped' $where ");
+		$data['list'] = $slot->result_array();
+		foreach ($data['list'] as $key => $value) {
+			$data['list'][$key]['activity'] = $this->transaction->getActivityDetail($value['activity_id']);
+			$data['list'][$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
+			$data['list'][$key]['coach_id'] = $this->transaction->getCoachDetail($value['coach_id']);
 		}
-		$data['arrayList'] = $arrayList;
+		
+		$data['fromDateVal'] = date('Y-m-d',strtotime($from_date));
+		$data['toDateVal'] = date('Y-m-d',strtotime($to_date));
+		$data['arrayList'] = $data['list'];
 
 		$this->load->view('reports/slot_swap', $data);
 	}
@@ -970,20 +1012,39 @@ class Reports extends CI_Controller
 		$acc_code = $this->input->post('acc_code');
 		$from_date = date('Y-m-1');
 		$to_date = date('Y-m-d');
+		$data['title'] = 'Ledger Report';
 		if(isset($postdate)){
-			$from_date = date('Y-m-d',strtotime($this->input->post('from_date')));
-			$to_date = date('Y-m-d',strtotime($this->input->post('to_date')));
+			$from_date = date('Y-m-d 00:00:00',strtotime($this->input->post('from_date')));
+			$to_date = date('Y-m-d 23:59:59',strtotime($this->input->post('to_date')));
 		}
-		$where = "where `transaction_date` BETWEEN '".$from_date."' AND '".$to_date."'";
+		$where = "where `created_at` BETWEEN '".$from_date."' AND '".$to_date."'";
 		if(isset($acc_code) && $acc_code != ''){
 			$where .= " AND `account_code` = '".$acc_code."' ";
+			$query = "(select a.created_at, a.transaction_id, a.payable_date as transaction_date, s.Name as account_code_val, a.description_detail as transaction_detail, '' as parent_id, 
+			CASE WHEN s.Type = 'Expenses' or s.Type = 'Payable' THEN a.payable_amount ELSE '' END as 'debit' ,
+			CASE WHEN s.Type = 'Income' or s.Type = 'Receivable' THEN a.payable_amount ELSE '' END as 'credit' 
+			from accounts_service_entries a left join accounts_service as s on s.Id = a.accountservice_id $where order by created_at asc)
+			";
 		}
-		$data['title'] = 'Ledger Report';
-		$query = $this->db->query("select * from daily_transactions ".$where.' order by `id` DESC');
+		else{
+			$query = "(select a.created_at, a.transaction_id, a.payable_date as transaction_date, s.Name as account_code_val, a.description_detail as transaction_detail, '' as parent_id, 
+		CASE WHEN s.Type = 'Expenses' or s.Type = 'Payable' THEN a.payable_amount ELSE '' END as 'debit' ,
+		CASE WHEN s.Type = 'Income' or s.Type = 'Receivable' THEN a.payable_amount ELSE '' END as 'credit' 
+		  from accounts_service_entries a left join accounts_service as s on s.Id = a.accountservice_id $where)
+		UNION
+		(select a.created_at, a.wallet_transaction_id, a.wallet_transaction_date as transaction_date, '' as account_code_val, a.wallet_transaction_detail as transaction_detail, p.parent_code as parent_id, 
+		CASE WHEN a.wallet_transaction_type = 'Debit' THEN a.net_amount ELSE '' END as 'debit' ,
+		CASE WHEN a.wallet_transaction_type = 'Credit' THEN a.net_amount ELSE '' END as 'credit' 
+		  from wallet_transactions a left join parent as p on p.parent_id = a.parent_id $where) order by created_at asc";
+		}
+		
+		
+		$query = $this->db->query($query);
 		$transactionList = $query->result_array();
+		//echo $this->db->last_query();die;
 		foreach($transactionList as $key=>$txnval){
-			$transactionList[$key]['account_code_val'] = (isset($txnval['account_code']) && $txnval['account_code']!='')?$this->transaction->getAccountCodeDetail($txnval['account_code']):'-';
-			$transactionList[$key]['paid_to'] = (isset($txnval['paid_to']) && $txnval['paid_to']!='')?$this->transaction->getUserDetail($txnval['paid_to']):'-';
+			//$transactionList[$key]['account_code_val'] = (isset($txnval['accountservice_id']) && $txnval['accountservice_id']!='')?$this->transaction->getAccountCodeDetail($txnval['accountservice_id']):'-';
+			$transactionList[$key]['created_by'] = (isset($txnval['created_by']) && $txnval['created_by']!='')?$this->transaction->getUserDetail($txnval['created_by']):'-';
 		}
 
 		$data['transactionList'] = $transactionList;
@@ -992,7 +1053,7 @@ class Reports extends CI_Controller
 		$data['acc_code'] =$acc_code;
 		$data['account_code_data'] = $this->schools->getAccountCodeList();
 		$data['userList'] = $this->transaction->getAllUserList();
-		
+		//print_r($data);die;
 		$this->load->view('reports/ledger_report', $data);
 	}
 

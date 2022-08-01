@@ -81,6 +81,7 @@
   
   <script>var baseurl = "<?php echo site_url(); ?>";</script>
   <script type="text/javascript">
+    
     jQuery(document).ready(function() {
     setTimeout(function () {
           jQuery('span#success-msg').parent().slideUp('slow');
@@ -135,6 +136,20 @@
    
 }
 
+.badge2 {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: white !important;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    border-radius: 10px;
+}
   </style>
   
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets_booking/css/style.css"> 
@@ -355,9 +370,9 @@
             <?php if ($role == 'superadmin'|| $role == 'parent' || $academy_activities_menu_arr['Registration_fees'] == 1) : ?>
               <li data-menu="registration_fees"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Registration_fees' ?>"><span data-i18n="Registration Fees">Registration Fees</span></a></li>
             <?php endif; ?>
-            <?php if ($role == 'superadmin' || $academy_activities_menu_arr['Daily_transaction'] == 1) : ?>
+            <!--<?php if ($role == 'superadmin' || $academy_activities_menu_arr['Daily_transaction'] == 1) : ?>
               <li data-menu="Daily_transaction"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Daily_transaction' ?>"><span data-i18n="Daily Fees">Daily Transaction</span></a></li>
-            <?php endif; ?>
+            <?php endif; ?>-->
             <?php if ($role == 'superadmin' || $academy_activities_menu_arr['Activity_remark'] == 1) : ?>
               <li data-menu="Activity_remark"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Activity_remark' ?>"><span data-i18n="Daily Fees">Activity Remark</span></a></li>
             <?php endif; ?>
@@ -454,9 +469,9 @@
               <?php if ($role == 'superadmin' || $maintenance_menu_arr['Discount_setup'] == 1) : ?>
                 <li data-menu="discount_setup"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Discount_setup' ?>"><span data-i18n="Discount Setup">Discount Setup</span></a></li>
               <?php endif; ?>
-              <?php if ($role == 'superadmin' || $maintenance_menu_arr['Account_codes'] == 1) : ?>
+              <!--<?php if ($role == 'superadmin' || $maintenance_menu_arr['Account_codes'] == 1) : ?>
                 <li data-menu="account_codes"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Account_codes' ?>"><span data-i18n="Account Codes">Account Codes</span></a></li>
-              <?php endif; ?>
+              <?php endif; ?>-->
               <?php if ($role == 'superadmin' || $maintenance_menu_arr['Events'] == 1) : ?>
                 <li data-menu="events"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Events' ?>"><span data-il8n="Events">Events</span></a></li>
               <?php endif; ?>

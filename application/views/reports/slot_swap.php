@@ -38,7 +38,7 @@
             <div class="card-body card-dashboard">
                 <div class="mainbox col-sm-12">
                     <div class="panel panel-info">
-                        <form action ="<?php echo base_url() . 'index.php/reports/attendance_tracking' ?>" id="attendanceBook" method="POST">
+                        <form action ="<?php echo base_url() . 'index.php/reports/slot_swap' ?>" id="attendanceBook" method="POST">
                         <div class="row" style="margin-bottom: 20px">
                             <div class="col-lg-2">
                                 <b>From date</b>
@@ -71,7 +71,7 @@
                                     <th scope="col">New Slot date</th>
                                     <th scope="col">New Slot Timing</th>
                                     <th scope="col">Created date</th>
-                                    <th scope="col">Updated by</th>
+                                   <!-- <th scope="col">Updated by</th> -->
 
                                 </tr>
                             </thead>
@@ -83,14 +83,14 @@
                                     <td><?php echo $value['student_name'];?></td>
                                     <td><?php echo $value['parent_name'];?></td>
                                     <td><?php echo $value['mobile_no'];?></td>
-                                    <td><a class="badge badge-success" href="javascript:void(0);" data-toggle="modal" data-target="#swap_details" onclick="getSwapDetails(<?php echo $value['id'];?>)"><?php echo $value['ticket_no'];?></a></td>
+                                    <td><!--<a class="badge badge-success" href="javascript:void(0);" data-toggle="modal" data-target="#swap_details" onclick="getSwapDetails(<?php echo $value['id'];?>)">--><?php echo $value['booking_no'];?><!--</a>--></td>
                                     <td><?php echo $value['activity'];?></td>
-                                    <td><?php echo date('d-m-Y', strtotime($value['checkout_date']));?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($value['booked_date']));?></td>
                                     <td><?php echo $value['from_time'].'-'.$value['to_time'];?></td>
-                                    <td><?php echo date('d-m-Y', strtotime($value['change_slot_date']));?></td>
-                                    <td><?php echo $value['change_slot_from_time'].'-'.$value['change_slot_to_time'];?></td>
-                                    <td><?php echo date('d-m-Y', strtotime($value['created_at']));?></td>
-                                    <td><?php echo $value['updated_admin_id'];?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($value['old_booked_date']));?></td>
+                                    <td><?php echo $value['old_from_time'].'-'.$value['old_to_time'];?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($value['swapped_at']));?></td>
+                                    <!--<td><?php echo $value['updated_admin_id'];?></td>-->
 
                                     
                                     

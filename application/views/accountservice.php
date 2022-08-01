@@ -14,6 +14,7 @@
 </style>
 
 <script>
+  var vat_perc = "<?php echo $vat_perc;?>";
   jQuery(document).ready(function(){
     $('input[type="radio"][name="service"]').on('change',function() {
       var selected = $(this).val(); 
@@ -36,7 +37,7 @@ $(document).ready(function() {
       //  var test = $(this).val();
         if(this.value == 'yes')
         {
-          $('#vat_percentage').val(5.00);
+          $('#vat_percentage').val(vat_perc);
           $("div.vat").show();
             var paid_amount=parseFloat(document.getElementById('paid_amount').value); 
             var vat_percentage=parseFloat(document.getElementById('vat_percentage').value);
@@ -227,7 +228,7 @@ $.ajax({
   
   
 
-    <div id="result"></div> 
+    
     
     <div class="form-group lg-btm">
     <div class="row">
@@ -253,7 +254,7 @@ $.ajax({
 
 
 
-    <div id="result1"></div>
+    
     
     <div class="form-group lg-btm">
         <div class="row">
@@ -387,13 +388,13 @@ $.ajax({
             <div class="col-md-6 control ">
                     <span class="input-transaction-payment_type">
                             <input id="payment_type" class="payment_cash" type="radio" value="Cash" name="payment_type" onclick="cashPayment()" <?php if(isset($payment_type) && $payment_type== 'Cash'){ echo 'checked';} ?>    />
-                                        <label style="margin-left: 10px; margin-right: 10px">Cash</label>
-                                        <input id="payment_type" type="radio" value="Card" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Card'){ echo 'checked';} ?> />
-                                        <label style="margin-left: 10px; margin-right: 10px">Card</label>
-                                        <input id="payment_type" type="radio" value="Online" name="payment_type" onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Online'){ echo 'checked';} ?> />
-                                        <label style="margin-left: 10px; margin-right: 10px">Online</label>
-                                        <input id="payment_type" type="radio" value="Cheque" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Cheque'){ echo 'checked';} ?> />
-                                        <label style="margin-left: 10px; margin-right: 10px">Cheque</label>
+                              <label style="margin-left: 10px; margin-right: 10px">Cash</label>
+                              <input id="payment_type" type="radio" value="Card" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Card'){ echo 'checked';} ?> />
+                              <label style="margin-left: 10px; margin-right: 10px">Card</label>
+                              <input id="payment_type" type="radio" value="Online" name="payment_type" onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Online'){ echo 'checked';} ?> />
+                              <label style="margin-left: 10px; margin-right: 10px">Online</label>
+                              <input id="payment_type" type="radio" value="Cheque" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Cheque'){ echo 'checked';} ?> />
+                              <label style="margin-left: 10px; margin-right: 10px">Cheque</label>
                     </span>
             </div>
         </div>
@@ -439,8 +440,9 @@ $.ajax({
 
                   }?>
 
+<div id="result"></div> 
+<div id="result1"></div>
 
-     
            <div class="form-group lg-btm">
               <div class="col-md-6 control text-center">
                 <input id="save" type="submit" name="submit" value="Submit" class="btn btn-secondary" />      
@@ -472,9 +474,9 @@ $.ajax({
 <script type="text/javascript">
 
 function payment_details(payment_type){
-  console.log(payment_type);
+  //console.log(payment_type);
 $.ajax({
-    url:"<?php echo base_url().'index.php/AccountService/payment_type/'; ?>?payment_type=payment_type",
+    url:"<?php echo base_url().'AccountService/payment_type/'; ?>",
     type:"POST",
     data:{payment_type:payment_type},
     success:function(data)

@@ -21,10 +21,11 @@ class Accountservice_model extends CI_Model {
       $query = $this->db->get();
      return $query->row()->percentage;
      }
-	 public function getlist()
+	 public function getlist($where)
 	 {
-      $query = $this->db->query('select ase.*,acs.Name,acs.Type from accounts_service_entries as ase left join accounts_service as acs on acs.Id=ase.accountservice_id');
+      $query = $this->db->query("select ase.*,acs.Name,acs.Type from accounts_service_entries as ase left join accounts_service as acs on acs.Id=ase.accountservice_id $where");
 	   	$row = $query->result_array();
+       //echo $this->db->last_query();die;
 	  	return $row;
 		
 	 }

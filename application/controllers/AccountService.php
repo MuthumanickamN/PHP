@@ -8,17 +8,16 @@ class AccountService extends CI_Controller {
     
 	public function __construct()
 	{
-	parent::__construct();
-	$this->load->model('Accountservice_model');
-	$this->load->model('Daily_Transaction_Model', 'transaction');
-	$this->load->library('upload');
+		parent::__construct();
+		$this->load->model('Accountservice_model');
+		$this->load->model('School_profile_report_Model', 'schools');
+		$this->load->model('Daily_Transaction_Model', 'transaction');
+		$this->load->library('upload');
 	}
     public function index(){
-	
 		$data['title'] = 'AccountService';
 		$data['account_service'] = $this->Accountservice_model->gettype();
 		$data['vat_perc'] = $this->Accountservice_model->getVatPercentage();
-		$data['vat_value']=$this->Accountservice_model->getVatPercentage();
 		
 		if($this->input->post('submit')){
 			$type=$this->input->post('type');
@@ -32,6 +31,8 @@ class AccountService extends CI_Controller {
 			$payable_amount=$this->input->post('payable_amount');
 			$payable_date=$this->input->post('payable_date');
 			$created_at=date('Y-m-d H:i:s');
+			$txn_id = $this->schools->getLastEntry('wallet_transactions');
+			$wallet_transaction_id = 'TXNO-'.$txn_id;
 
 			if ($payment_type == 'Card' || $payment_type == 'Online') {
 				$bank = $this->input->post('bank');
@@ -64,7 +65,7 @@ class AccountService extends CI_Controller {
 					$json['error']['service'] = 'Please enter service';
 				}
 			} 
-			$sql="INSERT into accounts_service_entries(accountservice_id,gross_amount,vat_percentage,vat_amount,payable_amount,description_detail,payable_date,payment_type,bank,cheque_number,cheque_date,created_at)values('".$service."','".$paid."','".$vat_percent."','".$vat_value."','".$payable_amount."','".$description_detail."','".$payable_date."','".$payment_type."','".$bank."','".$cheque_number."','".$cheque_date."','".$created_at."')";
+			$sql="INSERT into accounts_service_entries(transaction_id, accountservice_id,gross_amount,vat_percentage,vat_amount,payable_amount,description_detail,payable_date,payment_type,bank,cheque_number,cheque_date,created_at, created_by)values('".$wallet_transaction_id."','".$service."','".$paid."','".$vat_percent."','".$vat_value."','".$payable_amount."','".$description_detail."','".$payable_date."','".$payment_type."','".$bank."','".$cheque_number."','".$cheque_date."','".$created_at."', '".$this->session->userid."')";
 		    $insert=$this->db->query($sql);	
 			//print_r ($sql);die;
 			$lastid = $this->db->insert_id();
@@ -96,7 +97,7 @@ class AccountService extends CI_Controller {
 				}				
 				/***************************End**********************************/
 			//$this->session->set_flashdata('success_msg', 'Accounts Details Added Successfully.');
-			redirect(base_url().'accountservice');	
+			redirect(base_url().'AccountService');	
 		}
 		
 		   
@@ -170,7 +171,7 @@ class AccountService extends CI_Controller {
 		$data['toDateVal'] = date('Y-m-d',strtotime($to_date));
 		$data['Name'] =$Name;
 		//$data['account_service_name'] = $this->Accountservice_model->getname();
-		$data['account_service'] = $this->Accountservice_model->getlist();
+		$data['account_service'] = $this->Accountservice_model->getlist($where);
 
 
 		$this->load->view('all_list',$data);
@@ -181,6 +182,7 @@ class AccountService extends CI_Controller {
 		$data['upload_items'] = $this->Accountservice_model->upload_items($id);
 		$data['account_service'] = $this->Accountservice_model->gettype();
 		$data['bankdetails'] = $this->transaction->getAllBankList();
+		$data['vat_perc'] = $this->Accountservice_model->getVatPercentage();
 		//print_r ($data);die;
 		$this->load->view('account_edit',$data);
 	}
@@ -271,13 +273,13 @@ class AccountService extends CI_Controller {
 	}
 	public function delete($id){
 		
-	$this->db->delete('accounts_service_entries', array('Id' => $id)); 
-	
-	$this->db->delete('accountserviceuploadedfiles', array('accountservice_id' => $id)); 
-	
-	redirect(base_url().'AccountService/all_list');	
-}
-public function payment_type()
+		$this->db->delete('accounts_service_entries', array('Id' => $id)); 
+		
+		$this->db->delete('accountserviceuploadedfiles', array('accountservice_id' => $id)); 
+		
+		redirect(base_url().'AccountService/all_list');	
+	}
+	public function payment_type()
 	{
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type'] = $payment_type;

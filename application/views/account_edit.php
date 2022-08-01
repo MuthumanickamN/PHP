@@ -14,6 +14,7 @@
 </style>
 
 <script>
+  var vat_perc = "<?php echo $vat_perc;?>";
   jQuery(document).ready(function(){
     $('input[type="radio"][name="service"]').on('change',function() {
       var selected = $(this).val(); 
@@ -36,7 +37,7 @@ $(document).ready(function() {
       //  var test = $(this).val();
         if(this.value == 'yes')
         {
-          $('#vat_percentage').val(5.00);
+          $('#vat_percentage').val(vat_perc);
           $("div.vat").show();
             var paid_amount=parseFloat(document.getElementById('paid_amount').value); 
             var vat_percentage=parseFloat(document.getElementById('vat_percentage').value);
@@ -227,7 +228,7 @@ $.ajax({
   
   
 
-    <div id="result"></div> 
+    
     
     <div class="form-group lg-btm">
     <div class="row">
@@ -332,7 +333,7 @@ $.ajax({
                 <b>Description</b>*
               </div>                            
           <div class="col-md-3 control text-right">
-            <textarea  id="description_detail" name="description_detail" required="" class="form-control input-description-description_detail" ><?php echo isset($description_detail)?$description_detail:''; ?></textarea>
+            <textarea  id="description_detail" name="description_detail" required="" class="form-control input-description-description_detail" ><?php echo $result['description_detail'];?></textarea>
             <span class="errorMsg"></span>
           </div>
         </div>
@@ -375,22 +376,26 @@ $.ajax({
                <?php } ?>
         </div> 
 
-
+        <?php $payment_type = $result['payment_type'];
+        $bank = $result['bank'];
+        $cheque_date = $result['cheque_date'];
+        $cheque_number = $result['cheque_number'];
+        ?>
         <div class="form-group lg-btm">
         <div class="row">
           <div class="col-md-3 control">
-                  <strong>Payment Type</strong>*
+              <strong>Payment Type</strong>*
           </div>                            
-            <div class="col-md-6 control ">
-                    <span class="input-transaction-payment_type">
-                            <input id="payment_type" class="payment_cash" type="radio" value="Cash" name="payment_type" onclick="cashPayment()" <?php if(isset($payment_type) && $payment_type== 'Cash'){ echo 'checked';} ?>    />
-                                        <label style="margin-left: 10px; margin-right: 10px">Cash</label>
-                                        <input id="payment_type" type="radio" value="Card" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Card'){ echo 'checked';} ?> />
-                                        <label style="margin-left: 10px; margin-right: 10px">Card</label>
-                                        <input id="payment_type" type="radio" value="Online" name="payment_type" onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Online'){ echo 'checked';} ?> />
-                                        <label style="margin-left: 10px; margin-right: 10px">Online</label>
-                                        <input id="payment_type" type="radio" value="Cheque" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Cheque'){ echo 'checked';} ?> />
-                                        <label style="margin-left: 10px; margin-right: 10px">Cheque</label>
+          <div class="col-md-6 control ">
+              <span class="input-transaction-payment_type">
+                  <input id="payment_type" class="payment_cash" type="radio" value="Cash" name="payment_type" onclick="cashPayment()" <?php if(isset($payment_type) && $payment_type== 'Cash'){ echo 'checked';} ?>    />
+                    <label style="margin-left: 10px; margin-right: 10px">Cash</label>
+                    <input id="payment_type" type="radio" value="Card" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Card'){ echo 'checked';} ?> />
+                    <label style="margin-left: 10px; margin-right: 10px">Card</label>
+                    <input id="payment_type" type="radio" value="Online" name="payment_type" onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Online'){ echo 'checked';} ?> />
+                    <label style="margin-left: 10px; margin-right: 10px">Online</label>
+                    <input id="payment_type" type="radio" value="Cheque" name="payment_type"  onclick="payment_details(this.value); $('#result').show();" <?php if(isset($payment_type) && $payment_type=='Cheque'){ echo 'checked';} ?> />
+                    <label style="margin-left: 10px; margin-right: 10px">Cheque</label>
                     </span>
             </div>
         </div>
@@ -399,15 +404,15 @@ $.ajax({
                   <?php if(isset($payment_type) && $payment_type != '' && $payment_type != 'Cash') {
                       if($payment_type=="Cheque") { ?>
                       <div class="row edit_payment_hideDiv" >
-                              <div class="col-md-6 control ">
+                              <div class="col-md-3 control ">
                                 <p><b>Cheque No</b>*</p>
                                 <input type="text"  id="cheque_number" name="cheque_number" required="" class="form-control input-transaction-cheque_number" value="<?php echo isset($cheque_number)?$cheque_number:''; ?>">
                               </div>
-                              <div class="col-md-6 control ">
+                              <div class="col-md-3 control ">
                                 <p><b>Cheque Date</b>*</p>
                                   <input type="date"  name="cheque_date" id="cheque_date" class="form-control input-transaction-cheque_date" value="<?php echo isset($cheque_date)?$cheque_date:''; ?>">
                               </div>
-                        <div class="col-md-6 control ">
+                        <div class="col-md-3 control ">
                           <p><strong>Bank Name</strong>*</p>
                          <select name="bank" id="bank" class="form-control input-transaction-bank bank_name"  required="">
                             <option value="">Select</option>
@@ -420,7 +425,7 @@ $.ajax({
                     </div>
                     <?php }else{?>
                       <div class="row edit_payment_hideDiv">
-                       <div class="col-md-6 control ">
+                       <div class="col-md-3 control ">
                           <p><strong>Bank Name</strong>*</p>
                          <select name="bank" id="bank" class="form-control input-transaction-bank bank_name"  required="">
                             <option value="">Select</option>
@@ -436,7 +441,7 @@ $.ajax({
 
                   }?>
 
-	 
+<div id="result"></div> 
 	 
 
 <div class="form-group lg-btm">
@@ -470,7 +475,7 @@ $.ajax({
 <script type="text/javascript">
 
 function payment_details(payment_type){
-  console.log(payment_type);
+  //console.log(payment_type);
 $.ajax({
     url:"<?php echo base_url().'index.php/AccountService/payment_type/'; ?>?payment_type=payment_type",
     type:"POST",

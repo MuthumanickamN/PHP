@@ -133,7 +133,7 @@
                                                                 $tag ='danger';
                                                                 $setval = 'Active';
                                                             };?>
-                                                            <a class='badge badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $activity['id'];?>','status','<?php echo $setval;?>')"><?php echo $activity['status'];?>
+                                                            <a class='badge2 badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $activity['id'];?>','status','<?php echo $setval;?>')"><?php echo $activity['status'];?>
                                                             </a>
                                                         </td>
                                                         <td>

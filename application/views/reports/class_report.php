@@ -170,7 +170,7 @@
                                             $tag ='danger';
                                             $setval = 'ABSENT';
                                         };?>
-                                        <a class='badge badge-<?php echo $tag;?>' ><?php echo $setval;?>
+                                        <a class='badge2 badge-<?php echo $tag;?>' ><?php echo $setval;?>
                                         </a>
                                         
                                     </td>

@@ -151,8 +151,8 @@
         <td align="center" class="coach-btn">
         <a type="button" style="color:white;text-decoration:none;" class="btn btn-warning fa fa-edit" data-id="<?php echo $coach['Id']; ?>" data-toggle="tooltip" title="Edit" href="<?php echo base_url('AccountService/account_edit/'.$coach['Id']); ?>">
         </a>
-		<a type="button" onClick="return confirm('Are you sure you want to delete?')" style="color:white;text-decoration:none;" class="btn btn-danger fa fa-trash" data-id="<?php echo $coach['Id']; ?>" data-toggle="tooltip" title="Delete"  href="<?php echo base_url('AccountService/delete/'.$coach['Id']); ?>">
-        </a>
+		<!--<a type="button" onClick="return confirm('Are you sure you want to delete?')" style="color:white;text-decoration:none;" class="btn btn-danger fa fa-trash" data-id="<?php echo $coach['Id']; ?>" data-toggle="tooltip" title="Delete"  href="<?php echo base_url('AccountService/delete/'.$coach['Id']); ?>">
+        </a>-->
         </td>
         </tr>
         <?php 

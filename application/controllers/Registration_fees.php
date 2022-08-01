@@ -454,7 +454,9 @@ public function get_category_fees()
 			$user_id = $this->session->userid;
 			$exists = 'No';
 		}
-			
+		
+		if($payable_amount > 0)
+		{
 			$created_at=date('Y-m-d H:i:s');
 			$q = $this->db->query('select * from prepaid_credits where parent_id='.$parent_id);
 			if($q->num_rows() <= 0)
@@ -546,10 +548,16 @@ public function get_category_fees()
 			
 			$this->send_email($email_data_array);
 			echo true;
+			
 		}
 		else{
 			echo false;
 		}
+		}
+		else{
+			echo false;
+		}
+	
 		
 	}
 	public function extendvalidity()

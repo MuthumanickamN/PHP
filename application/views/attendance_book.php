@@ -157,7 +157,7 @@ document.getElementById('net_amount').value=payable_amount;
 
          <div class="form-group lg-btm">
                         <div class="col-md-2 control">
-                                <strong>Traansaction Date</strong>*
+                                <strong>Transaction Date</strong>*
                               </div>                            
                     <div class="col-md-4 control text-right">
                   <input type="date"  name="transaction_date" id="transaction_date" class="form-control" value="<?php echo $transaction_date; ?>">

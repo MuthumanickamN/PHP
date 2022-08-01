@@ -117,7 +117,7 @@
                                                             $tag ='danger';
                                                             $setval = 'Active';
                                                         };?>
-                                                            <a class='badge badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $coach['coach_id'];?>','status','<?php echo $setval;?>')"><?php echo $coach['status'];?></a>
+                                                            <a class='badge2 badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $coach['coach_id'];?>','status','<?php echo $setval;?>')"><?php echo $coach['status'];?></a>
                                                         </td>
                                                         <td>
                                                             <a  href="<?php echo base_url('index.php/coach/view/'.$coach['coach_id']); ?>" title="View coach details" class="view-coach ml-1 btn-ext-small btn btn-sm btn-info"  data-schoolid="' + row[0] + '"><i class="fas fa-eye"></i></a>

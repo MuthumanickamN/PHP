@@ -128,6 +128,7 @@
 
            <div class="col-md-2  control text-left">
                <input type="hidden" name="slot_id" id="slot_id" value="<?php echo $slot_id;?>">
+               <input type="hidden" name="slot_date" id="slot_date" value="<?php echo $slot_date;?>">
             <input id="save" type="submit" name="submit" value="Show Slots" class="btn btn-success margin-top-20" />
            </div> 
           </div>
@@ -839,6 +840,7 @@ $(document).ready(function() {
     d_month =  new Date(date).getMonth();
     d_year =  new Date(date).getFullYear();
     
+    
     l_t_date = new Date();
     var lastDay = new Date(l_t_date.getFullYear(), l_t_date.getMonth() + 1, 0);
     var lastDate = lastDay.getDate();
@@ -882,8 +884,10 @@ $(document).ready(function() {
         
         if(slot_id !=0)
             {
-                
-                if((t_month == d_month) && (t_year == d_year) )
+              slot_date = $('#slot_date').val();
+              d_month2 =  new Date(date).getMonth();
+              d_year2 =  new Date(date).getFullYear();
+                if((t_month <= d_month2) && (t_year == d_year2 || t_year == d_year ) )
                 {
                     
                 }

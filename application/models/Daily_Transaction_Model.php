@@ -29,11 +29,11 @@ class Daily_Transaction_Model extends CI_Model {
     }
     public function getAccountCodeDetail($code){
         $this->db->select(array('*'));
-        $this->db->from('account_codes a');  
-        $this->db->where('a.status', 'Active'); 
-        $this->db->where('a.id', $code);     
+        $this->db->from('accounts_service a');  
+        //$this->db->where('a.status', 'Active'); 
+        $this->db->where('a.Id', $code);     
         $query = $this->db->get();
-       return $query->row()->name_of_service;
+       return $query->row()->Name;
     } 
     public function getUserDetail($userid){
         $this->db->select(array('*'));

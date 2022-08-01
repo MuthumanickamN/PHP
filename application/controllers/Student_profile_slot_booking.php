@@ -142,6 +142,11 @@ public function view_calender(){
     $slot_id = $this->input->post('slot_id');
     $data['activity_id']=$activity_id;
     $data['slot_id']=$slot_id;
+    $data['slot_date']='';
+    if($solt_id)
+    {
+        $data['slot_date'] = $this->db->query("select booked_date from booked_slots where id=$slot_id")->row()->booked_date;
+    }
     $data['location_id']=$this->input->post('location_id');
     $data['coach_id']=$this->input->post('coach_id');
     $data['hour']=$this->input->post('hour');
@@ -351,8 +356,8 @@ public function swap_slot_booking()
         );
     $this->db->insert('booked_slots', $insertarr1);
     $insert_id = $this->db->insert_id();
-   
-    $this->db->query("update booked_slots set status=0, info='Swapped',swapped_slot_id='$insert_id' where id='$slot_id'");
+    $date = date('Y-m-d H:i:s');
+    $this->db->query("update booked_slots set status=0, info='Swapped',swapped_slot_id='$insert_id', created_at='".$date."' where id='$slot_id'");
     //$this->session->set_flashdata('success_msg', 'Slot Swapped successfully');
     echo 'student_profile_slot_booking/swap_slot_list/'.$activity_id.'/'.$sid.'/'.$sid;  
      

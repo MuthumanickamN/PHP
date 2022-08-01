@@ -75,7 +75,7 @@
                                                             $tag ='danger';
                                                             $setval = 'INACTIVE';
                                                         };?>
-                                                        <a class='badge badge-<?php echo $tag;?>' ><?php echo $setval;?>
+                                                        <a class='badge2 badge-<?php echo $tag;?>' ><?php echo $setval;?>
                                                         </a>
                                                     </td>
                                                     

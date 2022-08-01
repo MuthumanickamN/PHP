@@ -100,7 +100,8 @@
                                                       
                                                        ?>
                                                       <?php $fees_paid = $stud['fees_paid_key'];?>
-                                                      <a class='badge badge-<?php echo $tag;?>' onclick="changeregistration('<?php echo $stud['id'];?>','fees_paid','<?php echo $fees_paid;?>', '<?php echo $stud['fees_id'];?>' );"><?php echo $stud['fees_paid']; ?></a>
+                                                      
+                                                      <a class='' onclick="changeregistration('<?php echo $stud['id'];?>','fees_paid','<?php echo $fees_paid;?>', '<?php echo $stud['fees_id'];?>' );"><?php echo $stud['fees_paid']; ?></a>
                                                       </td>  
 
 
@@ -124,7 +125,7 @@
                                                             $tag ='danger';
                                                             $setval = 'Active';
                                                         };?>
-                                                            <a class='badge badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $stud['id'];?>','status','<?php echo $setval;?>')"><?php echo $stud['status'];?></a>
+                                                            <a class='badge2 badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $stud['id'];?>','status','<?php echo $setval;?>')"><?php echo $stud['status'];?></a>
                                                         </td>
                                                         <td><?php if($stud['approval_status'] == 'Approved'){
                                                             $approvaltag ='success';
@@ -133,7 +134,7 @@
                                                             $approvaltag ='danger';
                                                             $setvalue = 'Approved';
                                                         };?>
-                                                            <a class='badge badge-<?php echo $approvaltag;?>' onclick="changestatus('<?php echo $stud['id'];?>','approval_status','<?php echo $setvalue;?>')"><?php echo ucfirst($stud['approval_status']);?></a>
+                                                            <a class='badge2 badge-<?php echo $approvaltag;?>' onclick="changestatus('<?php echo $stud['id'];?>','approval_status','<?php echo $setvalue;?>')"><?php echo ucfirst($stud['approval_status']);?></a>
                                                         </td>
                                                         <td>
                                                             <a  href="<?php echo base_url('Students/edit/'.$stud['id']); ?>" title="Edit student details" class="edit-transaction ml-1 btn-ext-small btn btn-sm btn-warning"  data-schoolid="' + row[0] + '"><i class="fas fa-edit"></i></a>

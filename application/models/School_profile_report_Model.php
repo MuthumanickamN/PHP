@@ -149,9 +149,9 @@ class School_profile_report_Model extends CI_Model {
     } 
     /* added on 28.4.21 */
     public function getAccountCodeList(){
-		$this->db->select(array('a.id', 'a.name_of_service'));
-        $this->db->from('account_codes a');  
-        $this->db->where('a.status', 'Active');     
+		$this->db->select(array('a.Id as id', 'a.Name as name_of_service'));
+        $this->db->from('accounts_service a');  
+        //$this->db->where('a.status', 'Active');     
         $query = $this->db->get();
        return $query->result_array();
 	}   
@@ -183,8 +183,21 @@ class School_profile_report_Model extends CI_Model {
     }
 
     public function getLastEntry($tablename){
-        $lastentry = $this->db->query('select * from '.$tablename.'');
-        $lastentryId = $lastentry->num_rows();
+        if($tablename == "wallet_transactions")
+        {
+            $lastentry = $this->db->query('select * from '.$tablename.'');
+            $lastentryId1 = $lastentry->num_rows();
+
+            $lastentry = $this->db->query('select * from accounts_service_entries');
+            $lastentryId2 = $lastentry->num_rows();
+            
+            $lastentryId = $lastentryId1+$lastentryId2;
+        }
+        else{
+            $lastentry = $this->db->query('select * from '.$tablename.'');
+            $lastentryId = $lastentry->num_rows();
+        }
+        
         if(isset($lastentryId)){
             $trans_id = $lastentryId+1;
         }else{

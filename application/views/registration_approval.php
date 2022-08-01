@@ -78,7 +78,7 @@ $(document).ready(function() {
                       $tag ='danger';
                       $setval = 'Approved';
                   };?>
-                  <a class='badge badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $row1['id'];?>','approval_status','<?php echo $setval;?>')"><?php echo $row1['approval_status'];?>
+                  <a class='badge2 badge-<?php echo $tag;?>' onclick="changestatus('<?php echo $row1['id'];?>','approval_status','<?php echo $setval;?>')"><?php echo $row1['approval_status'];?>
                   </a>
               </td>
 

@@ -95,7 +95,7 @@
                                                         <th scope="col">Transaction Date</th>
                                                         <th scope="col">Acc code</th>
                                                         <th scope="col">Transaction Details</th>
-                                                        <th scope="col">Paid to</th>
+                                                        <th scope="col">Parent ID</th>
                                                         <th scope="col">Credit (AED)</th>
                                                         <th scope="col">Debit (AED)</th>
                                                         <th scope="col">Action</th>
@@ -110,13 +110,13 @@
                                                         <td><?php echo $txn['transaction_date'];?></td>
                                                         <td><?php echo $txn['account_code_val'];?></td>
                                                         <td><?php echo $txn['transaction_detail'];?></td>
-                                                        <td><?php echo $txn['paid_to'];?></td>
+                                                        <td><?php echo $txn['parent_id'];?></td>
                                                         <td><?php echo $txn['credit'];?></td>
                                                         <td><?php echo $txn['debit'];?></td>
                                                         <td>
-                                                            <a data-toggle="modal" data-target="#display_transaction" onclick="viewTransaction(<?php echo $txn['id'];?>)" title="View transaction" class="display-transaction ml-1 btn-ext-small btn btn-sm btn-info"  ><i class="fas fa-eye"></i></a>
+                                                           <!-- <a data-toggle="modal" data-target="#display_transaction" onclick="viewTransaction(<?php echo $txn['id'];?>)" title="View transaction" class="display-transaction ml-1 btn-ext-small btn btn-sm btn-info"  ><i class="fas fa-eye"></i></a>
 
-                                                        <a  href="<?php echo base_url('index.php/Daily_transaction/edit/'.$txn['id']); ?>" title="Edit transaction" class="edit-transaction ml-1 btn-ext-small btn btn-sm btn-warning"  data-schoolid="' + row[0] + '"><i class="fas fa-edit"></i></a>
+                                                        <a  href="<?php echo base_url('index.php/Daily_transaction/edit/'.$txn['id']); ?>" title="Edit transaction" class="edit-transaction ml-1 btn-ext-small btn btn-sm btn-warning"  data-schoolid="' + row[0] + '"><i class="fas fa-edit"></i></a>-->
                                                         </td>
 
 
@@ -165,6 +165,8 @@ jQuery(document).ready(function() {
     var todateval = jQuery('#to_date').val();
     var t = jQuery('#transactionListing').DataTable( {
         dom: 'Bfrtip',
+        //paging: true,
+        "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
         buttons: [
             { extend: 'print',
             className: 'btn btn-secondary', 
@@ -174,7 +176,10 @@ jQuery(document).ready(function() {
             exportOptions: {
                     columns: [ 1, 2, 3, 4,5,6,7 ]
                 },
-            }
+            },
+            
+                //'pageLength'
+            
         ],
         "fnRowCallback" : function(nRow, aData, iDisplayIndex ){
                 var info = $(this).DataTable().page.info();

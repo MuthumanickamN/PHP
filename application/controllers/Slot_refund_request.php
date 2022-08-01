@@ -214,7 +214,7 @@ class Slot_refund_request extends CI_Controller {
                             			left join booking_approvals ba on ba.id=bs.booking_id
                             			left join registrations r on r.id=ba.student_id
                             			left join parent p on p.parent_id=ba.parent_id
-                            			where  bs.refund_requested=1 order by order_position ASC ,refund_requested_on DESC");
+                            			where  bs.refund_requested=1 and  bs.refund_approval_status != 'Approved' and  bs.refund_approval_status != 'Rejected' order by order_position ASC ,refund_requested_on DESC");
 	   		$data['list'] = $slot->result_array();
 	   		foreach ($data['list'] as $key => $value) {
 	   			$data['list'][$key]['activity_id'] = $this->transaction->getActivityDetail($value['activity_id']);
