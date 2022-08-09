@@ -70,6 +70,19 @@
                                                         }?>
                                                     </select>
                                                 </div>
+
+                                                <div class="col-lg-3">
+                                                    <b>Location</b>
+                                                    <select class="form-control location" id="location_id" name="location_id">
+                                                        <option value="">Select</option>
+                                                        <?php if(isset($locationList)){
+                                                            foreach ($locationList as $location) { ?>
+                                                                <option value="<?php echo $location['location_id'] ?>" <?php if(isset($location_idval) && $location['location_id']==$location_id ){ echo 'selected';} ?>><?php echo $location['location']; ?></option>
+                                                            <?php }
+                                                        }?>
+                                                    </select>
+                                                </div>
+
                                                 <div class="col-lg-3">
                                                     <b>From date</b>
                                                     <input type="date" id="from_date" name="from_date" class="form-control" value="<?php echo $fromDateVal;?>" placeholder="From date">
@@ -157,6 +170,7 @@ $this->load->view('templates/footer');
 
 $(document).ready(function(){
 $('.account_code').select2();
+$('#location_id').select2();
 });
 
 

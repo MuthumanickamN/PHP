@@ -1018,6 +1018,7 @@ class Reports extends CI_Controller
 	public function ledger_report(){		
 		$postdate = $this->input->post('from_date');
 		$acc_code = $this->input->post('acc_code');
+		$data['location_id'] = $this->input->post('location_id');
 		$from_date = date('Y-m-1');
 		$to_date = date('Y-m-d');
 		$data['title'] = 'Ledger Report';
@@ -1025,6 +1026,7 @@ class Reports extends CI_Controller
 			$from_date = date('Y-m-d 00:00:00',strtotime($this->input->post('from_date')));
 			$to_date = date('Y-m-d 23:59:59',strtotime($this->input->post('to_date')));
 		}
+		$data['locationList'] = $this->schools->getAllLocationList();
 		$where = "where `created_at` BETWEEN '".$from_date."' AND '".$to_date."'";
 		if(isset($acc_code) && $acc_code != ''){
 			$where .= " AND `account_code` = '".$acc_code."' ";

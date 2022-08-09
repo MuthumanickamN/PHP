@@ -854,6 +854,11 @@ function file_uploads($FILES,$filepath,$insert_id)
 	    
 	    $data = $this->db->query($qry)->result_array();
 	    $output = '';
+
+		foreach($data as $key => $value)
+		{
+			$data[$key]['location_id']=$this->transaction->getLocationDetail($value['location_id']);
+		}
 	    
 	    foreach($data as $key => $value)
 	    {
@@ -879,6 +884,10 @@ function file_uploads($FILES,$filepath,$insert_id)
 	        
 	        $output .="<td>";
 	        $output .=$value['sid'];
+	        $output .="</td>";
+
+			$output .="<td>";
+	        $output .=$value['location_id'];
 	        $output .="</td>";
 	        
 	        $output .="<td>";
@@ -911,6 +920,9 @@ function file_uploads($FILES,$filepath,$insert_id)
 	        
 	        
 	        $output .="</tr>";
+
+			
+
 	        
 	    }
 	    

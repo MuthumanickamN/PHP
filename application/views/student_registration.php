@@ -869,6 +869,7 @@ function contact_check(inputtxt){
                    <th>Transaction Details</th>
                    <th>Parent ID</th>
                    <th>Student ID</th>
+                   <th>Location</th>
                    <th>Gross Amount</th>
                    <th>Discount %</th>
                    <th>VAT %</th>

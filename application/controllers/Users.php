@@ -415,6 +415,11 @@ class Users extends CI_Controller {
 	    
 	    $data = $this->db->query($qry)->result_array();
 	    $output = '';
+
+        foreach($data as $key => $value)
+        {
+            $data[$key]['location_id'] = $this->transaction->getLocationDetail($value['location_id']);
+        }
 	    
 	    foreach($data as $key => $value)
 	    {
@@ -440,6 +445,10 @@ class Users extends CI_Controller {
 	        
 	        $output .="<td>";
 	        $output .=$value['sid'];
+	        $output .="</td>";
+
+            $output .="<td>";
+	        $output .=$value['location_id'];
 	        $output .="</td>";
 	        
 	        $output .="<td>";

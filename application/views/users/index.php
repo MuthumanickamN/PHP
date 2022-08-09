@@ -137,6 +137,7 @@ $role = strtolower($this->session->userdata['role']);
                     <th>Transaction Details</th>
                     <th>Parent ID</th>
                     <th>Student ID</th>
+                    <th>Location</th>
                     <th>Gross Amount</th>
                     <th>Discount %</th>
                     <th>Discount Amount</th>
