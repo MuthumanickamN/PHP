@@ -400,7 +400,7 @@ class Court_booking extends CI_Controller{
             'amount' => $amount
         );
         $this->court_booking_model->update_wallet_amount($update_data,$id);*/
-        $sql_vat="select coalesce(v.percentage,5.00) as vat_perc from vat_setups where id='1'";
+        $sql_vat="select coalesce(percentage,5.00) as vat_perc from vat_setups where id='1'";
 		$vat_perc = $this->db->query($sql_vat)->row()->vat_perc;
 		
         if ($from=="court_booking_regular"){
