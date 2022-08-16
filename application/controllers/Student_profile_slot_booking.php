@@ -184,6 +184,9 @@ public function view_calender(){
     $getRows = $this->db->query('SELECT * FROM `tmp_booking` where student_id ="'.$data['sid'].'" and activity_id ="'.$data['activity_id'].'"');
     $data['count'] =  $getRows->num_rows();
     $data['role'] = strtolower($this->session->userdata('role'));
+
+    //$data['termscondition'] = base_url()."assets/termsandconditions_documents/".$this->db->query("select * from termsconditionsuploadedfiles where id=1")->row()->filename;
+    $data['termscondition'] = base_url()."assets/TERMS & Conditions - Prime Star Sports Services.pdf";
    $this->load->view('slot_booking_activity_calander',$data);
 }
 

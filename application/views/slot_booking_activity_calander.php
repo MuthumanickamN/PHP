@@ -240,7 +240,7 @@
     	<div class="form-check tc_check" style="display:block;">
     		<input type="checkbox" name="tc_chkbox" id="tc_chkbox">
     		<label class="form-check-label">
-    		I have read and agreed to the <a href="http://sports.primestaruae.com/assets/TERMS%20&%20Conditions%20-%20Prime%20Star%20Sports%20Services.pdf" target="_blank"><span style="font-size:20px;"> Terms & Conditions </span></a> as mentioned in the link
+    		I have read and agreed to the <a href="<?php echo $termscondition;?>" target="_blank"><span style="font-size:20px;"> Terms & Conditions </span></a> as mentioned in the link
     		</label>
         
 		</div>

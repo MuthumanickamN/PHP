@@ -103,7 +103,7 @@ define('FROM_NAME','Primestar Sports Services');
 define('CC_ADDRESS','primestarsportsservices@gmail.com');
 define('DEFAULT_MAIL','primestarsportsservices@gmail.com');
 define('SEND_TO_PARENT','NO');
-define('TERMS_CONDITION_ATTACHMENT',FCPATH.'/assets/TERMS & Conditions - Prime Star Sports Services.pdf');
+define('TERMS_CONDITION_ATTACHMENT',FCPATH.'/assets/TERMS_and_Conditions_Prime_Star_Sports_Services.pdf');
 //define('CC_ADDRESS','');
 
 define("smpt_host",     "smtp.gmail.com");

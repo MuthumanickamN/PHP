@@ -63,7 +63,7 @@
                       <div class="col-md-3 control"><strong>Uploaded</strong></div>
                         <div class="col-md-3 control">
                          
-                          <a class="btn btn-info" target='_blank' href="<?php echo 'http://sports.primestaruae.com/assets/termsandconditions_documents/'.$upload_items[0]['filename']; ?>">View</a>
+                          <a class="btn btn-info" target='_blank' href="<?php echo base_url().'assets/TERMS_and_Conditions_Prime_Star_Sports_Services.pdf'?>">View</a>
                               <?php //foreach($upload_items as $uploads){ ?>
                                 <!--<p class="upload-remove" id="upload_remove_<?php echo $uploads['id']; ?>"><img src="<?php echo base_url().'assets/accounts_documents/'.$uploads['filename']; ?>">
                                 <span title="Remove" id="hover-remove" style="cursor:pointer; padding-left:10px;" onclick="remove_upload('<?php echo $uploads['id']; ?>')"><i class="fa fa-remove"></i></span></p>-->

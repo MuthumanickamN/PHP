@@ -28,7 +28,7 @@ class Registration_fees extends CI_Controller {
 		$data['edit']=0;
 		$data['role']=strtolower($this->session->userdata('role'));
 
-		
+		$where = "";
 		if(isset($data['location_id']) && $data['location_id'] != '')
 		{
 			$where .= " where `location_id` = '".$data['location_id']."' ";

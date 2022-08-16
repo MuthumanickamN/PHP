@@ -493,6 +493,9 @@
               <?php if ($role == 'superadmin' || $maintenance_menu_arr['Assign_coach'] == 1) : ?>
                 <li data-menu="assign_coach"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'Assign_coach' ?>"><span data-il8n="Assign Coach">Assign Coach</span></a></li>
               <?php endif; ?>
+              <?php if ($role == 'superadmin' || $maintenance_menu_arr['TermsConditions'] == 1) : ?>
+                <li data-menu="terms_condition"><a class="dropdown-item" data-toggle="" href="<?php echo base_url() . 'TermsConditions' ?>"><span data-il8n="TermsConditions">Terms & Conditions</span></a></li>
+              <?php endif; ?>
 
 
             </ul>

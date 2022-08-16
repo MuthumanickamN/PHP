@@ -14,8 +14,8 @@ class TermsConditions extends CI_Controller {
 	{   
 	//upload an image options
 	$config = array();
-	$config['upload_path'] = './assets/termsandconditions_documents/';
-	$config['allowed_types'] = '*';
+	$config['upload_path'] = './assets/';
+	$config['allowed_types'] = 'pdf'; //*
 	$config['max_size']      = '0';
 	$config['overwrite']     = FALSE;
 
@@ -45,7 +45,9 @@ class TermsConditions extends CI_Controller {
 				}
 				else
 				{
-					$_FILES['userfile']['name']= $files['userfile']['name'][$i];
+					unlink(FCPATH.'/assets/TERMS_and_Conditions_Prime_Star_Sports_Services.pdf');
+					//$_FILES['userfile']['name']= $files['userfile']['name'][$i];
+					$_FILES['userfile']['name']= "TERMS_and_Conditions_Prime_Star_Sports_Services.pdf";
 					$_FILES['userfile']['type']= $files['userfile']['type'][$i];
 					$_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'][$i];
 					$_FILES['userfile']['error']= $files['userfile']['error'][$i];
@@ -54,10 +56,8 @@ class TermsConditions extends CI_Controller {
 					$this->upload->initialize($this->set_upload_options());
 					$this->upload->do_upload('userfile');
 							
-					//$sql1="INSERT into termsconditionsuploadedfiles(filename) values('".$files['userfile']['name'][$i]."')";
-					$sql1="Update  termsconditionsuploadedfiles set filename='".$files['userfile']['name'][$i]."' where id = 1 ";
-					//print_r ($sql1);die;
-					$this->db->query($sql1);
+					//$sql1="Update  termsconditionsuploadedfiles set filename='".$files['userfile']['name'][$i]."' where id = 1 ";
+					//$this->db->query($sql1);
 				}
 			}				
 			
