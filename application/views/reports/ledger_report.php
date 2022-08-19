@@ -108,6 +108,7 @@
                                                         <th scope="col">Transaction Date</th>
                                                         <th scope="col">Acc code</th>
                                                         <th scope="col">Transaction Details</th>
+                                                        <th scope="col">Location</th>
                                                         <th scope="col">Parent ID</th>
                                                         <th scope="col">Credit (AED)</th>
                                                         <th scope="col">Debit (AED)</th>
@@ -123,6 +124,7 @@
                                                         <td><?php echo $txn['transaction_date'];?></td>
                                                         <td><?php echo $txn['account_code_val'];?></td>
                                                         <td><?php echo $txn['transaction_detail'];?></td>
+                                                        <td></td>
                                                         <td><?php echo $txn['parent_id'];?></td>
                                                         <td><?php echo $txn['credit'];?></td>
                                                         <td><?php echo $txn['debit'];?></td>
@@ -188,7 +190,7 @@ jQuery(document).ready(function() {
             messageTop: 'Ledger report for '+fromdateval+' - '+todateval, 
             title: 'Ledger report', 
             exportOptions: {
-                    columns: [ 1, 2, 3, 4,5,6,7 ]
+                    columns: [ 1, 2, 3, 4,5,6,7, 8 ]
                 },
             },
             
@@ -212,22 +214,6 @@ jQuery(document).ready(function() {
             };
            
             crdtotal = api
-                .column( 6 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
- 
-            // Total over this page
-            crdpageTotal = api
-                .column( 6, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
- 
- // Total over all pages
-            dbttotal = api
                 .column( 7 )
                 .data()
                 .reduce( function (a, b) {
@@ -235,8 +221,24 @@ jQuery(document).ready(function() {
                 }, 0 );
  
             // Total over this page
+            crdpageTotal = api
+                .column( 8, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+ // Total over all pages
+            dbttotal = api
+                .column( 8 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+            // Total over this page
             dbtpageTotal = api
-                .column( 7, { page: 'current'} )
+                .column( 8, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -245,10 +247,10 @@ jQuery(document).ready(function() {
             var totalBalance = crdtotal-dbttotal;
             var balanceVal =  'AED '+pageBalance.toFixed(2) +' <br>(AED '+ totalBalance.toFixed(2) +' total)';
             // Update footer
-            jQuery( api.column( 6 ).footer() ).html(
+            jQuery( api.column( 7 ).footer() ).html(
                 'AED'+crdpageTotal.toFixed(2) +' <br>(AED'+ crdtotal.toFixed(2) +' total)'
             );
-            jQuery( api.column( 7 ).footer() ).html(
+            jQuery( api.column( 8 ).footer() ).html(
                 'AED'+dbtpageTotal.toFixed(2) +' <br>(AED'+ dbttotal.toFixed(2) +' total)'
             );
             jQuery( '.balance' ).html(balanceVal);

@@ -13,6 +13,7 @@ class Registration_fees extends CI_Controller {
 		$this->load->model('School_profile_report_Model', 'schools');
 		$this->load->model('Invoice_Model', 'invoice_model');
 		$this->load->model('Daily_Transaction_Model', 'transaction');
+		$this->load->model('Ledger_Model', 'ledger_model');
 		//$this->load->view('registration_fees');
 
 	}
@@ -98,12 +99,12 @@ class Registration_fees extends CI_Controller {
 		        $updateCredit=$this->db->query("Update prepaid_credits set balance_credits='".$balance_credits."',total_credits='".$balance_credits."' where parent_id='".$parent_id."' ");
 				//wallet transaction
 				$txn_id = $this->schools->getLastEntry('wallet_transactions');
-		          $wallet_transaction_id = 'WTXNO-'.$txn_id;
+		        $wallet_transaction_id = 'WTXNO-'.$txn_id;
 		          
 		          $inv_id = $this->default->getInvoiceId('wallet_transactions');
-              $invoice_id = 'PS'.date('Y').'-'.$inv_id;
+				  $invoice_id = 'PS'.date('Y').'-'.$inv_id;
               
-		          $walletArray = array(
+		          $walletArary = array(
 		            'wallet_transaction_id' =>$wallet_transaction_id,
 		            'ac_code' => 'RFWTR',
 		            'wallet_transaction_date' =>date('Y-m-d'),
@@ -127,20 +128,24 @@ class Registration_fees extends CI_Controller {
 		            'parent_name'=> $parent_name,
 		            'parent_mobile'=> $parent_contact_no,
 		            //'parent_email_id'=> $data['parent_email'],
-		            'description'=> ' Registration Fees',
+		            'description'=> 'Registration Fees',
 		            'created_at'=> date('Y-m-d H:i:s'),
+					'accountservice_id' => 2,
+					'payment_type' => $payment_type
 		        );
 		        
-		          $this->db->insert('wallet_transactions', $walletArray); 
-		          $wallet_transaction_id = $this->db->insert_id();
-		          
+				$this->db->insert('wallet_transactions', $walletArray); 
+				$wallet_transaction_id = $this->db->insert_id();
+
+				$wallet_transaction_id_new = 'WTXNO-'.$wallet_transaction_id;
+				$walletArary['wallet_transaction_id'] = $wallet_transaction_id_new;
+				$sql="Update wallet_transactions set wallet_transaction_id='$wallet_transaction_id_new' where id=$wallet_transaction_id";
+				$this->db->query($sql);
+
+		        $this->ledger_model->insert($wallet_transaction_id, 'Registration Fees');  
 			    $this->invoice_model->send_email_invoice($wallet_transaction_id, "RegistrationFees");
 					
-		        
-				
-				
-				
-				$email_data = $this->db->query("SELECT rf.*,
+		        $email_data = $this->db->query("SELECT rf.*,
 											   r.sid,
 											   wt.*,
 											   p.parent_code,
@@ -348,13 +353,13 @@ public function delete($id)
 
 public function view($id)
 {
-	$query = $this->db->query('select * from registration_fees where id='.$id);
+	$query = $this->db->query('select r.*, p.parent_code from registration_fees r left join parent as p on p.parent_id = r.parent_id where r.id='.$id);
 	$postData=$query->row_array();
 
 	$data['id']=$postData['id'];
 $data['student_id']=$postData['student_id'];
 $data['student_name']=$postData['student_name'];
-$data['parent_id']=$postData['parent_id'];
+$data['parent_id']=$postData['parent_code'];
 $data['parent_contact']=$postData['parent_contact'];
 $data['parent_name']=$postData['parent_name'];
 $data['location_id']=$postData['location_id'];
@@ -371,7 +376,7 @@ $data['student_id']=$postData['student_id'];
 
 public function list_(){
     $data = array();
-    $data['data']=$this->db->query("select * from registration_fees order by id desc")->result_array();
+    $data['data']=$this->db->query("select r.*, p.parent_code from registration_fees r left join parent as p on p.parent_id = r.parent_id order by r.id desc")->result_array();
 	foreach ($data['data'] as $key => $value) 
 	{
 
@@ -548,6 +553,7 @@ public function get_category_fees()
 				//'parent_email_id'=> $data['parent_email'],
 				'description'=> ' Registration Fees',
 				'created_at'=> date('Y-m-d H:i:s'),
+				'accountservice_id' => 46
 			);
 			
 				$this->db->insert('wallet_transactions', $walletArray); 

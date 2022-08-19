@@ -251,7 +251,7 @@ function allnumeric(inputtxt){
                 <strong>Payment Type</strong>*
               </div>                            
         <div class="col-md-3 control">
-          <input id="payment_type" type="radio" value="wallet" previousValue="" name="payment_type" <?php if(isset($pay_type) && $pay_type=='wallet'){ echo 'checked';} else { 'checked'; }?> checked required/>
+          <input id="payment_type" type="radio" value="Wallet" previousValue="" name="payment_type" <?php if(isset($pay_type) && $pay_type=='wallet'){ echo 'checked';} else { 'checked'; }?> checked required/>
           <label style="margin-left: 10px; margin-right: 10px">Wallet</label>
           <span class="errorMsg"></span>
           

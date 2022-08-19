@@ -54,9 +54,9 @@
 	 <div class="form-group lg-btm">	
             <div class="row">
                   <div class="col-md-3 control"><strong>Upload</strong></div>
-             <div class="col-md-3 control">
-               <input name="userfile[]" type="file" multiple="multiple" />
-             </div>
+              <div class="col-md-3 control">
+                <input name="userfile[]" type="file" multiple="multiple" />
+              </div>
             </div>	
             	<?php if(!empty($upload_items)) { ?>
                   <div class="row">

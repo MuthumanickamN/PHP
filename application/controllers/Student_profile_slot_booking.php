@@ -880,7 +880,8 @@ public function add_slot_booking(){
                 'parent_mobile'=> $resultp['mobile_no'],
                 'parent_email_id'=> $resultp['email_id'],
                 'description'=> 'Slot Booking Fees Discount',
-                'created_at' => date('Y-m-d H:i:s')
+                'created_at' => date('Y-m-d H:i:s'),
+                'accountservice_id' => 3
             );
             }
             else
@@ -909,7 +910,8 @@ public function add_slot_booking(){
                 'parent_mobile'=> $resultp['mobile_no'],
                 'parent_email_id'=> $resultp['email_id'],
                 'description'=> 'Slot Booking Fees',
-                'created_at' => date('Y-m-d H:i:s')
+                'created_at' => date('Y-m-d H:i:s'),
+                'accountservice_id' => 3
             );
             
             }
@@ -924,7 +926,13 @@ public function add_slot_booking(){
               $wallet_transaction_id = $checkexistsArr['id'];
             }
             
-            
+            $wallet_transaction_id_new = 'WTXNO-'.$wallet_transaction_id;
+            $walletArary['wallet_transaction_id'] = $wallet_transaction_id_new;
+            $sql="Update wallet_transactions set wallet_transaction_id='$wallet_transaction_id_new' where id=$wallet_transaction_id";
+            $this->db->query($sql);
+
+            $this->ledger_model->insert($wallet_transaction_id, 'Slot Booking'); 
+
             $sql2="select p.parent_name, r.name as student_name,p.email_id as parent_email from booking_approvals ba 
             left join parent p on p.parent_id = ba.parent_id
             left join registrations r on r.id = ba.student_id
@@ -1960,7 +1968,8 @@ public function add_slot_booking(){
                 'parent_email_id'=> $data['parent_email'],
                 'description'=> 'Slot Booking Fees - Refund',
                 'balance_credit'=>$balance_credits,
-                'created_at' => date('Y-m-d H:i:s')
+                'created_at' => date('Y-m-d H:i:s'),
+                'accountservice_id' => 40
             );
             $this->db->insert('wallet_transactions', $walletArray); 
             $this->send_email_rejected($booking_id, $email_details);

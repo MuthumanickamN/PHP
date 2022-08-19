@@ -50,16 +50,16 @@ $this->load->view('includes/header3');
 <table id="creditList" class="table table-striped table-bordered" border="0" cellpadding="0" cellspacing="0">
     <thead>
         <tr> 
-            <th >S.No</th>
-            <th>Parent Name</th>
-            <th>Parent ID</th>
-            <th>Location</th>
-            <th>Mobile</th>
-            <th>Amount Paid</th>
-            <th>Total Credits</th>
-            <th>Balance Credits</th>
-            <th >Created At</th>
-            <th >Action</th>
+            <th style="text-align: center">S.No</th>
+            <th style="text-align: center">Parent Name</th>
+            <th style="text-align: center">Parent ID</th>
+            <th style="text-align: center">Location</th>
+            <th style="text-align: center">Mobile</th>
+            <th style="text-align: center">Amount Paid</th>
+            <th style="text-align: center">Total Credits</th>
+            <th style="text-align: center">Balance Credits</th>
+            <th style="text-align: center" >Created At</th>
+            <th style="text-align: center" >Action</th>
         </tr>
     </thead>
     <tbody>

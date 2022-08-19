@@ -8,6 +8,7 @@ class Prepaid_credits extends CI_Controller {
 	$this->load->model('School_profile_report_Model', 'schools');
 	$this->load->model('Default_Model', 'default');
 	$this->load->model('Daily_Transaction_Model', 'transaction');
+	$this->load->model('Ledger_Model', 'ledger_model');
 	}
 	
 	public function index(){
@@ -139,34 +140,42 @@ class Prepaid_credits extends CI_Controller {
 					'balance_credit'=>$balanceamount,
     	            'description'=> 'Prepaid credits',
     	            'created_at' => date('Y-m-d H:i:s'),
+					'accountservice_id' => 1
     	        );
     	        $checkexists = $this->db->query('select id from wallet_transactions where wallet_transaction_date ="'.date('Y-m-d').'" and created_at ="'.date('Y-m-d H:i:s').'" and  ac_code ="WCTR" and wallet_transaction_type = "Credit"  ');
     	        $checkexistsArr = $checkexists->row_array();
     			
     	        if (empty($checkexistsArr)){
-    	          $this->db->insert('wallet_transactions', $walletArray); 
-    			  $wallet_id = $this->db->insert_id();
+					$this->db->insert('wallet_transactions', $walletArray); 
+					$wallet_id = $this->db->insert_id();
     	        }else{
-    	          $this->db->where('id', $checkexistsArr['id']);
+    	           $this->db->where('id', $checkexistsArr['id']);
     	           $this->db->update('wallet_transactions', $walletArray); 
     			   $wallet_id = $checkexistsArr['id'];
     	        }
     			
-    						$email_data = $this->db->query("SELECT pc.*,
-    															   p.*
-    														FROM   prepaid_credits AS pc
-    															   LEFT JOIN parent AS p
-    																	  ON p.parent_id = pc.parent_id
-    														WHERE  pc.id = ".$pre_id."");
+				$wallet_transaction_id_new = 'WTXNO-'.$wallet_id;
+				$walletArary['wallet_transaction_id'] = $wallet_transaction_id_new;
+				$sql="Update wallet_transactions set wallet_transaction_id='$wallet_transaction_id_new' where id=$wallet_id";
+				$this->db->query($sql);
+
+		        $this->ledger_model->insert($wallet_id, 'Prepaid Credits'); 
+
+				$email_data = $this->db->query("SELECT pc.*,
+														p.*
+												FROM   prepaid_credits AS pc
+														LEFT JOIN parent AS p
+																ON p.parent_id = pc.parent_id
+												WHERE  pc.id = ".$pre_id."");
+												
+																			
+				$email_data_array = $email_data->row_array();
+				
+				
+				$wallet_email_data = $this->db->query("SELECT  * FROM wallet_transactions WHERE id = ".$wallet_id."");
     													  
     																				  
-    						$email_data_array = $email_data->row_array();
-    						
-    						
-    						$wallet_email_data = $this->db->query("SELECT  * FROM wallet_transactions WHERE id = ".$wallet_id."");
-    													  
-    																				  
-    						$wallet_data_array = $wallet_email_data->row_array();
+				$wallet_data_array = $wallet_email_data->row_array();
     						
     				
     			$this->send_email($email_data_array,$wallet_data_array,  $prev_balance);

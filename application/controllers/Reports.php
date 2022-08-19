@@ -1028,27 +1028,19 @@ class Reports extends CI_Controller
 		}
 		$data['locationList'] = $this->schools->getAllLocationList();
 		$where = "where `created_at` BETWEEN '".$from_date."' AND '".$to_date."'";
-		if(isset($acc_code) && $acc_code != ''){
-			$where .= " AND `account_code` = '".$acc_code."' ";
-			$query = "(select a.created_at, a.transaction_id, a.payable_date as transaction_date, s.Name as account_code_val, a.description_detail as transaction_detail, '' as parent_id, 
-			CASE WHEN s.Type = 'Expenses' or s.Type = 'Payable' THEN a.payable_amount ELSE '' END as 'debit' ,
-			CASE WHEN s.Type = 'Income' or s.Type = 'Receivable' THEN a.payable_amount ELSE '' END as 'credit' 
-			from accounts_service_entries a left join accounts_service as s on s.Id = a.accountservice_id $where order by created_at asc)
-			";
-		}
-		else{
-			$query = "(select a.created_at, a.transaction_id, a.payable_date as transaction_date, s.Name as account_code_val, a.description_detail as transaction_detail, '' as parent_id, 
+		
+		$query = "(select a.created_at, a.transaction_id, a.payable_date as transaction_date, s.Name as account_code_val, a.description_detail as transaction_detail, '' as parent_id, 
 		CASE WHEN s.Type = 'Expenses' or s.Type = 'Payable' THEN a.payable_amount ELSE '' END as 'debit' ,
 		CASE WHEN s.Type = 'Income' or s.Type = 'Receivable' THEN a.payable_amount ELSE '' END as 'credit' 
 		  from accounts_service_entries a left join accounts_service as s on s.Id = a.accountservice_id $where)
 		UNION
 		(select a.created_at, a.wallet_transaction_id, a.wallet_transaction_date as transaction_date, '' as account_code_val, a.wallet_transaction_detail as transaction_detail, p.parent_code as parent_id, 
-		CASE WHEN a.wallet_transaction_type = 'Debit' THEN a.net_amount ELSE '' END as 'debit' ,
-		CASE WHEN a.wallet_transaction_type = 'Credit' THEN a.net_amount ELSE '' END as 'credit' 
+		CASE WHEN a.wallet_transaction_type = 'Credit' THEN a.net_amount ELSE '' END as 'debit',
+		CASE WHEN a.wallet_transaction_type = 'Debit' THEN a.net_amount ELSE '' END as 'credit'  
 		  from wallet_transactions a left join parent as p on p.parent_id = a.parent_id $where) order by created_at asc";
-		}
 		
 		
+		//echo $query;die;
 		$query = $this->db->query($query);
 		$transactionList = $query->result_array();
 		//echo $this->db->last_query();die;

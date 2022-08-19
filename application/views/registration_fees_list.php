@@ -4,31 +4,7 @@
  <head>
   <title>Registration Fees</title>
 </head>
-<script type="text/javascript">
-    $(document).ready(function() {
-    $('#example').DataTable();
-} );
 
- function view_registration_fees(id)
-{
-    
-    window.location='<?php echo site_url('/Registration_fees/view/'); ?>'+id; 
-
-}
- $(function () {
-              
-                    $('#dialog').fadeIn('slow').delay(1000).fadeOut('slow');
-                });
-</script>
-<style type="text/css">
-
-    .btn2
-    {
-        color: black;
-        background-color: white;
-
-    }
-</style>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <style rel="stylesheet" src="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css"></style>
@@ -55,7 +31,31 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#example').DataTable();
+} );
 
+ function view_registration_fees(id)
+{
+    
+    window.location='<?php echo site_url('/Registration_fees/view/'); ?>'+id; 
+
+}
+ $(function () {
+              
+                    $('#dialog').fadeIn('slow').delay(1000).fadeOut('slow');
+                });
+</script>
+<style type="text/css">
+
+    .btn2
+    {
+        color: black;
+        background-color: white;
+
+    }
+</style>
 
 <div id="dialog" style="display: none; left:40%; position: fixed; background-color:#f4f5fa;
             height: 50px;line-height: 45px; width: 300px;" class="row">
@@ -106,22 +106,22 @@
                     <div class="card-body card-dashboard">
                        
                         <div class="table-responsive">
-                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap" border="0" cellpadding="0" cellspacing="0" style="width:150%">
+                            <table id="example" class="table table-striped table-bordered" border="0" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr> 
                                         <!--<th style="text-align: center">REG-ID</th>-->
-                                        <th>NAME</th>
-                                        <th style="text-align: center">PARENT-ID</th>
-                                        <th>PARENT NAME</th>
-                                        <th style="text-align: center">LOCATION</th>
-                                        <th style="text-align: center">PARENT MOBILE</th>
-                                        <th style="text-align: center">PAID AMOUNT(AED)</th>
-                                        <th style="text-align: center">PAYMENT TYPE</th>
-                                        <th style="text-align: center">CREATED AT</th>
-                                        <th style="text-align: center">UPDATED AT</th>               
-                                        <!--<th style="text-align: center">VIEW</th>-->
-                                         <th style="text-align: center">EDIT</th>
-                                          <th style="text-align: center">DELETE</th>
+                                        <th style="text-align: center">Student Name</th>
+                                        <th style="text-align: center">Parent-ID</th>
+                                        <th style="text-align: center">Parent Name</th>
+                                        <th style="text-align: center">Location</th>
+                                        <th style="text-align: center">Parent Mobile</th>
+                                        <th style="text-align: center">Paid Amount(AED)</th>
+                                        <th style="text-align: center">Payment Type</th>
+                                        <th style="text-align: center">Created at</th>
+                                        <!--<th style="text-align: center">UPDATED AT</th>               
+                                        
+                                        <th style="text-align: center">EDIT</th>
+                                        <th style="text-align: center">DELETE</th>-->
                                            
                 
                                     </tr>
@@ -139,7 +139,7 @@
 
                 <!--<td style="text-align: center"><?php echo $row1['id']; ?></td> --> 
                 <td><?php echo $row1['student_name']; ?></td>
-                <td style="text-align: center"> <?php echo $row1['parent_id']; ?></td>
+                <td style="text-align: center"> <?php echo $row1['parent_code']; ?></td>
                 <td><?php echo $row1['parent_name']; ?></td>
                 <td style="text-align: center"> <?php echo $row1['location_id']; ?></td>
                 <td style="text-align: center"><?php echo $row1['parent_contact']; ?></td>
@@ -147,9 +147,9 @@
                 <td style="text-align: center"><?php echo Ucfirst($row1['pay_type']); ?></td>  
                 
                 <td style="text-align: center"><span style="display:none;"><?php echo strtotime($date_time);?></span><?php echo date("d/m/Y H:i", strtotime("$date_time")); ?></td>
-                   <td style="text-align: center;"><?php if($date_time1=='0000-00-00 00:00:00') { echo '-'; } else  { echo date("d/m/Y H:i", strtotime("$date_time1")); } ?></td>
+                  <!-- <td style="text-align: center;"><?php if($date_time1=='0000-00-00 00:00:00') { echo '-'; } else  { echo date("d/m/Y H:i", strtotime("$date_time1")); } ?></td>
               
-                  <!--<td style="text-align: center"><a type="button" style="color:white;text-decoration:none" onClick="view_registration_fees(<?php echo $row1['id'];?>)" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View"> --> 
+                  <!--<td style="text-align: center"><a type="button" style="color:white;text-decoration:none" onClick="view_registration_fees(<?php echo $row1['id'];?>)" class="btn btn-info fa fa-eye" data-id="4" data-toggle="tooltip" title="View"> 
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
                 <td style="text-align: center"><a type="button" style="color:white;text-decoration:none; line-height: 15px" class="btn btn-warning fa fa-edit" data-id="4" data-toggle="tooltip" title="Edit" href="<?php echo base_url('Registration_fees/edit/'.$row1['id']); ?>">
         </a>
@@ -158,7 +158,7 @@
                 <td style="text-align: center">
                     <a type="button" onClick="return confirm('Are you sure you want to delete?')" style="color:white;text-decoration:none; line-height: 15px;" class="btn btn-danger fa fa-trash" data-id="4" data-toggle="tooltip"  href="<?php echo base_url('Registration_fees/delete/'.$row1['id']); ?>">
         </a>
-                  </td>
+                  </td>-->
           
 
 
